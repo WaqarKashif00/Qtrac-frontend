@@ -1,0 +1,14 @@
+<ng-container
+  *ngIf="{
+    button: ButtonsList$ | async,
+    ControlSelection: ControlSelection$ | async
+  } as values"
+>
+  <ng-container *ngIf="values.button && values.ControlSelection">
+    <lavi-mobile-button-form
+      [Control]="values.button"
+      [(IsButtonSelected)]="values.ControlSelection.IsButtonSelected"
+      (OnDataChange)="OnButtonDataChange($event)"
+    ></lavi-mobile-button-form>
+  </ng-container>
+</ng-container>

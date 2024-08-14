@@ -1,0 +1,82 @@
+<lavi-modal [OpenDialog]="isSQuestionSetDialogOpen" [Title]="'Question Set'" [Width]="'80%'">
+  <div class="modal-background">
+    <lavi-form [FormGroup]="AddEditQuestionSetForm">
+      <div class="condition-container w-25">
+
+        <kendo-textbox-container floatingLabel="Name">
+          <input kendoTextBox
+          maxlength="50" tabindex="1" lavi-auto-focus [formControl]="AddEditQuestionSetForm.controls.questionSetName"
+          [AutoFocusRequired]="isSQuestionSetDialogOpen" lavi-trim-value/>
+
+        </kendo-textbox-container>
+        <lavi-validation-message-list [validation-form-group-name]="AddEditQuestionSetForm"
+                      validation-control-name="questionSetName" [validation-errorlist]="WorkFlowMessage.QuestionSetNameMessage">
+                    </lavi-validation-message-list>
+      </div>
+      <div class="question-set-modal">
+              <div class="row pt-3">
+                <div class="left-col col-3">
+                  <div class="row">
+                    <p class="col-6 mb-0">Questions</p>
+                    <div class="mb-0 flex-auto" >
+                      <p class="text-blue cursor-pointer pl-2 mb-0 margin-right-2 pr-2 float-right">
+                        <a (click)="AddQuestion()">Add Question</a></p>
+                    </div>
+                  </div>
+                  <hr/>
+                  <div class="question-list scroll-y w-100">
+
+                    <kendo-grid [data]="questionData" id="question-grid" [rowClass]="rowCallback" class="width-fit" (dataStateChange)="dataStateChange($event)">
+                      <kendo-grid-column width="40">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                          <img class="drag-icon cursor-pointer mr-2" src="../../../../assets/drag-indicator.png">
+                        </ng-template>
+                      </kendo-grid-column>
+
+                      <kendo-grid-column field="shortName" title="Template Name" width="90">
+                      </kendo-grid-column>
+
+                      <kendo-grid-column field="id" title="" width="70" class="fload-right">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                          <img class="img-width cursor-pointer" (click)="DeleteQuestion(dataItem.id,AddEditQuestionSetForm?.value?.id)" src="../../../../assets/img/delete-icon.svg">
+                          <img class="img-width cursor-pointer ml-2" (click)="EditQuestion(dataItem)" src="../../../../assets/img/edit-icon.svg">
+                        </ng-template>
+                      </kendo-grid-column>
+
+                      <ng-template kendoGridNoRecordsTemplate>
+                        No question added
+                     </ng-template>
+                    </kendo-grid>
+                  </div>
+
+                  <kendo-textbox-container floatingLabel="Routing">
+                    <kendo-dropdownlist
+                      placeholder="Routing"
+                      class="no-border mt-1"
+                      tabindex="1"
+                      [data]="Routings | laviSortBy:'type'"
+                      [textField]="'type'"
+                      [valueField]="'id'"
+                      [formControl] ="AddEditQuestionSetForm.controls.routing"
+                    >
+                    </kendo-dropdownlist>
+                  </kendo-textbox-container>
+                </div>
+                <div class="vertical-line height-330-px " ></div>
+                <div class="col-9 col-lg-8 right-col">
+                  <lavi-shared-add-edit-question *ngIf="IsAddQuestionsVisibe"
+                  [supportedLanguageList] = "SupportedLanguages" [IsCancelButtonVisible]="true" [IsOnlySaveButtonVisible]="false" [IsGlobalQuestion]="false"
+                    [IsHideAllButton]='true' [IsSaveClicked]="IsSaveClicked" [Mode]="QuestionMode" (Save)="SaveQuestion($event)" (Cancel)="CancelQuestion()" ></lavi-shared-add-edit-question>
+                </div>
+              </div>
+      </div>
+      <div class="text-right mt-4 close-modal">
+        <button kendoButton class="secondary-button mr-2" (click)="ModalClose()" *ngIf="!IsAddQuestionsVisibe">Close</button>
+        <button kendoButton class="secondary-button mr-2" (click)="CLoseAddQuestion()" *ngIf="IsAddQuestionsVisibe">Cancel</button>
+        <button kendoButton class="primary-button mr-2" (click)="ApplyChanges()" *ngIf="!IsAddQuestionsVisibe">Apply</button>
+        <button kendoButton class="primary-button mr-2" (click)="AddQuestionInList()" *ngIf="IsAddQuestionsVisibe">{{QuestionMode == 'ADD' ? 'Add' : 'Update'}}</button>
+      </div>
+    </lavi-form>
+  </div>
+
+</lavi-modal>

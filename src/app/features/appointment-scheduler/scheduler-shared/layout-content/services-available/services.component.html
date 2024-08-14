@@ -1,0 +1,25 @@
+<div class="services">
+  <p class="sub-heading">{{(headerText[SelectedLanguage?.selectedLanguage] || headerText[SelectedLanguage?.defaultLanguage])}}  <ng-container *ngIf="Services.length == 0"> (Please Select One)</ng-container></p>
+  <div class="list" *ngIf="Services.length > 0">
+    <ul class="p-0">
+      <ng-container *ngFor="let item of Services">
+        <li (click)="OnServiceClick(item.itemId)">
+          <span
+            class="thumbnails"
+            [style.background-image]="'url(' + (item.url? item.url : '') + ')'"
+          ></span>
+          <span
+            class="selected-service"
+            [style.color]="ActiveBackGroundColor"
+            *ngIf="item.isSelected"
+            >&#10003;</span
+          >
+          <p [style.color]="FormTextColor" class="heading" *ngIf="(!(ShowServiceIconsOnly))">{{ item.name }}</p>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+  <ng-container *ngIf="Services.length == 0">
+    No Service Available
+  </ng-container>
+</div>

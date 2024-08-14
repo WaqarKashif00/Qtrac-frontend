@@ -1,0 +1,17 @@
+<div class="col-lg-12 inner-panel-padding right-column-width">
+    <div class="mb-5">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="sub-header">Advanced Rules</div>
+            </div>
+            <div class="col-lg-3">
+                <span class="text-blue pl-4 cursor-pointer font-weight-bold" (click)="OpenAddRulesModal()">Add Rule</span>
+            </div>
+        </div>
+    </div>
+</div>
+<lavi-advance-rule-content [OpenRuleDialog]="AdvanceRuleModelOpen$ | async" [DynamicVariablesList]="DynamicVariablesList" [ConditionVariables]="ConditionVariableList" [Triggers]="Triggers" [AdvanceRuleForm]="AdvanceRuleForm" [ConditionFormArray]="ConditionFormArray"
+    [ActionFormArray]="ActionFormArray" [Groups]="Groups$ | async" [Routings]="Routings$ | async" 
+    (Save)="SaveRule()" [LanguageSupported]="SupportedLanguages" (Cancel)="CloseAddRuleModal()">
+</lavi-advance-rule-content>
+<lavi-advance-workflow-rule-list [AdvanceRuleList]="AdvanceWorkflowList$ | async"></lavi-advance-workflow-rule-list>

@@ -1,0 +1,15 @@
+@import "src/stylings/primitives/primitives.scss";
+.notification-banner {
+  position: absolute;
+  width: 100%;
+  z-index: 99;
+  p {
+    margin-bottom: 0;
+    display: inline-block;
+    font-size: $_font-size-small-2;
+  }
+  span {
+    cursor: pointer;
+    float: right;
+  }
+}

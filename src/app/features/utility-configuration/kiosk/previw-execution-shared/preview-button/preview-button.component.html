@@ -1,0 +1,22 @@
+<div class="position-absolute"
+[style.height.px]="0"  
+[style.width.px]="0"  
+>
+  <input type="button"
+  [ngClass]="{ 'btn-position': FixedButton, 'back-btn' : ShowBackButtonInPanel, 'bg-img': Button.showIcon, 'shadow': Button.shadow }"
+  (click)="ClickButton()"
+  [style.background-image]="(Button.showIcon && GetUrl(Button.src)) ? 'url(' + GetUrl(Button.src) + ')' : ''"
+  [style.transform]="'translate(' + Button.left + 'px, ' + Button.top + 'px) scale(1)'"
+  [style.height.px]="Button.height"
+  [style.color]="Button.color"
+  [style.background-color]="Button.backgroundColor"
+  [style.font-size]="Button.fontSize ? Button.fontSize + 'px' : ''"
+  [style.font-style]="Button.fontStyle"
+  [style.font-family]="Button.font"
+  [style.font-weight]="Button.fontWeight"
+  [style.width.px]="Button.width"
+  [style.border]="Button.border + 'px solid ' + Button.borderColor"
+  [style.border-radius.px]="Button.boxRoundCorners || 0"
+  [value]="(Button.showIcon && GetUrl(Button.src)) ? '' : (Button.text[SelectedLanguage] || Button.text[DefaultLanguage] || '')" />
+</div>
+

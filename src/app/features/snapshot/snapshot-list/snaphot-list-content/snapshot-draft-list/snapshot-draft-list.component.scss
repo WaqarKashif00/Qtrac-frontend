@@ -1,0 +1,76 @@
+@import "src/stylings/primitives/primitives.scss";
+.content-list-container {
+    height: calc(100vh - 125px);
+    overflow-y: auto;
+    background: $color-background-white;
+    
+    h6{
+        color: $snapshot-list-sub-header-text-color;
+    }
+    .content-list {
+        background: $color-background-white;
+        line-height: 20px;
+        margin: 0;
+
+        .heading {
+            color: $_color-grey-200;
+            font-size: $_font-size-small-2;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .values {
+            color: $_color_blue-800;
+            font-size: $_font-size-small-4;
+            font-weight: $font-weight-600;
+        }
+
+        .col:not(:last-child) {
+            border-right: solid 1px $_color-light-blue-200;
+        }
+    }
+
+    .content-list-hover{
+        background: $color-background-white;
+        line-height: 20px;
+        margin: 0;
+
+        .snapshot-input-name-style{
+            border-left: solid 1px;
+            border-right: solid 1px;
+            height: 5px;
+            padding-bottom: 12px;
+        }
+
+        .heading {
+            color: $_color-grey-200;
+            font-size: $_font-size-small-2;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .values {
+            color: $_color_blue-800;
+            font-size: $_font-size-small-4;
+            font-weight: $font-weight-600;
+        }
+
+        .col:not(:last-child) {
+            border-right: solid 1px $_color-light-blue-200;
+        }
+    }
+
+    .content-list-hover:hover{
+        background-color: lightcyan;
+    }
+}
+
+.selected{
+    background-color: lightcyan !important;
+    border: solid 0.01rem;
+}
+
+.p-10px{
+  padding: 10px;
+}
+

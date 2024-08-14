@@ -1,0 +1,64 @@
+<div
+  *ngIf="Data?.items?.length > 0"
+  [style.transform]="'translate(0px, ' + Data.panel.top + 'px) scale(1)'"
+  [style.height.px]="Data.panel.height"
+  [style.padding-left.px]="Data.panel.horizontalPadding || 0"
+  [style.padding-right.px]="Data.panel.horizontalPadding || 0"
+  [style.padding-top.px]="Data.panel.verticalPadding || 0"
+  [style.padding-bottom.px]="Data.panel.verticalPadding || 0"
+  class="e-panel insideDiv w-100 transperant position-absolute"
+>
+  <ul class="UL">
+    <ng-container *ngFor="let item of Data?.items">
+      <li
+        class="LI"
+        style="cursor: pointer"
+        [ngClass]="{'border border-dark': Data.panel.showServiceIcons,
+        'service-bg-img': (Data.panel.showServiceIcons && item.itemIcon) }"
+        (click)="CanShowNextPage(item)"
+        [style.color]="Data.panel.primaryColor"
+        [style.background-color]="Data.panel.showServiceIcons ? 'white' : Data.panel.backgroundColor"
+        [style.font-size]="Data.panel.fontSize ? Data.panel.fontSize + 'px' : ''"
+        [style.font-style]="Data.panel.fontStyle"
+        [style.font-family]="Data.panel.font"
+        [style.font-family]="Data.panel.font"
+        [style.border-radius.px]="Data.panel.boxCorner || 0"
+        [style.background-image]="(Data.panel.showServiceIcons)
+         ? 'url(' + item.itemIcon + ')'  : ''"
+         [class.disabled]="!item.isActive"
+        *ngIf="item.isItemSelected"
+      >
+      <ng-container *ngIf="!(Data?.panel?.showServiceIcons) || !(item?.itemIcon)">
+        {{ item.itemText }}
+      </ng-container>
+      </li>
+    </ng-container>
+  </ul>
+</div>
+<lavi-preview-execution-label
+[Labels]="Data?.labels"
+[SelectedLanguage]="SelectedLanguage"
+[DefaultLanguage]="DefaultLanguage"
+></lavi-preview-execution-label>
+<lavi-preview-execution-image [Images]="Data?.images" [SelectedLanguage]="SelectedLanguage"></lavi-preview-execution-image>
+<lavi-preview-execution-video [Videos]="Data?.videos" [SelectedLanguage]="SelectedLanguage"></lavi-preview-execution-video>
+<lavi-preview-execution-slider [Sliders]="Data?.sliders" [SelectedLanguage]="SelectedLanguage"></lavi-preview-execution-slider>
+
+<ng-container *ngFor="let button of Data?.buttons">
+  <lavi-preview-execution-button
+  [Button]="button"
+  [SelectedLanguage]="SelectedLanguage"
+  [DefaultLanguage]="DefaultLanguage"
+  (OnButtonClick)="ShowAppointmentDialog()"
+></lavi-preview-execution-button>
+</ng-container>
+
+<lavi-appointment-modal
+Title="Appointment"
+[ModalWidth]="'80%'"
+[ModalHeight]="'40%'"
+[ModalForMobile]="true"
+[OpenDialog]="OpenAppointmentModal"
+(CloseModal)="CloseAppointmentDialog()"
+(ApplyChanges)="HaveAppointment($event)">
+</lavi-appointment-modal>

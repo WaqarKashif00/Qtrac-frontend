@@ -1,0 +1,39 @@
+<ng-content select="default-control"></ng-content>
+<ng-container *ngIf="OtherControlsData$ | async as data">
+<lavi-label-control
+  [Control]="data.labels"
+  [DivLayoutDesignContainer]="DivLayoutDesignContainer"
+  [SelectedLanguage]="SelectedLanguage$ | async"
+  (OnMoveEnd)="OnControlMoveEnd($event)"
+  (OnResizeStop)="OnControlResizeStop($event)"
+  (OnRemove)="OnRemoveLabelClick($event)"
+  (OnClick)="OnClickLabel($event)"
+></lavi-label-control>
+<lavi-image-control
+  [Controls]="data.images"
+  [DivLayoutDesignContainer]="DivLayoutDesignContainer"
+  [SelectedLanguage]="SelectedLanguage$ | async"
+  (OnMoveEnd)="OnControlMoveEnd($event)"
+  (OnResizeStop)="OnControlResizeStop($event)"
+  (OnRemove)="OnRemoveImageClick($event)"
+  (OnClick)="OnClickImage($event)"
+></lavi-image-control>
+<lavi-video-control
+  [Controls]="data.videos"
+  [DivLayoutDesignContainer]="DivLayoutDesignContainer"
+  [SelectedLanguage]="SelectedLanguage$ | async"
+  (OnMoveEnd)="OnControlMoveEnd($event)"
+  (OnResizeStop)="OnControlResizeStop($event)"
+  (OnRemove)="OnRemoveVideoClick($event)"
+  (OnClick)="OnClickVideo($event)"
+></lavi-video-control>
+<lavi-slider-control
+  [Controls]="data.sliders"
+  [DivLayoutDesignContainer]="DivLayoutDesignContainer"
+  [SelectedLanguage]="SelectedLanguage$ | async"
+  (OnMoveEnd)="OnControlMoveEnd($event)"
+  (OnResizeStop)="OnControlResizeStop($event)"
+  (OnRemove)="OnRemoveSliderClick($event)"
+  (OnClick)="OnClickSlider($event)"
+></lavi-slider-control>
+</ng-container>

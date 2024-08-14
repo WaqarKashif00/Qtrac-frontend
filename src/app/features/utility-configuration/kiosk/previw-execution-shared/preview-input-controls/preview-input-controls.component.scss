@@ -1,0 +1,102 @@
+@import "src/stylings/primitives/primitives.scss";
+
+.k-textbox {
+  font-size: unset;
+}
+
+.preview-control-items{
+  width: 100%;
+  margin: 0px 13px 0px 0px;
+  padding-right: 0;
+  // color: rgb(185, 207, 227);
+}
+
+.preview-radio-btn-control{
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: $font-size-big-2;
+}
+
+.preview-control{
+  padding: 0 13px;
+}
+
+.preview-control ::ng-deep{
+  .k-textbox-container > .k-label, .k-floating-label-container > .k-label{
+    color:inherit !important;
+  }
+  .k-textbox-container::after, .k-floating-label-container::after{
+     background-color: inherit;
+  }
+  .k-textbox,.k-input{
+    color:inherit !important;
+    border-color:inherit !important;
+  }
+  .k-textarea{
+    color:inherit !important;
+    border-color:inherit !important;
+    background-color: inherit !important;
+    border-width : 1px 1px 1px 1px;
+    resize: none;
+  }
+  .k-dateinput, .k-datepicker, .k-datetimepicker, .k-timepicker,.k-picker-wrap{
+    color:inherit !important;
+    border-color:inherit !important;
+  }
+  .k-textbox:focus, .k-textbox:focus-within, .k-textbox.k-state-focus, .k-textbox.k-state-focused, .k-textarea:focus, .k-textarea:focus-within {
+    border-color:inherit !important;
+  }
+  .k-textarea:focus, .k-textarea:focus-within, .k-textarea.k-state-focus, .k-textarea.k-state-focused, .k-textarea:focus, .k-textarea:focus-within {
+    border-color:inherit !important;
+    background-color: inherit !important;
+  }
+  .k-input.k-formatted-value{
+    color:inherit !important;
+    border-color:inherit !important;
+  }
+
+  .k-button > span{
+    color:inherit !important;
+  }
+  .wrapper-phone-number{
+    border-bottom-color: inherit !important;
+  }
+
+  .k-numerictextbox .k-numeric-wrap .k-input{
+    color:inherit !important;
+    border-color:inherit !important;
+  }
+
+  .k-numerictextbox .k-numeric-wrap {
+    color:inherit !important;
+    border-color:inherit !important;
+  }
+
+  .k-dropdown .k-dropdown-wrap, .k-dropdowntree .k-dropdown-wrap {
+    color:inherit !important;
+    border-color:inherit !important;
+  }
+
+  .k-multiselect-wrap .k-floatwrap, .k-header{
+    // color:inherit !important;
+    border-color:inherit !important;
+
+  }
+  .k-multiselect .k-multiselect-wrap {
+    border-color:inherit !important;
+  }
+  .k-multiselect-wrap .k-floatwrap .k-reset .k-button{
+    color:inherit !important;
+    border-color:inherit !important;
+
+  }
+
+  .preview-control-items .k-button{
+    color:inherit !important;
+  }
+
+  .k-dateinput .k-dateinput-wrap .k-input, .k-dateinput .k-picker-wrap .k-input, .k-datepicker .k-dateinput-wrap .k-input, .k-datepicker .k-picker-wrap .k-input, .k-datetimepicker .k-dateinput-wrap .k-input, .k-datetimepicker .k-picker-wrap .k-input, .k-timepicker .k-dateinput-wrap .k-input, .k-timepicker .k-picker-wrap .k-input,
+  .k-numerictextbox .k-numeric-wrap .k-input, .preview-control-items.k-multiselect .k-multiselect-wrap{
+    padding-left: 12px;
+  }
+}

@@ -1,0 +1,29 @@
+<div class="position-absolute">
+  <lavi-preview-label
+  [Labels]="Data?.labels"
+  [SelectedLanguage]="SelectedLanguage"
+  [DefaultLanguage]="DefaultLanguage">
+</lavi-preview-label>
+
+  <lavi-preview-image
+  [Images]="Data?.images"
+  [SelectedLanguage]="SelectedLanguage">
+</lavi-preview-image>
+
+  <lavi-preview-video [Videos]="Data?.videos"
+  [SelectedLanguage]="SelectedLanguage">
+</lavi-preview-video>
+
+  <lavi-preview-slider
+  [Sliders]="Data?.sliders"
+  [SelectedLanguage]="SelectedLanguage">
+</lavi-preview-slider>
+
+  <ng-container *ngFor="let button of Data?.buttons">
+  <lavi-preview-button [Button]="button"
+  [SelectedLanguage]="SelectedLanguage"
+  [DefaultLanguage]="DefaultLanguage"
+  (ShowNextQuestion)="showNextPage(button.name)">
+  </lavi-preview-button>
+  </ng-container>
+</div>

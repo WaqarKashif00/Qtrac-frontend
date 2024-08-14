@@ -1,0 +1,143 @@
+<div  [formGroup]="TicketItem.form">
+  <div *ngIf="TicketItem.type === Type.EstimatedWait">
+    <label>Show Item</label>
+    <span class="float-right mr-3 mt-1">
+      <input
+      type="checkbox"
+      kendoCheckBox
+      formControlName="showItem"
+    />
+    </span>
+  </div>
+  <div>
+    <label>Text</label>
+    <div class="float-right">
+      <span
+        (click)="OpenTranslateDialog()"
+        class="text-blue cursor-pointer">
+        Edit text</span>
+    </div>
+  </div>
+  <div class="mr-15">
+    <label>Height </label
+    ><input
+      type="text"
+      formControlName="height"
+      maxlength="3"
+      [value]="TicketItem.styles.height"
+      lavi-app-numbers-only
+      placeholder="Height"
+    />
+    <span>px</span>
+  </div>
+  <div class="mr-15">
+    <label>Width </label
+    ><input
+      type="text"
+      formControlName="width"
+      maxlength="3"
+      [value]="TicketItem.styles.width"
+      lavi-app-numbers-only
+      placeholder="Width"
+    />
+    <span>px</span>
+  </div>
+  <div>
+    <label>Background Color</label>
+    <kendo-colorpicker
+      formControlName="backgroundColor"
+      class="cursor-pointer"
+      [value]="TicketItem.styles.backgroundColor"
+    >
+    </kendo-colorpicker>
+  </div>
+  <div>
+    <label>Color</label>
+    <kendo-colorpicker
+      formControlName="color"
+      class="cursor-pointer"
+      [value]="TicketItem.styles.color"
+    >
+    </kendo-colorpicker>
+  </div>
+  <div>
+    <label>Vertical Padding </label
+    ><input
+      type="text"
+      maxlength="3"
+      formControlName="verticalPadding"
+      placeholder="Vertical Padding"
+      lavi-app-numbers-only
+      [value]="TicketItem.verticalPadding"
+    />
+    <span>px</span>
+  </div>
+  <div>
+    <label>Horizontal Padding </label
+    ><input
+      type="text"
+      formControlName="horizontalPadding"
+      placeholder="Horizontal Padding"
+      lavi-app-numbers-only
+      maxlength="3"
+      [value]="TicketItem.horizontalPadding"
+    />
+    <span>px</span>
+  </div>
+  <div>
+    <label>Box Round Corners:</label
+    ><input
+      type="text"
+      formControlName="boxRoundCorners"
+      [value]="TicketItem.styles.boxRoundCorners"
+      placeholder="Box Round Corners"
+      lavi-app-numbers-only
+      maxlength="3"
+    />
+    <span>px</span>
+  </div>
+  <hr class="mt-2 mb-2">
+  Text Styles:
+  <lavi-mobile-font [FormGroup]="TicketItem.form"></lavi-mobile-font>
+  <hr class="mt-2 mb-2">
+  Value Styles:
+  <div class="font-container">
+    <div >
+      <label>Font</label>
+      <select class="cursor-pointer" formControlName="valuesFont">
+        <option *ngFor="let font of FontFamily" [value]="font">
+          {{ font }}
+        </option>
+      </select>
+    </div>
+    <div>
+      <label>Font size</label>
+      <input type="text" lavi-app-numbers-only [maxlength]="FontMaxLength" formControlName="valuesFontSize" placeholder="Font size" />
+      <span>px</span>
+    </div>
+    <div>
+      <label>Font style</label>
+      <select class="cursor-pointer" formControlName="valuesFontStyle">
+        <option *ngFor="let font of FontStyle" [value]="font">
+          {{ font }}
+        </option>
+      </select>
+    </div>
+    <div>
+      <label>Font weight</label>
+      <select class="cursor-pointer" formControlName="valuesFontWeight">
+        <option class="text-capitalize" *ngFor="let font of FontWeight" [value]="font">
+          {{ font }}
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<lavi-language-translate-modal
+Title="{{ 'Ticket Control Text'}}"
+[OpenDialog]="Open"
+[TextFormArray]="TextFormArray$ | async"
+(CloseTranslateTextDialog)="CloseTranslateDialog()"
+(Save)="UpdateTranslatedTexts($event)"
+(TranslateText)="Translate($event)"></lavi-language-translate-modal>

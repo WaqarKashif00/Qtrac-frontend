@@ -1,0 +1,12 @@
+<div class='container banner-container' [ngStyle]='{borderColor:BannerColor,
+fontFamily:BannerFontFamily}'>
+  <div [translate]="translate" class="row banner-header" [ngStyle]='{backgroundColor:BannerColor,
+    fontSize:"0.7em"}'>
+    {{BannerHeader}}
+  </div>
+  <div class="row banner-body" [ngStyle]='{
+    fontSize:BannerBodyFontSize}'>
+    <ng-content></ng-content>
+
+  </div>
+</div>

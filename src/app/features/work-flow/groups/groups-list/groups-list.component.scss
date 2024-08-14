@@ -1,0 +1,29 @@
+@import "src/stylings/primitives/primitives.scss";
+.no-routing-specified {
+    color: $workflow-no-routing-color;
+    display: inline-block;
+    font-size: $font-size-small-1;
+    font-style: oblique;
+    line-height: 14px;
+  }
+
+  .k-grid, .k-grid th, .k-grid td, ::ng-deep .k-grid-header, ::ng-deep .k-grid-header-wrap {
+    border: none;
+}
+
+::ng-deep .k-grid tbody tr td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-color: transparent;
+}
+  .bg-black{
+    background-color: $color-background-black !important;
+  }
+
+  .group-color{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }

@@ -1,0 +1,50 @@
+<div class="schedule-appointment">
+  <p class="sub-heading">{{(headerText[SelectedLanguage?.selectedLanguage] || headerText[SelectedLanguage?.defaultLanguage])}}</p>
+  <ul class="appointment-list p-0">
+    <li
+      [ngStyle]="
+        appointmentDetails.firstAvailable
+          ? { backgroundColor: ActiveBackColor, color: ActiveTextColor  }
+          : { backgroundColor: InActiveBackColor, color: InActiveTextColor }
+      "
+      [ngClass]="{ 'deselected' : !appointmentDetails.firstAvailable}"
+      (click)="ShowFirstAvailable()"
+    >
+      {{AppointmentTexts.appointmentFirstAvailableButton}}
+    </li>
+    <li
+      [ngStyle]="
+        !appointmentDetails.selectDifferentDate
+          ? { backgroundColor: InActiveBackColor, color: InActiveTextColor }
+          : { backgroundColor: ActiveBackColor, color: ActiveTextColor }
+      "
+      [ngClass]="{ 'deselected' : !appointmentDetails.selectDifferentDate}"
+      (click)="ShowSelectDifferentDate()"
+    >
+      {{AppointmentTexts.appointmentSelectDifferentDateButton}}
+    </li>
+  </ul>
+  <lavi-first-available
+    [InActiveBackColor]="InActiveBackColor"
+    [InActiveTextColor]="InActiveTextColor"
+    [ActiveBackColor]="ActiveBackColor"
+    [ActiveTextColor]="ActiveTextColor"
+    [FirstAvailableSlots]="AvailableTimeSlots"
+    [NonWorkingDaysText]="AppointmentTexts.appointmentNonWorkingDays"
+    (OnChangingTimeSlot)="OnFirstAvailableTimeSlotChange($event)"
+    *ngIf="appointmentDetails.firstAvailable"
+  ></lavi-first-available>
+  <lavi-select-different-date
+    [InActiveBackColor]="InActiveBackColor"
+    [InActiveTextColor]="InActiveTextColor"
+    [ActiveBackColor]="ActiveBackColor"
+    [ActiveTextColor]="ActiveTextColor"
+    [MaxAppointmentBookAvailableDate]="appointmentDetails.maxAppointmentBookingDate"
+    [AvailableSlots]="SelectedDatesAvailableSlots"
+    [MinAvailableDate]="MinAvailableDate"
+    [AppointmentTexts]="AppointmentTexts"
+    (OnAppointmentDateChange)="OnAppointmentDateChange($event)"
+    (OnChangingTimeSlot)="OnTimeSlotChange($event)"
+    *ngIf="appointmentDetails.selectDifferentDate && MinAvailableDate"
+  ></lavi-select-different-date>
+</div>

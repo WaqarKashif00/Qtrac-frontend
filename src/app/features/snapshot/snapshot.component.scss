@@ -1,0 +1,92 @@
+@import "src/stylings/primitives/primitives.scss";
+
+.left-panel {
+  background: $_color-white;
+  border-right: solid 1px $_color-light-grey-1600;
+  width: 256px;
+}
+.right-panel {
+  width: calc(100vw - 262px);
+}
+.text-link {
+  color: $_color-light-grey-1700;
+  font-size: $_font-size-small-4;
+}
+.btn-group  {
+  font-size: $_font-size-small-4;
+}
+.btn-group .btn-primary {
+  background: $_color_blue-800;
+  border-radius: 4px !important;
+  border: none;
+  color: $_color-white;
+  height: 32px;
+  line-height: 20px;
+  width: 122px;
+}
+.btn-group .btn.disabled, .btn-group .btn:disabled {
+  opacity: .3;
+}
+.btn-group .btn:hover {
+  text-decoration: none;
+}
+input[type='checkbox'] {
+  height: 18px;
+  width: 18px;
+  border-radius: 4px;
+  border: solid 1px $_color-light-grey-1600;
+  background: $_color-white;
+}
+
+input[type='radio'] {
+  height: 21px;
+  width: 21px;
+  border-radius: 10.5px;
+  border: solid 1.5px $_color-light-grey-1600;
+  background: $_color-white;
+}
+
+input[type='checkbox']:checked {
+  color: $_color-white;
+  background: $_color_blue-800;
+}
+
+input[type='radio']:checked {
+  color: $_color-white;
+  background: transparent;
+  border: solid 1.5px $_color-light-grey-1600;
+}
+
+.k-checkbox::before {
+  top: 2px;
+  width: 16px;
+  max-width: 16px;
+  height: 16px;
+  font-size: $_font-size-small-3;
+}
+
+.k-radio::before {
+  width: 15px;
+  max-width: 15px;
+  border-radius: 7.5px;
+  height: 15px;
+  font-size: $_font-size-small-3;
+  background-color: $_color_blue-800;
+}
+.k-label {
+  color: $_color-dark-grey-1500;
+  font-size: $_font-size-small-4;
+  font-weight: 400;
+  line-height: 20px;
+  word-wrap: break-word;
+}
+h6 {
+  color: $_color-dark-grey-1500;
+  font-size: $_font-size-big-3;
+  padding: 12px 0 12px 10px;
+  margin: 0;
+  line-height: 24px;
+}
+.snap-list{
+  width:100%
+}

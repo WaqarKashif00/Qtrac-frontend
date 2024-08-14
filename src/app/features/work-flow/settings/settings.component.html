@@ -1,0 +1,223 @@
+  <lavi-form-content-panel>
+    <div class="col-lg-12 inner-panel-padding ">
+      <div class="mb-5">
+        <div class="row">
+          <div class="col-lg-9">
+            <div class="font-weight-500">Basic Workflow Rules</div>
+          </div>
+          <div class="col-lg-3 text-right">
+          </div>
+        </div>
+        <div class="pl-2 pt-1">
+          <lavi-form [FormGroup]="SettingForm" (OnSubmit)="Save()">
+            <div class="setting-data main-div">
+              <div class="col-12">
+                <div>
+                  <div class="col-12">
+                    <input
+                      type="checkbox"
+                      tabindex="1"
+                      id="clearTicketsEndOfTheDay"
+                      kendoCheckBox
+                      [formControl]="SettingForm.controls.clearTicketsEndOfTheDay"
+                    />
+                    <label class="cursor-pointer" for="clearTicketsEndOfTheDay"><span>Clear tickets at the end of the day</span></label>
+                  </div>
+                  <div class="col-12">
+                    <input
+                      type="checkbox"
+                      tabindex="2"
+                      id="allowTransferBetweenServices"
+                      kendoCheckBox
+                      [formControl]="SettingForm.controls.allowTransferBetweenServices"
+                    />
+                    <label class="cursor-pointer"  for="allowTransferBetweenServices"><span>Allow transfer between services</span></label>
+                  </div>
+                  <div class="col-12">
+                    <input
+                      type="checkbox"
+                      tabindex="3"
+                      id="allowTransferBetweenBranches"
+                      kendoCheckBox
+                      [formControl]="SettingForm.controls.allowTransferBetweenBranches"
+                    />
+                    <label class="cursor-pointer"  for="allowTransferBetweenBranches"><span>Allow transfer between locations</span></label>
+                  </div>
+                  <div class="col-12">
+                    <input
+                      type="checkbox"
+                      tabindex="3"
+                      id="moveVisitorToFront"
+                      kendoCheckBox
+                      [formControl]="SettingForm.controls.moveVisitorToFront"
+                    />
+                    <label class="cursor-pointer"  for="moveVisitorToFront"><span>Transferred tickets are automatically prioritized to the front of the Queue</span></label>
+                  </div>
+                  <div class="col-12">
+                    <input
+                      type="checkbox"
+                      tabindex="4"
+                      id="enablePreServiceQuestions"
+                      kendoCheckBox
+                      [formControl]="SettingForm.controls.enablePreServiceQuestions"
+                    />
+                    <label class="cursor-pointer"  for="enablePreServiceQuestions">
+                    <span
+                      >Enable general questions. Display questions</span>
+                  </label>
+                  <span class="d-inline pl-2">
+                      <kendo-dropdownlist
+                        tabindex="5"
+                        class="no-border"
+                        [data]="listItems"
+                        [formControl]="SettingForm.controls.displayPreServiceQuestions"
+                      >
+                      </kendo-dropdownlist>
+                      service.</span
+                    >
+                  </div>
+                  <div class="col-12">
+                    <input
+                      type="checkbox"
+                      tabindex="6"
+                      id="enableSingleNumberFormat"
+                      kendoCheckBox
+                      [formControl]="SettingForm.controls.enableSingleNumberFormat"
+                    />
+                    <label class="cursor-pointer mb-0"  >
+                    <span [formGroup]="SettingForm.controls.singleNumberFormat"
+                      >
+                      <label for="enableSingleNumberFormat">Single numbering rules.</label>
+                       Format : Prefix
+                        <kendo-textbox-container class="width-min">
+                          <input
+                            kendoTextBox
+                            maxlength="5"
+                            tabindex="7"
+                            formControlName="prefix"
+                            lavi-trim-value
+                          />
+
+                        </kendo-textbox-container >
+
+
+                      &nbsp;
+                      <label class="mr-2">{{ MiddlefixNumberFormat }}</label>
+
+                      Postfix
+                      <kendo-textbox-container class="width-min">
+                        <input
+                          kendoTextBox
+                          maxlength="5"
+                          tabindex="7"
+                          formControlName="postfix"
+                          lavi-trim-value
+                        />
+                        <lavi-validation-message-list
+                            [validation-form-group-name]="SettingForm.controls.singleNumberFormat"
+                            validation-control-name="postfix"
+                            [validation-errorlist]="WorkflowMessage.postfixMessage">
+                          </lavi-validation-message-list>
+                      </kendo-textbox-container>
+                    </span>
+                  </label>
+                  <div class="ml-32">
+                    <lavi-validation-message-list
+                            [validation-form-group-name]="SettingForm.controls.singleNumberFormat"
+                            validation-control-name="prefix"
+                            [validation-errorlist]="WorkflowMessage.prefixMessage">
+                    </lavi-validation-message-list>
+                  </div>
+                  </div>
+
+                  <div class="col-12">
+                    <input type="checkbox" tabindex="6" id="enableMobileInterfaceRequeue" kendoCheckBox
+                      [formControl]="SettingForm.controls.enableMobileInterfaceRequeue" />
+                    <label class="cursor-pointer" for="enableMobileInterfaceRequeue">
+                      <span>
+                        On visitor mobile interface, move visitor
+                        <input class="numericTextbox pl-0" maxlength="5" kendoTextBox lavi-app-numbers-only tabindex="11"
+                          [formControl]="SettingForm.get('personMovementSettings.mobilePositionOnRequeue')" />
+                          position(s) back after requeue.
+                      </span></label>
+                    <div class="error-message"
+                      *ngIf="SettingForm.get('personMovementSettings.mobilePositionOnRequeue').hasError('isZeroValueError')">
+                      Please enter only numbers greater than 0.
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <input
+                      type="checkbox"
+                      tabindex="8"
+                      kendoCheckBox
+                      id="isEnabledPersonMovementSettings"
+                      [formControl]="SettingForm.get('personMovementSettings.isEnabled')"
+                    />
+                    <span
+                      ><label class="cursor-pointer" for="isEnabledPersonMovementSettings">Re-queuing rule: After
+                        <input tabindex="9" maxlength="5" class="numericTextbox pl-0" kendoTextBox lavi-app-numbers-only
+                        [formControl]="SettingForm.get('personMovementSettings.numberOfCalls')" />
+                        call(s), move the visitor
+                      <input tabindex="10" maxlength="5" class="numericTextbox pl-0" kendoTextBox lavi-app-numbers-only
+                      [formControl]="SettingForm.get('personMovementSettings.numberOfPositionsBack')" />
+                      position(s) back </label>
+                      <div class="error-message" *ngIf="
+                                              SettingForm.get('personMovementSettings.numberOfCalls').hasError('isZeroValueError') ||
+                                              SettingForm.get('personMovementSettings.numberOfPositionsBack').hasError('isZeroValueError')">
+                       Please enter only numbers greater than 0.
+                    </div>
+                    </span>
+
+                    <br />
+                      <br />
+                  </div>
+
+                  <div class="col-12" *ngIf="SettingForm.get('personMovementSettings.isEnabled').value" >
+                    <input
+                      type="checkbox"
+                      tabindex="11"
+                      kendoCheckBox
+                      id="enableDeleteOnRequeue"
+                      [formControl]="SettingForm.controls.enableDeleteOnRequeue"
+                    />
+                    <span><label class="cursor-pointer" for="enableDeleteOnRequeue">Delete a visitor ticket after re-queuing
+                    <input tabindex="12" maxlength="5" class="numericTextbox pl-0" kendoTextBox lavi-app-numbers-only
+                          [formControl]="SettingForm.get('personMovementSettings.numberOfRequeueCalls')" />
+                    times
+                    </label>
+                      <div class="error-message" *ngIf="
+                                              SettingForm.controls.enableDeleteOnRequeue.hasError('isZeroValueError')">
+                       Please enter only numbers greater than 0.
+                    </div>
+                    </span>
+
+                    <br />
+                      <br />
+                  </div>
+                  <div class="col-12 col-lg-12 pt-0">
+                    <span class="col-lg-12 pl-4 ml-2">
+                      Ticket resetting rule: Starting Ticket No.
+                      <input class="numericTextbox pl-0" maxlength="5" kendoTextBox lavi-app-numbers-only tabindex="12"
+                      [formControl]="SettingForm.controls.ticketStart" />
+                      . Ending Ticket No.
+                      <input class="numericTextbox pl-0" maxlength="5" kendoTextBox lavi-app-numbers-only tabindex="13"
+                      [formControl]="SettingForm.controls.ticketEnd" />
+                      <div class="error-message" *ngIf="
+                                                  SettingForm.get('ticketStart').hasError('isZeroValueError') ||
+                                                  SettingForm.get('ticketEnd').hasError('isZeroValueError')
+                                                  ">
+                           Please enter only numbers greater than 0.
+                        </div>
+                    </span>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </lavi-form>
+        </div>
+      </div>
+    </div>
+  </lavi-form-content-panel>
+

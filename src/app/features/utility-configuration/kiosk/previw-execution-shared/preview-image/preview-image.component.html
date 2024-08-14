@@ -1,0 +1,12 @@
+<div
+  class="newControl newImage position-absolute"
+  *ngFor="let control of Images"
+  [style.transform]="
+  'translate(' + control.left + 'px, ' + control.top + 'px) scale(1)'
+"
+  [style.width.px]="control.width"
+  [style.height.px]="control.height"
+  [style.z-index]="control.zindex"
+>
+  <img [src]="GetUrl(control.src, SelectedLanguage)" />
+</div>

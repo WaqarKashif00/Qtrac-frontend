@@ -1,0 +1,124 @@
+<div class="content-list-container">
+  <!-- Save current state as new snapshot state -->
+  <div *ngIf="!IsLoadingPage">
+    <div class="pl-4">
+      <h6 >Save as new</h6>
+    </div>
+    <div class="content-list mr-4 ml-4 p-1">
+    
+      <div class="ml-2 mb-2">
+        <div class="col-3 p-0" [formGroup]="SnapShotForm">
+          <kendo-textbox-container class="pt-0">
+            <input kendoTextBox maxlength="30" tabindex="7" lavi-trim-value
+              [(ngModel)]="SelectedName" lavi-auto-focus [formControl]="SnapShotForm.controls.name" />
+          </kendo-textbox-container>
+          <lavi-validation-message-list [validation-form-group-name]="SnapShotForm" validation-control-name="name"
+            [validation-errorlist]="ValidationMessage.NameMessage">
+          </lavi-validation-message-list>
+        </div>
+      </div>
+      <div class="row p-2">
+        <div class="col col-md-6 col-lg-2">
+          <p class="heading">
+            Scope
+          </p>
+          <p class="values">
+            {{Scopes}}
+          </p>
+        </div>
+        <div class="col col-md-6 col-lg-2" >
+          <p class="heading">
+            Time Period
+          </p>
+          <p class="values">
+            {{TimePeriod}}
+          </p>
+        </div>
+        <div class="col col-md-6 col-lg-3">
+          <p class="heading">
+            Tags
+          </p>
+          <p class="values">
+            {{Tags}}
+          </p>
+        </div>
+        <div class="col col-md-6 col-lg-3" >
+          <p class="heading">
+            Location
+          </p>
+          <p class="values">
+            {{Locations}}
+          </p>
+        </div>
+        <div class="col col-md-6 col-lg-2">
+          <p class="heading">
+            data view
+          </p>
+          <p class="values">
+            {{DataView}}
+          </p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- Update current state into existing snapshot state -->
+  <div *ngIf="(SnapshotList$ | async) as dataItems">
+    <div class="mb-2 pl-4" *ngIf="!IsLoadingPage && dataItems[0]">
+      <h6>Overwrite existing</h6>
+    </div>
+    <div *ngFor="let item of (dataItems  | laviSortBy: 'name')">
+      <div class="content-list-hover cursor-pointer mr-4 ml-4 mt-2 p-1" (click)="SetSelection(dataItems,item)" [ngClass]="{'selected':item.isSelected}">
+        <div class="m-2">
+          <div class="col-3 p-0">
+              {{item.name}}
+          </div>
+        </div>
+        <div class="row p-2">
+          <div class="col col-md-6 col-lg-2">
+            <p class="heading">
+              Scope
+            </p>
+            <p class="values">
+              {{GetDataByType(item,typeConstants.scope)}}
+            </p>
+          </div>
+          <div class="col col-md-6 col-lg-2">
+            <p class="heading">
+              Time Period
+            </p>
+            <p class="values">
+              {{GetDataByType(item,typeConstants.timeperiod)}}
+            </p>
+          </div>
+          <div class="col col-md-6 col-lg-3">
+            <p class="heading">
+              Tags
+            </p>
+            <p class="values">
+              {{GetDataByType(item,typeConstants.tag)}}
+            </p>
+          </div>
+          <div class="col col-md-6 col-lg-3">
+            <p class="heading">
+              Location
+            </p>
+            <p class="values">
+              {{GetDataByType(item,typeConstants.location)}}
+            </p>
+          </div>
+          <div class="col col-md-6 col-lg-2">
+            <p class="heading">
+              data view
+            </p>
+            <p class="values">
+              {{GetDataByType(item,typeConstants.dataview)}}
+            </p>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>

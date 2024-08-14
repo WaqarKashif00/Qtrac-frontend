@@ -1,0 +1,21 @@
+<lavi-vertical-item
+  [SelectedLanguage]="SelectedLanguage$ | async"
+  [Panel]="Panel$ | async"
+  [CurrentPage]="CurrentPage$ | async"
+  (ResizeStop)="OnResizeStop($event)"
+  (MoveEnd)="OnMoveEnd($event)"
+  (ItemClick)="OnClick()"
+></lavi-vertical-item>
+
+<ng-container *ngIf="Buttons$ | async as buttons">
+  <div *ngFor="let button of buttons">
+    <lavi-button-control
+      *ngIf="button"
+      [Button]="button"
+      [SelectedLanguage]="SelectedLanguage$ | async"
+      (OnButtonResize)="OnButtonResizeStop($event, button.name)"
+      (OnButtonMove)="OnButtonMoveEnd($event, button.name)"
+      (OnButtonClick)="OnButtonClick()"
+    ></lavi-button-control>
+  </div>
+</ng-container>

@@ -1,0 +1,9 @@
+<div
+  class="error-text-color w-auto"
+  *ngIf="
+    CurrentForm.get(CurrentControl).hasError(ErrorType) &&
+     (CurrentForm.get(CurrentControl).dirty)
+  "
+>
+  <ng-content></ng-content>
+</div>

@@ -1,0 +1,146 @@
+<div class="filtes-container">
+  <div class="container p-0">
+    <div class="row mt-3" *ngIf="AgentGroups?.length > 0">
+      <div class="col-12">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 bold font-size-small-3" [translate]="currentLanguage == 'es'? false: true">{{visitorTagText}}</div>
+
+          </div>
+
+          <div class="search-container">
+            <kendo-textbox-container class="pt-1 mt-1" *ngIf="AgentGroups && AgentGroups[0]">
+              <input #filterBox kendoTextBox placeholder="    Search..."
+              [(ngModel)]="SearchData"
+              (keyup.enter)="SearchDataChanged($event.target.value)"  />
+              <button kendoButton look="clear" icon="search" class="position-absolute" ></button>
+              <span class="k-icon k-i-close k-i-x close-icon" (click)="SearchDataChanged('')"></span>
+            </kendo-textbox-container>
+          </div>
+          <div class="row">
+
+
+            <lavi-agent-group-item
+              class="col-12"
+              [IsSelected]="SelectedGroup == group.id"
+              (OnChecked)="Checked(group.id, $event)"
+              [Group]="group"
+              *ngFor="let group of AgentGroups | laviFilterList  : (SearchData) : 'groupName'"
+              [IsCheckBoxVisible]="false"
+            >
+            </lavi-agent-group-item>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12 text-center">
+              <button
+                class="btn btn-danger col-12 font-size-small-2 font-weight-bold"
+                (click)="RemoveGroups()"
+                *ngIf="SelectedGroup"
+                [translate]="currentLanguage == 'es'? false: true"
+              >
+               {{removeVisitorTagText}}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3 mb-3" *ngIf="IsAllowCreateGroup">
+      <hr />
+      <div class="col-12">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 bold font-size-small-3" [translate]="currentLanguage == 'es'? false: true">{{createVisitorTagText}}</div>
+          </div>
+          <div class="row">
+            <lavi-form [FormGroup]="AddGroupForm">
+              <div class="col-12">
+                <kendo-textbox-container [floatingLabel]="visitorTagNameText" [translate]="currentLanguage == 'es'? false: true">
+                  <input
+                    [formControl]="AddGroupForm.controls.groupName"
+                    class="font-size-small-2"
+                    kendoTextBox
+                    tabindex="1"
+                    maxlength="50"
+                    laviTrimValue
+                    translate="yes"
+                  />
+                </kendo-textbox-container>
+                <lavi-validation-message-list
+                  [validation-form-group-name]="AddGroupForm"
+                  validation-control-name="groupName"
+                  [validation-errorlist]="
+                    AgentGroupValidationMessages.GroupName
+                  "
+                ></lavi-validation-message-list>
+              </div>
+              <div class="col-12 mt-2">
+                <label class="font-size-small-2" [translate]="currentLanguage == 'es'? false: true">{{selectVisitorTagColorText}}</label>
+                <div class="container-fluid custom-color-picker">
+                  <div class="row">
+                    <div class="col-8 pl-0">
+                      <div
+                        *ngFor="let color of palette"
+                        class="group-circle-container"
+                      >
+                        <div
+                          (click)="OnChange(color)"
+                          class="circle pointer"
+                          [ngStyle]="{
+                            backgroundColor: color
+                          }"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 mt2">
+                <label class="font-size-small-2">OR</label>
+              </div>
+              <div class="col-12 mt-2">
+                <label class="font-size-small-2">Enter Hex Color Code</label>
+                <kendo-textbox-container [floatingLabel]="visitorTagColorText" [translate]="currentLanguage == 'es'? false: true">
+                  <input
+                    [formControl]="AddGroupForm.controls.groupColor"
+                    class="font-size-small-2"
+                    kendoTextBox
+                    tabindex="1"
+                    maxlength="10"
+                    translate="yes"
+                    laviTrimValue
+                  />
+                </kendo-textbox-container>
+                <lavi-validation-message-list
+                  [validation-form-group-name]="AddGroupForm"
+                  validation-control-name="groupColor"
+                  [validation-errorlist]="
+                    AgentGroupValidationMessages.GroupColor
+                  "
+                >
+                </lavi-validation-message-list>
+              </div>
+              <div class="col-12 mt-2">
+                <button
+                  class="
+                    btn
+                    primary-button
+                    font-size-small-2
+                    w-100
+                    font-weight-bold
+                    ml-0
+                  "
+                  (click)="CreateGroup()"
+                  [translate]="currentLanguage == 'es'? false: true"
+                >
+                  {{addVisitorTagText}}
+                </button>
+              </div>
+            </lavi-form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

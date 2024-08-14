@@ -1,0 +1,44 @@
+<div class="configuration bg-white" *ngIf="Configurations">
+  <div *ngFor="let config of Configurations?.granuleTypes">
+
+    <div class="config-section" *ngIf="config.type!=SnapshotTypeConstants.workflow">
+      <div class="row config-heading m-0">
+        <div class="col">
+          <p>{{config.name}}</p>
+        </div>
+        <div class="col" *ngIf="config?.granules && config?.granules[0]">
+          <span *ngIf="config.type==SnapshotTypeConstants.tag ||  config.type==SnapshotTypeConstants.location" class="float-right cursor-pointer" (click)="ClearData(config.type)">Clear</span>
+        </div>
+      </div>
+      <div class="row m-0" *ngIf="config?.granules && config?.granules[0]">
+        <div class="col-3 col-sm-6 col-md-3 config-content" *ngFor="let granule2 of config.granules|uniqueFilter:'id'">
+          <label class="k-label cursor-pointer">
+            <input class="k-radio" [(ngModel)]="TimerPeriodRadio.name" [checked]="TimerPeriodRadio.isSelected"
+                  (change)=RadioChecked(granule2,$event.target.checked,config.granules)
+                  *ngIf="config.type==SnapshotTypeConstants.timeperiod"
+                  type="radio" [name]="config.type" id="granule2.id" kendoRadioButton [value]="granule2.name"/>
+
+            <input class="k-radio" [(ngModel)]="DataViewRadio.name" [checked]="DataViewRadio.isSelected"
+                  (change)=RadioChecked(granule2,$event.target.checked,config.granules)
+                  *ngIf="config.type==SnapshotTypeConstants.dataview" type="radio" [name]="config.type" id="granule2.id"
+                  kendoRadioButton [value]="granule2.name" />
+
+            <input *ngIf="config.type==SnapshotTypeConstants.tag ||  config.type==SnapshotTypeConstants.location || config.type==SnapshotTypeConstants.scope"
+                    type="checkbox" [(ngModel)]="granule2.isSelected" tabindex="1" kendocheckbox
+                    (change)=CheckBoxChecked(granule2,$event.target.checked) class="k-checkbox ng-untouched ng-pristine ng-valid">
+                      {{granule2.type==SnapshotTypeConstants.company ? 'Company' : granule2.name}}
+          </label>
+        </div>
+      </div>
+      <div class="row m-0" *ngIf="!config?.granules || !config?.granules[0]">
+        <div class="col config-content">
+          <label class="k-label cursor-pointer">
+            No Records
+          </label>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </div>
+

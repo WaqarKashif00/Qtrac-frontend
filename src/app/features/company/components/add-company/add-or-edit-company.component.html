@@ -1,0 +1,129 @@
+<ng-container
+  *ngIf="{
+    dropdownData: CompanyConfigDropdownListData$ | async,
+    isAdd: IsAddMode$ | async
+  } as values"
+>
+  <lavi-auth-container
+    HeaderTitle="{{ 'Company' }}"
+    ExitURL="/manage/companies"
+  >
+    <div class="panel-container pb-5 company-config">
+      <lavi-form [FormGroup]="CompanyConfigForm" (OnSubmit)="Save()">
+        <lavi-form-panel
+          PanelHeader="Super Admin Company Configuration"
+          *ngIf="IsLaviUserType"
+        >
+          <lavi-form-content-panel>
+            <lavi-company-super-admin-configuration
+              [CompanySuperAdminConfigForm]="
+                CompanyConfigForm?.controls?.companySuperAdminInfo
+              "
+              (OnLinkAccount)="LinkAccount()"
+              [IsEditMode]="values?.isAdd"
+              [ShowRetentionYear]="ShowRetentionYears$ | async"
+              [IsMultiQueueError]="IsMultiQueueError$ | async"
+              [IsSMSAccountLinked]="IsSMSConfigAccountLinked$ | async"
+            >
+            </lavi-company-super-admin-configuration>
+          </lavi-form-content-panel>
+        </lavi-form-panel>
+        <lavi-form-panel
+          PanelHeader="General Configuration"
+          [PanelExpand]="true"
+        >
+          <lavi-form-content-panel>
+            <lavi-company-general-configuration
+              [CountryList]="values?.dropdownData?.countryList"
+              [CompanyGeneralConfigForm]="
+                CompanyConfigForm?.controls?.companyConfigurationInfo
+              "
+              [StateList]="StateList$ | async"
+              [CityList]="CityList$ | async"
+              [DefaultLangList]="DefaultList$ | async"
+              [SupportedLangList]="values?.dropdownData?.languageList"
+              [TagList]="TagList$ | async"
+              [TagSuggestionList]="values?.dropdownData?.tagList"
+              (BindState)="BindStateList($event)"
+              (ResetCityName)="ResetCity($event)"
+              (ResetZip)="ResetZipCode()"
+              (BindLanguageList)="BindLanguageList($event)"
+              (EnterTag)="AddTagOnEnter()"
+              (DiscardTag)="RemoveTag($event)"
+              (AddressChange)="AddressChange($event)"
+              (SetDefaultLanguage)="SetDefaultLanguage($event)"
+            >
+            </lavi-company-general-configuration>
+          </lavi-form-content-panel>
+        </lavi-form-panel>
+        <lavi-form-panel PanelHeader="Contact Person">
+          <lavi-form-content-panel>
+            <lavi-company-contact-person
+              [CompanyContactPersonForm]="
+                CompanyConfigForm?.controls?.companyContactPersonInfo
+              "
+            >
+            </lavi-company-contact-person>
+          </lavi-form-content-panel>
+        </lavi-form-panel>
+        <lavi-form-panel PanelHeader="Communication Configuration">
+          <lavi-form-content-panel>
+            <lavi-company-communication-configuration
+              (OnDelete)="DeleteNumber($event)"
+              (OnUpdate)="Update($event)"
+              (OnUpdateAll)="UpdateAll($event)"
+              (OnBindSMSConfigurations)="BindSMSConfigurations()"
+              [EncryptionList]="values?.dropdownData?.encryptionList"
+              [IsSMSAccountLinked]="IsAccountLinked()"
+              [AllTwilioActiveNumbers]="AllTwilioActiveNumbers$ | async"
+              [AllAssignedToBranchNumbers]="AllAssignedToBranchNumbers$ | async"
+              [AllUnAssignedNumbers]="AllUnAssignedNumbers$ | async"
+              [BranchList]="values?.dropdownData?.branchList"
+              [CompanyCommunicationConfigForm]="
+                CompanyConfigForm?.controls?.companyCommunicationInfo
+              "
+              [HideEmailConfigIfLaviSettingsEnable]="
+                CompanyConfigForm?.controls?.companySuperAdminInfo?.controls
+                  ?.useLaviSMTPSettings.value
+              "
+              [IsValidSMTPSettings]="IsValidSMTPSettings$ | async"
+            >
+            </lavi-company-communication-configuration>
+          </lavi-form-content-panel>
+        </lavi-form-panel>
+        <lavi-form-panel PanelHeader="Advanced Settings">
+          <lavi-form-content-panel>
+            <lavi-company-advance-configuration
+              [CompanyAdvanceConfigForm]="
+                CompanyConfigForm?.controls?.companyAdvanceSettingInfo
+              "
+              [TimeIntervalList]="values?.dropdownData?.timeIntervalList"
+              [LoginModeList]="values?.dropdownData?.loginModeList"
+            >
+            </lavi-company-advance-configuration>
+          </lavi-form-content-panel>
+        </lavi-form-panel>
+        <div>
+          <lavi-transparent-footer>
+            <div class="col-lg-12 col-sm-12 col-12 pt-2 pr-5">
+              <div class="row">
+                <div class="col-lg-4 col-4"></div>
+                <div class="col-lg-8 col-8">
+                  <div class="float-right mr-5">
+                    <button
+                      type="submit"
+                      kendoButton
+                      class="primary-button mr-4"
+                    >
+                      {{ !values?.isAdd ? "Update" : "Save" }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </lavi-transparent-footer>
+        </div>
+      </lavi-form>
+    </div>
+  </lavi-auth-container>
+</ng-container>

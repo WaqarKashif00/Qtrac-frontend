@@ -1,0 +1,68 @@
+<div [formGroup]="LiteConfigForm">
+  <div class="p-4 panel-border">
+    <div class="col-lg-12">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="col-lg-12 form-group">
+            <label class="k-label cursor-pointer font-weight-bold">
+              <input
+                type="checkbox"
+                [formControl]="LiteConfigForm.controls.allowMultipleCalls"
+                kendoCheckBox
+              />
+              Allow multiple calls
+            </label>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label class="k-label cursor-pointer font-weight-bold">
+              <input
+                type="checkbox"
+                [formControl]="LiteConfigForm.controls.displayKiosk"
+                kendoCheckBox
+              />
+              Display Kiosk
+            </label>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label class="k-label cursor-pointer font-weight-bold">
+              <input
+                type="checkbox"
+                [formControl]="LiteConfigForm.controls.displayTodaysTickets"
+                kendoCheckBox
+              />
+              Display Today's Tickets
+            </label>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group">
+            <kendo-textbox-container
+              class="w-100"
+              floatingLabel="Time Format"
+            >
+              <kendo-dropdownlist
+                [defaultItem]="DefaultValues.TimeFormatDefaultValue"
+                tabindex="26"
+                [formControl]="LiteConfigForm.controls.timeFormat"
+                [data]="TimeFormat | laviSortBy:'text'"
+                [textField]="'text'"
+                [valueField]="'value'"
+              >
+              </kendo-dropdownlist>
+            </kendo-textbox-container>
+            <div class="h-10">
+              <lavi-validation-message-list
+                [validation-form-group-name]="LiteConfigForm"
+                validation-control-name="timeFormat"
+                [validation-errorlist]="
+                  ValidationMessages.TimeFormatMessages
+                "
+              >
+              </lavi-validation-message-list>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,107 @@
+<div [formGroup]="Control.form">
+  <div>
+    <label>Name</label
+    ><input
+      type="text"
+      placeholder="Label Name"
+      formControlName="name"
+      [value]="Control.name"
+      maxlength="50"
+    /><span class="edit-icon"></span>
+  </div>
+  <div>
+    <label>Text</label>
+    <div class="float-right">
+      <span (click)="OpenTranslateDialog()" class="text-blue cursor-pointer">
+        Edit text</span
+      >
+    </div>
+  </div>
+  <div>
+    <label>Top</label
+    ><input
+      type="text"
+      formControlName="top"
+      placeholder="Top"
+      maxlength="3"
+      [value]="Control.styles.top"
+      lavi-app-numbers-only
+    />
+    <span>px</span>
+  </div>
+  <div>
+    <label>Left</label
+    ><input
+      type="text"
+      formControlName="left"
+      placeholder="Left"
+      maxlength="3"
+      [value]="Control.styles.left"
+      lavi-app-numbers-only
+    />
+    <span>px</span>
+  </div>
+  <div>
+    <label>Width</label
+    ><input
+      type="text"
+      formControlName="width"
+      placeholder="Width"
+      maxlength="3"
+      [value]="Control.styles.width"
+      lavi-app-numbers-only
+    />
+    <span>px</span>
+  </div>
+  <div>
+    <label>Height</label
+    ><input
+      type="text"
+      formControlName="height"
+      placeholder="Height"
+      maxlength="3"
+      [value]="Control.styles.height"
+      lavi-app-numbers-only
+    />
+    <span>px</span>
+  </div>
+  <div>
+    <label>Alignment</label>
+    <select class="cursor-pointer text-capitalize" formControlName="alignment">
+      <option class="text-capitalize" *ngFor="let align of Alignments" [value]="align">
+        {{ align }}
+      </option>
+    </select>
+  </div>
+  <lavi-font [FormGroup]="Control.form"></lavi-font>
+  <div>
+    <label>Background color</label>
+    <kendo-colorpicker
+      formControlName="backgroundColor"
+      class="cursor-pointer"
+      [value]="Control.styles.backgroundColor"
+    >
+    </kendo-colorpicker>
+  </div>
+  <div>
+    <label>Move control</label>
+    <div class="front-back-control" >
+      <span class="k-i-forward-element k-icon move-to-front" title="Move to front" (click)="IncreaseZIndex()">
+      </span>
+      <span class="k-i-backward-element k-icon move-to-back" title="Move to back" (click)="DecreaseZIndex()">
+      </span>
+    </div>
+  </div>
+</div>
+
+
+<lavi-language-translate-modal
+  Title="{{ Control.name + ' Text' }}"
+  [OpenDialog]="OpenDialog$ | async"
+  [TextFormArray]="TextFormArray$ | async"
+  [MaxLength]="400"
+  [ConditionsName]="DynamicVariables$ | async"
+  (CloseTranslateTextDialog)="CloseTranslateDialog()"
+  (TranslateText)="Translate($event)"
+  (Save)="UpdateTranslatedTextsInForm($event)"
+></lavi-language-translate-modal>

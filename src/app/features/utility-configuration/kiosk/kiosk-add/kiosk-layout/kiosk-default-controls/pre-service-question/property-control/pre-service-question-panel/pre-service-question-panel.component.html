@@ -1,0 +1,106 @@
+<div class="">
+  <div [formGroup]="Panel.form">
+    <lavi-form-panel
+      PanelHeader="General Question Properties"
+      [(PanelExpand)]="IsPanelExpand"
+    >
+      <lavi-form-content-panel>
+        <div class="property-window-body">
+          <div>
+            <label>Top </label
+            ><input
+              type="text"
+              formControlName="top"
+              [value]="Panel.styles.top"
+              lavi-app-numbers-only
+              maxlength="5"
+              placeholder="Top"
+            /><span>px</span>
+          </div>
+          <div>
+            <label>Left </label
+            ><input
+              type="text"
+              formControlName="left"
+              [value]="Panel.styles.left"
+              maxlength="5"
+              lavi-app-numbers-only
+              placeholder="Left"
+            /><span>px</span>
+          </div>
+          <div>
+            <label>Width </label
+            ><input
+              type="text"
+              formControlName="width"
+              [value]="Panel.styles.width"
+              maxlength="5"
+              lavi-app-numbers-only
+              placeholder="Width"
+            />
+            <span>px</span>
+          </div>
+          <div>
+            <label>Height </label
+            ><input
+              type="text"
+              formControlName="height"
+              maxlength="5"
+              [value]="Panel.styles.height"
+              lavi-app-numbers-only
+              placeholder="Height"
+            /><span>px</span>
+          </div>
+          <div>
+            <label>Background color</label>
+            <kendo-colorpicker
+              formControlName="backgroundColor"
+              [value]="Panel.styles.backgroundColor"
+              (valueChange)="ChangeColorPicker()"
+            >
+            </kendo-colorpicker>
+          </div>
+          <div>
+            <label>Text color</label>
+            <kendo-colorpicker
+              formControlName="color"
+              [value]="Panel.styles.color"
+              (valueChange)="ChangeColorPicker()">
+            </kendo-colorpicker>
+          </div>
+          <lavi-font [FormGroup]="Panel.form"></lavi-font>
+          <div>
+            <label>Vertical Padding </label
+            ><input
+              type="text"
+              maxlength="5"
+              formControlName="verticalPadding"
+              placeholder="Vertical Padding"
+              lavi-app-numbers-only
+              [value]="Panel.verticalPadding"
+            /><span>px</span>
+          </div>
+          <div>
+            <label>Horizontal Padding </label
+            ><input
+              type="text"
+              formControlName="horizontalPadding"
+              placeholder="Horizontal Padding"
+              lavi-app-numbers-only
+              maxlength="5"
+              [value]="Panel.horizontalPadding"
+            />
+            <span>px</span>
+          </div>
+          <div>
+            <label>Style</label>
+            <select (change)="OnChangeMode($event)" formControlName="mode">
+              <option value="1">Vertical Buttons</option>
+              <option value="2">Single Question</option>
+            </select>
+          </div>
+        </div>
+      </lavi-form-content-panel>
+    </lavi-form-panel>
+  </div>
+</div>

@@ -1,0 +1,102 @@
+<div [formGroup]="Panel.form">
+  <div>
+    <div>
+      <label>Top</label
+      ><input
+        type="text"
+        formControlName="top"
+        [value]="Panel.styles.top"
+        placeholder="Top"
+        lavi-app-numbers-only
+        maxlength="3"
+      />
+      <span>px</span>
+    </div>
+    <div>
+      <label>Left</label
+      ><input
+        type="text"
+        formControlName="left"
+        [value]="Panel.styles.left"
+        placeholder="Left"
+        lavi-app-numbers-only
+        maxlength="3"
+      />
+      <span>px</span>
+    </div>
+    <div>
+      <label>Width</label
+      ><input
+        type="text"
+        formControlName="width"
+        [value]="Panel.styles.width"
+        placeholder="Width"
+        lavi-app-numbers-only
+        maxlength="3"
+      />
+      <span>px</span>
+    </div>
+    <div>
+      <label>Height</label
+      ><input
+        type="text"
+        formControlName="height"
+        [value]="Panel.styles.height"
+        placeholder="Height"
+        lavi-app-numbers-only
+        maxlength="3"
+      />
+      <span>px</span>
+    </div>
+    <div>
+      <label>Background color</label>
+      <kendo-colorpicker
+        formControlName="backgroundColor"
+        [value]="Panel.styles.backgroundColor"
+        (valueChange)="ChangeColorPicker()"
+      >
+      </kendo-colorpicker>
+    </div>
+    <div>
+      <label>Text color</label>
+      <kendo-colorpicker
+        formControlName="color"
+        [value]="Panel.styles.color"
+        (valueChange)="ChangeColorPicker()"
+      >
+      </kendo-colorpicker>
+    </div>
+    <lavi-font [FormGroup]="Panel.form"></lavi-font>
+    <div>
+      <label>Vertical Padding</label
+      ><input
+        type="text"
+        formControlName="verticalPadding"
+        placeholder="Vertical Padding"
+        [value]="Panel.verticalPadding"
+        lavi-app-numbers-only
+        maxlength="5"
+      />
+      <span>px</span>
+    </div>
+    <div>
+      <label>Horizontal Padding</label
+      ><input
+        type="text"
+        formControlName="horizontalPadding"
+        placeholder="Horizontal Padding"
+        [value]="Panel.horizontalPadding"
+        lavi-app-numbers-only
+        maxlength="5"
+      />
+      <span>px</span>
+    </div>
+    <div>
+      <label>Mode</label>
+      <select (change)="ChangeMode($event)" formControlName="mode">
+        <option value="1">Vertical Buttons</option>
+        <option value="2">Single Question</option>
+      </select>
+    </div>
+  </div>
+</div>

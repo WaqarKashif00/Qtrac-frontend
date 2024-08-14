@@ -1,0 +1,38 @@
+@import "src/stylings/primitives/primitives.scss";
+.submit-button{
+  background-color: $button-yellow-background-color;
+  border-radius: 8px;
+  color:$agent-button-text;
+  font-weight: $font-weight-600;
+  text-transform: uppercase;
+  margin-right: 0;
+  cursor: pointer;
+}
+
+::ng-deep .k-textbox-container.k-state-focused > .k-label {
+  color: #828282 !important;
+}
+
+ .branchDropDown {
+  .k-textbox-container {
+    position: relative;
+  
+    .k-label {
+      position: absolute;
+      top: 0.6em;
+      left: 1em;
+      transition: top 0.3s, font-size 0.3s, color 0.3s;
+      font-size: 0.9em;
+      color: #999;
+    }
+  
+    .k-input {
+      &:focus + .k-label,
+      &[value]:not([value=""]) + .k-label {
+        top: -1.6em;
+        font-size: 0.7em;
+        color: #333;
+      }
+    }
+  }
+} 

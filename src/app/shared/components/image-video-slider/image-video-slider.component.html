@@ -1,0 +1,54 @@
+<div
+  class="SliderContainerDiv "
+  [style.width.px]="Width"
+  [style.height.px]="Height"
+>
+  <div
+    class="SliderContentDiv"
+    [style.left.px]="left"
+  >
+    <ng-container *ngFor="let Img of Items">
+      <img
+        *ngIf="Img?.type == 'image'"
+        [src]="Img?.url"
+        class="SliderImage"
+        [style.width.px]="Width"
+        [style.max-width.%]="100"
+        [style.height.px]="Height"
+      />
+      <video
+        muted="false"
+        oncontextmenu="return false;"
+        (pause)="OnVideoPause()"
+        (playing)="OnVideoPlaying()"
+        #videoplayer
+        *ngIf="Img?(Img.type == 'video'):false"
+        [controls]="IsVideoControlEnabled"
+        class="SliderImage"
+        [src]="Img?.url"
+        [style.width.px]="Width"
+        [style.max-width.%]="100"
+        [style.height.px]="Height"
+      ></video>
+    </ng-container>
+  </div>
+</div>
+<div
+  *ngIf="ManualSliderNeeded"
+  class="icon-container"
+  [style.width.px]="Width"
+  [style.height.px]="Height"
+>
+  <input
+    type="button"
+    class="previous-icon"
+    [disabled]="IsCurrentlyAnyVideoPlaying"
+    (click)="ManuallyScrollFromRightToLeft()"
+  />
+  <input
+    type="button"
+    class="next-icon"
+    [disabled]="IsCurrentlyAnyVideoPlaying"
+    (click)="ManuallyScrollFromLeftToRight()"
+  />
+</div>

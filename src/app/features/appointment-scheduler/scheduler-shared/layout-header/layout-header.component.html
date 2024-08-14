@@ -1,0 +1,16 @@
+<div
+  [style.color]="Color"
+  [style.background-color]="BackgroundColor"
+  class="row layout-header"
+>
+  <div class="col-lg-4 col-sm-12 logo-icon"><img *ngIf="LogoURL && LogoURL!='undefined'" class="h-75 mt-2 logo-icon-img" [src]="LogoURL" /></div>
+  <div class="col-lg-8 col-sm-12 appointment-nav pl-0">
+    <div class="float-right mt-3">
+    <kendo-dropdownlist *ngIf="comingFrom !== 'Designer'" class="no-border mt-1 languageSwitcher" tabindex="1"
+    [defaultItem]="SelectedLanguage$ | async" [data]="LanguageList"
+    [textField]="'language'"
+    [valueField]="'languageCode'"  (selectionChange)="updateLanguage($event)">
+  </kendo-dropdownlist>
+    </div>
+  </div>
+</div>

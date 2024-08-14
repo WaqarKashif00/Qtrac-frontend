@@ -1,0 +1,148 @@
+<lavi-form-panel
+  PanelHeader="{{ HeaderText }} Properties"
+  [(PanelExpand)]="IsControlSelected"
+>
+  <lavi-form-content-panel>
+    <div class="property-window">
+      <div class="property-window-body">
+        <div *ngIf="Items">
+          <label>Question Sets</label>
+          <select (change)="OnItemsDropDownChange($event.target.value)">
+            <option *ngFor="let item of Items" [value]="item.itemSetId">
+              {{ item.itemSetName }}
+            </option>
+          </select>
+        </div>
+        <div [formGroup]="Panel.form">
+          <div *ngIf="CurrentPage && CurrentPage.IsServicePage">
+            <label>Show Service Icon</label>
+            <span class="float-right mr-3 mt-1">
+              <input
+                type="checkbox"
+                kendoCheckBox
+                formControlName="showServiceIcons"
+              />
+            </span>
+          </div>
+          <div class="mr-15">
+            <label>Top </label
+            ><input
+              type="text"
+              formControlName="top"
+              [value]="Panel.styles.top"
+              lavi-app-numbers-only
+              maxlength="3"
+              placeholder="Top"
+            />
+            <span>px</span>
+          </div>
+          <div class="mr-15" *ngIf="Panel.styles.height != -1">
+            <label>Height </label
+            ><input
+              type="text"
+              formControlName="height"
+              maxlength="3"
+              [value]="Panel.styles.height"
+              lavi-app-numbers-only
+              placeholder="Height"
+            />
+            <span>px</span>
+          </div>
+          <div
+            *ngIf="
+              CurrentPage &&
+              (CurrentPage.IsLanguagePage ||
+                (CurrentPage.IsServicePage && !Panel.showServiceIcons) ||
+                CurrentPage.IsTicketPage)
+            "
+          >
+            <label>Background color</label>
+            <kendo-colorpicker
+              formControlName="backgroundColor"
+              class="cursor-pointer"
+              [value]="Panel.styles.backgroundColor"
+            >
+            </kendo-colorpicker>
+          </div>
+          <ng-container
+            *ngIf="
+              CurrentPage &&
+              ( !CurrentPage.IsServicePage || !Panel.showServiceIcons)
+            "
+          >
+            <div *ngIf="CurrentPage && !CurrentPage.IsTicketPage">
+              <label>Color</label>
+              <kendo-colorpicker
+                formControlName="color"
+                class="cursor-pointer"
+                [value]="Panel.styles.color"
+              >
+              </kendo-colorpicker>
+            </div>
+            <lavi-mobile-font *ngIf="!CurrentPage.IsTicketPage || !IsTicketControl"
+              [ShowFontSize]="!CurrentPage.IsTicketPage || !IsTicketControl"
+              [FormGroup]="Panel.form"
+            ></lavi-mobile-font>
+          </ng-container>
+          <div>
+            <label>Vertical Padding </label
+            ><input
+              type="text"
+              maxlength="3"
+              formControlName="verticalPadding"
+              placeholder="Vertical Padding"
+              lavi-app-numbers-only
+              [value]="Panel.verticalPadding"
+            />
+            <span>px</span>
+          </div>
+          <div>
+            <label>Horizontal Padding </label
+            ><input
+              type="text"
+              formControlName="horizontalPadding"
+              placeholder="Horizontal Padding"
+              lavi-app-numbers-only
+              maxlength="3"
+              [value]="Panel.horizontalPadding"
+            />
+            <span>px</span>
+          </div>
+          <div>
+            <label>Box Round Corners:</label
+            ><input
+              type="text"
+              formControlName="boxRoundCorners"
+              [value]="Panel.styles.boxRoundCorners"
+              placeholder="Box Round Corners"
+              lavi-app-numbers-only
+              maxlength="3"
+            />
+            <span>px</span>
+          </div>
+        </div>
+        <div *ngIf="CurrentPage && CurrentPage.IsServicePage">
+          <label>Visible Services</label>
+          <div class="row">
+            <ng-container *ngFor="let item of Panel.items; index as i">
+              <div class="visible-elements" *ngIf="item.visible">
+                <div *ngIf="item.text[SelectedLanguage.selectedLanguage]">
+                  <input
+                    type="checkbox"
+                    kendoCheckBox
+                    [checked]="item.isSelected"
+                    [(ngModel)]="item.isSelected"
+                    id="{{ 'Service' + i }}"
+                  />
+                  <label for="{{ 'Service' + i }}">{{
+                    item.text[SelectedLanguage.selectedLanguage]
+                  }}</label>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </lavi-form-content-panel>
+</lavi-form-panel>

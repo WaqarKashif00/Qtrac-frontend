@@ -1,0 +1,123 @@
+<lavi-list-screen-header
+Title="All Companies"
+(OnAddNewButtonClick)="RedirectToAddCompany()"
+[PageName]="roleActions.CompanyConfiguration"
+[ActionName]="actionType.AddEdit"
+[ButtonValue]="'Add New Company'"
+></lavi-list-screen-header>
+
+
+    <div>
+      <lavi-filter-with-tags
+        searchTextTitle="Search Companies"
+        [(filter)]="searchModel"
+        >
+      </lavi-filter-with-tags>
+    </div>
+
+    <div class="row mt-5 mr-2 ml-2 standardlist-grid company-grid">
+      <kendo-grid
+        [kendoGridBinding]="CompanyList$ | async  |laviFilterListWithTags:searchModel:'tags':'companyName'"
+        [pageSize]="100"
+        [sortable]="true"
+        [reorderable]="true"
+        [resizable]="true"
+        [selectable]="{ enabled: true, mode: 'multiple' }"
+
+        [(expandedDetailKeys)]='expansionManager.expandedIds'
+        [kendoGridExpandDetailsBy]='expansionManager.expandDetailsBy'
+        [rowClass]="listStyleManager.rowStyleCallBack"
+      >
+        <kendo-grid-column
+          field="companyName"
+          title="Company Name"
+          [headerClass]="listStyleManager.headerClass"
+          [style]="listStyleManager.columnStyle"
+         ></kendo-grid-column>
+        <kendo-grid-column
+          title="Contact Name"
+          [headerClass]="listStyleManager.headerClass"
+          [style]="listStyleManager.columnStyle"
+            >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <span>{{
+              dataItem.contactPerson.firstName ||
+              dataItem.contactPerson.lastName
+                ? (dataItem.contactPerson.firstName
+                    ? dataItem.contactPerson.firstName
+                    : "") +
+                  " " +
+                  (dataItem.contactPerson.lastName
+                    ? dataItem.contactPerson.lastName
+                    : "")
+                : "-"
+            }}</span>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="contactPerson.emailAddress"
+          title="Email"
+          [headerClass]="listStyleManager.headerClass"
+          [style]="listStyleManager.columnStyle"
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <span>{{
+              dataItem.contactPerson.emailAddress
+                ? dataItem.contactPerson.emailAddress
+                : "-"
+            }}</span>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="phoneNumber"
+          title="Phone Number"
+          [headerClass]="listStyleManager.headerClass"
+          [style]="listStyleManager.columnStyle"
+        ></kendo-grid-column>
+        <kendo-grid-column
+        field="companyId"
+        title=""
+        [headerClass]="listStyleManager.headerClass"
+        [style]="listStyleManager.columnStyle"
+        width="150"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <lavi-list-menu
+            [dataItem]="dataItem"
+            [menuItems]="menuItems"
+            [menuItemValidator]="showMenuItem"
+            (showMenuItem)="onItemMenuSelect($event)"
+            >
+          </lavi-list-menu>
+        </ng-template>
+      </kendo-grid-column>
+
+        <kendo-grid-column
+        title=''
+        [headerClass]="listStyleManager.headerClass"
+        [width]="listStyleManager.expanderColumnSize"
+        [style]="listStyleManager.columnStyle"
+        field='id'
+      >
+        <ng-template kendoGridCellTemplate let-column>
+          <lavi-list-detail-expander
+            [expansionManager]="expansionManager"
+            [columnId]="column.id"
+          >
+          </lavi-list-detail-expander>
+        </ng-template>
+      </kendo-grid-column>
+
+      <ng-template kendoGridDetailTemplate let-dataItem>
+        TODO: Number of Locations and Number of Users
+        <div>
+          <lavi-tag-display
+            [tags]='dataItem.tags'
+          >
+          </lavi-tag-display>
+        </div>
+      </ng-template>
+
+
+      </kendo-grid>
+    </div>

@@ -1,0 +1,31 @@
+@import "../primitives/primitives.scss";
+
+$_small-button-rounded-border-radius: 20px;
+$_small-button-width: 105px;
+$_small-button-height: 21px;
+
+$tag-border-radius: $_small-button-rounded-border-radius;
+$tag-height: $_small-button-height;
+$tag-width: $_small-button-width;
+$tag-text-font-size: $_font-size-smallest;
+$tag-text-color: $color-global-text;
+
+.tag-button-selected {
+  background-color: $color-background-yellow;
+  color: $tag-text-color;
+  border-radius: $tag-border-radius;
+  height: $tag-height;
+  min-width: $tag-width;
+  text-align: center;
+  font-size: $tag-text-font-size;
+}
+
+.tag-button-unselected {
+  background-color: $color-form-secondary-button-background;
+  color: $tag-text-color;
+  border-radius: $tag-border-radius;
+  height: $tag-height;
+  min-width: $tag-width;
+  text-align: center;
+  font-size: $tag-text-font-size;
+}

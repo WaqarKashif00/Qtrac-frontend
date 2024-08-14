@@ -1,0 +1,82 @@
+@import "src/stylings/primitives/primitives.scss";
+.button-container {
+  padding-bottom: 50px;
+}
+.appointment-buttons {
+  float: right;
+}
+.description {
+  font-size: $font-size-small-4;
+  vertical-align: top;
+  margin-top: 7px;
+  display: inline-block;
+  line-height: 1;
+}
+.appointment-notification {
+  font-size: 20px;
+}
+.delete-position{
+margin-right:-20px
+}
+/* Portrait and Landscape */
+@media only screen and (min-device-width: 320px) and (max-device-width: 667px)
+and (-webkit-min-device-pixel-ratio: 2) {
+  .appointment-buttons {
+    float: left;
+  }
+  .appointment-close-btn {
+    bottom: -160px;
+    position: relative;
+  }
+  .stepper-desc .layout-content .content-area,
+  .stepper-desc .layout-content .button-container {
+    width: 94%;
+  }
+  .content-area.stepper-container, .button-container {
+    width: 100% !important;
+  }
+  .k-stepper .k-step-label .k-step-text {
+    font-size: $font-size-small-1;
+  }
+  .stepper-desc {
+    padding: 20px;
+  }
+  .verify-code-buttons {
+    .primary-button {
+      padding: 9px;
+      margin-top: 10px;
+    }
+  }
+}
+.i-check-circle {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border-radius: 50%;
+  padding-left: 4px;
+  padding-top: 0;
+  margin-top: 4px;
+}
+
+.preview-icon {
+  // color: $StepperActiveBackColor;
+  font-size: $font-size-small-3;
+  float: left;
+  padding-right: 21px;
+  padding-top: 4px;
+}
+
+.k-step-link .k-icon {
+  font-size: $font-size-small-5;
+  // color: $StepperActiveTextColor;
+}
+
+.lavi-secondary-button {
+  background: $scheduler-background;
+  color: $scheduler-default-font-color;
+  border-radius: 5px;
+  border: solid thin $color-border-form-element-active;
+  height: 42px;
+  width: 138px;
+}

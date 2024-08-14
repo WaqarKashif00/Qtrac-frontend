@@ -1,0 +1,157 @@
+<div class="float-right top-navigation d-inline-block"  [lavi-help-button-visibility]="ShowHelpBtn"  [ngStyle]="{ 'margin-right': (!ShowHelpBtn ? '-100px' :'0')}">
+  <ng-container *ngIf="IsLaviUser">
+    <ng-container *ngIf="Companies$ | async as companies">
+      <kendo-dropdownlist
+        [class]="'custom-header-company-dropdown'"
+        *ngIf="companies && companies.length > 0"
+        [formControl]="CompanyDropdownFormControl"
+        [data]="companies | laviSortBy: 'companyName'"
+        [textField]="'companyName'"
+        [valueField]="'companyId'"
+        (valueChange)="OnCompanyChange($event)"
+        [popupSettings]="{ popupClass: 'custom-dropdownlist' }"
+      >
+      </kendo-dropdownlist>
+    </ng-container>
+  </ng-container>
+  <span class="notification-icon"></span>
+  <div
+    class="position-relative d-inline-block"
+    (lavi-click-outside)="IsMenuVisible = false"
+  >
+    <ng-container *ngIf="UserDetails$ | async as userdetails">
+      <img
+        *ngIf="userdetails.image"
+        [src]="userdetails.image"
+        class="rounded-circle head-user-icon cursor-pointer"
+        alt="avatar image"
+        height="30"
+        width="30"
+        (click)="MakeMenuVisible()"
+      />
+      <span
+        *ngIf="!userdetails.image"
+        class="head-username head-username-initial cursor-pointer"
+        (click)="MakeMenuVisible()"
+        >{{ userdetails.firstName | initials
+        }}{{ userdetails.lastName | initials }}</span
+      >
+      <div class="user-menu position-absolute" *ngIf="IsMenuVisible">
+        <ul class="user-details">
+          <li>
+            <img
+              *ngIf="userdetails.image"
+              [src]="userdetails.image"
+              class="rounded-circle"
+              alt="avatar image"
+              height="30"
+              width="30"
+            />
+            <span *ngIf="!userdetails.image" class="head-username-initial"
+              >{{ userdetails.firstName | initials
+              }}{{ userdetails.lastName | initials }}</span
+            >
+          </li>
+          <li class="font-weight-bold mt-2">
+            {{ userdetails.firstName }} {{ userdetails.lastName }}
+          </li>
+          <li class="email-text">{{ userdetails.email }}</li>
+          <li class="user-role-text mt-1">{{ userdetails.roleName }}</li>
+        </ul>
+        <ul class="user-menu-profile">
+          <ng-container *ngIf="IsAgentRoute$ | async">
+          <li  (click)="ChangeBranchDeskTemplate()"  class="cursor-pointer" [translate]="currentLanguage  == 'es'? false: true" >
+            <span class="location-icon"></span>{{changeLocationText}}
+          </li>
+          <li  (click)="ToggleSmallQueue()" class="cursor-pointer" *ngIf="!IsSmallQueue" [translate]="currentLanguage  == 'es'? false: true">
+            <span class="setting-icon"></span>{{viewSmallQueueText}}
+          </li>
+          <li  (click)="ToggleSmallQueue()" class="cursor-pointer" *ngIf="IsSmallQueue">
+            <span class="setting-icon"></span>View Large Queue
+          </li>
+        </ng-container>
+
+          <li
+            (click)="FeatureIsComingSoonNotification()"
+            class="cursor-pointer"
+            [translate]="currentLanguage  == 'es'? false: true"
+          >
+            <span class="profile-icon"></span> {{profileSettingText}}
+          </li>
+          <li (click)="ChangePassword()" class="cursor-pointer" *ngIf="!isTailoredBrandUser"
+             [translate]="currentLanguage  == 'es'? false: true">
+            <span class="change-password-icon"></span> {{changePasswordText}}
+          </li>
+          <li (click)="Logout()" class="cursor-pointer"
+              [translate]="currentLanguage  == 'es'? false: true">
+            <span class="logout-icon"></span> {{signOutText}}
+          </li>
+          <ng-container *ngIf="isMonitorDiagnostics">
+            <li   (click)="openConnectionMonitor()" class="cursor-pointer">
+              <span class="setting-icon"></span> Open Connection Monitor</li>
+          </ng-container>
+          <li
+          (click)="FeatureIsComingSoonNotification()"
+          class="cursor-pointer"
+        >
+          <span class="profile-icon"></span> Profile Settings
+        </li>
+          <li (click)="Logout()" class="cursor-pointer">
+            <span class="logout-icon"></span> Sign Out
+          </li>
+
+        </ul>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+
+  <lavi-modal
+  Title="Connection Monitor"
+  [OpenDialog]="OpenConnectionMonitorDialog"
+  [Width]="'60%'"
+  (CloseModal)="closeModal()"
+>
+  <div class="modal-content">
+    <!-- Header of the modal -->
+    <div class="modal-header">
+      <h2>Active Hubs</h2>
+      <span class="k-icon k-i-close k-i-x close-icon cross-position" (click)="closeModal()"></span>
+    </div>
+    <!-- Body of the modal -->
+    <div class="modal-body">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>ID</th>
+            <th>Status</th>
+            <th>Last Activity</th>
+            <!-- <th>Last Message</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="hubs$ | async as hubs">        
+          <tr *ngFor="let hub of hubs">
+            <td>{{ hub.Name }}</td>
+            <td>{{ hub.id }}</td>
+            <td>{{ hub.Status }}</td>
+            <td>{{hub.LastActivity}}</td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+      <!-- Block showing the history -->
+      <h2 style="text-align: left;" >Manage History</h2>
+      <div class="history">
+        <ul>
+          <li *ngFor="let event of history$ | async">{{ event }}</li>
+          <br>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <button kendoButton class="primary-button mt-4" (click)="CopyData()">Copy</button>
+
+</lavi-modal>

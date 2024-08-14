@@ -1,0 +1,17 @@
+<ng-container>
+  <div
+    [ngClass]="{'file-upload float-right': !(IfRoundedImage), 'rounded-file-upload rounded-circle d-inline-block': IfRoundedImage }">
+    <input [id]="FileUploadId" [disabled]='IsDisabled'  class="hide" multiple type="file" accept="image/png, image/jpeg, image/jpg, image/gif" />
+    <label [for]="FileUploadId" class="w-100 text-center cursor-pointer" [ngClass]="{'disabled':IsDisabled}">
+      <div class="file-size cursor-pointer"  [ngClass]="{'disabled':IsDisabled}">
+        <img
+
+          [ngClass]="{'file-dimension image-size': !(IfRoundedImage), 'rounded-image-size rounded-circle': IfRoundedImage}"
+          [src]="ImageSrc ? ImageSrc : (IfRoundedImage ? '../../../assets/profileDefaultImage.png' : '../../../assets/defaultImage.png')">
+        <div class="text-center file-label">
+          <label [for]="FileUploadId" class="cursor-pointer lbl-upload-new">{{ImageTitle}}</label>
+        </div>
+      </div>
+    </label>
+  </div>
+</ng-container>

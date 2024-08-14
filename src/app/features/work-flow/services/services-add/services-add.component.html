@@ -1,0 +1,310 @@
+<kendo-dialog *ngIf="isServiceDialogOpen" title="Add Service" [width]="'70%'" class="x-unset">
+  <div class="add-service-modal">
+    <div class="font-weight-bold">Basic Info</div>
+    <form [formGroup]="AddServiceForm" (ngSubmit)="Save()">
+      <div class="row service-modal-body">
+        <div class="col-7">
+          <!-- service name/description -->
+          <div class="paddin-right-lite">
+            <div class=" row col-12">
+              <div class="col-10">
+                <!-- service Name -->
+                <div formArrayName="serviceNames" class="mb-2"
+                  *ngFor="let x of ServiceNamesFormArray.controls; let i = index">
+                  <div [formGroupName]="i" class="row" *ngIf="x.value.isDefault">
+                    <div class="col-8 p-0">
+                      <kendo-textbox-container floatingLabel="Service Name ({{ x.value.languageName }})"
+                        class="width-150">
+                        <input type="text" kendoTextBox tabindex="1" lavi-auto-focus
+                          [AutoFocusRequired]="x.value.isDefault" formControlName="serviceName" maxlength="100"
+                          autofocus laviTrimValue [ngClass]="{'padding-right-25': x.value.isDefault}" />
+                          <div class="translation-div col-1" *ngIf="x.value.isDefault">
+                            <p class="text-blue cursor-pointer" *ngIf="supportedLanguages?.length > 1"
+                              (click)="NameModalOpen()">
+                              <a>Translation</a>
+                            </p>
+                          </div>
+                      </kendo-textbox-container>
+                      <lavi-validation-message-list [validation-form-group-name]="x"
+                        validation-control-name="serviceName"
+                        [validation-errorlist]="WorkflowMessage.ServiceNameMessage">
+                      </lavi-validation-message-list>
+                      <div class="error-message"
+                        *ngIf="!x.controls.serviceName.invalid && ServiceNamesFormArray.invalid">Service name is not
+                        translated.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-2">
+                <div formArrayName="serviceIconUrls" class="mb-4"
+                  *ngFor="let x of ServiceIconsFormArray.controls; let i = index">
+                  <div [formGroupName]="i" class="width-fit-content" *ngIf="x.value.isDefault">
+                    <lavi-file-upload (click)="IconsModalOpen()" [IsDisabled]="true" [IfRoundedImage]="true"
+                      [ImageSrc]="x.controls.url.value" [formControl]="x.controls.url" [ImageWidth]="76"
+                      [ImageHeight]="80" [ImageTitle]="'Upload Photo'">
+                    </lavi-file-upload>
+                    <div class="h-10 profile-error-msg pl-2">
+                      <span *ngIf="x.get('url').errors?.requiredFileType">
+                        Upload only .png, .jpg, .jpeg file.
+                      </span>
+                      <span *ngIf="
+                        x.get('url').errors?.requiredFileSize
+                      ">
+                        Image size exceeds maximum limit 4 MB.
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <workflow-language-image-modal [OpenDialog]="IsServiceIconDialogOpen"
+              [ImageFormArray]="ServiceIconsFormArray" [Title]="'Service Icon'" [ModalWidth]="'50%'"
+              [ModalHeight]="'54%'" (CloseTranslateTextDialog)="IconsModalClose()" (Save)=SaveIconForm($event)>
+            </workflow-language-image-modal>
+
+
+            <!-- service name dialog -->
+            <kendo-dialog *ngIf="IsServiceNameDialogOpen" [width]="'40%'" title="Service Name">
+
+              <div class="name-model">
+                <div formArrayName="serviceNames" *ngFor="let x of ServiceNamesFormArray.controls; let i = index">
+                  <div [formGroupName]="i" class="row position-relative">
+                    <div class="col-8 p-0">
+                      <kendo-textbox-container floatingLabel="Service Name ({{ x.value.languageName }})"
+                        class="width-150">
+                        <input type="text" kendoTextBox tabindex="1" formControlName="serviceName" maxlength="100"
+                          autofocus laviTrimValue lavi-auto-focus [ngClass]="{'padding-right-25': x.value.isDefault}" />
+                      </kendo-textbox-container>
+                      <lavi-validation-message-list [validation-form-group-name]="x"
+                        validation-control-name="serviceName"
+                        [validation-errorlist]="WorkflowMessage.ServiceNameMessage">
+                      </lavi-validation-message-list>
+                    </div>
+                    <div class="translate-name" *ngIf="x.value.isDefault">
+                      <p class="text-blue cursor-pointer" *ngIf="supportedLanguages?.length > 1"
+                        (click)="translate(x.value.serviceName,ServiceNamesFormArray,'serviceName')">
+                        <a>Translate</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 mt-4">
+                <div class="float-right">
+                  <button type="button" kendoButton class="secondary-button mr-2" (click)="NameModalClose()">
+                    Cancel
+                  </button>
+                  <button type="button" kendoButton class="primary-button" (click)="SaveNameForm()">
+                    Apply
+                  </button>
+                </div>
+              </div>
+            </kendo-dialog>
+
+            <!-- Description -->
+            <div formArrayName="descriptions" *ngFor="let x of ServiceDescriptionsFormArray.controls; let i = index">
+              <div [formGroupName]="i" class="row ml-0" *ngIf="x.value.isDefault">
+                <kendo-floatinglabel text="Description ({{ x.value.languageName }})" class="width-150">
+                  <textarea kendoTextArea rows="4" [autoSize]="true" tabindex="2" formControlName="description"
+                    maxlength="500" class="mt-1 height-100 ml-1">
+                    </textarea>
+                </kendo-floatinglabel>
+
+                <lavi-validation-message-list [validation-form-group-name]="x" validation-control-name="description"
+                  [validation-errorlist]="WorkflowMessage.DescriptionMessage">
+                </lavi-validation-message-list>
+                <div class="error-message"
+                  *ngIf="!x.controls.description.invalid && ServiceDescriptionsFormArray.invalid">Service description is
+                  not translated.</div>
+
+                <div class="translation-div padding-top-0" *ngIf="x.value.isDefault">
+                  <p class="text-blue cursor-pointer" *ngIf="supportedLanguages?.length > 1"
+                    (click)="DescriptionModalOpen()">
+                    <a>Translation</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- description dialog -->
+            <kendo-dialog *ngIf="IsServiceDescriptionDialogOpen" [width]="600" title="Service Description">
+              <div>
+                <div class="description-model">
+                  <div formArrayName="descriptions"
+                    *ngFor="let x of ServiceDescriptionsFormArray.controls; let i = index">
+                    <div [formGroupName]="i" class="row mt-2 position-relative">
+                      <kendo-floatinglabel text="Description ({{ x.value.languageName }})" class="width-150">
+                        <textarea kendoTextArea rows="4" [autoSize]="true" tabindex="2" formControlName="description"
+                          maxlength="500" class="mt-2 height-100 ml-1">
+                        </textarea>
+                      </kendo-floatinglabel>
+
+                      <lavi-validation-message-list [validation-form-group-name]="x"
+                        validation-control-name="description"
+                        [validation-errorlist]="WorkflowMessage.DescriptionMessage">
+                      </lavi-validation-message-list>
+                      <div class="translate-name padding-top-0" *ngIf="x.value.isDefault">
+                        <p class="text-blue cursor-pointer" *ngIf="supportedLanguages?.length > 1"
+                          (click)="translate(x.value.description,ServiceDescriptionsFormArray,'description')">
+                          <a>Translate</a>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 mt-4">
+                  <div class="float-right">
+                    <button type="button" kendoButton class="secondary-button mr-2" (click)="DescriptionModalClose()">
+                      Cancel
+                    </button>
+                    <button type="button" kendoButton class="primary-button" (click)="SaveDescriptionForm()">
+                      Apply
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+
+            </kendo-dialog>
+          </div>
+
+
+          <div class="col-12 pl-0">
+            <div class="row">
+              <div class="col-6 mt-4">
+                <label class="k-label cursor-pointer">
+                  <input type="checkbox" kendoCheckBox tabindex="6"
+                    [formControl]="AddServiceForm.controls.acceptWalkins" />
+                  Accept Walk-Ins
+                </label>
+                <div class="error-message" *ngIf="AddServiceForm.controls.acceptWalkins.hasError('notEditableError')">
+                  Can't change, Workflow already used by kiosk.</div>
+              </div>
+              <div class="col-6 mt-4">
+                <label class="k-label cursor-pointer">
+                  <input type="checkbox" kendoCheckBox tabindex="7"
+                    [formControl]="AddServiceForm.controls.acceptAppointments" />
+                  Accept Appointments
+                </label>
+              </div>
+              <div class="col-12 paddin-right-lite" *ngIf="AddServiceForm.value.acceptAppointments">
+                <kendo-textbox-container floatingLabel="Service Appointment Template">
+                  <kendo-dropdownlist placeholder="Appointment Template" class="no-border mt-1"
+                    [formControl]="AddServiceForm.controls.appointmentTemplate" tabindex="8"
+                    [data]="AppointmentList | laviSortBy : 'templateName' " [textField]="'templateName'"
+                    [valueField]="'id'">
+                  </kendo-dropdownlist>
+                </kendo-textbox-container>
+                <lavi-validation-message-list [validation-form-group-name]="AddServiceForm"
+                  validation-control-name="appointmentTemplate"
+                  [validation-errorlist]="WorkflowMessage.AppointmentTemlpateMessges">
+                </lavi-validation-message-list>
+              </div>
+
+            </div>
+          </div>
+          <div class="paddin-right-lite mt-4">
+            <div class="row mb-2">
+              <div class="col-12 add-service-col padding-zero">
+                <kendo-textbox-container floatingLabel="Routing">
+                  <kendo-dropdownlist placeholder="Routing" [formControl]="AddServiceForm.controls.routing"
+                    class="no-border mt-1" tabindex="2" [data]="Routings | laviSortBy:'type' |laviSortBy:'type'"
+                    [textField]="'type'" [valueField]="'id'">
+                  </kendo-dropdownlist>
+                </kendo-textbox-container>
+              </div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-12 add-service-col padding-zero">
+                <kendo-textbox-container floatingLabel="Survey Template">
+                  <kendo-dropdownlist placeholder="Survey Template" class="no-border mt-1"
+                    [formControl]="AddServiceForm.controls.surveyTemplate" tabindex="4"
+                    [data]="SurveyQuestions$ | async | laviSortBy:'questionSetName'" [textField]="'questionSetName'"
+                    [valueField]="'id'">
+                  </kendo-dropdownlist>
+                </kendo-textbox-container>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12 add-service-col padding-zero">
+                <kendo-textbox-container floatingLabel="Ticket Template">
+                  <kendo-dropdownlist placeholder="Ticket Template" class="no-border mt-1"
+                    [formControl]="AddServiceForm.controls.ticketTemplate" tabindex="5"
+                    [data]="TicketTemplates | laviSortBy:'type'" [textField]="'type'" [valueField]="'id'">
+                  </kendo-dropdownlist>
+                </kendo-textbox-container>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-5 service-modal-left-part-padding">
+          <div class="row height-100px">
+            <div>
+              <h6 class="fontsize-120 pb-2">Operational Hours</h6>
+            </div>
+            <div class="row col-lg-12">
+              <div class="col-5 col-lg-5 mt-2 pl-5">
+                <h6 class="panel-sub-header mt-1">Service Occurs</h6>
+              </div>
+              <div class="col-7 col-lg-7">
+                <div class="dropdown-position">
+                  <kendo-dropdownlist placeholder="Service occurs" class="no-border mt-1"
+                    [defaultItem]="DefaultWorkflowDropdownValues.ServiceOccurs"
+                    [formControl]="AddServiceForm.controls.serviceOccur" [data]="ServiceOccurs | laviSortBy : 'text' "
+                    (valueChange)="OnChangeServiceOccursDropDown()" [textField]="'text'" [valueField]="'value'">
+                  </kendo-dropdownlist>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div [formGroup]="OperationalWorkingHoursFormGroup" class="mt-3">
+            <div *ngIf="AddServiceForm.controls.serviceOccur.value?.value === OperationalOccurs.Default">
+              <div class="row working-hours ">
+                <div class="col-lg-11 col-sm-12">
+                  <div class="border">
+                    <div class="mt-4 ml-4">
+                    <p>{{HoursOfOperations[0].generalConfiguration.templateName}}</p>
+                    </div>
+                  </div>
+              <lavi-default-hours *ngFor="let day of  Days " [workingHour]="HoursOfOperations[0].workingHours[day | lowercase]">
+              </lavi-default-hours>
+            </div>
+            </div>
+            </div>
+            <lavi-weekly-hours *ngIf="AddServiceForm.controls.serviceOccur.value?.value === OperationalOccurs.Weekly"
+              [WeeklyWorkingDaysForm]="OperationalWorkingHoursFormGroup.controls.weeklyWorkingDays"
+              (AddHours)="AddHours($event)" (RemoveHours)="RemoveHours($event)"></lavi-weekly-hours>
+            <lavi-daily-hours *ngIf="AddServiceForm.controls.serviceOccur.value?.value === OperationalOccurs.Daily"
+              [DailyWorkingDaysForm]="OperationalWorkingHoursFormGroup.controls.dailyWorkingDays"
+              (AddHours)="AddHours($event)" (RemoveHours)="RemoveHours($event)"></lavi-daily-hours>
+            <lavi-on-custom-date-hours
+              *ngIf="AddServiceForm.controls.serviceOccur.value?.value === OperationalOccurs.Custom_Date"
+              [OnCustomDateWorkingDaysFormArray]="OnCustomDateFormArray" (AddHours)="AddHours($event)"
+              (RemoveWorkingDate)="RemoveWorkingDate($event)" (RemoveHours)="RemoveHours($event)"
+              (AddDateArray)="AddDateArray($event)"></lavi-on-custom-date-hours>
+            <lavi-during-date-range-hours
+              *ngIf="AddServiceForm.controls.serviceOccur.value?.value === OperationalOccurs.During_Date_Range"
+              [DuringDateRangeWorkingDaysFormArray]="DuringDateRangeFormArray" (AddHours)="AddHours($event)"
+              (RemoveWorkingDate)="RemoveWorkingDate($event)" (RemoveHours)="RemoveHours($event)"
+              (AddDateArray)="AddDateArray($event)"></lavi-during-date-range-hours>
+          </div>
+        </div>
+      </div>
+
+      <kendo-dialog-actions class="pb-0 pr-0">
+        <div class="col-lg-6 col-12 mt-4">
+          <div class="float-right">
+            <input type="button" kendoButton class="secondary-button mr-2" (click)="ModalClose()" value="Cancel" />
+            <input type="button" kendoButton class="primary-button" type="submit" *ngIf="Mode=='ADD'" value="Add" />
+            <input type="button" kendoButton class="primary-button" type="submit" *ngIf="Mode=='EDIT'" value="Update" />
+          </div>
+        </div>
+      </kendo-dialog-actions>
+    </form>
+  </div>
+</kendo-dialog>

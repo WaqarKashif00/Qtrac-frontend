@@ -1,0 +1,14 @@
+<div class="selector-heading-text">
+  <ul>
+    <li [ngClass]="{selected : !IsServiceSelected}" (click)="ChangeOnSelect(true)">KPIs</li>
+    <li [ngClass]="{selected : IsServiceSelected}" (click)="ChangeOnSelect(false)">Services</li>
+  </ul>
+</div>
+<div class="selector-content">
+  <div class="kpi-content" *ngIf="!IsServiceSelected">
+    <lavi-kpi-content [Configurations]="Configurations" (CheckboxChanged)="CheckBoxChecked($event)"></lavi-kpi-content>
+  </div>
+  <div class="services-content" *ngIf="IsServiceSelected">
+    <lavi-services-content [Configurations]="Configurations" (CheckboxChanged)="CheckBoxChecked($event)"></lavi-services-content>
+  </div>
+</div>

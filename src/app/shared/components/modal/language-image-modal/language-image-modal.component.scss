@@ -1,0 +1,18 @@
+@import "src/stylings/primitives/primitives.scss";
+.image {
+  height: 83%;
+  overflow-y: auto;
+  max-height: 300px;
+}
+.img-upload {
+  box-shadow: 0 0.125rem 0.25rem rgba($color-background-black, 0.075) !important;
+  background-color: $color-background-white!important;
+  border-color: $file-upload-border !important;
+  border: 2px solid;
+  border-radius: 4px;
+}
+.lbl-upload-new {
+  color: $color-link-text-blue !important;
+  font-weight: $font-weight-500;
+  font-size: $_font-size-small-4;
+}

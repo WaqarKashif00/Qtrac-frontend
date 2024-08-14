@@ -1,0 +1,193 @@
+
+<div *ngIf="{workFlow: WorkFlows$ | async  , workFlowUsedInBranchList: WorkFlowUsedInBranchList$ | async } as value">
+  <lavi-form-panel PanelHeader="Workflow Used In Location">
+    <lavi-form-content-panel>
+      <div class="col-lg-12 inner-panel-padding panel-border">
+        <div class="mb-5">
+            <div class="col-lg-12 text-right">
+              <div class="pr-3">
+                <span
+                  (click)="OpenWorkflowUsedInBranchModal(false)"
+                  class="text-blue pl-4 cursor-pointer"
+                  *laviHasRoleAccess="
+    roleActions.BranchWorkFlow;
+    actionName: actionType.AddEdit
+  "
+                  >Add Workflow</span
+                >
+              </div>
+            </div>
+
+            <lavi-modal
+              [OpenDialog]="OpenWorkFlowUsedInBranchDialog$ | async"
+              [Title]= "Title"
+              Width="50%"
+            >
+              <div>
+                <lavi-form [FormGroup]="WorkFlowUsedInBranchForm">
+                  <div class="col-lg-12">
+                    <div class="row">
+                      <div class="col-lg-1">
+                        <kendo-textbox-container>
+                        <input
+                        type="text" kendoTextBox
+                        [formControl]="WorkFlowUsedInBranchForm.controls.id"
+                        hidden
+                        lavi-trim-value
+                      /></kendo-textbox-container>
+                      </div>
+                      <div class="col-lg-12">
+                        <div class="row">
+                          <div class="col-lg-5 form-group">
+                            <kendo-textbox-container
+                              class="w-100"
+                              floatingLabel="Workflow"
+                            >
+                              <kendo-dropdownlist
+                                placeholder="Workflow"
+                                class="no-border mt-1"
+                                [textField]="'name'"
+                                tabindex="201"
+                                [data]="value?.workFlow | laviSortBy:'name'"
+                                [formControl]="WorkFlowUsedInBranchForm?.controls?.workFlow"
+                                (valueChange)="SetServices($event)"
+                                [valueField]="'workFlowId'"
+                                [defaultItem]="DefaultData.WorkflowDefaultValue"
+                              >
+                              </kendo-dropdownlist>
+                            </kendo-textbox-container>
+                            <div class="h-10">
+                              <lavi-validation-message-list
+                              [validation-form-group-name]="WorkFlowUsedInBranchForm"
+                              validation-control-name="workFlow"
+                              [validation-errorlist]="ValidationMessages.WorkflowMessages"
+                            >
+                            </lavi-validation-message-list>
+                            <div class="note-message" *ngIf="this.isEditMode && WorkFlowUsedInBranchForm?.controls?.workFlow.status == 'DISABLED'">Note: Workflow already in use.</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 pt-3">
+                        <div class="col-lg-5 pl-4">
+                          <label class="k-label cursor-pointer checkbox-label">
+                            <input type="checkbox" kendoCheckBox
+                            [formControl]="WorkFlowUsedInBranchForm?.controls?.isAllServices"
+                            (change)="DisableServiceDropDown()"
+                            />
+                            All Services
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-lg-12">
+                        <div class="row">
+                          <div class="col-lg-12 pl-3 form-group">
+                              <kendo-floatinglabel
+                                class="w-100"
+                                text="Select Services"
+                              >
+                                <kendo-multiselect
+                                  [data]="Services$ | async | laviSortBy:'serviceName'"
+                                  [filterable]="true"
+                                  [formControl]="WorkFlowUsedInBranchForm?.controls?.services"
+                                  tabindex="202"
+                                  [textField]="'serviceName'"
+                                  [valueField]="'id'"
+                                >
+                                </kendo-multiselect>
+                              </kendo-floatinglabel>
+                              <div class="h-10">
+                                <lavi-validation-message-list
+                                [validation-form-group-name]="WorkFlowUsedInBranchForm"
+                                validation-control-name="services"
+                                [validation-errorlist]="
+                                  ValidationMessages.ServiceMessages
+                                "
+                              >
+                              </lavi-validation-message-list>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pt-4">
+                    <kendo-dialog-actions class="pb-0 pr-0">
+                      <div class="col-lg-12 pr-0">
+                        <div class="row">
+                          <div class="col-4"></div>
+                          <div class="col-8 col-sm-12">
+                            <div class="float-right pb-2">
+                              <input
+                                type="button"
+                                kendoButton
+                                class="secondary-button mr-2"
+                                (click)="ModalClose()"
+                                value="Cancel"
+                              />
+                              <input
+                                type="button"
+                                kendoButton
+                                class="primary-button"
+                                (click)="AddOrEditWorkflowUsedInBranch()"
+                                value="Save"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </kendo-dialog-actions>
+                  </div>
+                </lavi-form>
+              </div>
+            </lavi-modal>
+
+            <div>
+              <div *ngIf="value?.workFlowUsedInBranchList" class="scroll-bar">
+                <div *ngFor="let workFlow of value?.workFlowUsedInBranchList">
+                  <div class="col-lg-12 col-sm-12 col-12 mt-3">
+                    <div class="row">
+                      <div class="col-lg-6 col-sm-6 col-6 font-weight-500 text-center wrap row">
+                          {{ value?.workFlow | laviTextFromDropdown : workFlow?.workFlowId : 'workFlowId' : 'name' }}
+                      </div>
+                      <div class="col-lg-5 col-sm-5 col-5 font-weight-500 text-center wrap">
+                        {{ (workFlow?.isAllServices) ? 'All Services': GetServicesForList(workFlow?.workFlowId, workFlow?.serviceIds) }}
+                      </div>
+                      <div class="col-lg-1 col-sm-1 col-1 row pr-0">
+                        <div class="col-lg-6 col-sm-6 col-6">
+                          <img
+                          (click)="DeleteWorkFlowUsedInBranch(workFlow?.id)"
+                            tabindex="19"
+                            class="img-width cursor-pointer float-right"
+                            src="../../../../assets/img/delete-icon.svg"
+                            *laviHasRoleAccess="
+                            roleActions.BranchWorkFlow;
+                            actionName: actionType.Delete"
+                          />
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-6">
+                          <img
+                          (click)="OpenWorkflowUsedInBranchModal(true, workFlow)"
+                            tabindex="20"
+                            class="img-width cursor-pointer float-right"
+                            *laviHasRoleAccess="
+                            roleActions.BranchWorkFlow;
+                            actionName: actionType.AddEdit"
+                            src="../../../../assets/img/edit-icon.svg"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <hr />
+                </div>
+              </div>
+              <div *ngIf="value?.workFlowUsedInBranchList.length === 0 ">
+                <p class="text-center">No workflow added</p>
+              </div>
+            </div>
+        </div>
+      </div>
+    </lavi-form-content-panel>
+  </lavi-form-panel>
+</div>

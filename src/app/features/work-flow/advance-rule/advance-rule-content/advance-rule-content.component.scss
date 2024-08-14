@@ -1,0 +1,306 @@
+@import "src/stylings/primitives/primitives.scss";
+.advance-rules-modal {
+    padding: 0;
+    .modal-header {
+        border-bottom: solid 1px $language-color;
+        padding: 10px 0;
+    }
+    h3 {
+        font-size: $font-size-big-3;
+        font-weight: $font-weight-700;
+    }
+    .font-weight-700 {
+        font-weight: $font-weight-700;
+    }
+    .modal-container {
+        height: 350px;
+        overflow-y: auto;
+        width: 100%;
+        padding-right: 10px;
+        overflow-x: clip;
+    }
+    .slider {
+        ul {
+            background: $slider-background-color;
+            border-radius: 100px;
+            border: 1px solid $input-border-color;
+            margin: 0;
+            padding: 4px;
+            width: 250px;
+            li {
+                color: $slider-text-color;
+                list-style: none;
+                display: inline-block;
+                padding: 6px 8px;
+                width: 50%;
+                text-align: center;
+            }
+            li.selected {
+                background: $slider-active-color;
+                border-radius: 100px;
+                color: $color-text-white;
+            }
+        }
+    }
+    .when-conditional.slider {
+        ul {
+            white-space: nowrap;
+            list-style: none;
+            width: fit-content;
+            li {
+                width: auto;
+                padding: 2px 14px;
+                text-transform: uppercase;
+            }
+        }
+    }
+    .internal-condition {
+        z-index: 10;
+        position: absolute;
+        left: 95px;
+        margin-top: -17px;
+    }
+    .form-group {
+        label {
+            color: $language-text-color;
+            display: block;
+            font-size: $font-size-small-2;
+            margin-bottom: 0;
+            text-transform: uppercase;
+        }
+        input {
+            background: $input-background-color;
+            border: 1px solid $input-border-color;
+            border-radius: 4px;
+            height: 32px;
+            margin: 3px 0;
+            padding: 6px 14px;
+        }
+    }
+    .condition-box {
+        background: $slider-background-color;
+        border: 1px solid $input-border-color;
+        border-radius: 4px;
+        padding: 20px 24px;
+    }
+    .clear-all-text,
+    .translate-text {
+        color: $slider-text-color;
+        cursor: pointer;
+        margin-right: 3px;
+    }
+    .add-condition-button {
+        background: $slider-active-color;
+        border: none;
+        border-radius: 100px;
+        color: $color-text-white;
+        font-size: $font-size-small-4;
+        padding: 6px 27px;
+    }
+    .rule-state-container {
+        background: $conditional-background;
+        border: solid 1px $input-border-color;
+        border-radius: 4px;
+        min-height: 104px;
+        padding: 28px 24px;
+        position: relative;
+    }
+    select,
+    input:not([type='button']),
+    .multiselect-dropdown .dropdown-btn,
+    .k-datepicker .k-picker-wrap,
+    .k-timepicker .k-picker-wrap .k-dateinput-wrap {
+        background: $input-background-color;
+        border: 1px solid $input-border-color;
+        border-radius: 4px;
+        color: $input-text-color;
+        font-size: $global-font-size;
+        padding: 3px 60px;
+    }
+     ::ng-deep .multiselect-dropdown {
+        color: $input-text-color;
+        top: 0;
+        margin-left: 0;
+    }
+   
+    .whenbox{
+        width: 95%;
+    }
+    select:hover,
+    input:not([type='button']):hover,
+    select:focus,
+    input:focus,
+    select:active,
+    input:not([type='button']):active,
+    textarea:focus,
+    textarea:focus {
+        border: 1px solid $input-border-color;
+        outline: none;
+    }
+    .remove-condition {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        position: absolute;
+        right: -16px;
+        border: 1px solid rgba(235, 11, 26, 0.25);
+        border-radius: 100px;
+        text-align: center;
+        cursor: pointer;
+        transform: translateY(-50%);
+        top: 50%;
+    }
+    .remove-condition-group {
+        right: 25px;
+    }
+    .remove-condition-internal {
+        display: inline-block;
+        margin-left: 30px;
+        width: 18px;
+        height: 18px;
+        border: 1px solid $slider-text-color;
+        border-radius: 12px;
+        position: relative;
+        top: 7px;
+    }
+    .add-state-condition {
+        background: $add-button-background;
+        border: solid 1px $slider-active-color;
+        border-radius: 100px;
+        box-shadow: inset 0px 0px 0px 1px $input-border-color, inset 0px 0px 4px 2px $slider-background-color;
+        color: $slider-active-color;
+        font-size: $font-size-small-4;
+        line-height: 20px;
+        padding: 5px 20px;
+        width: fit-content;
+        text-align: center;
+        margin-top: 15px;
+        position: absolute;
+        transform: translateX(-50%);
+        left: 50%;
+        cursor: pointer;
+    }
+    .multiple-conditions {
+        .slider ul {
+            background: $color-text-white;
+        }
+    }
+    .then-condition-block {
+        border: 1px solid $input-border-color;
+        border-radius: 4px;
+        background: $slider-background-color;
+        padding: 32px 24px;
+        width: 101.5%;
+    }
+    textarea {
+        border: 1px solid $input-border-color;
+        background: $color-text-white;
+        border-radius: 4px;
+        color: $input-text-color;
+        font-size: $font-size-small-4;
+        padding: 10px 14px;
+        width: 100%;
+    }
+    textarea::placeholder {
+        color: $input-text-color;
+    }
+    .message-language {
+        position: relative;
+        ul {
+            position: absolute;
+            list-style: none;
+            padding: 0;
+            right: 10px;
+            top: -20px;
+            li {
+                background: $language-color;
+                border-radius: 3px 3px 0 0;
+                color: $language-text-color;
+                display: inline-block;
+                font-size: $font-size-small-4;
+                padding: 2px 8px;
+                margin-right: 8px;
+            }
+            li.selected {
+                background: $color-background-white;
+                box-shadow: 0 -1px 0 1px $language-color;
+            }
+            .lang-warning {
+                display: inline-block;
+                height: 14px;
+                width: 14px;
+            }
+        }
+    }
+}
+
+.advance-rules-modal ::ng-deep {
+    .k-datepicker .k-picker-wrap,
+    .k-timepicker .k-picker-wrap,
+    .k-maskedtextbox {
+        background: $input-background-color;
+        border: 1px solid $input-border-color;
+        border-radius: 4px;
+        font-size: $global-font-size;
+    }
+    .multiselect-dropdown .dropdown-btn {
+        border: 1px solid $input-border-color !important;
+        padding: 3px 30px 3px 12px !important;
+        max-height: 75px;
+        overflow-y: auto;
+    }
+    .k-dateinput .k-dateinput-wrap.k-state-focused,
+    .k-state-focused>.k-dateinput .k-dateinput-wrap,
+    .k-dateinput .k-picker-wrap.k-state-focused,
+    .k-state-focused>.k-dateinput .k-picker-wrap,
+    .k-datepicker .k-dateinput-wrap.k-state-focused,
+    .k-state-focused>.k-datepicker .k-dateinput-wrap,
+    .k-datepicker .k-picker-wrap.k-state-focused,
+    .k-state-focused>.k-datepicker .k-picker-wrap,
+    .k-datetimepicker .k-dateinput-wrap.k-state-focused,
+    .k-state-focused>.k-datetimepicker .k-dateinput-wrap,
+    .k-datetimepicker .k-picker-wrap.k-state-focused,
+    .k-state-focused>.k-datetimepicker .k-picker-wrap,
+    .k-timepicker .k-dateinput-wrap.k-state-focused,
+    .k-state-focused>.k-timepicker .k-dateinput-wrap,
+    .k-timepicker .k-picker-wrap.k-state-focused,
+    .k-state-focused>.k-timepicker .k-picker-wrap {
+        border: 1px solid $input-border-color;
+    }
+    .k-textbox:focus,
+    .k-textbox:focus-within,
+    .k-textbox.k-state-focus,
+    .k-textbox.k-state-focused,
+    .k-textarea:focus,
+    .k-textarea:focus-within,
+    .k-textbox {
+        border-width: 0;
+    }
+    .k-dateinput .k-dateinput-wrap .k-input,
+    .k-dateinput .k-picker-wrap .k-input,
+    .k-datepicker .k-dateinput-wrap .k-input,
+    .k-datepicker .k-picker-wrap .k-input,
+    .k-datetimepicker .k-dateinput-wrap .k-input,
+    .k-datetimepicker .k-picker-wrap .k-input,
+    .k-timepicker .k-dateinput-wrap .k-input,
+    .k-timepicker .k-picker-wrap .k-input {
+        color: $slider-text-color;
+        height: 23px !important;
+        padding: 0 !important;
+    }
+    .k-dateinput .k-picker-wrap .k-dateinput-wrap,
+    .k-datepicker .k-picker-wrap .k-dateinput-wrap,
+    .k-datetimepicker .k-picker-wrap .k-dateinput-wrap,
+    .k-timepicker .k-picker-wrap .k-dateinput-wrap {
+        border: none;
+        padding: 3px 12px 0;
+    }
+    .multiselect-dropdown .dropdown-btn .selected-item-container .selected-item {
+        max-width: none !important;
+        margin: 2px;
+    }
+    .multiselect-item-checkbox input[type=checkbox]+div,
+    .k-textbox {
+        color: $input-text-color;
+    }
+}

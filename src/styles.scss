@@ -1,0 +1,782 @@
+@import "./stylings/themes/themes.scss";
+@import 'simple-keyboard/build/css/index.css';
+
+/* Reset CSS */
+body,
+.k-window {
+  font-family: $global-font;
+  font-size: $global-font-size;
+}
+
+/* kendo ui css starts */
+
+.top-navigation {
+  .k-dropdown {
+    width: auto;
+  }
+  .k-dropdown .k-dropdown-wrap .k-input,
+  .k-dropdowntree .k-dropdown-wrap .k-input {
+    display: inline-block;
+    font-size: $font-size-small-2;
+    text-overflow: ellipsis;
+  }
+  .k-dropdown-wrap {
+    border: none;
+  }
+  .logout-icon {
+    .k-i-logout {
+      color: rgba($color-text-black, 0.5);
+    }
+    .k-i-logout:hover {
+      color: rgba($color-text-black, 0.7);
+    }
+  }
+}
+kendo-uploaddropzone {
+  margin: 0 8px;
+  flex-grow: 1;
+}
+
+kendo-upload,
+kendo-fileselect {
+  margin: 8px 8px 0;
+}
+.k-textbox-container,
+.k-dropdown,
+.k-floating-label-container {
+  width: 100%;
+}
+.k-textbox-container > .k-label,
+.k-floating-label-container > .k-label {
+  padding-left: 15px;
+  max-width: 100%;
+}
+.k-textbox {
+  font-size: $global-font-size;
+  padding: 8px 0px 8px 10px;
+  width: 100%;
+}
+.k-window-title {
+  font-size: $font-size-big-3;
+  white-space: normal;
+}
+.k-panelbar {
+  font-size: $global-font-size;
+}
+.k-panelbar {
+  .k-item > .k-link {
+    background: transparent;
+    cursor: pointer;
+    font-size: $font-size-big-3;
+    font-weight: $font-weight-600;
+    padding: 12px;
+  }
+}
+.k-checkbox {
+  margin-right: 10px;
+  margin-top: -4px;
+}
+.k-checkbox:checked,
+.k-checkbox:checked:focus {
+  border-color: $color-global-checkbox;
+  background-color: $color-global-checkbox;
+}
+.k-multiselect .k-multiselect-wrap,
+.k-dropdowntree .k-multiselect-wrap {
+  height: auto;
+  overflow: auto;
+  margin-top: 2px;
+  max-height: 65px;
+}
+.k-multiselect .k-multiselect-wrap li.k-button,
+.k-dropdowntree .k-multiselect-wrap li.k-button,
+.k-chip-filled {
+  background: $color-background-white;
+  border: 1px solid $color-background-grey;
+}
+.k-multiselect .k-multiselect-wrap .k-button.k-state-hover,
+.k-dropdowntree .k-multiselect-wrap .k-button.k-state-hover,
+.k-multiselect .k-multiselect-wrap .k-button:hover,
+.k-dropdowntree .k-multiselect-wrap .k-button:hover,
+.k-chip-filled:hover {
+  border-color: rgba($_color-black, 0.2);
+  color: $color-global-text;
+  background-color: $color-background-grey;
+}
+.k-window .k-label {
+  font-size: $global-font-size;
+}
+.k-window .k-panelbar > .k-item > .k-link {
+  font-size: $font-size-big-3;
+}
+.k-window .checkbox-label,
+.checkbox-label {
+  font-size: $font-size-small-4;
+}
+.k-label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+.k-panelbar,
+.k-button,
+.k-textbox,
+.k-grid {
+  font-family: $global-font;
+}
+.k-list .k-item,
+.k-list-optionlabel {
+  line-height: 20px;
+  min-height: 20px;
+  padding: 5px;
+}
+.k-textbox::selection,
+.k-textbox .k-input::selection {
+  color: $color-text-white;
+  background-color: $color-border-form-element-focus !important;
+}
+.k-panelbar > .k-item > .k-link.k-state-selected {
+  color: $color-text-black;
+}
+.k-panelbar {
+  border: $accordion-border-color solid 1px;
+  background-color: rgba($accordion-bg-color, 0.7) !important;
+}
+.k-panelbar .k-panelbar-expand,
+.k-panelbar .k-panelbar-collapse {
+  top: 50%;
+  right: 6px;
+}
+.k-panelbar > .k-item > .k-link:hover,
+.k-panelbar > .k-item > .k-link.k-state-hover,
+.k-panelbar > .k-item > .k-link.k-state-focused {
+  background-color: transparent !important;
+}
+.k-dropdown,
+.k-dropdowntree {
+  width: 100%;
+}
+.k-textbox-container::after,
+.k-floating-label-container::after {
+  background-color: $color-border-form-element-focus;
+}
+.k-textbox:focus,
+.k-textbox:focus-within,
+.k-textbox.k-state-focus,
+.k-textbox.k-state-focused,
+.k-textarea:focus,
+.k-textarea:focus-within {
+  border-color: $color-border-form-element-focus !important;
+}
+.k-textarea:focus,
+.k-textarea:focus-within {
+  box-shadow: 0 0 0 1px $color-border-form-element-focus;
+}
+.k-text-selection ::selection,
+.k-chart ::selection,
+.k-sparkline ::selection,
+.k-stockchart ::selection,
+kendo-scrollview.k-scrollview-wrap ::selection,
+div.k-scrollview ::selection,
+.k-pdf-viewer ::selection,
+.k-mediaplayer ::selection,
+.k-chat ::selection,
+.k-scheduler ::selection,
+.k-spreadsheet ::selection,
+.k-splitter ::selection,
+.k-card ::selection,
+.k-panelbar ::selection,
+.k-pager-wrap ::selection,
+.k-notification ::selection,
+.k-drawer ::selection,
+.k-window ::selection,
+.k-rating ::selection,
+.k-maskedtextbox ::selection,
+.k-multiselect ::selection,
+.k-dropdowntree ::selection,
+.k-dropdown ::selection,
+.k-dateinput ::selection,
+.k-datepicker ::selection,
+.k-datetimepicker ::selection,
+.k-timepicker ::selection,
+.k-combobox ::selection,
+.k-flatcolorpicker ::selection,
+.k-numerictextbox ::selection,
+.k-progressbar ::selection,
+.k-pane-wrapper ::selection,
+.k-view ::selection,
+.k-block ::selection,
+.k-panel ::selection {
+  background-color: $color-border-form-element-focus;
+  color: $color-text-white;
+}
+.k-dropdown .k-dropdown-wrap.k-state-focused,
+.k-dropdowntree .k-dropdown-wrap.k-state-focused {
+  border-color: $color-border-form-element-focus;
+}
+.k-dropdown .k-dropdown-wrap .k-input,
+.k-dropdowntree .k-dropdown-wrap .k-input {
+  // font-size: $global-font-size;
+  padding-left: 10px;
+}
+.k-textbox-container.k-state-focused > .k-label,
+.k-floating-label-container.k-state-focused > .k-label {
+  color: $color-border-form-element-focus;
+}
+.k-window-actions > .k-button-icon {
+  display: none !important;
+}
+.k-dialog-button-layout-stretched {
+  padding: 24px 0 24px;
+}
+.k-textbox-container.k-textarea-wrapper,
+.k-floating-label-container.k-textarea-container {
+  width: 590px;
+  height: 150px;
+}
+
+.k-textbox-container:not(.k-state-empty) > .k-label,
+.k-floating-label-container:not(.k-state-empty) > .k-label {
+  background-color: transparent;
+}
+.k-window-titlebar {
+  padding-top: 10px;
+  font-weight: $font-weight-600;
+}
+.k-window-titlebar + .k-window-content {
+  overflow: visible;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.k-multiselect .k-multiselect-wrap li.k-button,
+.k-dropdowntree .k-multiselect-wrap li.k-button {
+  border: 1px solid $color-border-form-element;
+}
+.k-multiselect .k-multiselect-wrap .k-button.k-state-hover,
+.k-dropdowntree .k-multiselect-wrap .k-button.k-state-hover,
+.k-multiselect .k-multiselect-wrap .k-button:hover,
+.k-dropdowntree .k-multiselect-wrap .k-button:hover {
+  border-color: rgba($color-text-black, 0.2);
+  color: $color-global-text;
+  background-color: $color-background-form-element;
+}
+
+.k-window-actions > .k-button-icon {
+  display: none !important;
+}
+
+.k-textbox-container.k-textarea-wrapper,
+.k-floating-label-container.k-textarea-container {
+  width: 590px;
+  height: 150px;
+}
+
+.k-textbox-container:not(.k-state-empty) > .k-label,
+.k-floating-label-container:not(.k-state-empty) > .k-label {
+  background-color: transparent;
+}
+
+.k-switch-on .k-switch-container {
+  background-color: $switch-background-color !important;
+}
+
+.k-switch-on .k-switch-handle,
+.k-switch-on:hover .k-switch-handle,
+.k-switch-on.k-state-hover .k-switch-handle {
+  color: $color-text-white;
+  background-color: $color-link-text-blue !important;
+}
+
+.k-switch-on:hover .k-switch-container,
+.k-switch-on.k-state-hover .k-switch-container {
+  color: $color-text-white;
+  background-color: $switch-background-color !important;
+}
+
+.k-switch-container {
+  font-size: x-small !important;
+}
+kendo-drawer-container {
+  position: fixed;
+  height: 100%;
+}
+.k-drawer-item {
+  padding: 5px 8px;
+  margin: 5px 5px 8px;
+  border-radius: 5px;
+  outline: none;
+}
+.k-drawer-wrapper {
+  width: 255px;
+}
+.k-drawer-wrapper ul li span.items-container:hover {
+  background-color: $sidebar-background-color;
+  color: $sidebar-text-color;
+}
+
+.k-drawer-item:hover {
+  background: $color-background-white;
+}
+
+.k-drawer-wrapper ul li span.items-container.active :hover {
+  background-color: $sidebar-background-active-color;
+  color: $sidebar-text-color;
+}
+
+.k-drawer-wrapper ul li span.items-container.active {
+  padding: 5px 8px;
+  margin: 5px 5px 8px;
+  border-radius: 5px;
+  outline: none;
+  width: 100%;
+  background-color: $sidebar-background-active-color;
+  color: $sidebar-text-color;
+}
+
+.k-drawer-wrapper ul li span {
+  padding: 2px 8px;
+  margin: 5px 5px 8px;
+  border-radius: 5px;
+  outline: none;
+  width: 100%;
+}
+
+.k-drawer-item.k-state-selected {
+  background-color: transparent;
+}
+
+.k-drawer-item.k-state-selected:focus {
+  background: $color-background-white;
+}
+
+.k-drawer-wrapper ul li .items-container:focus,
+.icon-container :focus {
+  outline: none;
+}
+
+.k-drawer-wrapper ul li span.items-container {
+  font-size: $font-size-small-3;
+  font-weight: $font-weight-700;
+  line-height: 24px;
+}
+
+.k-drawer-wrapper ul li span.items-container span {
+  display: inline-block;
+  padding: 0;
+  margin: 3px 0 0;
+  width: auto;
+}
+
+.k-drawer-wrapper ul li {
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+}
+
+.k-drawer-item.k-state-selected:hover,
+.k-drawer-item.k-state-selected.k-state-hover {
+  background-color: transparent;
+}
+
+.k-drawer-wrapper ul li.k-drawer-item span.items-container span[id$="homeNav"],
+.k-drawer-wrapper
+  ul
+  li.k-drawer-item
+  span.items-container
+  span[id$="hoursOfOperationsNav"] {
+  border-bottom: solid 1px $color-background-grey;
+  border-radius: 0;
+  padding-bottom: 10px;
+}
+
+.all-users-grid .k-grid {
+  background: transparent;
+  border: none;
+}
+
+.users-grid .k-grid {
+  background: transparent;
+  border: none;
+}
+
+.standardlist-grid .k-grid {
+  background: transparent;
+  border: none;
+}
+
+.layout-content {
+  background: $color-background-white;
+  min-height: 350px;
+  .content-area,
+  .button-container {
+    margin: 0 auto;
+    width: 710px;
+  }
+  .visited-branch,
+  .find-branch-container,
+  .services,
+  .schedule-appointment,
+  .review-information,
+  .appointment-notification {
+    padding: 0px 0 25px;
+    text-align: left;
+  }
+  .sub-heading {
+    font-size: 20px;
+    font-weight: 500;
+  }
+  input[type="text"] {
+    font-size: 18px;
+    line-height: 21px;
+    padding: 6px 10px;
+    width: 100%;
+  }
+}
+.list-grid-header-column {
+  background-color: #f4f6fa;
+  font-size: $_font-size-small-4;
+  line-height: 0em;
+  border: 0;
+}
+
+.listrow {
+  border-color: #f4f6fa;
+}
+
+.k-grid .k-hierarchy-cell {
+  width: 0;
+}
+
+.k-grid .k-header.k-hierarchy-cell {
+  border: none;
+}
+
+.k-grid .k-hierarchy-cell .k-icon {
+  display: none;
+}
+
+.k-grid .k-hierarchy-col {
+  width: 1px;
+}
+
+.k-grid .k-detail-row .k-detail-cell {
+  padding: 0;
+}
+
+.k-detail-cell {
+  padding: 0;
+  transform: translateY(-12px);
+  background-color: $color-background-white;
+}
+
+// lavi-modal lavi-form-panel .k-panelbar {
+//   background-color: $color-background-white !important ;
+// }
+
+lavi-modal lavi-form-panel .k-panelbar > .k-item > .k-link:hover,
+lavi-modal lavi-form-panel .k-panelbar > .k-item > .k-link.k-state-hover,
+lavi-modal lavi-form-panel .k-panelbar > .k-item > .k-link.k-state-focused {
+  background-color: $color-background-white;
+}
+
+lavi-modal .k-button-overlay,
+kendo-scheduler .k-scheduler-toolbar li a::before,
+kendo-scheduler .k-scheduler-toolbar li .k-link::before,
+kendo-scheduler .k-scheduler-footer li a::before,
+kendo-scheduler .k-scheduler-footer li .k-link::before,
+.k-toolbar .k-picker-wrap::before,
+.k-toolbar .k-dropdown-wrap::before,
+.k-button::before {
+  background-color: $color-background-white;
+  display: none;
+}
+
+/* kendo ui css ends */
+
+lavi-preview-execution-input-controls .k-textbox {
+  color: $color-text-black;
+}
+
+.kendo-picker {
+  width: 300px;
+  height: 200px;
+  display: flex;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.grid {
+  position: absolute;
+}
+
+.grid.bordered {
+  position: absolute;
+  color: $_color-white;
+  text-align: center;
+  line-height: 50px;
+  border: 1px dashed;
+  filter: invert(0.65);
+}
+
+.menu-style,
+.menu-list-style,
+.data-style {
+  color: $workflow-menu-text-color;
+  font-weight: $font-weight-800;
+}
+
+ #launcher {
+  display: none;
+  z-index: 0 !important;
+  width: 108px !important ;
+}
+
+.w-130{
+  width : 130% !important
+}
+
+.k-notification-group{
+  z-index: 99999;
+}
+
+/*#region Simple Keyboard*/
+.simple-keyboard {
+  max-width: 100%;
+
+  color: black;
+  font-size: 2.0rem;
+  font-family: "Neue Haas Unica W1G";
+  // font-weight: bold;
+}
+
+.sk-extraButton{
+  max-width: 21% !important;
+}
+
+.h-69 {
+  height: 69%!important;
+}
+
+.h-80 {
+  height: 80%!important;
+}
+
+.hide-cursor {
+  caret-color: transparent;
+}
+
+/*#endregion */
+
+.k-calendar-navigation {
+  .k-content {
+    li {
+      padding: 0;
+    }
+  }
+}
+
+li.disabled{
+  cursor: not-allowed;
+  opacity: .7;
+}
+
+@font-face {
+  font-family: 'Lora-Bold';
+  font-style: normal;
+  src: url('/../../assets/fonts/Lora-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'Lora-BoldItalic';
+  font-style: normal;
+  src: url('/../../assets/fonts/Lora-BoldItalic.ttf');
+}
+
+@font-face {
+  font-family: 'Lora-Italic';
+  font-style: normal;
+  src: url('/../../assets/fonts/Lora-Italic.ttf');
+}
+
+@font-face {
+  font-family: 'Lora-Regular';
+  font-style: normal;
+  src: url('/../../assets/fonts/Lora-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'RobotoCondensed-Regular';
+  font-style: normal;
+  src: url('/../../assets/fonts/RobotoCondensed-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Roboto-Regular';
+  font-style: normal;
+  src: url('/../../assets/fonts/Roboto-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Oswald-Bold';
+  font-style: normal;
+  src: url('/../../assets/fonts/Oswald-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'Oswald-BoldItalic';
+  font-style: normal;
+  src: url('/../../assets/fonts/Oswald-BoldItalic.ttf');
+}
+
+@font-face {
+  font-family: 'Oswald-DemiBold';
+  font-style: normal;
+  src: url('/../../assets/fonts/Oswald-DemiBold.ttf');
+}
+
+@font-face {
+  font-family: 'Oswald-Demi-BoldItalic';
+  font-style: normal;
+  src: url('/../../assets/fonts/Oswald-Demi-BoldItalic.ttf');
+}
+
+@font-face {
+  font-family: 'Oswald-ExtraLight';
+  font-style: normal;
+  src: url('/../../assets/fonts/Oswald-ExtraLight.ttf');
+}
+
+@font-face {
+  font-family: 'Oswald-Extra-LightItalic';
+  font-style: normal;
+  src: url('/../../assets/fonts/Oswald-Extra-LightItalic.ttf');
+}
+
+@font-face {
+  font-family: 'Oswald-Heavy';
+  font-style: normal;
+  src: url('/../../assets/fonts/Oswald-Heavy.ttf');
+}
+
+@font-face {
+  font-family: 'Oswald-HeavyItalic';
+  font-style: normal;
+  src: url('/../../assets/fonts/Oswald-HeavyItalic.ttf');
+}
+
+@font-face {
+  font-family: 'Oswald-Light';
+  font-style: normal;
+  src: url('/../../assets/fonts/Oswald-Light.ttf');
+}
+
+@font-face {
+  font-family: 'Oswald-LightItalic';
+  font-style: normal;
+  src: url('/../../assets/fonts/Oswald-LightItalic.ttf');
+}
+
+@font-face {
+  font-family: 'Oswald-Medium';
+  font-style: normal;
+  src: url('/../../assets/fonts/Oswald-Medium.ttf');
+}
+
+@font-face {
+  font-family: 'Oswald-MediumItalic';
+  font-style: normal;
+  src: url('/../../assets/fonts/Oswald-MediumItalic.ttf');
+}
+
+@font-face {
+  font-family: 'Oswald-Regular';
+  font-style: normal;
+  src: url('/../../assets/fonts/Oswald-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Oswald-RegularItalic';
+  font-style: normal;
+  src: url('/../../assets/fonts/Oswald-RegularItalic.ttf');
+}
+
+@font-face {
+  font-family: 'Oswald-Stencil';
+  font-style: normal;
+  src: url('/../../assets/fonts/Oswald-Stencil.ttf');
+}
+
+
+@font-face {
+  font-family: 'Scout-Bold';
+  font-style: normal;
+  src: url('/../../assets/fonts/Scout-Bold.otf');
+}
+
+@font-face {
+  font-family: 'Scout-BoldItalic';
+  font-style: normal;
+  src: url('/../../assets/fonts/Scout-BoldItalic.otf');
+}
+
+@font-face {
+  font-family: 'Scout-Light';
+  font-style: normal;
+  src: url('/../../assets/fonts/Scout-Light.otf');
+}
+
+@font-face {
+  font-family: 'Scout-Regular';
+  font-style: normal;
+  src: url('/../../assets/fonts/Scout-Regular.otf');
+}
+
+
+@font-face {
+  font-family: 'Scout-RegularItalic';
+  font-style: normal;
+  src: url('/../../assets/fonts/Scout-RegularItalic.otf');
+}
+
+
+@font-face {
+  font-family: 'ScoutCond-Black';
+  font-style: normal;
+  src: url('/../../assets/fonts/ScoutCond-Black.otf');
+}
+
+@font-face {
+  font-family: 'ScoutCond-Bold';
+  font-style: normal;
+  src: url('/../../assets/fonts/ScoutCond-Bold.otf');
+}
+
+@font-face {
+  font-family: 'ScoutCond-Light';
+  font-style: normal;
+  src: url('/../../assets/fonts/ScoutCond-Light.otf');
+}
+
+@font-face {
+  font-family: 'ScoutCond-ExtraLight';
+  font-style: normal;
+  src: url('/../../assets/fonts/ScoutCond-ExtraLight.otf');
+}
+
+
+@font-face {
+  font-family: 'ScoutCond-Regular';
+  font-style: normal;
+  src: url('/../../assets/fonts/ScoutCond-Regular.otf');
+}
+
+@font-face {
+  font-family: 'ScoutCond-Thin';
+  font-style: normal;
+  src: url('/../../assets/fonts/ScoutCond-Thin.otf');
+}
+
+
+
+

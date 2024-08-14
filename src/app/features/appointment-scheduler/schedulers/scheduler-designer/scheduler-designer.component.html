@@ -1,0 +1,86 @@
+<ng-container
+  *ngIf="{
+    opened: Opened$ | async,
+    isEditMode: IsEditMode$ | async,
+    workflowList: WorkFlowList$ | async
+  } as value"
+>
+  <lavi-auth-container
+    [ExitURL]="'/manage/appointment-scheduler'"
+    [HeaderTitle]="'Scheduler Interface Designer'"
+  >
+    <ng-container *ngIf="!value.opened">
+      <div class="container-fluid divLayoutContainer appointment-scheduler">
+        <lavi-header-controls></lavi-header-controls>
+        <div class="row divLayoutTopMiddleSection mt-3">
+          <div class="column center" [lavi-fill-height]="true">
+            <div class="middle-outer-div">
+              <lavi-layout-container></lavi-layout-container>
+            </div>
+          </div>
+          <div
+            class="column right divLayoutPropertyContainer"
+            [lavi-fill-height]="true"
+          >
+            <lavi-property-window></lavi-property-window>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <kendo-dialog
+      *ngIf="value.opened"
+      title="{{
+        value.workflowList.length > 0 ? 'Select a workflow and continue.' : ''
+      }}"
+      [width]="'40%'"
+    >
+      <ng-container *ngIf="value.workflowList.length > 0">
+        <div class="text-center">
+          <kendo-textbox-container class="w-50">
+            <kendo-dropdownlist
+              tabindex="4"
+              (valueChange)="WorkFlowChange($event)"
+              [data]="value.workflowList | laviSortBy: 'name'"
+              textField="name"
+              valueField="workFlowId"
+              [(ngModel)]="SelectedValue"
+              placeholder="Select Workflow"
+            >
+            </kendo-dropdownlist>
+          </kendo-textbox-container>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="value.workflowList.length === 0">
+        <div class="text-center f-20">
+          <span>No workflow to continue.</span>
+        </div>
+      </ng-container>
+      <kendo-dialog-actions>
+        <div class="col-lg-12 col-sm-12 col-12 pt-3">
+          <div class="row">
+            <div class="col-lg-2 col-2"></div>
+            <div class="col-lg-10 col-10">
+              <div class="float-right">
+                <input
+                  kendoButton
+                  type="button"
+                  (click)="Cancel()"
+                  class="secondary-button"
+                  value="Cancel"
+                />
+                <input
+                  *ngIf="value.workflowList.length > 0"
+                  type="button"
+                  (click)="OnAction($event)"
+                  kendoButton
+                  class="primary-button"
+                  value="Continue"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </kendo-dialog-actions>
+    </kendo-dialog>
+  </lavi-auth-container>
+</ng-container>

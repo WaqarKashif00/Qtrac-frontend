@@ -1,0 +1,15 @@
+<div class="container-fluid right-content">
+  <lavi-content-add *ngIf="IsEditing"
+  (ClearGranule)="ClearData($event)"
+  (CheckboxChanged)=CheckBoxChanged($event)
+  [Configurations]="Configurations"
+  [IsEditing]="IsEditing">
+</lavi-content-add>
+
+<lavi-content-list *ngIf="SnapshotState?.id && !IsEditing"
+  [IsEditing]="!IsEditing"
+  [Configurations]="Configurations"
+  [SnapshotGraph]="SnapshotGraph"
+  >
+</lavi-content-list>
+</div>

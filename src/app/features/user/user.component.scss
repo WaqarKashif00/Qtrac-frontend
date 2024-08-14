@@ -1,0 +1,18 @@
+lavi-modal > lavi-user-advance-settings >.k-multiselect .k-multiselect-wrap, .k-dropdowntree .k-multiselect-wrap {
+height: 25px;
+}
+.show{
+ display: block;
+}
+.profile-error-msg{
+  width: 125px;
+  position: absolute;
+  bottom: 5px;
+}
+::ng-deep .k-label {
+  display: flex;
+  margin-bottom: 0;
+}
+::ng-deep .k-checkbox {
+  margin-top: 0;
+}

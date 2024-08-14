@@ -1,0 +1,51 @@
+<div
+  class="e-panel divTool"
+  [lavi-drag-me]="true"
+  [drag-me-drop-element]="DivLayoutDesignContainer"
+  (OnDrop)="OnLabelDrop($event)"
+>
+  <div class="e-panel-container">
+    <img src="/assets/text-icon.svg" alt="Label" />
+    <span>Text</span>
+    <span class="drag-icon"></span>
+  </div>
+</div>
+<div
+  class="e-panel divTool"
+  [lavi-drag-me]="true"
+  [drag-me-drop-element]="DivLayoutDesignContainer"
+  (OnDrop)="OnImageDrop($event)"
+>
+  <div class="e-panel-container">
+    <img src="/assets/img-icon.svg" alt="Image" />
+    <span>Image</span>
+    <span class="drag-icon"></span>
+  </div>
+</div>
+
+<div
+  class="e-panel divTool"
+  [lavi-drag-me]="true"
+  [drag-me-drop-element]="DivLayoutDesignContainer"
+  (OnDrop)="OnVideoDrop($event)"
+>
+  <div class="e-panel-container">
+    <img src="/assets/video-icon.svg" alt="Video" />
+    <span>Video</span>
+    <span class="drag-icon"></span>
+  </div>
+</div>
+<div
+  class="e-panel divTool"
+  [lavi-drag-me]="true"
+  [drag-me-drop-element]="DivLayoutDesignContainer"
+  (OnDrop)="OnSliderDrop($event)"
+>
+  <div class="e-panel-container">
+    <div class="icon-containers">
+      <img src="/assets/slideshow-icon.svg" alt="Slideshow" />
+    </div>
+    <span>Slideshow</span>
+    <span class="drag-icon"></span>
+  </div>
+</div>

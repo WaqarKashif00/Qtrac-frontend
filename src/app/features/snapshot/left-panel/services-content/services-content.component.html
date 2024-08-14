@@ -1,0 +1,21 @@
+<div class="tab-content" [ngClass]="{'tab-content-footer': (IsEditing$| async)}">
+  <div class="pl-2 pr-2" *ngIf="workflows && workflows[0]">
+    <ul class="services-selector" *ngFor="let config of workflows">
+      <li>
+        <span class="accordion k-icon k-i-minus" [ngClass]="{ 'k-i-plus' : !config.isSelected , 'k-i-minus': config.isSelected }" (click)="expandCollapse(config)"></span><label (click)="expandCollapse(config)" class="k-label cursor-pointer">
+        {{config.name}}</label>
+        <div *ngIf="config.isSelected">
+          <ul *ngFor="let subConfig of config.granules">
+            <li>
+              <label class="k-label cursor-pointer">
+              <input type="checkbox" tabindex="2"  [(ngModel)]="subConfig.isSelected"
+                  (change)="CheckBoxChecked(subConfig,$event.target.checked,config.id)"
+                  kendocheckbox class="k-checkbox ng-untouched ng-pristine ng-valid">{{subConfig.name}}</label>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="!workflows || !workflows[0]" class="text-center"> No workflows </div>
+</div>

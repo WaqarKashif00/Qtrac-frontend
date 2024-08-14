@@ -1,0 +1,12 @@
+﻿/.angular/cache
+################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/node_modules
+/.vs
+/.vscode
+/dist/lavi-frontend-web
+/dist
+/kendo-ui-license.txt
+

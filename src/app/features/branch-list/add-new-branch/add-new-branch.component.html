@@ -1,0 +1,138 @@
+<div
+  *ngIf="{edit :(IsEditedMode$ | async), kiosks: KioskList$ | async, monitors: MonitorList$ | async,
+    desks: DeskList$ | async, mobileInterface: MobileInterfaceList$ | async,
+     workflowName: WorkflowName$ | async, branchDropdown: NewBranchDropdownData$ | async   } as value">
+  <lavi-auth-container HeaderTitle="{{'Location'}}" ExitURL="/manage/branches">
+
+    <div class="panel-container branch">
+      <lavi-form [FormGroup]="BranchForm" (OnSubmit)="Save()">
+        <lavi-general-configuration
+          [GeneralConfigForm]="BranchForm?.controls?.generalSettings"
+          [Countries]="value?.branchDropdown?.countries"
+          (StateList)="BindState($event)"
+          (CityListOnStateChange)="BindCity($event)"
+          [States]="StateList$ | async"
+          [Cities]="CityList$ | async"
+          [SupportedLanguages]="value?.branchDropdown?.languages"
+          [DefaultLanguage]="DefaultLanguageList$ | async"
+          [SmsNumbers]="value?.branchDropdown?.phoneNumberList"
+          [Tags]="Tags$ | async" [TagSuggestions]="value?.branchDropdown?.tags"
+          (ResetZipCity)="ResetCity()"
+          (ResetZip)="ResetZip()"
+          (AddressChange)="AddressChange($event)"
+          (DefaultLanguageList)="AddDefaultLanguage($event)"
+          (GetCompanyGeneralSettingsInfo)="GetCompanyGeneralSettingsInfo($event)"
+          (EnterTag)="AddTagOnEnter()" (DiscardTag)="RemoveTag($event)"
+          [EditMode]="value?.edit"
+          [LocationPrinters]="value?.branchDropdown?.locationPrinters"
+          (SetDefaultLanguage)="SetDefaultLanguage($event)">
+
+        </lavi-general-configuration>
+
+
+        <div *ngIf="value?.edit">
+
+          <lavi-workflow-used-in-branch   *laviHasRoleAccess="
+          roleActions.BranchWorkFlow;
+          actionName: actionType.View
+        ">
+          </lavi-workflow-used-in-branch>
+
+          <lavi-kiosks
+            [KioskList]="value?.kiosks"
+            [NumberList]="value?.branchDropdown?.numberList"
+            [TimeIntervals]="value?.branchDropdown?.timeIntervals"
+            (SaveAddedKiosk)="AddKiosk($event)"
+            (SaveUpdatedKiosk)="SaveEditedKiosk($event)"
+            (ShutdownDevice)="ShutDownKioskDevice($event)"
+            (SaveDeletedKiosk)="DeleteKiosk($event)"
+            (SaveLinkDevice)="LinkKioskDevice($event)"
+            (DeRegisterDeviceStatus)="DeRegisterKioskDevice($event)"
+            (StandByDeviceStatus)="StandByKioskDevice($event)"
+            (ResumeDeviceStatus)="ResumeKioskDevice($event)"
+            (RefreshKiosk)="RefreshKioskGrid($event)"
+            (SendMessageToKiosk)="SendMessageToKioskDevice($event)"
+            (SendMessageToAllKiosk)="SendMessageToAllKioskDevice($event)"
+            (OnURLCopy)="ShowURLCopied()"
+            *laviHasRoleAccess="
+            roleActions.BranchKioskConfigurations;
+            actionName: actionType.View
+          ">
+          </lavi-kiosks>
+
+          <lavi-monitors
+          *laviHasRoleAccess="
+          roleActions.BranchMonitorConfigurations;
+          actionName: actionType.View
+        "
+          [MonitorList]="value?.monitors"
+          [NumberList]="value?.branchDropdown?.numberList"
+          [TimeIntervals]="value?.branchDropdown?.timeIntervals"
+          [Languages]="value?.branchDropdown?.languages"
+          (SaveAddedMonitor)="AddMonitor($event)"
+          (SaveUpdatedMonitor)="SaveEditedMonitor($event)"
+          (SaveDeletedMonitor)="DeleteMonitor($event)"
+          (SaveLinkDevice)="LinkMonitorDevice($event)"
+          (DeRegisterDeviceStatus)="DeRegisterMonitorDevice($event)"
+          (StandByDeviceStatus)="StandByMonitorDevice($event)"
+          (ShutdownDevice)="ShutDownMonitorDevice($event)"
+          (ResumeDeviceStatus)="ResumeMonitorDevice($event)"
+          (RefreshMonitor)="RefreshMonitorGrid($event)"
+          (SendMessageToMonitor)="SendMessageToKioskDevice($event)"
+          (SendMessageToAllMonitor)="SendMessageToAllMonitorDevice($event)"
+          (OnURLCopy)="ShowURLCopied()">
+        </lavi-monitors>
+        <lavi-mobile-interface
+        *laviHasRoleAccess="
+        roleActions.BranchMobileInterface;
+        actionName: actionType.View
+        "
+        [MobileList]="value?.mobileInterface"
+        (SaveNewMobile)="AddMobileInterface($event)"
+        (SaveUpdatedMobile)="SaveEditedMobile($event)"
+        (DeleteSaveMobile)="DeleteMobileInterface($event)"></lavi-mobile-interface>
+        <lavi-desks
+        *laviHasRoleAccess="
+        roleActions.BranchDeskConfigurations;
+        actionName: actionType.View
+      "
+        [DeskList]="value?.desks"
+        (SaveNewDesk)="AddDesk($event)"
+        (SaveUpdatedDesk)="SaveEditedDesk($event)"
+        (DeleteSavedDesk)="DeleteDesk($event)"></lavi-desks>
+        </div>
+        <lavi-additional-settings
+          [AdditionalSettingsForm]="BranchForm?.controls?.additionalSettings"
+          [HoursOfOperation]='value?.branchDropdown?.hoursOfOperation'
+          [BranchTimeZone]='value?.branchDropdown?.branchTimeZone'>
+        </lavi-additional-settings>
+
+        <lavi-branch-advance-settings
+        [AdvanceSettingsForm]="BranchForm?.controls?.advanceSettings"
+        [HoursOfOperationException]="value?.branchDropdown?.exceptionHoursOfOperations"
+        [MobileTemplates]="SelectedMobileTemplates$|async"
+        >
+        </lavi-branch-advance-settings>
+
+        <div>
+          <lavi-transparent-footer>
+            <div class="col-lg-12 col-sm-12 col-12 pt-2 pr-5">
+              <div class="row">
+                <div class="col-lg-4 col-4"></div>
+                <div class="col-lg-8 col-8">
+                  <div class="float-right">
+                    <button type="submit" kendoButton class="primary-button mr-4">
+                      {{value?.edit? 'Update':'Save'}}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </lavi-transparent-footer>
+        </div>
+      </lavi-form>
+      <div>
+      </div>
+    </div>
+  </lavi-auth-container>
+</div>

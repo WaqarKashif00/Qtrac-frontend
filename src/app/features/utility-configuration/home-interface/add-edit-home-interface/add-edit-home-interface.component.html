@@ -1,0 +1,12 @@
+<ng-container
+  *ngIf="{
+    isEditMode: IsEditMode$ | async,
+    opened: IsModalOpened$ | async
+  } as value"
+>
+  <lavi-auth-container
+    [HeaderTitle]="value.isEditMode ? 'Edit Home Interface' : 'Add Home Interface'" [ExitURL]="'/manage/home-interfaces'"
+  >
+    <lavi-home-interface-layout></lavi-home-interface-layout>
+  </lavi-auth-container>
+</ng-container>

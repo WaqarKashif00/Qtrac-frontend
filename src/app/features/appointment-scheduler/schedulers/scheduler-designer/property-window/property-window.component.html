@@ -1,0 +1,22 @@
+<div class="property-window">
+  <lavi-general-properties
+    [DesignerPanel]="DesignerPanel$ | async"
+    (OnUpdateDesignerData)="UpdateDesignerData($event)"
+    (OnWorkFlowChangeClick)="WorkFlowChangeButtonClicked()"
+  ></lavi-general-properties>
+  <lavi-ticket-properties
+    *ngIf="
+      (SelectedPage$ | async) == PageName.AppointmentNotificationPreferencePage
+    "
+    [TicketPropertyControl]="TicketPropertyPanel$ | async"
+    (OnDataChanged)="UpdateTicketPropertyData($event)"
+  ></lavi-ticket-properties>
+  <lavi-announcement-properties
+  [Announcement]="Announcement$ | async"
+  (OnDataChanged)="UpdateAnnouncementData($event)">
+  </lavi-announcement-properties>
+  <lavi-scheduler-footer-properties
+  [FooterPropertiesPanel]="FooterPropertiesPanel$ | async"
+  (OnDataChanged)="UpdateFooterData($event)">
+  </lavi-scheduler-footer-properties>
+</div>

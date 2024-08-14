@@ -1,0 +1,145 @@
+<div class="branch-map">
+  <div class="row m-0">
+    <span class="sub-heading">{{AppointmentTexts.appointmentRadiusHeader}}: </span>
+    <ul id="mapDistance">
+      <ng-container *ngFor="let item of Miles">
+        <lavi-list-item
+          [Value]="item.value"
+          [Text]="item.text"
+          [IsSelected]="item.isSelected"
+          [InActiveBackColor]="InActiveBackColor"
+          [InActiveTextColor]="InActiveTextColor"
+          [ActiveBackColor]="ActiveBackColor"
+          [ActiveTextColor]="ActiveTextColor"
+          (OnSelectingMile)="OnSelectingTheMiles($event)"
+        ></lavi-list-item>
+      </ng-container>
+    </ul>
+  </div>
+  <div class="row m-0">
+    <div class="col-lg-4 col-sm-12 p-0 branch-details-container">
+      <ng-container *ngFor="let branch of NearestBranchList">
+        <div
+          [style.color]="InActiveTextColor"
+          [style.background-color]="InActiveBackColor"
+          class="branch-details"
+        >
+          <div class="row">
+            <div class="col-6 heading-text">{{ branch.branchName }}</div>
+            <div class="col-6">
+              <p
+                *ngIf="branch.milesInDistance"
+                class="text-right font-weight-bold"
+              >
+                5 mi
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col address-row">
+              {{ branch.branchAddress }}<br />
+              {{ branch.branchPhoneNumber }}
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <p
+                *ngIf="branch.isPreviouslyVisited"
+                class="small-text text-right visited-branch-indication"
+              >
+                Previously Visited Location
+              </p>
+            </div>
+          </div>
+          <div class="row pt-1">
+            <div class="col-6">
+              <p class="font-weight-bold">{{AppointmentTexts.appointmentServiceOfferTitle}}:</p>
+              <p>
+                <ng-container *ngFor="let service of branch.branchServices">
+                  {{ service.name }}<br />
+                </ng-container>
+                <ng-container *ngIf="branch.branchServices.length==0">
+                   ----<br />
+                </ng-container>
+              </p>
+            </div>
+            <div class="col-6">
+              <p class="text-right font-weight-bold">{{AppointmentTexts.appointmentHOOHeader}}</p>
+              <p class="text-right">
+                <ng-container *ngFor="let hours of branch.workingHours">
+                 {{ TranslatedDays? TranslatedDays[hours.day]: hours.day }}
+                  <!-- {{  hours.day }} -->
+                  :
+                  {{
+                    hours.isOpen
+                      ? hours.time.length == 0
+                        ? AppointmentTexts.appointmentLocationAvailableTime
+                        :this.GetConvertedTime(hours.time[0].fromTime.hours,hours.time[0].fromTime.minutes)  +
+                          " - " +
+                          this.GetConvertedTime( hours.time[hours.time.length - 1].toTime.hours, hours.time[hours.time.length - 1].toTime.minutes)
+                      : AppointmentTexts.appointmentNotAvailableShort
+                  }}
+                  <br />
+                </ng-container>
+                <ng-container *ngIf="branch.workingHours.length == 0"
+                  >-</ng-container
+                >
+              </p>
+            </div>
+          </div>
+          <div class="row pt-2">
+            <div class="col-12">
+              <input
+                [ngStyle]="
+                  !branch.isBranchSelected
+                    ? {
+                        backgroundColor: SecondaryBackColor,
+                        color: SecondaryTextColor
+                      }
+                    : {
+                        backgroundColor: PrimaryBackColor,
+                        color: PrimaryTextColor
+                      }
+                "
+                (click)="OnBranchSelectionChange(branch.branchId)"
+                kendoButton
+                type="button"
+                value={{AppointmentTexts.appointmentSelectLocationButton}}
+                class="w-100"
+              />
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div class="col-lg-8 col-sm-12 p-0">
+      <div class="google-map">
+        <!-- <lib-google-maps-angular
+          class="position-relative"
+          [latLong]="latLong"
+          [markers]="Markers"
+
+        ></lib-google-maps-angular> -->
+        <google-map
+          height="390px"
+          width="100%"
+          [center]="currentMapLocation"
+          [options]="options"
+          [zoom]="zoom"
+        >
+          <map-marker
+            *ngFor="let marker of Markers"
+            [position]="marker.position"
+            [label]="marker.label"
+            [title]="marker.title"
+            [options]="marker.options"
+            (mapClick)="openInfo(marker.branchId)"
+          >
+          </map-marker
+        ></google-map>
+        latLong config format
+      </div>
+    </div>
+  </div>
+</div>

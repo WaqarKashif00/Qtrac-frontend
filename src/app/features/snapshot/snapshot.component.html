@@ -1,0 +1,33 @@
+  <div class="container-fluid h-100">
+    <div class="row" *ngIf="!(ShowSnapshotDraftScreen$ | async)">
+      <div class="left-panel position-relative">
+        <lavi-left-panel
+          [SnapshotState]="SnapShotState$ | async "
+          [Configurations] ="Configurations$ | async"
+          (CheckboxChanged) ="SelectionChanged($event)">
+        </lavi-left-panel>
+      </div>
+      <div class="right-panel">
+        <lavi-right-panel
+        [SnapshotState]="SnapShotState$ | async "
+        [Configurations]="Configurations$ | async "
+        [SnapshotGraph]="SnapshotGraph$ | async"
+        [Saved]="Saved$ | async"
+        (Save)="SaveContext()"
+        (Cancel)="CancelContext()"
+        (AddEdit)="AddEditContext()"
+        (GranuleSelected)="SelectionChanged($event)"
+        (ClearGranule)="ClearGranule($event)"></lavi-right-panel>
+      </div>
+    </div>
+    
+    <div class="row" *ngIf="ShowSnapshotDraftScreen$ | async">
+      <div class="snap-list">
+        <snapshot-list
+        [IsLoadingPage]="IsLoadingPage$ | async"
+        [SnapshotState]="SnapShotState$ | async "
+        (Cancel)="OnCancel()"></snapshot-list>
+      </div>
+    </div>
+  </div>
+

@@ -1,0 +1,29 @@
+<div class="filter-adorner">
+  <div class="filter-adorner-container">
+    <input
+      kendoTextBox
+      class="filter-search-text"
+      placeholder="{{ searchTextTitle }}"
+      (changed)='onTextFilterChanged()'
+      [(ngModel)]="filter.FilterText"
+      >
+      <ng-template kendoTextBoxSuffixTemplate>
+        <kendo-icon [name]="'search'"></kendo-icon>
+      </ng-template>
+    />
+    <span class="filter-search-action-buttons-block">
+      <button
+        class="filter-search-buttons"
+        kendoButton look="flat"
+        (click)='onResetFilter()'
+        [disabled]="!filter.isFilterApplied()"
+        >Reset</button>
+      <button
+        class="filter-search-buttons"
+        kendoButton
+        look="flat"
+        *ngIf='filter.hasAdvancedFilter()'
+        >Advanced</button>
+    </span>
+  </div>
+</div>

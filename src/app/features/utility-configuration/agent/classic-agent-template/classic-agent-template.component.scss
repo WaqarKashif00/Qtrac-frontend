@@ -1,0 +1,49 @@
+@import "src/stylings/primitives/primitives.scss";
+@import "src/stylings/shared/agent-layout.scss";
+
+.agent-buttons-row{
+    display: grid;
+    grid-template-columns: $agent-buttons-row-grid-template-columns;
+    margin-top: 15px;
+  }
+
+.agent-queue-grid{
+    width: 100%;
+}
+
+.more-information-button{
+  text-align: center;
+  justify-content: center;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+  color:$color-text-white;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* */
+}
+
+
+  .call-next-button{
+    background-color: $button-yellow-background-color;
+    color:$agent-button-text;
+  }
+
+ .modal-bg{
+  width: calc(100% - 325px);
+  height: calc(100% - 118px);
+  background-color: $agent-modal-bg;
+  opacity:  0.38;
+  position: absolute;
+  z-index: 10;
+}
+
+.overflow-scroll{
+  overflow-x: scroll;
+}

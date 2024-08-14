@@ -1,0 +1,42 @@
+@import "src/stylings/primitives/primitives.scss";
+.agent-view-container {
+  border-radius: 4px;
+  margin: 50px 0 0;
+  padding: 10px 25px 40px 12px;
+  .agent-columns .col-6 {
+    padding-left: 65px;
+    .link-text {
+      display: inline-block;
+      vertical-align: text-top;
+    }
+  }
+  .agent-view-template-list {
+    padding: 22px 0 0 25px;
+    .row {
+      padding-top: 10px;
+    }
+    .template-name {
+      padding-top: 3px;
+    }
+  }
+  .heading-text {
+    font-size: $font-size-small-4;
+    font-weight: bold;
+  }
+  .list-heading,
+  .list-details {
+    color: rgba($color-text-black, 0.6);
+    font-size: $font-size-small-2;
+  }
+  .list-details p {
+    font-weight: $font-weight-600;
+  }
+  ::ng-deep .k-dropdown .k-dropdown-wrap .k-input,
+  ::ng-deep .k-dropdowntree .k-dropdown-wrap .k-input {
+    font-size: $font-size-small-4 !important;
+  }
+  ::ng-deep .k-textbox-container,
+  ::ng-deep .k-dialog .k-multiselect {
+    width: 80%;
+  }
+}

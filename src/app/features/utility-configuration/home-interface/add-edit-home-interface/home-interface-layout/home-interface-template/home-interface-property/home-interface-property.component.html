@@ -1,0 +1,62 @@
+<lavi-home-interface-layout-control-property
+  [DesignerPanel]="DesignerPanel$ | async"
+></lavi-home-interface-layout-control-property>
+<ng-content select="default-control-property"></ng-content>
+<div
+  *ngIf="{
+    controls: Controls$ | async,
+    controlSelection: ControlSelection$ | async
+  } as values"
+  class="service-controls-properties"
+>
+  <div *ngIf="values.controls.length > 0" class="property-window">
+    <lavi-form-panel
+    [(PanelExpand)]="values.controlSelection.IsOtherControlsSelected"
+      PanelHeader="Other Control Property"
+    >
+      <lavi-form-content-panel>
+        <div class="property-window-body">
+          <div>
+            <label>Items</label>
+            <select
+              class="OtherItemDropdown"
+              (change)="OnControlDropdownChange($event)"
+            >
+              <option
+                *ngFor="let labelDiv of values.controls"
+                [value]="labelDiv.control.name"
+                [selected]="labelDiv.showPropertyWindow"
+              >
+                {{ labelDiv.control.name }}
+              </option>
+            </select>
+          </div>
+          <div *ngFor="let item of values.controls">
+            <div *ngIf="item.showPropertyWindow">
+              <div *ngIf="item.isLabelControl">
+                <lavi-home-interface-label-form
+                  [Control]="item.control"
+                ></lavi-home-interface-label-form>
+              </div>
+              <div *ngIf="item.isImageControl">
+                <lavi-home-interface-image-form
+                  [Item]="item.control"
+                ></lavi-home-interface-image-form>
+              </div>
+              <div *ngIf="item.isSliderControl">
+                <lavi-home-interface-slider-form
+                  [Item]="item.control"
+                ></lavi-home-interface-slider-form>
+              </div>
+              <div *ngIf="item.isVideoControl">
+                <lavi-home-interface-video-form
+                  [Item]="item.control"
+                ></lavi-home-interface-video-form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </lavi-form-content-panel>
+    </lavi-form-panel>
+  </div>
+</div>

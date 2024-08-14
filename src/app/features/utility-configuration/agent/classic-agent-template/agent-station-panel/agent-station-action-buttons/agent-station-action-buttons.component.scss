@@ -1,0 +1,82 @@
+@import "src/stylings/primitives/primitives.scss";
+@import "src/stylings/shared/agent-layout.scss";
+
+.more-information-button{
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-size: $font-size-smallest;
+  font-weight: $bold-font-weight;
+  height: 26px;
+  display: flex;
+  border-radius: 3px;
+  line-height: normal;
+  text-transform: uppercase;
+  margin-right: 0;
+  cursor: pointer;
+  width: 100%;
+  color:$color-text-white;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* */
+}
+
+
+  .select-box{
+    border: 1px solid $color-background-black;
+    width: 0.6em;
+    height: 0.6em;
+    cursor: pointer;
+  }
+
+  .select-box.selected{
+    background-color: $button-yellow-background-color;
+  }
+
+  .select-box[data-selected="True"]{
+    background-color:$button-yellow-background-color;
+  }
+
+
+.header{
+  border-radius: 1em;
+  display: grid;
+  grid-template-columns: 5% 90% 5%;
+}
+
+.header-column{
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+ul{
+ li {
+  display: inline-block;
+  list-style: none;
+  margin-right: 2px;
+  width: auto;
+  div {
+    display: inline-block;
+    font-size: $font-size-smallest;
+    padding: 6px 10px 5px;
+  }
+}
+}
+
+.button-col{
+  margin:0 !important;
+  padding-right: 5px !important;
+}
+
+.start-button{
+  background-color: $button-light-blue-background-color;
+}
+
+.call-button{
+  background-color: $button-green-background-color;
+}

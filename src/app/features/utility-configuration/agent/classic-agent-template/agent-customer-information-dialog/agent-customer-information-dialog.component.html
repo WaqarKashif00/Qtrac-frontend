@@ -1,0 +1,51 @@
+<lavi-agent-dialog-box [ModalColor]="'#F7CC46'"  [Width]="'500px'" [Height]="'500px'" (OnClose)="Close()" [IsOpen]="true" class="customer-information-dialog">
+  <div header>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-left bold header">
+          {{GetDisplayField(Customer) | uppercase}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div body class="container">
+    <div class="text-center mt-3">
+      <p class="bold">GENERAL QUESTIONNAIRE</p>
+    </div>
+    <div *ngFor="let question of Customer?.agentQuestions ;let index = index">
+      <div  class="row p-2">
+      <div class="col-6 text-left">{{question?.questionText}}</div>
+      <div *ngIf="!question.IsHyperLink" class="col-6 text-right">
+        {{question|laviAnswerFormat}}
+      </div>
+      
+    <a *ngIf="question.IsHyperLink" [href]="question|laviAnswerFormat" target="blank" class="col-6 text-right">
+        {{question|laviAnswerFormat}}
+    </a>
+    </div>
+      <div  *ngIf="index+1 ===  Customer.preServiceQuestionLength">
+        <div class="row p-2">
+          <div class="col-6 text-left">Selected Language</div>
+          <div class="col-6 text-right">
+            {{Customer.selectedLanguage}}
+        </div>
+      </div>
+        <div class="text-center mt-3">
+          <p class="bold">SUPPLEMENTAL QUESTIONNAIRE</p>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div footer *ngIf="AllowEditingCustomerInformation">
+      <div class="container-fluid">
+        <div class="row center">
+          <button
+            type="submit"
+            kendoButton
+            (click)="EditVisitorInformation()"
+            class="primary-button mr-4 "
+          >Edit</button>
+        </div>
+      </div>
+   </div>
+</lavi-agent-dialog-box>

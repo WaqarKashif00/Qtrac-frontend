@@ -1,0 +1,31 @@
+    <lavi-form-content-panel>
+        <div class="col-lg-12 inner-panel-padding right-column-width">
+          <div class="mb-5">
+            <div class="row mb-4">
+              <div class="col-lg-9">
+              <div class="font-weight-500">Appointment Templates</div>
+              </div>
+              <div class="col-lg-3">
+                <span
+                  (click)="OpenModel()"
+                  class="text-blue pl-4 cursor-pointer font-weight-bold"
+                  >Add Template</span
+                >
+              </div>
+              <lavi-appointment-template-add
+              [OpenAppointmentDialog]="OpenAppointTemplateDialog$ | async"
+              (Close)="closeModal()"
+              [Mode]="Mode"
+              (SaveForm)="Save($event)"
+              ></lavi-appointment-template-add>
+            </div>
+            <div>
+              <lavi-appointment-template-list
+              [AppointmentTemplates]="AppointmentTemplateList$ | async"
+              (Edit)="Edit($event)"
+              (Delete)="Delete($event)"
+              ></lavi-appointment-template-list>
+            </div>
+          </div>
+        </div>
+      </lavi-form-content-panel>

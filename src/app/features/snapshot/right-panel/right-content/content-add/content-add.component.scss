@@ -1,0 +1,29 @@
+@import "src/stylings/primitives/primitives.scss";
+.configuration {
+  height: auto;
+  padding-bottom: 20px;
+}
+.config-heading {
+  border-bottom: solid 1px $_color-light-grey-1600;
+  color: $_color-grey-200;
+  font-size: $_font-size-small-2;
+  p {
+    margin-bottom: 8px;
+  }
+}
+.config-content {
+  padding-top: 15px;
+}
+.config-section {
+  padding: 30px 30px 0;
+}
+.k-label {
+  display: flex;
+}
+input[type='checkbox'] {
+  padding: 8px;
+  margin-top: 2px;
+}
+input[type='radio'] {
+  margin-right: 10px;
+}

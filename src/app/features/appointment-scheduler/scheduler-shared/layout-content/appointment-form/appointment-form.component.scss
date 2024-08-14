@@ -1,0 +1,80 @@
+@import "src/stylings/primitives/primitives.scss";
+.appointment-form {
+  padding: 50px 0 100px;
+}
+.form-group {
+  margin-bottom: 40px;
+}
+.form-group:last-child {
+  margin-bottom: 0;
+}
+.country-code {
+  border-radius: 8px 0 0 8px;
+  display: inline-block;
+  font-size: $font-size-big-1;
+  padding: 6px 10px;
+  width: auto;
+}
+.displayText{
+  display: inline-flex;
+}
+input[type=text].phone-number {
+  display: inline-block;
+  border-radius: 0 8px 8px 0;
+  width: auto;
+}
+.phone-number {
+  display: inline-block;
+  border-radius: 0 8px 8px 0;
+}
+.container{
+  ::ng-deep .appointment-notification .wrapper-phone-number input,
+::ng-deep .global-question-container .wrapper-phone-number input,
+::ng-deep .supplimental-question-container .wrapper-phone-number input {
+  margin-left: 48px;
+  font-size: $global-font-size;
+}
+}
+
+::ng-deep .supplimental-question-container .disabled .wrapper-phone-number  {
+  opacity: .6;
+}
+::ng-deep .supplimental-question-container .disabled {
+  .k-textbox:disabled, .k-multiselect.k-state-disabled > .k-multiselect-wrap, .k-state-disabled.k-dropdowntree > .k-multiselect-wrap,
+.k-state-disabled > .k-dropdown .k-dropdown-wrap, .k-state-disabled > .k-dropdowntree .k-dropdown-wrap, .k-dropdown .k-dropdown-wrap.k-state-disabled, .k-dropdowntree .k-dropdown-wrap.k-state-disabled,
+.k-state-disabled > .k-dateinput .k-dateinput-wrap, .k-dateinput .k-dateinput-wrap.k-state-disabled, .k-state-disabled > .k-dateinput .k-picker-wrap, .k-dateinput .k-picker-wrap.k-state-disabled, .k-state-disabled > .k-datepicker .k-dateinput-wrap, .k-datepicker .k-dateinput-wrap.k-state-disabled,
+.k-state-disabled > .k-datepicker .k-picker-wrap, .k-datepicker .k-picker-wrap.k-state-disabled, .k-state-disabled > .k-datetimepicker .k-dateinput-wrap, .k-datetimepicker .k-dateinput-wrap.k-state-disabled, .k-state-disabled > .k-datetimepicker .k-picker-wrap,
+.k-datetimepicker .k-picker-wrap.k-state-disabled, .k-state-disabled > .k-timepicker .k-dateinput-wrap, .k-timepicker .k-dateinput-wrap.k-state-disabled, .k-state-disabled > .k-timepicker .k-picker-wrap, .k-timepicker .k-picker-wrap.k-state-disabled,
+.k-numerictextbox .k-numeric-wrap.k-state-disabled {
+  border-style: solid;
+}
+.k-textbox:hover, .k-textbox.k-state-hover, .k-picker-wrap.k-state-disabled:hover {
+  border-color: rgba(191, 191, 191);
+}
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation:portrait) {
+  input[type=text].phone-number {
+    width: 215px;
+  }
+}
+
+
+
+
+.header{
+  color:$agent-header-column-font-color;
+}
+::ng-deep .preview-control {
+  input[type="radio"] + label {
+    margin-top: 4px;
+  }
+}
+.center{
+  justify-content: center;
+  vertical-align: middle;
+}
+.service-question{
+  word-break: break-word; 
+  display: inline-flex;
+}

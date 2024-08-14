@@ -1,0 +1,22 @@
+@import "src/stylings/primitives/primitives.scss";
+
+.footer-icon {
+  border-top: solid 1px $_color-light-grey-1600;
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+  ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 12px;
+    li {
+      align-items: center;
+      background:$_color-light-grey-1700;
+      border-radius: 5px;
+      display: flex;
+      justify-content: center;
+      height: 32px;
+      width: 32px;
+    }
+  }
+}

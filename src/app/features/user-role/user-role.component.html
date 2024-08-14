@@ -1,0 +1,80 @@
+<lavi-list-screen-header
+Title="User Role"
+(OnAddNewButtonClick)="OpenAddUserDialog()"
+[PageName]="roleActions.UserRoles"
+[ActionName]="actionType.AddEdit"
+[ButtonValue]="'Add New Role'"
+></lavi-list-screen-header>
+
+  <ng-container *ngIf="OpenUserRoleDialog$ | async">
+    <lavi-add-role
+      [AgentTemplateDropdownList]="AgentTemplateDropdownList$ | async"
+      [OpenUserRoleDialog]="OpenUserRoleDialog$ | async"
+      [EditedTemplateId$]="EditedTemplateId$"
+      (Submit)="OnSave($event)"
+      (OnAddAgentTemplate)="AddAgentTemplate($event)"
+      (OnDeleteTemplate)="DeleteTemplate($event)"
+      (OnUpdateTemplate)="UpdateTemplate($event)"
+      [AgentQueueDropdownList]="AgentQueueDropdownList$ | async"
+      (OnTemplateChange)="ChangeTemplate($event)"
+      (ClosePopup)="ClosePopup($event)"
+      [addUserRoleForm]="AddUserRoleForm"
+      [userRole]="UserRole"
+      [DetectChange]="IsRoleNameChangeDetected"
+      [submitButtonTitle]="SubmitButtonTitle"
+      [formTitle]="FormTitle"
+      [HomeInterfaceDropdownList]="HomeInterfaceDropdownList$ | async"
+    >
+    </lavi-add-role>
+  </ng-container>
+
+  <div class="row mt-5 mr-2 ml-2 standardlist-grid" *ngIf="AllRolesList$ | async as List">
+    <kendo-grid
+      [kendoGridBinding]="List"
+      [pageSize]="100"
+      [sortable]="true"
+      [reorderable]="true"
+      [resizable]="true"
+      [selectable]="{ enabled: true, mode: 'multiple' }"
+    >
+      <kendo-grid-column title="Name">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <span>{{ dataItem.roleName }}</span>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column
+      field="id"
+      title=""
+      width="500"
+    >
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <label>
+          <kendo-menu
+            class="cursor-pointer text-blue"
+            [items]="items"
+            (select)="OnSelect($event, dataItem)"
+          >
+            <ng-template
+              kendoMenuItemLinkTemplate
+              let-item="item"
+              let-index="index"
+            >
+              <span
+                [kendoMenuItemLink]="index"
+                *ngIf="ShowMenuItem(item)"
+                [ngClass]="{
+                  'menu-style': item.text === '...',
+                  'menu-list-style': item.text != '...'
+                }"
+              >
+                {{ item.text }}
+                <span *ngIf="item.items && item.items.length"></span>
+              </span>
+            </ng-template>
+          </kendo-menu>
+        </label>
+      </ng-template>
+    </kendo-grid-column>
+    </kendo-grid>
+  </div>
+

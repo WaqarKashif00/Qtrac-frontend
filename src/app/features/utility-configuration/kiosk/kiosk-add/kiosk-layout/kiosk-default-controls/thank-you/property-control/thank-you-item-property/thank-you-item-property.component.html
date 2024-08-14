@@ -1,0 +1,20 @@
+<div>
+  <div>
+    <label>Text</label>
+    <div class="float-right">
+      <span
+        (click)="OpenTranslateDialog()"
+        class="text-blue cursor-pointer">
+        Edit text</span>
+    </div>
+  </div>
+  <lavi-font [FormGroup]="ThankYouItem.form"></lavi-font>
+</div>
+
+<lavi-language-translate-modal
+Title="{{ 'Thank You Control Text'}}"
+[OpenDialog]="Open"
+[TextFormArray]="TextFormArray$ | async"
+(CloseTranslateTextDialog)="CloseTranslateDialog()"
+(Save)="UpdateTranslatedTexts($event)"
+(TranslateText)="Translate($event)"></lavi-language-translate-modal>

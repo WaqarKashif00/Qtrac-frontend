@@ -1,0 +1,27 @@
+@import "src/stylings/primitives/primitives.scss";
+@import "src/stylings/shared/agent-layout.scss";
+
+.circle{
+  height: 1em;
+  width: 1em;
+  border-radius: 50%;
+}
+
+// .appointment-item-container *{
+//   color: $color-text-white
+// }
+
+.appointment-item-container{
+  display:grid;
+  grid-template-columns: 2em auto;
+}
+
+.appointment-content{
+  line-height:1;
+}
+
+// ::ng-deep{
+//   .k-scheduler-layout.k-scheduler-agendaview.k-scheduler-agenda .appointment-item-container *{
+//     color: $color-global-text
+//   }
+// }

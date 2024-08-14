@@ -1,0 +1,16 @@
+<div [formGroup]="Control.form" class="property-container">
+  <div>
+    <label>Background Color </label>
+    <kendo-colorpicker
+      formControlName="backgroundColor"
+      [value]="Control.styles.backgroundColor"
+    >
+    </kendo-colorpicker>
+  </div>
+  <div>
+    <label>Text Color </label>
+    <kendo-colorpicker formControlName="color" [value]="Control.styles.color">
+    </kendo-colorpicker>
+  </div>
+</div>
+<lavi-font [FormGroup]="Control.form"></lavi-font>

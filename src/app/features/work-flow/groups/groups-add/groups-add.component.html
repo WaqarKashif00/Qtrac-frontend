@@ -1,0 +1,44 @@
+<kendo-dialog *ngIf="IsGroupDialogOpen" title="Add Visitor tag" [width]="500" [height]="400">
+    <div class="add-group-modal">
+        <lavi-form [FormGroup]="AddGroupForm" (OnSubmit)="Save()">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-4 col-md-8 add-group-col">
+                        <div class="row">
+                            <div class="col-10">
+                                <kendo-textbox-container floatingLabel="Visitor tag Name" class="width-250">
+                                    <input kendoTextBox [formControl]="AddGroupForm.controls.groupName" tabindex="1" maxlength="50"
+                                        lavi-auto-focus [AutoFocusRequired]="IsGroupDialogOpen" lavi-trim-value />
+                                </kendo-textbox-container>
+                                <lavi-validation-message-list [validation-form-group-name]="AddGroupForm"
+                                    validation-control-name="groupName"
+                                    [validation-errorlist]="WorkflowMessage.GroupNameMessage">
+                                </lavi-validation-message-list>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <label>Select Color</label>
+                            <br>
+                            <kendo-colorpicker (valueChange)="OnColorPickerValueChange()" [formControl]="AddGroupForm.controls.groupColor">
+                            </kendo-colorpicker>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-4">
+                <div class="float-right">
+                    <button type="button" kendoButton class="secondary-button mr-2" (click)="ModalClose()">
+                        Cancel
+                    </button>
+                    <button kendoButton class="primary-button" type="submit" *ngIf="Mode=='ADD'">
+                        Add
+                    </button>
+                    <button kendoButton class="primary-button" type="submit" *ngIf="Mode=='EDIT'">
+                        Update
+                    </button>
+
+                </div>
+            </div>
+        </lavi-form>
+    </div>
+</kendo-dialog>

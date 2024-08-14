@@ -1,0 +1,122 @@
+@import "src/stylings/primitives/primitives.scss";
+.content-list-container {
+    .content-list {
+        background: $color-background-white;
+        border-bottom: solid 1px $snapshot-tab-border;
+        line-height: 20px;
+        margin: 0;
+
+        .heading {
+            color: $_color-grey-200;
+            font-size: $_font-size-small-2;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .values {
+            color: $_color_blue-800;
+            font-size: $_font-size-small-4;
+            font-weight: $font-weight-600;
+        }
+
+        .col:not(:last-child) {
+            border-right: solid 1px $_color-light-blue-200;
+        }
+    }
+
+    .content-graph {
+        height: auto;
+
+        div {
+            background: $color-background-white;
+            padding-left: 0.5%;
+        }
+        .main-one-dimensional-div{
+            background: $_color-light-grey-1500;
+            display: flex;
+            width:80%;
+            flex-wrap: wrap;
+            height: fit-content;
+            .one-dimensional-div{
+                display: flex;
+                align-items: center;
+                align-content: stretch;
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 190px;
+                margin: 2% 2% 2% 2%;
+                border: $frame-border-color 2px solid;
+                padding: 1.5%;
+                border-radius: 5%;
+                .heading {
+                    color: $_color-grey-200;
+                    font-size: $_font-size-big-1;
+                    font-weight: $_font-weight-600;
+                    text-transform: uppercase;
+                    margin-bottom: 4px;
+                    width: 100%
+                }
+                .one-dimensional-sub-div{
+                    display: flex; 
+                    flex-wrap: nowrap; 
+                    justify-content: space-evenly; 
+                    width: 100%;
+                    .number-heading{
+                        width: 95%; 
+                        font-size: $font-size-big-8; 
+                        font-weight: $_font-weight-600;
+                        word-wrap: break-word;
+                    }
+                    .arrow-div{
+                        padding-top: 12%;
+                        .less-than-arrow{
+                            color: red; 
+                            background-color: $_color-light-red; 
+                            padding-bottom: 30%;
+                            text-shadow: 0 0 $color-text-red-100;
+                            font-size: $_font-size-big-3;
+                        }
+                        .greater-than-arrow{
+                            color: green; 
+                            background-color: $_color-green-400; 
+                            padding-bottom: 30%;
+                            text-shadow: 0 0 green;
+                            font-size: $_font-size-big-3;
+                        }
+                        .equal-arrow{
+                            color: $_color-yellow-1000; 
+                            background-color: $_color-yellow-900; 
+                            padding-bottom: 30%;
+                            text-shadow: 0 0 $_color-yellow-1000;
+                            font-size: $_font-size-big-3;
+                        }
+                    }
+                }
+                
+                
+          }
+          }
+    }
+    .accordion {
+        width: 18px;
+        height: 18px;
+        border: solid 1px $nav-border-color;
+        border-radius: 4px;
+        margin-right: 9px;
+        color: $nav-border-color;
+  }
+
+  
+
+  .k-i-minus {
+    color: $color-text-white;
+    background: $nav-selected-text-color;
+  }
+    
+
+}
+
+.p-10px{
+  padding: 10px;
+}
+

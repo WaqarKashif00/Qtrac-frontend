@@ -1,0 +1,9 @@
+<lavi-modal
+  Title="General Question"
+  [OpenDialog]="OpenQuestionDialog"
+  [Width]="'60%'"
+
+>
+  <lavi-shared-add-edit-question [supportedLanguageList] = "SupportedLanguages" [IsGlobalQuestion]="true"
+  [Mode]="Mode" (Save)="Save($event)" (Cancel)="CloseModal()" ></lavi-shared-add-edit-question>
+</lavi-modal>

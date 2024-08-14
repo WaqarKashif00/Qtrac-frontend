@@ -1,0 +1,65 @@
+<div class="row mt-1">
+  <div class="col-4 col-sm-4">
+    <kendo-textbox-container floatingLabel="From Date">
+      <kendo-datepicker
+        [formControl]="fromDateFormControl"
+        (valueChange)="ValidateDate()"
+        [disabledDates]="disabledDates"
+      >
+      </kendo-datepicker>
+    </kendo-textbox-container>
+    <div class="error-message" *ngIf="!IsValidFromDate">
+      Please select date.
+    </div>
+  </div>
+  <div class="col-1 col-sm-1 pt-3">
+    <span>_</span>
+  </div>
+  <div class="col-4 col-sm-4">
+    <kendo-textbox-container floatingLabel="To Date">
+      <kendo-datepicker
+        [formControl]="toDateFormControl"
+        (valueChange)="ValidateDate()"
+        [disabledDates]="disabledDates"
+      >
+      </kendo-datepicker>
+    </kendo-textbox-container>
+    <div class="error-message" *ngIf="!IsValidToDate">Please select date.</div>
+    <div class="error-message" *ngIf="IsValidToDate && InValidDate">
+      Please select valid date.
+    </div>
+    <div class="error-message" *ngIf="IsAlreadyExist">
+      Date Range already exist.
+    </div>
+  </div>
+  <div class="col-3 col-sm-3 pl-3 pt-4">
+    <span class="text-primary small cursor-pointer" (click)="AddDate()"
+      >Add Date</span
+    >
+  </div>
+</div>
+<div
+  class="mt-4"
+  *ngIf="DuringDateRangeWorkingDaysFormArray.controls.length > 0"
+>
+  <lavi-operational-date-hours
+    *ngFor="
+      let form of DuringDateRangeWorkingDaysFormArray.controls;
+      let i = index
+    "
+    [DayName]="form.controls.dateText.value"
+    [TimeFrameFormArray]="form.controls.availableTimeFrames"
+    [AvailableTimeFrame]="form.controls.availableTimeFrameFormGroup"
+    (AddHoursForm)="
+      AddHoursForm(
+        form.controls.availableTimeFrames,
+        form.controls.availableTimeFrameFormGroup
+      )
+    "
+    (RemoveHoursForm)="
+      RemoveHoursForm($event, form.controls.availableTimeFrames)
+    "
+    (RemoveWorkingDateForm)="RemoveWorkingDateForm(i)"
+    (ValidationToTimeControl)="ValidateToTime($event)"
+  ></lavi-operational-date-hours>
+</div>

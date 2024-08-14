@@ -1,0 +1,88 @@
+<div class="row rule-state-container" [formGroup]="ConditionForm">
+
+    <!-- condition Variables dropdown -->
+    <div class="col-4">
+        <select class="w-100" formControlName="condition" [compareWith]="compareFn">
+            <option [ngValue]="null" ></option>
+            <optgroup *ngFor="let conditionGroup of ConditionVar" [label]="conditionGroup.value">
+                <option  [ngValue]="condition" *ngFor="let condition of conditionGroup.items">{{condition.shortName}}</option>
+            </optgroup>
+        </select>
+        <lavi-validation-message-list [validation-form-group-name]="ConditionForm" validation-control-name="condition" [validation-errorlist]="WorkflowMessage.AnyDropdownMessages">
+        </lavi-validation-message-list>
+    </div>
+
+    <!-- Operator Dropdown -->
+    <div class="col-3">
+        <select class="w-100" formControlName="operator" [compareWith]="compareOperatorFn">
+            <option *ngFor="let operator of Operator" [ngValue]="operator">{{operator.text}}</option>
+        </select>
+        <lavi-validation-message-list [validation-form-group-name]="ConditionForm" validation-control-name="operator" [validation-errorlist]="WorkflowMessage.AnyDropdownMessages">
+        </lavi-validation-message-list>
+    </div>
+
+    <!-- Dropdown / MultiSelect -->
+    <div class="col-4" *ngIf="ConditionForm?.value?.condition?.data_type == questionType.DropDown.value
+                            || ConditionForm?.value?.condition?.data_type == questionType.MultiSelect.value
+                            || ConditionForm?.value?.condition?.data_type == questionType.Options.value || 
+                            !CheckTextControlVisibility">
+        <select class="w-100" formControlName="value" *ngIf="ConditionForm?.value?.operator?.text == operatorEnum.Equals
+                                || ConditionForm?.value?.operator?.text == operatorEnum.NotEquals ">
+            <option [ngValue]="null">Select</option>
+            <option *ngFor="let dropdownData of DropdownData() | async">{{dropdownData}}</option>
+        </select>
+        <ng-multiselect-dropdown *ngIf="ConditionForm?.value?.operator?.text == operatorEnum.In || ConditionForm?.value?.operator?.text == operatorEnum.NotIn" formControlName="value" [data]="DropdownData() | async" [settings]="dropdownSettings">
+        </ng-multiselect-dropdown>
+        <lavi-validation-message-list [validation-form-group-name]="ConditionForm" validation-control-name="value" [validation-errorlist]="WorkflowMessage.DropdownValueMessages">
+        </lavi-validation-message-list>
+    </div>
+
+    <!-- Time / Date -->
+    <div class="col-3" *ngIf="ConditionForm?.value?.condition?.data_type == questionType.Time.value || ConditionForm?.value?.condition?.data_type == questionType.Date.value">
+        <kendo-timepicker *ngIf="ConditionForm?.value?.condition?.data_type == questionType.Time.value" formControlName="value">
+        </kendo-timepicker>
+
+        <kendo-datepicker *ngIf="ConditionForm?.value?.condition?.data_type == questionType.Date.value" formControlName="value"></kendo-datepicker>
+
+        <lavi-validation-message-list [validation-form-group-name]="ConditionForm" validation-control-name="value" [validation-errorlist]="WorkflowMessage.DropdownValueMessages">
+        </lavi-validation-message-list>
+    </div>
+
+    <!-- NUmber -->
+    <div class="col-3" *ngIf="ConditionForm?.value?.condition?.data_type == questionType.Number.value && CheckTextControlVisibility">
+        <input type="number" class="form-control height-78-perc" formControlName="value" maxlength="10" [placeholder]="showMinuteLabel" />
+        <lavi-validation-message-list [validation-form-group-name]="ConditionForm" validation-control-name="value" [validation-errorlist]="WorkflowMessage.NumberMessages"></lavi-validation-message-list>
+    </div>
+
+    <div *ngIf="showMinuteLabel" class="pt-2"> ({{showMinuteLabel}}) </div>
+    <!-- Phone Numbers -->
+    <div class="col-3" *ngIf="(ConditionForm?.value?.condition?.data_type == questionType.PhoneNumber.value
+                            || ConditionForm?.value?.condition?.data_type == questionType.SMSPhoneNumber.value)
+                            && ConditionForm?.value?.operator?.text != operatorEnum.IsEmpty">
+        <kendo-maskedtextbox placeholder="Phone Number" [mask]="Validation.PhoneNoMask" formControlName="value">
+        </kendo-maskedtextbox>
+
+        <lavi-validation-message-list [validation-form-group-name]="ConditionForm" validation-control-name="value" [validation-errorlist]="WorkflowMessage.PhoneMessages">
+        </lavi-validation-message-list>
+    </div>
+
+    <!-- Email -->
+    <div class="col-3" *ngIf="(ConditionForm?.value?.condition?.data_type == questionType.Email.value)
+                                && ConditionForm?.value?.operator?.text != operatorEnum.IsEmpty">
+        <input type="text" class="form-control" formControlName="value" maxlength="100" laviTrimValue />
+        <lavi-validation-message-list [validation-form-group-name]="ConditionForm" validation-control-name="value" [validation-errorlist]="WorkflowMessage.EmailMessages">
+        </lavi-validation-message-list>
+    </div>
+
+    <!-- Text / Long text -->
+    <div class="col-3" *ngIf="((ConditionForm?.value?.condition?.data_type == questionType.Text.value) || 
+                                ((ConditionForm?.value?.condition?.data_type == questionType.LongText.value)) ) 
+                                && ConditionForm?.value?.operator?.text != operatorEnum.IsEmpty && CheckTextControlVisibility">
+        <input type="text" class="form-control" formControlName="value" maxlength="100" laviTrimValue />
+        <lavi-validation-message-list [validation-form-group-name]="ConditionForm" validation-control-name="value" [validation-errorlist]="WorkflowMessage.TextValueMessage">
+        </lavi-validation-message-list>
+    </div>
+
+    <span class="remove-condition-internal cursor-pointer" (click)="RemoveIndividualCondition()"></span>
+    <div class="add-state-condition " *ngIf="ShowAddCondition" (click)="AddSubCondition()">+ Condition</div>
+</div>

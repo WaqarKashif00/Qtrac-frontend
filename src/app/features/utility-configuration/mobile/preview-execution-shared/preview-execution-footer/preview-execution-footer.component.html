@@ -1,0 +1,16 @@
+<div  class="row col-lg-12 col-12 col-sm-12 mobile-preview-footer m-0 p-0" [style.color]="footerData.color"
+  [style.font-size]="
+  footerData.fontSize ? footerData.fontSize + 'px' : ''
+  " [style.font-style]="footerData.fontStyle" [style.font-family]="footerData.font"
+  [style.font-weight]="footerData.fontWeight"> <!--*ngIf="footerData.isVisible"-->
+  <div class="col-2 mt-3 pr-0 text-left" *ngIf="ShowFooterBackButtonImage && footerData.isFooterImageVisible">
+    <img (click)="ShowPreviousPage()" class="w-75" [src]="footerData.footerImage" />
+  </div>
+  <div class="footer-text w-50 px-2 mt-2" *ngIf="footerData.isTextVisible">
+    <span>{{footerData.text[SelectedLanguage] || footerData.text[DefaultLanguage]}}</span>
+  </div>
+  <div class="col p-0 h-75 text-right">
+    <a href="https://qtrac.com/welcome-to-the-virtual-queue/"><img class="h-100 pt-2 pr-2 w-auto"
+        [src]='getQtracLogo()' /></a>
+  </div>
+</div>

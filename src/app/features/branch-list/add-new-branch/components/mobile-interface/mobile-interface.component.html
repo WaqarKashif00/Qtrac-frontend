@@ -1,0 +1,198 @@
+
+<div *ngIf="{workflowName: WorkflowName$ |async, mobileLayout: MobileLayoutTemplate$ | async } as value">
+  <lavi-form-panel PanelHeader="Mobile Interface">
+    <lavi-form-content-panel>
+      <div class="col-lg-12 inner-panel-padding panel-border">
+        <div class="mobile mb-5">
+          <div class="row">
+            <div class="col-lg-12 text-right">
+              <div class="pr-3">
+                <span *ngIf="MobileList" (click)="PrintDiv('',true)" class="text-blue pl-3 cursor-pointer">Print All QR Code</span>
+                <span (click)="OpenAddMobile()" class="text-blue pl-3 cursor-pointer" *laviHasRoleAccess="
+                roleActions.BranchMobileInterface;
+                actionName: actionType.AddEdit
+                ">Add Mobile Interface</span>
+              </div>
+            </div>
+          </div>
+
+        <lavi-modal [OpenDialog]="OpenMobileDialog" (Save)="AddMobileInterface()" (Cancel)="ModalClose()"
+          [Title]="'Add Mobile Interface'" Width="50%">
+          <div>
+            <lavi-form [FormGroup]="MobileForm">
+              <div class="col-lg-12">
+                <div class="row">
+                  <div class="col-lg-5">
+                    <kendo-textbox-container class="w-100" floatingLabel="Title">
+                      <input lavi-auto-focus [AutoFocusRequired]="OpenMobileDialog" kendoTextBox tabindex="160" maxlength="50" [formControl]="MobileForm.controls.title" lavi-trim-value/>
+                    </kendo-textbox-container>
+                    <div class="h-10">
+                      <lavi-validation-message-list [validation-form-group-name]="MobileForm"
+                        validation-control-name="title"
+                        [validation-errorlist]="ValidationMessages.TitleMessages">
+                      </lavi-validation-message-list>
+                    </div>
+                  </div>
+                  <div class="col-lg-1"></div>
+                  <div class="col-lg-6">
+                    <kendo-textbox-container class="w-100" floatingLabel="Layout Template">
+                      <kendo-dropdownlist placeholder="Layout template" class="no-border mt-1"
+                        [textField]="'templateName'" tabindex="163"
+                        [data]="value.mobileLayout | laviSortBy:'templateName'"
+                        (valueChange)="SetWorkflow($event)"
+                        [formControl]="MobileForm.controls.name"
+                        [valueField]="'templateId'"
+                        [defaultItem]="DefaultData.MobileTemplateValue">
+                      </kendo-dropdownlist>
+                    </kendo-textbox-container>
+                    <div class="h-10">
+                      <span *ngIf="value?.workflowName" class="span-template pl-1">This layout is using {{value?.workflowName}}.</span>
+                      <lavi-validation-message-list
+                            [validation-form-group-name]="MobileForm"
+                            validation-control-name="name"
+                            [validation-errorlist]="ValidationMessages.TemplateNameMessages"
+                          >
+                      </lavi-validation-message-list>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        
+              <div class="pt-5">
+                <kendo-dialog-actions class="pb-0 pr-0">
+                  <div class="col-lg-12">
+                    <div class="row">
+                      <div class="col-4"></div>
+                      <div class="col-8 col-sm-12">
+                        <div class="float-right pb-2">
+                          <input type="button" kendoButton class="secondary-button mr-2" (click)="ModalClose()"
+                          value="Cancel" />
+                          <input type="button" kendoButton class="primary-button" (click)="AddMobileInterface()" value="Save" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </kendo-dialog-actions>
+                </div>
+              </lavi-form>
+            </div>
+          </lavi-modal>
+
+          <div class="mt-5" *ngIf="MobileList">
+            <div *ngFor="let mobile of MobileList | laviSortBy : 'title' ">
+              <div class="col-lg-12 scroll-bar">
+                <div class="row">
+                  <div class="col-lg-3 col-sm-3 col-3 row wrap">
+                    <div tabindex="39" class="font-weight-500">
+                      {{mobile?.title}}
+                    </div>
+                  </div>
+                <div class="col-lg-3 col-sm-3 col-3 text-center wrap">
+                  <span tabindex="40" class="text-blue cursor-pointer" (click)="PrintDiv(mobile.id,false)">Print QR Code</span>
+                  <div id="{{mobile.id}}" hidden="" class="{{mobile.id}}" >
+                    <h1 class="text-center">{{mobile?.title}}</h1>
+                      <ngx-qrcode  [elementType]="'img'" [width]="500" [value]="GetMobileExecutionUrl(mobile?.name?.templateId)" cssClass="bshadow"   errorCorrectionLevel="L">
+                      </ngx-qrcode>
+                </div>
+                </div>
+                <div class="col-lg-3 col-sm-3 col-3 text-center">
+                  <span>{{(mobile?.name) !== null ? (mobile?.name?.templateName):'template not assigned'}}</span>
+                </div>
+                <div class="col-lg-2 col-sm-2 col-2 wrap">
+                  <div class="row ml-3 icon-container">
+                    <div class="col-lg-2">
+                      <img class="img-width" title="Preview" tabindex="42" src="../../../../assets/img/view.png">
+                    </div>
+                  </div>
+
+                  </div>
+                  <div class="col-lg-1 col-sm-1 col-1 row pr-0">
+                    <div class="col-lg-6 col-sm-6 col-6">
+                      <img tabindex="37" *laviHasRoleAccess="
+                      roleActions.BranchMobileInterface;
+                      actionName: actionType.Delete
+                      " (click)="DeleteMobileInterface(mobile.id)"
+                      class="img-width cursor-pointer float-right"
+                        src="../../../../assets/img/delete-icon.svg">
+                    </div>
+                    <div class="col-lg-6 col-sm-6 col-6">
+                      <img tabindex="38" *laviHasRoleAccess="
+                      roleActions.BranchMobileInterface;
+                      actionName: actionType.AddEdit
+                      " (click)="OpenMobileUpdateModal(mobile)"
+                      class="img-width cursor-pointer float-right"
+                        src="../../../../assets/img/edit-icon.svg">
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <hr>
+            </div>
+          </div>
+          <div *ngIf="(!MobileList) || (MobileList && MobileList.length === 0) ">
+            <p class="text-center">No mobile added</p>
+          </div>
+
+        <lavi-modal [OpenDialog]="OpenMobileUpdateDialog" (Save)="SaveEditedMobile()" (Cancel)="ModalClose()"
+          [Title]="'Update Mobile Interface'" Width="50%">
+          <div>
+            <lavi-form [FormGroup]="MobileForm">
+              <div class="col-lg-12">
+                <div class="row">
+                  <div class="col-lg-5">
+                    <kendo-textbox-container class="w-100" floatingLabel="Title">
+                      <input kendoTextBox tabindex="160" lavi-auto-focus [AutoFocusRequired]="OpenMobileUpdateDialog" maxlength="50" [formControl]="MobileForm.controls.title" lavi-trim-value/>
+                    </kendo-textbox-container>
+                    <div class="h-10">
+                      <lavi-validation-message-list [validation-form-group-name]="MobileForm"
+                        validation-control-name="title"
+                        [validation-errorlist]="ValidationMessages.TitleMessages">
+                      </lavi-validation-message-list>
+                    </div>
+                  </div>
+                  <div class="col-lg-1"></div>
+                  <div class="col-lg-6">
+                    <kendo-textbox-container class="w-100" floatingLabel="Layout Template">
+                    <kendo-dropdownlist placeholder="Layout Template" class="no-border"
+                      [textField]="'templateName'" tabindex="163"
+                      [data]="value.mobileLayout| laviSortBy: 'templateName'"
+                      [formControl]="MobileForm.controls.name"
+                      [valueField]="'templateId'"
+                      (valueChange)="SetWorkflow($event)"
+                      [defaultItem]="DefaultData.MobileTemplateValue">
+                      </kendo-dropdownlist>
+                    </kendo-textbox-container>
+                      <div class="h-10">
+                        <span *ngIf="value?.workflowName" class="span-template pl-1">This layout is using
+                          {{value?.workflowName}}.</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+              <div class="pt-5">
+                <kendo-dialog-actions class="pb-0 pr-0">
+                  <div class="col-lg-12 pr-0">
+                    <div class="row">
+                      <div class="col-4"></div>
+                      <div class="col-8 col-sm-12">
+                        <div class="float-right pb-2">
+                          <input type="button" kendoButton class="secondary-button" (click)="ModalClose()" value="Cancel" />
+                          <input type="button" kendoButton class="primary-button" (click)="SaveEditedMobile()" value="Update" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </kendo-dialog-actions>
+              </div>
+            </lavi-form>
+          </div>
+        </lavi-modal>
+
+        </div>
+      </div>
+    </lavi-form-content-panel>
+  </lavi-form-panel>
+</div>
+

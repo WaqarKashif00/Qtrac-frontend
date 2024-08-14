@@ -1,0 +1,48 @@
+<div>
+    <div *ngIf="KioskData" [style.color]="KioskData.designer.color"
+        [style.font-size]="KioskData.designer.fontSize ? KioskData.designer.fontSize + 'px' : ''"
+        [style.background-color]="KioskData.designer.backgroundColor" [style.font-style]="KioskData.designer.fontStyle"
+        [style.background-image]="
+            'url(' + (KioskData.designer.backGroundImage|quoteString) + ')'
+            " [style.font-family]="KioskData.designer.font" class=" w-100 position-absolute divLayoutDesignContainer"
+        [ngClass]="isEnableKeyboard == true ? isNumericKeyBoard == true ? 'h-80' :'h-75': 'h-100' "
+        style="overflow-y: scroll;">
+        <lavi-kiosk-pre-service-question [SelectedLanguage]="CurrentLanguageId" [DefaultLanguage]="DefaultLanguage"
+            (NextPage)="ShowNextPage($event)" *ngIf="Page.IsPreServiceQuestionPage"
+            [Data]="KioskData.preServiceQuestionPage">
+        </lavi-kiosk-pre-service-question>
+
+        <lavi-kiosk-service-question [SelectedLanguage]="CurrentLanguageId" [DefaultLanguage]="DefaultLanguage"
+            (NextPage)="ShowNextPage($event)" [Data]="KioskData.serviceQuestion" *ngIf="Page.IsServiceQuestionPage">
+        </lavi-kiosk-service-question>
+
+        <lavi-kiosk-service [SelectedLanguage]="CurrentLanguageId" [DefaultLanguage]="DefaultLanguage"
+            (NextPage)="ShowNextPage($event)" [Data]="KioskData.servicePage" *ngIf="Page.IsServicePage">
+        </lavi-kiosk-service>
+
+        <lavi-kiosk-welcome [SelectedLanguage]="CurrentLanguageId" [DefaultLanguage]="DefaultLanguage"
+            (ShowNextPage)="ShowNextPage($event)" [Data]="KioskData.welcomePage" *ngIf="Page.IsWelcomePage">
+        </lavi-kiosk-welcome>
+
+        <lavi-kiosk-thank-you [SelectedLanguage]="CurrentLanguageId" [DefaultLanguage]="DefaultLanguage"
+            [Data]="KioskData.thankYouPage" (ShowNextPage)="ShowNextPage($event)" *ngIf="Page.IsThankYouPage">
+        </lavi-kiosk-thank-you>
+
+        <lavi-kiosk-language [Data]="KioskData.languagePage" [Languages]="Languages"
+            [SelectedLanguage]="CurrentLanguageId" [DefaultLanguage]="DefaultLanguage" (NextPage)="ShowNextPage($event)"
+            *ngIf="Page.IsLanguagePage">
+        </lavi-kiosk-language>
+
+        <lavi-kiosk-no-queue (ExitButton)="ExitButton()" [Data]="KioskData.noQueuePage"
+            [SelectedLanguage]="CurrentLanguageId" [DefaultLanguage]="DefaultLanguage" *ngIf="Page.IsNoQueuePage">
+        </lavi-kiosk-no-queue>
+    </div>
+
+    <footer [ngClass]="{ 'd-none': !isEnableKeyboard  }" class="fixed-bottom" style="position: fixed; height: 25vh;
+    left: 0; display: flex; bottom: 0; align-items: end; width: 100%; z-index: 999999 "><!--height: 235px;-->
+        <div class="text-center text-muted w-100">
+            <div class="simple-keyboard"></div>
+        </div>
+    </footer>
+
+</div>

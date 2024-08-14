@@ -1,0 +1,44 @@
+<div
+  class="newControl position-absolute controls-width text-center w-100"
+  *ngFor="let control of Control"
+  [position]="{ x: control.styles.left, y: control.styles.top }"
+  rzContainment="#DivLayoutDesignContainer"
+  [style.height.px]="control.styles.height"
+  [style.z-index]="control.styles.zindex"
+  [style.color]="control.styles.color"
+  [style.font-size]="
+    control.styles.fontSize ? control.styles.fontSize + 'px' : ''
+  "
+  [style.font-style]="control.styles.fontStyle"
+  [style.font-family]="control.styles.font"
+  [style.font-weight]="control.styles.fontWeight"
+  [inBounds]="true"
+  lockAxis="x"
+  [style.padding-left.px]="control.horizontalPadding || 0"
+  [style.padding-right.px]="control.horizontalPadding || 0"
+  [style.padding-top.px]="control.verticalPadding || 0"
+  [style.padding-bottom.px]="control.verticalPadding || 0"
+  rzHandles="s,n"
+  (click)="onControlClick(control)"
+  (endOffset)="onControlMoveEnd($event, control)"
+  (rzStop)="onControlResizeStop($event, control)"
+  ngDraggable
+  ngResizable
+  [ngClass]="{ controlFocus: control.selected }"
+> 
+  <button
+    type="button"
+    (click)="onControlRemove(control)"
+    class="close"
+    aria-label="Close"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <div
+    [style.border-radius.px]="control.styles.boxRoundCorners || 0"
+    [style.background-color]="control.styles.backgroundColor"
+    [style.text-align]="control.alignment"
+    class="w-100 h-100 wrap"
+  >{{ control.text[SelectedLanguage.selectedLanguage] || control.text[SelectedLanguage.defaultLanguage] }}
+  </div>
+</div>

@@ -1,0 +1,23 @@
+@import "src/stylings/primitives/primitives.scss";
+@import "src/stylings/shared/agent-layout.scss";
+
+.secondary-button.bg-grey {
+  min-width: 0;
+}
+.blue-btn, .green-btn {
+  background-color: rgba(69,143, 255, 0.2);
+  border: solid 1px #458FFF;
+  border-radius: 4px;
+  color: #458FFF;
+  font-size: $font-size-small-4;
+  font-weight: 500;
+  margin-right: 0;
+  padding: 9px 35px;
+  text-transform: uppercase;
+}
+.green-btn {
+  background-color: rgba(72,193, 106, 0.2);
+  border: solid 1px #28A745;
+  border-radius: 4px;
+  color: #28A745;
+}

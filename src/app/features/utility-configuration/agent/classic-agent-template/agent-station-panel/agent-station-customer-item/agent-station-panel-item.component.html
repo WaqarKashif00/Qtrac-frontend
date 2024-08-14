@@ -1,0 +1,178 @@
+<div [class]="IsFullView?'header-expanded border mt-2':'header border mt-2'">
+  <div *ngIf="!IsServingByOther" class="header-column border-right">
+    <div (click)="Checked()" [class]="IsSelected
+                ?'select-box selected'
+                :'select-box'">
+    </div>
+  </div>
+  <div *ngIf="IsServingByOther"></div>
+
+  <div class="station-actions-container">
+    <lavi-agent-station-action-buttons (OnCall)="Call()" (OnServe)="Serve()" [IsFullView]="IsFullView"
+      [MaxCallLimit]="MaxCallLimit"
+      [ServeButtonLabel]='ServeButtonLabel'
+      [AllowTransferingService]="AllowTransferingService"
+      [AllowedNotes]="AllowedNotes"  [AllowTicketDeletion]="AllowTicketDeletion" [AllowedSMS]="AllowedSMS" [AllowTakeOverCustomer]="AllowTakeOverCustomer" (OnShowSMSChat)="OpenSMSChatDialog()"
+      (OnShowNotes)="OpenNotesDialog()" [IsCanServe]='IsCanServe' [HideTicketNumber]="HideTicketNumber" (OnEndServing)="EndServing($event)"
+      (OnDelete)="Delete($event)" (OnCancel)="Cancel()"
+      [IsServingByOther]="IsServingByOther" [Customer]="Customer" (OnTransferServiceDailog)="OpenTransferServiceDialog()"
+      [AllowSelectedVisitorCalling]="AllowSelectedVisitorCalling"
+      [AllowCancellingService]="AllowCancellingService"
+      [messageText]="messageText"
+      [teamNotesText]="teamNotesText"
+      [currentLanguage]="currentLanguage"
+      [noShowText]="noShowText"
+      [callingText]="callingText"
+      [servingText]="servingText"
+      >
+    </lavi-agent-station-action-buttons>
+  </div>
+  <div class="header-column" (click)="ToggleExpand()">
+    <span [class]="IsExpanded
+                ? 'arrow-icon k-icon k-i-arrow-60-up pointer'
+                :'arrow-icon k-icon k-i-arrow-60-down pointer'">
+    </span>
+  </div>
+  <div *ngIf="IsServingByOther"></div>
+
+</div>
+<lavi-smooth-height [Trigger]="IsExpanded">
+
+
+  <div [class]="IsFullView?'header-expanded':'header'" *ngIf="IsExpanded">
+    <div class="border-0">
+
+    </div>
+    <div class="border-bottom station-expanded">
+      <div class="row border-0">
+        <div [class]="IsFullView? 'col-3 border-right':'col-12'">
+          <div class="container pb-2">
+            <div class="row field-container" *ngFor="let displayField of DisplayFieldsExcludePrimary">
+              <div class="col-12 field-header">
+                {{displayField.shortName | uppercase }}
+              </div>
+              <div class="col-12 field-value">
+                {{displayField.answer}}
+              </div>
+            </div>
+            <div class="row field-container">
+              <div class="col-12 field-header uppercase" [translate]="currentLanguage == 'es'? false: true">
+                {{queueText}}
+              </div>
+              <div class="col-12 field-value">
+                {{Customer.queueName}}
+              </div>
+            </div>
+            <div class="row field-container">
+              <div class="col-12 field-header">
+                SERVICE
+              </div>
+              <div class="col-12 field-value">
+                {{Customer.serviceName}}
+              </div>
+            </div>
+            <div class="row field-container" *ngIf="AllowGrouping && (Groups.length > 0 || AllowToCreateGroup)">
+              <div class="col-12 field-header uppercase" [translate]="currentLanguage == 'es'? false: true">
+                {{visitorTagText}}
+              </div>
+              <div class="col-12 field-value">
+                <ul class="groups-ul">
+                  <li *ngFor="let Group of CustomerGroups" class="customer-group mr-1">
+                    <div class="circle mt-2" [title]="Group.groupName" [ngStyle]="{
+                      backgroundColor: Group?.color
+                    }"></div>
+                  </li>
+                  <li>
+                    <div *ngIf="!(Customer?.isNowServing) && (CustomerGroups.length !== Groups.length || AllowToCreateGroup) " title="Assign Visitor Tag" class="add-group-plus-icon circle mt-2 pointer" (click)="AddToGroup()"></div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="row field-container" *ngIf="Customer?.branchTimeForAppointment">
+              <div class="col-12 field-header">
+                APPOINTMENT
+              </div>
+              <div class="col-12 field-value">
+                {{Customer?.branchTimeForAppointment || "-"}}
+              </div>
+            </div>
+            <div class="row field-container" *ngIf="AllowedSMS">
+              <div class="col-12 field-header">
+                MESSAGES
+              </div>
+              <div class="col-12 field-value">
+                <div class="sms-chat-grid-icon d-inline-block mt-1"></div>
+                <div class="d-inline-block align-top pl-2 text-left line-height">
+                  <div>
+                    <lavi-trimmed-span [Text]='Customer.lastSMSMessage'></lavi-trimmed-span>
+                  </div>
+                  <span class="text-blue cursor-pointer" *ngIf="!(Customer?.isNowServing)" (click)="OpenSMSChatDialog()">Respond</span>
+                </div>
+              </div>
+            </div>
+            <div class="row field-container" *ngIf="AllowedNotes">
+              <div class="col-12 field-header uppercase" [translate]="currentLanguage == 'es'? false: true">
+               {{teamNotesText}}
+              </div>
+              <div class="col-12 field-value">
+                <div class="agent-notes-grid-icon d-inline-block mt-1"></div>
+                <div class="d-inline-block align-top pl-2 text-left line-height">
+                  <div>
+                    <lavi-trimmed-span [Text]='Customer.lastNote'></lavi-trimmed-span>
+                  </div>
+                  <span class="text-blue cursor-pointer text-cptalize" [translate]="currentLanguage == 'es'? false: true" (click)="OpenNotesDialog()">{{viewText}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-9 border-right" *ngIf="IsFullView">
+        <div class="container pl-0 pt-2">
+            <div class="row">
+              <div class="col-12 pb-1">
+                <p class="station-heading ">GENERAL QUESTIONNAIRE</p>
+              </div>
+            </div>
+            <div class="row agent-questions" *ngFor="let question of Customer.agentQuestions">
+              <div class="col-4 pb-1">
+                {{question.questionText}}
+              </div>
+             <div class="col-1 verticle-line"></div>
+              <div *ngIf="!question.IsHyperLink" class="col-7 pb-1 text-left">
+                {{question |laviAnswerFormat}}
+              </div>
+
+              <a *ngIf="question.IsHyperLink" [href]="question|laviAnswerFormat" target="blank" class="col-7 pb-1 text-left">
+                {{question|laviAnswerFormat}}
+            </a>
+            </div>
+            <div class="row agent-questions">
+              <div class="col-4 pb-1">
+                Selected Language
+              </div>
+              <div class="col-1 verticle-line"></div>
+              <div class="col-7 pb-1 text-left">
+                {{Customer.selectedLanguage}}
+              </div>
+          </div>
+          </div>
+
+        </div>
+        <div class="border-bottom border-right">
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+
+
+
+
+
+
+
+</lavi-smooth-height>

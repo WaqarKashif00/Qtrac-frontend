@@ -1,0 +1,47 @@
+<ng-content select="default-control"></ng-content>
+<ng-container *ngIf="Data$ | async as data">
+  <lavi-label-control
+    [Control]="data.labelDivs"
+    [DivLayoutDesignContainer]="DivLayoutDesignContainer"
+    [SelectedLanguage]="SelectedLanguage$ | async"
+    [GridSize]="GridSize$ | async"
+    [IsOnlyGrid]="IsOnlyGrid$ | async"
+    (OnMoveEnd)="OnControlMoveEnd($event)"
+    (OnResizeStop)="OnControlResizeStop($event)"
+    (OnRemove)="OnRemoveServiceLabelClick($event)"
+    (OnClick)="OnLabelClick($event)"
+  ></lavi-label-control>
+  <lavi-image-control
+    [Controls]="data.imageDivs"
+    [DivLayoutDesignContainer]="DivLayoutDesignContainer"
+    [GridSize]="GridSize$ | async"
+    [IsOnlyGrid]="IsOnlyGrid$ | async"
+    [SelectedLanguage]="SelectedLanguage$ | async"
+    (OnMoveEnd)="OnControlMoveEnd($event)"
+    (OnResizeStop)="OnControlResizeStop($event)"
+    (OnRemove)="OnRemoveServiceImageClick($event)"
+    (OnClick)="OnImageClick($event)"
+  ></lavi-image-control>
+  <lavi-video-control
+    [Controls]="data.videoDivs"
+    [DivLayoutDesignContainer]="DivLayoutDesignContainer"
+    [GridSize]="GridSize$ | async"
+    [IsOnlyGrid]="IsOnlyGrid$ | async"
+    [SelectedLanguage]="SelectedLanguage$ | async"
+    (OnMoveEnd)="OnControlMoveEnd($event)"
+    (OnResizeStop)="OnControlResizeStop($event)"
+    (OnRemove)="OnRemoveServiceVideoClick($event)"
+    (OnClick)="OnVideoClick($event)"
+  ></lavi-video-control>
+  <lavi-slider-control
+    [Controls]="data.sliderDivs"
+    [DivLayoutDesignContainer]="DivLayoutDesignContainer"
+    [GridSize]="GridSize$ | async"
+    [IsOnlyGrid]="IsOnlyGrid$ | async"
+    [SelectedLanguage]="SelectedLanguage$ | async"
+    (OnMoveEnd)="OnControlMoveEnd($event)"
+    (OnResizeStop)="OnControlResizeStop($event)"
+    (OnRemove)="OnRemoveServiceSliderClick($event)"
+    (OnClick)="OnSliderClick($event)"
+  ></lavi-slider-control>
+</ng-container>

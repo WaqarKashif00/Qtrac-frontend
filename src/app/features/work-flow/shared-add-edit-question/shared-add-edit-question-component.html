@@ -1,0 +1,315 @@
+<div class="add-question-modal">
+  <form [formGroup]="AddEditQuestionForm">
+    <div class="row pr-2" [ngClass]="{'width-115': IsHideAllButton}" [ngClass]="{'height-324-px': !IsHideAllButton}">
+      <div class="col-lg-6">
+        <div class="row">
+          <div class="col-lg-6">
+            <kendo-textbox-container floatingLabel="Type">
+              <kendo-dropdownlist
+                placeholder="Type"
+                class="no-border mt-1"
+                tabindex="1"
+                [formControl]="AddEditQuestionForm.controls.type"
+                [data]="listItems"
+                [textField]="'text'"
+                [valueField]="'value'"
+                (valueChange)="onOptionsSelected($event)"
+              >
+              </kendo-dropdownlist>
+              <lavi-validation-message-list
+                [validation-form-group-name]="AddEditQuestionForm"
+                validation-control-name="type"
+                [validation-errorlist]="WorkflowMessage.TypeMessage"
+              >
+              </lavi-validation-message-list>
+            </kendo-textbox-container>
+          </div>
+          <div class="col-lg-6">
+            <kendo-textbox-container floatingLabel="Display Name">
+              <input
+                lavi-auto-focus
+                [AutoFocusRequired]="true"
+                kendoTextBox
+                maxlength="50"
+                [formControl]="AddEditQuestionForm.controls.shortName"
+                tabindex="2"
+                lavi-trim-value
+                type="text"
+              />
+            </kendo-textbox-container>
+            <lavi-validation-message-list
+              [validation-form-group-name]="AddEditQuestionForm"
+              validation-control-name="shortName"
+              [validation-errorlist]="WorkflowMessage.shortNameMessage"
+            >
+            </lavi-validation-message-list>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 mt-2">
+            <div class="row position-relative"
+              formArrayName="question"
+              *ngFor="let x of SupportedQuestionArray.controls; let i = index"
+            >
+              <div [formGroupName]="i" class="col-12">
+                <kendo-textbox-container class="mt-2 " [ngClass]="{
+                                                                    'width-169 ': IsHideAllButton,
+                                                                    'width-163': !IsHideAllButton}"
+                  floatingLabel="Question ({{ x.value.languageName }})"
+                >
+                  <input kendoTextBox formControlName="question" tabindex="5"
+                  [ngClass]="{
+                    'padding-right-17': (!IsHideAllButton && x?.value?.isDefault),
+                    'padding-right-19': (IsHideAllButton && x?.value?.isDefault)
+                  }"/>
+
+                </kendo-textbox-container>
+                <div>
+                  <lavi-validation-message-list
+                  [validation-form-group-name]="x"
+                  validation-control-name="question"
+                  [validation-errorlist]="
+                    WorkflowMessage.questionMessage
+                  "
+                >
+                </lavi-validation-message-list>
+                </div>
+
+              </div>
+              <div class="translate-div-q translate-div-pq"  *ngIf="x.value.isDefault && supportedLanguageList?.length > 1">
+                <p class="text-blue cursor-pointer mb-0">
+                  <a (click)='translate(x.value.question,true)'>Translate</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3" *ngIf="MaxLengthVisible">
+        <div>
+          <kendo-textbox-container
+            floatingLabel="Max Length"
+
+          >
+            <input
+              kendoTextBox
+              formControlName="maxLength"
+              lavi-app-numbers-only
+              maxlength="3"
+              tabindex="3"
+              lavi-trim-value
+            />
+          </kendo-textbox-container>
+          <lavi-validation-message-list
+            [validation-form-group-name]="AddEditQuestionForm"
+            validation-control-name="maxLength"
+            [validation-errorlist]="WorkflowMessage.maxLengthMessage"
+          >
+          </lavi-validation-message-list>
+        </div>
+      </div>
+      <div class="col-lg-3" *ngIf="MinMaxVisible">
+      <div>
+        <kendo-textbox-container  floatingLabel="Min">
+          <input kendoTextBox formControlName="min" lavi-app-numbers-only
+          maxlength="50" tabindex="3" lavi-trim-value/>
+        </kendo-textbox-container>
+        <lavi-validation-message-list
+        [validation-form-group-name]="AddEditQuestionForm"
+        validation-control-name="min"
+        [validation-errorlist]="WorkflowMessage.minMessage"
+      >
+      </lavi-validation-message-list>
+      </div>
+    </div>
+    <div class="col-lg-3" *ngIf="MinMaxVisible">
+      <div>
+        <kendo-textbox-container  floatingLabel="Max">
+          <input kendoTextBox formControlName="max" lavi-app-numbers-only
+          maxlength="50" tabindex="4" />
+        </kendo-textbox-container>
+        <lavi-validation-message-list
+        [validation-form-group-name]="AddEditQuestionForm"
+        validation-control-name="max"
+        [validation-errorlist]="WorkflowMessage.maxMessage"
+      >
+      </lavi-validation-message-list>
+      </div>
+    </div>
+
+      <div  class="col-lg-6 question-type-options mt-2 border-round-style"
+      *ngIf="OptionVisible"
+      >
+        <div class="row">
+          <div class="col-lg-1" [ngClass]="{
+            'modal1':!IsHideAllButton,
+            'modal2':IsHideAllButton
+          }" *ngIf="OptionVisible">
+            <p class="mb-0">
+              {{AddEditQuestionForm.controls.type.value.text}}
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6"  [ngClass]="{'pl-2': IsHideAllButton}">
+            <div class="row">
+              <div class="col-12 p-0 pt-1" formArrayName="option" *ngFor="let x of SupportedOptionsArray.controls; let i = index" [ngClass]="{'padding-bottom-10': x.value.isDefault}">
+                <div [formGroupName]="i" >
+                  <kendo-textbox-container floatingLabel="Item ({{ x.value.languageName }})">
+                    <input kendoTextBox formControlName="option" tabindex="5" maxlength="150" />
+
+                  </kendo-textbox-container>
+                  <div class="margin-left-7">
+                    <lavi-validation-message-list [validation-form-group-name]="x" validation-control-name="option"
+                      [validation-errorlist]="WorkflowMessage.optionItemMessages">
+                    </lavi-validation-message-list>
+                  </div>
+                </div>
+                <div class="cursor-pointer pt-0 translate-div-q" *ngIf="x.value.isDefault &&  supportedLanguageList?.length > 1" (click)='translate(x.value.option,false)' >
+                  <span class="text-blue cursor-pointer">
+                    <a>Translate</a>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <input type="button" value="ADD" *ngIf="!isEditable" (click)="AddOption()" class="primary-button float-right mt-3 button-style mb-3"/>
+            <input type="button" value="UPDATE" *ngIf="isEditable" (click)="UpdateOption()" class="primary-button float-right mt-3 button-style mb-3"/>
+          </div>
+          <div class="col-6 mt-2 padding-0">
+            <div class="padding-left-10">
+              <p>Items</p>
+            </div>
+            <div class="error-message padding-left-10" *ngIf="IsOptionErrorVisible" >
+              Please add items.
+            </div>
+            <ng-container *ngFor="let opt of OptionArray.controls; let i = index">
+              <div class="error-message padding-0" *ngIf="opt.hasError('translationError')" >
+                Not translated
+              </div>
+              <div class="col-12 padding-0" *ngFor="let x of opt.controls; let j = index">
+                <div class="row option-list pd-mg-0" *ngIf="x.value.isDefault" [ngClass]="{'error-message':OptionArray?.hasError('isTranslated')}" >
+                  <div class="col-4 row padding-0">
+                    <div>
+                      <img class="img-width cursor-pointer" (click)="DeleteOption(i)" *ngIf="(updateOptionIndex != i)"
+                        src="../../../../assets/img/delete-icon.svg" />
+                    </div>
+                    <div class="pl-1">
+                      <img class="img-width cursor-pointer" (click)="EditOption(i)" *ngIf="(updateOptionIndex != i)" src="../../../../assets/img/edit-icon.svg" />
+                    </div>
+                  </div>
+                  <div class="col-7" *ngIf="x.value.option">
+                    <p>{{ x.value.option }}</p>
+                  </div>
+                  <div class="col-7 error-message" *ngIf="!x.value.option">
+                    <p>Please add default language text</p>
+                  </div>
+                </div>
+
+              </div>
+
+            </ng-container>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="col-lg-12 mt-3">
+      <div class="row checkbox-container">
+        <div class="mr-4">
+          <label class="k-label cursor-pointer" for="isVisible">
+            <input
+              type="checkbox"
+              id="isVisible"
+              [formControl]="AddEditQuestionForm.controls.isVisible"
+              kendoCheckBox
+              tabindex="6"
+              checked="true"
+            />
+            Visible
+          </label>
+        </div>
+        <div class="mr-4">
+          <label class="k-label cursor-pointer" for="isRequired">
+            <input
+              type="checkbox"
+              id="isRequired"
+              [formControl]="AddEditQuestionForm.controls.isRequired"
+              kendoCheckBox
+              tabindex="7"
+              checked="true"
+              (change)="onRequiredCheckChange($event)"
+            />
+            Required
+          </label>
+        </div>
+        <div class="mr-4">
+          <label class="k-label cursor-pointer" for="isPersonalIdentifier">
+            <input
+              type="checkbox"
+              id="isPersonalIdentifier"
+              [formControl]="
+                AddEditQuestionForm.controls.isPersonalIdentifier
+              "
+              tabindex="8"
+              kendoCheckBox
+              checked="true"
+            />
+            Personal Identifier
+          </label>
+        </div>
+        <div class="mr-4">
+          <label class="k-label cursor-pointer" for="isPurge">
+            <input
+              type="checkbox"
+              id="isPurge"
+              [formControl]="AddEditQuestionForm.controls.isPurge"
+              kendoCheckBox
+              tabindex="9"
+              checked="true"
+            />
+            Purge
+          </label>
+        </div>
+        <div class="mr-4" *ngIf="IsGlobalQuestion">
+          <label class="k-label cursor-pointer" for="isDisplay">
+            <input
+              type="checkbox"
+              id="isDisplay"
+              [formControl]="AddEditQuestionForm.controls.isDisplay"
+              (change)="OnIsDisplayChanges()"
+              kendoCheckBox
+              tabindex="10"
+            />
+            Display On Queue
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-12 col-lg-12 mt-3 " *ngIf="!IsHideAllButton">
+      <div class="float-right">
+        <button *ngIf="IsCancelButtonVisible" type="button" kendoButton class="secondary-button mr-2" (click)="CancelQuestion()">
+          Cancel
+        </button>
+        <button
+          *ngIf="!IsOnlySaveButtonVisible && Mode == 'ADD'"
+            kendoButton
+            class="primary-button"
+            (click)="AddEditQuestion()"
+          >
+          Add
+        </button>
+        <button
+          *ngIf="!IsOnlySaveButtonVisible && Mode == 'EDIT'"
+            kendoButton
+            class="primary-button"
+            (click)="AddEditQuestion()"
+          >
+          Update
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

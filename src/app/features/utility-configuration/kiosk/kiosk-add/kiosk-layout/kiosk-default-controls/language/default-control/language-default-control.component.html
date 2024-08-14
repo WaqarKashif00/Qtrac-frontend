@@ -1,0 +1,56 @@
+<ng-container
+  *ngIf="{ Languages: Languages$ | async, Panel: Panel$ | async } as values"
+>
+  <div
+    *ngIf="values.Languages.length > 0 && values.Panel"
+    rzContainment="#DivLayoutDesignContainer"
+    (rzStop)="OnResizeStop($event)"
+    (endOffset)="OnMoveEnd($event)"
+    (click)="OnClick()"
+    [position]="{
+      x: values.Panel.styles.left,
+      y: values.Panel.styles.top
+    }"
+    [style.width.px]="values.Panel.styles.width"
+    [style.height.px]="values.Panel.styles.height"
+    [style.background-color]="values.Panel.styles.backgroundColor"
+    [style.padding-left.px]="values.Panel.horizontalPadding || 0"
+    [style.padding-right.px]="values.Panel.horizontalPadding || 0"
+    [style.padding-top.px]="values.Panel.verticalPadding || 0"
+    [style.padding-bottom.px]="values.Panel.verticalPadding || 0"
+    [style.font-size]="
+      (values.Panel.styles.fontSize) ? (values.Panel.styles.fontSize) + 'px' : ''
+    "
+    [style.font-style]="values.Panel.styles.fontStyle"
+    [style.font-family]="values.Panel.styles.font"
+    [style.font-weight]="values.Panel.styles.fontWeight"
+    [inBounds]="true"
+    [bounds]="DivLayoutDesignContainer"
+    [preventDefaultEvent]="true"
+    [gridSize]="IsOnlyGrid? GridSize:null"
+    [rzGrid]="IsOnlyGrid? GridSize:null"
+    class="e-panel insideDiv clearfix"
+    ngDraggable
+    ngResizable
+  >
+    <UL class="UL">
+      <ng-container *ngFor="let language of values.Languages" >
+        <LI
+        class="LI"
+        [style.color]="values.Panel.styles.color"
+        [style.background-color]="values.Panel.itemBackgroundColor"
+        [style.font-size]="
+        values.Panel.styles.fontSize ? values.Panel.styles.fontSize + 'px' : ''
+        "
+        [style.font-style]="values.Panel.styles.fontStyle"
+        [style.font-weight]="values.Panel.styles.fontWeight"
+        [style.font-family]="values.Panel.styles.font"
+        >{{
+          translatedLanguageName[language.languageCode]
+        }}
+      </LI>
+      </ng-container>
+      </UL
+    >
+  </div>
+</ng-container>

@@ -1,0 +1,43 @@
+<div class="row mt-1">
+  <div class="col-6 col-sm-6">
+    <kendo-textbox-container floatingLabel="Select Date">
+      <kendo-datepicker
+        [formControl]="fromDateFormControl"
+        (valueChange)="ValidateDate()"
+        [disabledDates]="disabledDates"
+      >
+      </kendo-datepicker>
+    </kendo-textbox-container>
+    <div class="error-message" *ngIf="!IsValidDate">Please select date.</div>
+    <div class="error-message" *ngIf="IsValidDate && IsAlreadyExist">
+      Date already exist.
+    </div>
+  </div>
+  <div class="col-6 col-sm-6 pl-3 pt-4">
+    <span class="text-primary small cursor-pointer" (click)="AddDate()"
+      >Add Date</span
+    >
+  </div>
+</div>
+<div class="mt-4" *ngIf="OnCustomDateWorkingDaysFormArray.controls.length > 0">
+  <lavi-operational-date-hours
+    *ngFor="
+      let form of OnCustomDateWorkingDaysFormArray.controls;
+      let i = index
+    "
+    [DayName]="form.controls.dateText.value"
+    [TimeFrameFormArray]="form.controls.availableTimeFrames"
+    [AvailableTimeFrame]="form.controls.availableTimeFrameFormGroup"
+    (AddHoursForm)="
+      AddHoursForm(
+        form.controls.availableTimeFrames,
+        form.controls.availableTimeFrameFormGroup
+      )
+    "
+    (RemoveHoursForm)="
+      RemoveHoursForm($event, form.controls.availableTimeFrames)
+    "
+    (RemoveWorkingDateForm)="RemoveWorkingDateForm(i)"
+    (ValidationToTimeControl)="ValidateToTime($event)"
+  ></lavi-operational-date-hours>
+</div>

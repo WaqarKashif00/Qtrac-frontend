@@ -1,0 +1,51 @@
+<div class="padding-top-2">
+    <div class="pre-service-question-list advance-workflow-list">
+        <div class="question-list-add">
+            <div class="col-lg-12">
+                <div class="row header-row">
+                    <kendo-grid [height]="540" [data]="gridData">
+
+                        <kendo-grid-column title="Name" width="120">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <span>
+                    {{dataItem.name}}
+                  </span>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <kendo-grid-column title="Type" width="120">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <span>
+                    {{dataItem.type}}
+                  </span>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <kendo-grid-column title="Trigger" width="180">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <span>
+                    {{dataItem.when.shortName}} ({{dataItem.when.type}})
+                  </span>
+                            </ng-template>
+                        </kendo-grid-column>
+
+
+                        <kendo-grid-column field="id" title="" width="60" class="fload-right">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <img class="img-width cursor-pointer" (click)="DeleteAdvanceRule(dataItem.id)" src="../../../../assets/img/delete-icon.svg">
+                                <img class="img-width cursor-pointer ml-2" (click)="EditAdvanceRule(dataItem)" src="../../../../assets/img/edit-icon.svg">
+                                <img class="img-width cursor-pointer ml-2" (click)="CopyAdvanceRule(dataItem)" src="../../../../assets/img/duplicate-icon.svg">
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <ng-template kendoGridNoRecordsTemplate>
+                            No Advance Rule Added.
+                        </ng-template>
+                    </kendo-grid>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

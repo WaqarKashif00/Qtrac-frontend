@@ -1,0 +1,124 @@
+<lavi-agent-dialog-box [ModalColor]="'#ff5e00'" [Width]="'400px'"
+  [Height]="(AllGroups$| async).length > 0  ? (IsAllowCreateGroup$ | async)? '600px':'250':'400px'" *ngIf="IsDialogShow$ | async" [IsFooterRequired]="false"
+  (OnClose)="Close()">
+  <div header>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-left header">
+          <ul class="m-0 p-0">
+            <li>
+              {{CustomerName$|async | uppercase}}
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div body class="container mt-2 font-size-small-2" [formGroup]='AddGroupForm'>
+    <div class="row" *ngIf="(AllGroups$| async).length > 0">
+      <div class="col-12 bold text-uppercase text-left font-size-small-4">
+        Add Visitor to Visitor Tag
+      </div>
+    </div>
+    <div class="search-container">
+      <kendo-textbox-container class="pt-1 mt-1" *ngIf="(AllGroups$| async)[0]">
+        <input #filterBox kendoTextBox placeholder="    Search..."
+        [(ngModel)]="SearchData" [ngModelOptions]="{standalone: true}"
+        (keyup.enter)="SearchDataChanged($event.target.value)"  />
+        <button kendoButton look="clear" icon="search" class="position-absolute" ></button>
+        <span class="k-icon k-i-close k-i-x close-icon" (click)="SearchDataChanged('')"></span>
+      </kendo-textbox-container>
+    </div>
+    <div class="container-fluid groups-list-container pl-0" *ngIf="(AllGroups$| async).length > 0">
+      <div class="row" *ngFor="let group of AllGroups$| async | laviFilterList  : (SearchData) : 'groupName' ">
+        <lavi-agent-group-item class="col-12 ml-0" (OnChecked)="Checked(group.id,$event)"
+          [IsSelected]="IsGroupSelected(group.id)" [Group]="group" [IsCheckBoxVisible]="true">
+        </lavi-agent-group-item>
+      </div>
+    </div>
+    <div class="row mt-2" *ngIf="(AllGroups$| async).length > 0">
+      <div class="col-12 text-left">
+        <button class="btn default-agent-add-btn" (click)="AddToSelectedGroup()">Add to Visitor Tag</button>
+      </div>
+    </div>
+    <div *ngIf="IsAllowCreateGroup$ |async">
+    <hr *ngIf="(AllGroups$| async).length > 0" />
+    <div class="row">
+      <div class="col-12 bold text-uppercase text-left font-size-small-4">
+        Create New Visitor Tag
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-10">
+        <kendo-textbox-container floatingLabel="Visitor tag name">
+          <input kendoTextBox tabindex="1" maxlength="50" laviTrimValue (change)="ClearSelectedGroup()"
+            [formControl]="AddGroupForm.controls.groupName" />
+        </kendo-textbox-container>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 mt-4 text-left">
+        <label class="font-size-small-2">Select Visitor Tag Color</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-5 custom-color-picker">
+        <div *ngFor="let color of palette" class="group-circle-container">
+          <div (click)="OnChange(color)" class="circle pointer" [ngStyle]="{
+              backgroundColor:color
+            }"></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 mt-2 text-left">
+        <label class="font-size-small-2">OR</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-10">
+        <kendo-textbox-container floatingLabel="Enter Hex Color Code">
+          <input [formControl]="AddGroupForm.controls.groupColor" (change)="ClearSelectedGroup()" kendoTextBox
+            tabindex="2" maxlength="7" laviTrimValue />
+        </kendo-textbox-container>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-12 text-left">
+          <button class="btn default-agent-add-btn" (click)="CreateGroupAndAddCustomers()">CREATE & ADD</button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="(CustomerAddGroups$| async).length > 0">
+      <hr *ngIf="(CustomerAddGroups$| async).length > 0" />
+      <div class="row mt-2" >
+        <div class="col-12 bold text-uppercase text-left font-size-small-4">
+          Delete Visitor Tag from visitor
+        </div>
+      </div>
+      <div class="search-container">
+        <kendo-textbox-container class="pt-1 mt-1" >
+          <input #filterBox kendoTextBox placeholder="    Search..."
+          [(ngModel)]="SearchAssignedData" [ngModelOptions]="{standalone: true}"
+          (keyup.enter)="SearchAssignedDataChanged($event.target.value)"  />
+          <button kendoButton look="clear" icon="search" class="position-absolute" ></button>
+          <span class="k-icon k-i-close k-i-x close-icon" (click)="SearchAssignedDataChanged('')"></span>
+        </kendo-textbox-container>
+      </div>
+      <div class="container-fluid groups-list-container pl-0" >
+        <div class="row" *ngFor="let group of CustomerAddGroups$| async | laviFilterList  : (SearchAssignedData) : 'groupName' ">
+          <lavi-agent-group-item class="col-12 ml-0" (OnChecked)="RemoveTag(group.id,$event)"
+            [IsSelected]="IsGroupAssigned(group.id)" [Group]="group" [IsCheckBoxVisible]="true">
+          </lavi-agent-group-item>
+        </div>
+      </div>
+      <div class="row mt-2" >
+        <div class="col-12 text-left">
+          <button class="btn default-agent-add-btn" (click)="DeleteCustomerAssignedGroup()">Delete From Visitor Tag</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</lavi-agent-dialog-box>

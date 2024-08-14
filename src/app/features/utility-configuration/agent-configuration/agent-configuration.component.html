@@ -1,0 +1,98 @@
+<lavi-list-screen-header
+Title="Queue Views"
+(OnAddNewButtonClick)="Redirect()"
+[PageName]="roleActions.AgentTemplates"
+[ActionName]="actionType.AddEdit"
+[ButtonValue]="'Add New Queue Views'"
+></lavi-list-screen-header>
+
+  <div class="row d-flex justify-content-center flex-nowrap">
+    <lavi-filter-with-tags
+      searchTextTitle="Search Queue Views"
+      [(filter)]="searchModel"
+    >
+    </lavi-filter-with-tags>
+  </div>
+
+  <div class="row mt-5 mr-2 ml-2 standardlist-grid">
+    <kendo-grid
+      [kendoGridBinding]="AgentTemplateList$ | async | laviFilterListWithTags: searchModel:'':'name'"
+      [pageSize]="100"
+      [sortable]="true"
+      [reorderable]="true"
+      [resizable]="true"
+      [selectable]="{ enabled: true, mode: 'multiple' }"
+      [(expandedDetailKeys)]="expansionManager.expandedIds"
+      [kendoGridExpandDetailsBy]="expansionManager.expandDetailsBy"
+      [rowClass]="listStyleManager.rowStyleCallBack"
+    >
+      <kendo-grid-column
+        field="name"
+        title="Queue View Name"
+        [headerClass]="listStyleManager.headerClass"
+        [style]="listStyleManager.columnStyle"
+      >
+      </kendo-grid-column>
+      <kendo-grid-column
+        field="workflowId"
+        title="Workflow Used"
+        [headerClass]="listStyleManager.headerClass"
+        [style]="listStyleManager.columnStyle"
+        >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <span>{{
+            Workflow$
+              | async
+              | laviTextFromDropdown: dataItem?.workflowId:"workFlowId":"name"
+          }}</span>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column
+        field="viewTypeId"
+        title="Type"
+        [headerClass]="listStyleManager.headerClass"
+        [style]="listStyleManager.columnStyle"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <span>{{
+            AgentViewType$ | async | laviTextFromDropdown: dataItem?.viewTypeId
+          }}</span>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column
+      field="id"
+      title=""
+      width="200"
+      [headerClass]="listStyleManager.headerClass"
+      [style]="listStyleManager.columnStyle"
+    >
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <label>
+          <kendo-menu
+            class="cursor-pointer text-blue"
+            [items]="items"
+            (select)="OnSelect($event, dataItem)"
+          >
+            <ng-template
+              kendoMenuItemLinkTemplate
+              let-item="item"
+              let-index="index"
+            >
+              <span
+                [kendoMenuItemLink]="index"
+                *ngIf="ShowMenuItem(item)"
+                [ngClass]="{
+                  'menu-style': item.text === '...',
+                  'menu-list-style': item.text != '...'
+                }"
+              >
+                {{ item.text }}
+                <span *ngIf="item.items && item.items.length"></span>
+              </span>
+            </ng-template>
+          </kendo-menu>
+        </label>
+      </ng-template>
+    </kendo-grid-column>
+    </kendo-grid>
+  </div>

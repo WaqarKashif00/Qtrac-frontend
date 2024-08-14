@@ -1,0 +1,130 @@
+<div class="container-fluid non-working-day">
+  <div class="row">
+    <div class="col-3 col-lg-3 col-sm-4">
+      <p class="col-heading">Add non-working day</p>
+    </div>
+    <div class="col-1 col-lg-1 col-sm-1"></div>
+    <div class="col-8 col-lg-8 col-sm-7 p-0">
+      <div class="row">
+        <div class="col-3 col-lg-3 col-sm-3 p-0">
+          <p class="col-heading">Non-working days</p>
+        </div>
+        <div class="col-3 col-lg-4 p-0 col-sm-5 pl-3 mt-n1">
+          <kendo-dropdownlist
+            [data]="countries | laviSortBy:'country'"
+            [textField]="'country'"
+            [valueField]="'countryCode'"
+            [(ngModel)]="SelectedCountryValue"
+            [defaultItem]="DefaultCountryValue"
+          >
+          </kendo-dropdownlist>
+        </div>
+        <div class="col-6 p-0 col-lg-5 col-sm-4 text-right">
+          <p class="text-blue cursor-pointer" (click)="LoadHolidayList()">
+            Load Default Holidays for year {{ Year }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3 col-lg-3 col-sm-4 left-col">
+      <div [formGroup]="nonWorkingDayForm" class="row p-3">
+        <div class="w-100">
+          <kendo-textbox-container floatingLabel="Description">
+            <input
+              formControlName="description"
+              kendoTextBox
+              value="Company Holiday"
+              maxlength="50"
+              lavi-trim-value
+            />
+          </kendo-textbox-container>
+          <div class="h-10">
+            <lavi-validation-message-list
+              [validation-form-group-name]="nonWorkingDayForm"
+              validation-control-name="description"
+              [validation-errorlist]="
+                HoursOfOperationMessage.DescriptionMessages
+              "
+            >
+            </lavi-validation-message-list>
+          </div>
+        </div>
+
+        <div class="mt-4 w-100">
+          <p>From Date:</p>
+          <kendo-datepicker
+            class="w-100"
+            formControlName="fromDate"
+          ></kendo-datepicker>
+          <div class="h-10">
+            <lavi-validation-message-list
+              [validation-form-group-name]="nonWorkingDayForm"
+              validation-control-name="fromDate"
+              [validation-errorlist]="HoursOfOperationMessage.DateMessages"
+            >
+            </lavi-validation-message-list>
+          </div>
+        </div>
+        <div class="mt-4 mb-2 w-100">
+          <p>To Date:</p>
+          <kendo-datepicker
+            class="w-100"
+            formControlName="toDate"
+          ></kendo-datepicker>
+          <div class="h-10">
+            <lavi-validation-message-list
+              [validation-form-group-name]="nonWorkingDayForm"
+              validation-control-name="toDate"
+              [validation-errorlist]="HoursOfOperationMessage.DateMessages"
+            >
+            </lavi-validation-message-list>
+            <div
+              class="error-message"
+              *ngIf="nonWorkingDayForm.hasError('invalidDate')"
+            >
+              To date must be greater than from date.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-1 ol-lg-1 col-sm-1 add-item-container">
+      <span (click)="AddNonWorkingDayToList()" class="add-non-working-day"
+        >>></span>
+    </div>
+    <div class="col-8 col-lg-8 col-sm-8 right-col non-working-day-scrollbar">
+      <div class="pt-2">
+        <div class="row" *ngFor="let holiday of defaultHolidayList | laviSortBy:'fromDate'">
+          <div class="col-1 col-sm-1 col-lg-1">           
+            <img
+            (click)="DeleteHoliday(holiday.id)"
+            class="img-width cursor-pointer"
+            src="../../../../assets/img/delete-icon.svg"
+          /> 
+            </div> 
+            <div class="col-1 col-sm-1 col-lg-1 pl-0">
+              <img
+              (click)="EditHoliday(holiday)"
+              class="img-width cursor-pointer"
+              src="../../../../assets/img/edit-icon.svg"
+            />                       
+          </div>
+          <div class="col-4 col-sm-4 col-lg-4 text-break">
+            <p>{{ holiday.description }}</p>
+          </div>
+          <div class="col-4 col-sm-4 col-lg-4">
+            <p>
+              {{ holiday.fromDate | date }}
+              <span
+                *ngIf="(holiday.fromDate | date) !== (holiday.toDate | date)"
+                >- {{ holiday.toDate | date }}</span
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

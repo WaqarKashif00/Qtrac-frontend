@@ -1,0 +1,111 @@
+<div id="container" class="row divLayoutTopMiddleSection">
+  <ng-container *ngIf="{
+      designerPanel: DesignerPanel$ | async
+    } as values">
+    <div class="column left divLayoutToolbar">
+      <lavi-kiosk-tool-box [DivLayoutDesignContainer]="DivLayoutDesignContainer">
+      </lavi-kiosk-tool-box>
+    </div>
+    <div class="column center middle-outer-div">
+      <div id="DivLayoutDesignContainer" [style.width.px]="values.designerPanel.styles.width"
+        [style.height.px]="values.designerPanel.styles.height" [style.background-image]="
+          'url(' + (values.designerPanel.backgroundImage|quoteString) + ')'
+        " [style.color]="values.designerPanel.styles.color"
+        [style.font-size]="values.designerPanel.styles.fontSize ? values.designerPanel.styles.fontSize + 'px' : ''"
+        [style.background-color]="values.designerPanel.styles.backgroundColor"
+        [style.font-style]="values.designerPanel.styles.fontStyle"
+        [style.font-family]="values.designerPanel.styles.font"
+        [style.font-weight]="values.designerPanel.styles.fontWeight" class="control-section divLayoutDesignContainer"
+        #DivLayoutDesignContainer>
+        <div *ngFor="let x of Columns">
+          <div *ngFor="let y of Rows">
+            <div [ngDraggable]="false" [position]="{x: x, y: y }" [preventDefaultEvent]="true" [class]="GridClass"
+              [style.width.px]="GridSize" [style.height.px]="GridSize">
+
+            </div>
+          </div>
+        </div>
+        <lavi-kiosk-middle-container [DivLayoutDesignContainer]="DivLayoutDesignContainer" [GridSize]="GridSize"
+          [IsOnlyGrid]="IsOnlyGrid">
+          <default-control>
+            <ng-container *ngIf="(Page$|async)?.IsLanguagePage">
+              <lavi-language-default-control [IsOnlyGrid]="IsOnlyGrid" [GridSize]="GridSize"
+                [DivLayoutDesignContainer]="DivLayoutDesignContainer">
+              </lavi-language-default-control>
+            </ng-container>
+            <ng-container *ngIf="(Page$|async)?.IsWelcomePage">
+              <lavi-welcome-default-control [IsOnlyGrid]="IsOnlyGrid" [GridSize]="GridSize"
+                [DivLayoutDesignContainer]="DivLayoutDesignContainer">
+              </lavi-welcome-default-control>
+            </ng-container>
+            <ng-container *ngIf="(Page$|async)?.IsPreServiceQuestionPage">
+              <lavi-pre-service-question-default-control [IsOnlyGrid]="IsOnlyGrid" [GridSize]="GridSize"
+                [DivLayoutDesignContainer]="DivLayoutDesignContainer">
+              </lavi-pre-service-question-default-control>
+            </ng-container>
+            <ng-container *ngIf="(Page$|async)?.IsServiceQuestionPage">
+              <lavi-service-question-default-control [IsOnlyGrid]="IsOnlyGrid" [GridSize]="GridSize"
+                [DivLayoutDesignContainer]="DivLayoutDesignContainer">
+              </lavi-service-question-default-control>
+            </ng-container>
+            <ng-container *ngIf="(Page$|async)?.IsServicePage">
+              <lavi-service-default-control class="position-absolute" [IsOnlyGrid]="IsOnlyGrid" [GridSize]="GridSize"
+                [DivLayoutDesignContainer]="DivLayoutDesignContainer">
+              </lavi-service-default-control>
+            </ng-container>
+            <ng-container *ngIf="(Page$|async)?.IsThankYouPage">
+              <lavi-thank-you-default-component class="position-absolute" [IsOnlyGrid]="IsOnlyGrid"
+                [GridSize]="GridSize" [DivLayoutDesignContainer]="DivLayoutDesignContainer">
+              </lavi-thank-you-default-component>
+            </ng-container>
+            <ng-container *ngIf="(Page$|async)?.IsNoQueuePage">
+              <lavi-no-queue-default-control class="position-absolute" [IsOnlyGrid]="IsOnlyGrid"
+                [GridSize]="GridSize" [DivLayoutDesignContainer]="DivLayoutDesignContainer">
+              </lavi-no-queue-default-control>
+            </ng-container>
+            <ng-container *ngIf="(Page$|async)?.IsOffLinePage">
+              <lavi-off-line-default-control class="position-absolute" [IsOnlyGrid]="IsOnlyGrid"
+                [GridSize]="GridSize" [DivLayoutDesignContainer]="DivLayoutDesignContainer">
+              </lavi-off-line-default-control>
+            </ng-container>
+          </default-control>
+
+        </lavi-kiosk-middle-container>
+
+      </div>
+    </div>
+    <div class="column right divLayoutPropertyContainer">
+      <lavi-kiosk-property>
+        <default-control-property>
+          <ng-content select="default-control-property"></ng-content>
+        </default-control-property>
+        <default-control-property>
+          <ng-container *ngIf="(Page$|async)?.IsLanguagePage">
+            <lavi-language-property-control></lavi-language-property-control>
+          </ng-container>
+          <ng-container *ngIf="(Page$|async)?.IsWelcomePage">
+            <lavi-welcome-button-property-control></lavi-welcome-button-property-control>
+          </ng-container>
+          <ng-container *ngIf="(Page$|async)?.IsPreServiceQuestionPage">
+            <lavi-pre-service-question-property-control></lavi-pre-service-question-property-control>
+          </ng-container>
+          <ng-container *ngIf="(Page$|async)?.IsServiceQuestionPage">
+            <lavi-service-question-property-control></lavi-service-question-property-control>
+          </ng-container>
+          <ng-container *ngIf="(Page$|async)?.IsServicePage">
+            <lavi-service-property-control></lavi-service-property-control>
+          </ng-container>
+          <ng-container *ngIf="(Page$|async)?.IsThankYouPage">
+            <lavi-thank-you-property-control></lavi-thank-you-property-control>
+          </ng-container>
+          <ng-container *ngIf="(Page$|async)?.IsNoQueuePage">
+            <lavi-no-queue-property-control></lavi-no-queue-property-control>
+          </ng-container>
+          <ng-container *ngIf="(Page$|async)?.IsOffLinePage">
+            <lavi-off-line-property-control></lavi-off-line-property-control>
+          </ng-container>
+        </default-control-property>
+      </lavi-kiosk-property>
+    </div>
+  </ng-container>
+</div>

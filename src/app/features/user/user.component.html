@@ -1,0 +1,156 @@
+<lavi-list-screen-header
+Title="Users"
+(OnAddNewButtonClick)="OpenModelInAddMode()"
+[PageName]="roleActions.Users"
+[ActionName]="actionType.AddEdit"
+[ButtonValue]="'Add New User'"
+></lavi-list-screen-header>
+
+
+  <div>
+    <lavi-filter-with-tags
+      searchTextTitle="Search Users"
+      [(filter)]="searchModel"
+      [tagList]="TagList$ | async"
+    >
+    </lavi-filter-with-tags>
+  </div>
+
+  <ng-container *ngIf="UserDropdownData$ | async as UserDropdown">
+    <lavi-add-user
+      [UserDropdownData]="UserDropdown"
+      [BranchSearchList]="BranchSearchList$ | async"
+      [Queues]="Queues$ | async"
+      [TemplateList]="TemplateList$ | async"
+      [UserForm]="UserForm"
+      [OpenDialog]="IsDialogOpened$ | async"
+      [Mode]="Mode"
+      [EmailExists]="EmailExists$ | async"
+      [PasswordNotAllow]="PasswordNotAllow$ | async"
+      [TagList]="TagList$ | async"
+      (OnCloseModal)="CloseModal()"
+      (OnSaveData)="OnSave($event)"
+      (OnUpdateData)="OnUpdate($event)"
+      (OnChangeUserRole)="OnChangeUserRoleBindAgentViewTemplate($event)"
+      (OnChangeAgentTemplate)="OnChangeAgentTemplateBindServices($event)"
+      (OnEnterTag)="OnEnterOfTag()"
+      (OnTagRemove)="OnTagRemoval($event)"
+      (OnEnterInput)="OnInputEnter($event)"
+      [PanelExpand]="PanelExpand$ | async"
+      (SearchBranchNameOrTag)="FilterBranchNameOrTag($event)"
+      (UncheckIsOverride)="BindAgentViewOnUnCheckIsOverride($event)"
+      [ShowOverrideCheckbox]="ShowOverrideCheckbox$ | async"
+      [IsInternalAuthentication]="IsInternalAuthentication$ | async"
+    ></lavi-add-user>
+
+    <div class="row mt-5 mr-2 ml-2 standardlist-grid users-grid">
+      <kendo-grid
+        [kendoGridBinding]="
+          Users$
+            | async
+            | laviFilterListWithTags: searchModel:'tags':'firstName':'lastName':'displayName': 'alertEmail': 'alertPhoneNumber' :'email':'roleName':'tags':'branchName': 'phone'"
+        [pageSize]="1000"
+        [sortable]="true"
+        [reorderable]="true"
+        [resizable]="true"
+        [selectable]="{ enabled: true, mode: 'multiple' }"
+        [(expandedDetailKeys)]="expansionManager.expandedIds"
+        [kendoGridExpandDetailsBy]="expansionManager.expandDetailsBy"
+        [rowClass]="listStyleManager.rowStyleCallBack"
+      >
+        <kendo-grid-column
+          field="firstName"
+          title="Name"
+          [headerClass]="listStyleManager.headerClass"
+          [style]="listStyleManager.columnStyle"
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <span>{{ dataItem.firstName }} {{ dataItem.lastName }}</span>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="roleId"
+          title="Role"
+          [headerClass]="listStyleManager.headerClass"
+          [style]="listStyleManager.columnStyle"
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <span *ngIf="dataItem.roleId">{{
+              UserDropdown?.roleList
+                | laviTextFromDropdown: dataItem?.roleId:"roleId":"roleName"
+            }}</span>
+            <span *ngIf="!dataItem.roleId">Super Admin</span>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="email"
+          title="Email"
+          [headerClass]="listStyleManager.headerClass"
+          [style]="listStyleManager.columnStyle"
+        ></kendo-grid-column>
+
+        <kendo-grid-column
+      field="id"
+      title=""
+      width="200"
+      [headerClass]="listStyleManager.headerClass"
+      [style]="listStyleManager.columnStyle"
+    >
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <label>
+          <kendo-menu
+            class="cursor-pointer text-blue"
+            [items]="items"
+            (select)="OnSelect($event, dataItem)"
+          >
+            <ng-template
+              kendoMenuItemLinkTemplate
+              let-item="item"
+              let-index="index"
+            >
+              <span
+                [kendoMenuItemLink]="index"
+                *ngIf="ShowMenuItem(item)"
+                [ngClass]="{
+                  'menu-style': item.text === '...',
+                  'menu-list-style': item.text != '...'
+                }"
+              >
+                {{ item.text }}
+                <span *ngIf="item.items && item.items.length"></span>
+              </span>
+            </ng-template>
+          </kendo-menu>
+        </label>
+      </ng-template>
+    </kendo-grid-column>
+        <kendo-grid-column
+          title=""
+          [headerClass]="listStyleManager.headerClass"
+          [width]="listStyleManager.expanderColumnSize"
+          [style]="listStyleManager.columnStyle"
+          field="id"
+        >
+          <ng-template kendoGridCellTemplate let-column>
+            <lavi-list-detail-expander
+              [expansionManager]="expansionManager"
+              [columnId]="column.id"
+            >
+            </lavi-list-detail-expander>
+          </ng-template>
+        </kendo-grid-column>
+
+        <ng-template kendoGridDetailTemplate let-dataItem>
+          <div>
+            <span *ngFor="let branch of dataItem.branches">
+              <button kendoButton class="branch-button-unselected">
+                {{ branch.name }}
+              </button>
+              <lavi-tag-display [tags]="dataItem.tags"> </lavi-tag-display>
+            </span>
+          </div>
+        </ng-template>
+      </kendo-grid>
+    </div>
+  </ng-container>
+

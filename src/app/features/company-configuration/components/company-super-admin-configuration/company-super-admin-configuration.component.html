@@ -1,0 +1,215 @@
+<div [formGroup]="CompanySuperAdminConfigForm">
+  <div class="col-lg-12 inner-panel-padding panel-border">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="row">
+          <div class="col-12">
+            <div class="row form-group ml-4 mt-4">
+              <div class="col-lg-12">
+                <label class="k-label cursor-pointer checkbox-label">
+                  <input
+                    type="checkbox"
+                    formControlName="isDataRetentionPolicy"
+                    kendoCheckBox
+                  />
+                  Data Retention Policy
+                </label>
+                <div class="d-inline pl-2" *ngIf="DataRetentionPolicyControl.value">
+                  <kendo-textbox-container class="width-11 pt-0">
+                    <input
+                      kendoTextBox
+                      appNumbersOnly
+                      class="text-center p-0 h-auto"
+                      maxlength="3"
+                      formControlName="dataRetentionYears"
+                    />
+                  </kendo-textbox-container>
+                  <span class="checkbox-label pl-2 d-inline-block">Years</span>
+                </div>
+              </div>
+              <div class="h-10"><lavi-validation-message-list [validation-form-group-name]="CompanySuperAdminConfigForm"
+                validation-control-name="dataRetentionYears"
+                [validation-errorlist]="ValidationMessage.DataRetentionMessages">
+              </lavi-validation-message-list></div>
+            </div>
+            <!-- TODO: May need in future for lite agent -->
+            <!-- <div class="row ml-4 mt-5">
+              <span class="col-lg-8 text-dark">Queue Layout Designer</span>
+            </div>
+            <div class="col-lg-12 form-group ml-4 mb-5 pt-2">
+              <div class="row">
+                <div class="col-4">
+                  <label class="k-label cursor-pointer checkbox-label">
+                    <input
+                      type="checkbox"
+                      formControlName="isLiteAgent"
+                      kendoCheckBox
+                    />
+                    Lite
+                  </label>
+                </div>
+                <div class="col-4">
+                  <label class="k-label cursor-pointer checkbox-label">
+                    <input
+                      type="checkbox"
+                      formControlName="isClassicAgent"
+                      kendoCheckBox
+                    />
+                    Classic
+                  </label>
+                </div>
+              </div>
+            </div> -->
+            <div class="col-lg-12 form-group ml-2 mb-5">
+              <div class="col-12">
+                <!--TODO : Disabled this section discussed in this task QTVR-1310
+                  <label class="k-label cursor-pointer checkbox-label">
+                  <input
+                    type="checkbox"
+                    formControlName="useLaviSMTPSettings"
+                    kendoCheckBox
+                  />
+                  Use Lavi SMTP Settings
+                </label>
+
+                <div class="d-inline-block font-size-small-4 ml-2" *ngIf="CompanySuperAdminConfigForm.controls.useLaviSMTPSettings.value">
+                  <p class="d-inline mb-0 ml-2 cursor-pointer text-blue" (click)="OpenConfigurationDialog()">Configure</p>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6" *ngIf="!IsEditMode">
+        <div class="row">
+          <div class="col-12 mt-4 ml-4">
+            <h6 class="inner-panel-header">
+              SMS Configuration(
+              <span [ngClass]="{'text-link-account': IsSMSAccountLinked}"
+                >Account
+                {{
+                  IsSMSAccountLinked
+                    ? ""
+                    : "not"
+                }}
+                linked</span
+              >)
+            </h6>
+
+            <div class="row col-8 mt-4 form-group">
+              <kendo-floatinglabel class="w-100" text="Select SMS Gateway">
+                <kendo-dropdownlist
+                  [data]="smsList"
+                  formControlName="smsGatewayName"
+                  tabindex="12"
+                >
+                </kendo-dropdownlist>
+              </kendo-floatinglabel>
+            </div>
+
+            <ng-container *ngIf="CompanySuperAdminConfigForm.get('smsGatewayName').value == 'messangi'">
+              <div class="row col-8 mt-4 form-group">
+                <kendo-textbox-container
+                  class="w-100"
+                  floatingLabel="Messangi Bearer Token"
+                >
+                  <input
+                    lavi-auto-focus
+                    kendoTextBox
+                    tabindex="1"
+                    maxlength="300"
+                    formControlName="messangiBearerToken"
+                    lavi-trim-value
+                  />
+                </kendo-textbox-container>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="CompanySuperAdminConfigForm.get('smsGatewayName').value == 'whatsapp'">
+              <div class="row col-8 mt-4 form-group">
+                <kendo-textbox-container
+                  class="w-100"
+                  floatingLabel="Messangi Whatsapp Key"
+                >
+                  <input
+                    lavi-auto-focus
+                    kendoTextBox
+                    tabindex="1"
+                    maxlength="300"
+                    formControlName="messangiBearerToken"
+                    lavi-trim-value
+                  />
+                </kendo-textbox-container>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="CompanySuperAdminConfigForm.get('smsGatewayName').value != 'messangi'
+            && CompanySuperAdminConfigForm.get('smsGatewayName').value != 'whatsapp'">
+              <div class="row col-8 mt-4 form-group">
+                <kendo-textbox-container
+                  class="w-100"
+                  floatingLabel="Account SID"
+                >
+                  <input
+                    lavi-auto-focus
+                    kendoTextBox
+                    tabindex="1"
+                    maxlength="50"
+                    formControlName="twilioAccountSID"
+                    lavi-trim-value
+                  />
+                </kendo-textbox-container>
+              </div>
+
+              <div class="row col-8 mt-4 form-group">
+                <kendo-textbox-container class="w-100" floatingLabel="Auth Key">
+                  <input
+                    lavi-auto-focus
+                    kendoTextBox
+                    tabindex="1"
+                    maxlength="50"
+                    formControlName="twilioAuthKey"
+                    lavi-trim-value
+                  />
+                </kendo-textbox-container>
+              </div>
+
+              <div class="row col-8 mt-4 form-group">
+                <kendo-textbox-container
+                  class="w-100"
+                  floatingLabel="Service SID"
+                >
+                  <input
+                    lavi-auto-focus
+                    kendoTextBox
+                    tabindex="1"
+                    maxlength="50"
+                    formControlName="twilioServiceId"
+                    lavi-trim-value
+                  />
+                </kendo-textbox-container>
+              </div>
+            </ng-container>
+
+            <div class="row col-8 mt-4">
+              <div class="row">
+                <div class="col-12 text-center">
+                  <span *ngIf="!IsSMSAccountLinked || IsFormValueChanges"
+                    tabindex="1"
+                    class="text-blue no-outline cursor-pointer float-right mr-3"
+                    (click)="LinkAccount()"
+                    >Link Account</span
+                  >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<lavi-company-smtp-configuration-modal
+[OpenDialog]="IsSMTPConfigurationDialogOpen$| async"
+(OnCloseConfiguration)="CloseConfigurationDialog()"
+></lavi-company-smtp-configuration-modal>

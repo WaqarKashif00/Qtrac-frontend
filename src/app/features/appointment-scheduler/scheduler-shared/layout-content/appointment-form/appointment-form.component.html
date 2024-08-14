@@ -1,0 +1,55 @@
+<div class="container pl-0 pr-0">
+  <div class="row d-block" *ngIf="GlobalQuestions?.length > 0">
+    <div class="col-12">
+      <h5>{{(headerText[SelectedLanguage?.selectedLanguage] || headerText[SelectedLanguage?.defaultLanguage])}} </h5>
+    </div>
+    <div class="col-12 p-0 pb-5">
+      <div class="container global-question-container">
+        <div class="row">
+          <div class="col-12 col-xs-12 col-sm-6 pt-4" *ngFor="let preServiceQuestion of GlobalQuestions">
+            <div class="col-12 text-left displayText">
+              <div class="" [innerHTML]="replaceURLs( preServiceQuestion.itemText )" ></div>
+              <span *ngIf="preServiceQuestion.required" class="error-message ml-1"> *</span>
+            </div>
+
+            <div class="col-12" *ngIf="preServiceQuestion.itemText">
+              <lavi-preview-input-controls
+                [branchCountryCode]="branchCountryCode"
+                [Item]="preServiceQuestion"
+                [AppointmentTexts]="AppointmentTexts"
+                [customerAppointmentId] = "customerAppointmentId"
+              ></lavi-preview-input-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row d-block" *ngIf="ServiceQuestions?.length > 0">
+    <hr />
+    <div class="col-12">
+      <h5>{{AppointmentTexts.appointmentSupplementalQuestionHeader}}</h5>
+    </div>
+    <div class="col-12 p-0 pb-5">
+      <div class="container supplimental-question-container">
+        <div class="row">
+          <ng-container *ngFor="let serviceQuestion of ServiceQuestions">
+            <div class="col-12 col-xs-12 col-sm-6 pt-4" *ngIf="serviceQuestion.itemText">
+              <div class="col-12 text-left service-question displayText">
+                <div class="" [innerHTML]="replaceURLs( serviceQuestion.itemText )" ></div>
+                <span *ngIf="serviceQuestion.required" class="error-message ml-1">*</span>
+              </div>
+              <div class="col-12">
+                <lavi-preview-input-controls [branchCountryCode]="branchCountryCode"
+                 [Item]="serviceQuestion"
+                 [AppointmentTexts]="AppointmentTexts"
+                  (ControlBlurOrChange)="ControlChange($event)"></lavi-preview-input-controls>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

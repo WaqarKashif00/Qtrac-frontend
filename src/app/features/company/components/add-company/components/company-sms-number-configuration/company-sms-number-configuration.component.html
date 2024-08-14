@@ -1,0 +1,43 @@
+<div>
+    <h6 class="panel-sub-header mt-5">SMS Number Configuration</h6>
+    <h4 *ngIf='!IsSMSAccountLinked' class="panel-sub-header mt-5 text-orange ml-2">Warning! The SMS account is not
+        linked.
+        Please contact lavi
+        industries to link your account.</h4>
+    <h4 *ngIf='IsSMSAccountLinked && InActiveNumberCount > 0' class="panel-sub-header mt-5 text-orange ml-2">
+        Warning! The system has detected {{InActiveNumberCount}} number{{(InActiveNumberCount>1?"s":"")}} that have been
+        removed from SMS accout.
+        <span class="text-blue cursor-pointer" (click)="OpenAssignNumbersDialog()">Click Here</span> for more details.
+    </h4>
+    <div class="d-flex justify-content-center mt-5 mb-5 w-90" *ngIf='IsSMSAccountLinked'>
+        <div class="col-lg-6 row center-sms">
+            <div class="form-group col-lg-4 col-sm-4">
+                <div class="rounded-text-box bg-gray font-weight-500 text-center pt-1 no-outline cursor-pointer" tabindex="29" (click)='TotalNumbersClicked()'>
+                    <!-- <input hidden class="sms-input" readonly formControlName="smsTotalNumber" /> -->
+                    {{AllTwilioActiveNumbers?.length || 0}} total numbers
+                </div>
+            </div>
+            <div class="form-group col-lg-4 col-sm-4">
+                <div class="rounded-text-box bg-gray font-weight-500 text-center pt-1 no-outline cursor-pointer" tabindex="30" (click)='AssignedNumbersClicked()'>
+                    <!-- <input hidden class="sms-input" readonly formControlName="smsAssignedNumber" /> -->
+                    {{AllAssignedToBranchNumbers?.length || 0}} assigned
+                </div>
+            </div>
+            <div class="form-group col-lg-4 col-sm-4 no-outline cursor-pointer" tabindex="31" (click)='NotAssignedNumbersClicked()'>
+                <div class="rounded-text-box bg-gray font-weight-500 text-center pt-1">
+                    <!-- <input hidden class="sms-input" readonly formControlName="smsUnassignedNumber" /> -->
+                    {{AllUnAssignedNumbers?.length || 0}} not assigned
+                </div>
+            </div>
+        </div>
+
+        <lavi-company-assign-sms-number-dialog *laviHasRoleAccess="roleActions.CompanyConfiguration;actionName: actionType.View" (OnDelete)="DeleteNumber($event)" (OnUpdate)="Update($event)" (OnUpdateAll)="UpdateAll($event)"
+            (OnClose)='CloseAssignNumbersDialog()' (FilterChange)="FilterChanged($event)" [BranchList]="BranchList"
+            [AllTwilioActiveNumbers]="AllTwilioActiveNumbers" [AllAssignedToBranchNumbers]="AllAssignedToBranchNumbers"
+            [InActiveNumberCount]="InActiveNumberCount" [AllUnAssignedNumbers]="AllUnAssignedNumbers"
+            [OpenDialog]='AssignNumberDialogState'
+            [FilterId]='FilterId'>
+        </lavi-company-assign-sms-number-dialog>
+
+    </div>
+</div>

@@ -1,0 +1,36 @@
+@import "src/stylings/primitives/primitives.scss";
+ul.appointment-list {
+  list-style: none;
+  margin: 0;
+  li {
+    background: $scheduler-background;
+    color: $scheduler-default-font-color;
+    cursor: pointer;
+    display: inline-block;
+    font-size: $font-size-big-1;
+    padding: 9px 35px;
+  }
+  .selected {
+    background: $color-background-yellow;
+  }
+  :first-child {
+    border-radius: 19px 0 0 19px;
+  }
+  :last-child {
+    border-radius: 0 19px 19px 0;
+    padding: 9px 23px;
+  }
+  .deselected {
+    border: solid thin #707070;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+}
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation:portrait) {
+  ul.appointment-list {
+    margin: 0 0 10px 0 !important;
+    li {
+      padding: 9px 5px;
+    }
+  }
+}

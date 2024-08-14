@@ -1,0 +1,91 @@
+<div class="appointment-form appointment-notification">
+  <p class="sub-heading">{{(headerText[SelectedLanguage?.selectedLanguage] || headerText[SelectedLanguage?.defaultLanguage])}}  </p>
+  <div class="row" *ngIf="ShowSMS == AllowSMS.YES">
+    <div class="col-1 pl-0 pt-3">
+      <input
+        id="chkPhone"
+        [ngStyle]="
+          AppointmentNotificationPreferences.isPhonNumberChecked
+            ? { backgroundColor: ActiveBackColor, color: ActiveTextColor }
+            : { backgroundColor: InActiveBackColor, color: InActiveTextColor }
+        "
+        type="checkbox"
+        (change)="OnPhoneNumberSelected()"
+        (change)="updateButton()"
+        kendoCheckBox
+        [(ngModel)]="AppointmentNotificationPreferences.isPhonNumberChecked"
+        class="cursor-pointer"
+      />
+    </div>
+
+    <div class="col-xl-7 col-sm-8 col-9 pl-0">
+    <lavi-phone-number class="preview-control-items p-0"
+      (OnValidPhoneNumber)="PhoneNumberChanged($event)"
+      (OnInvalidPhoneNumber)="PhoneNumberChanged($event)"
+      [PhoneNumber]="AppointmentNotificationPreferences.phoneNumber"
+      ></lavi-phone-number>
+    </div>
+
+    <div class="col-8 ml-5">
+      <span class="error-message d-block" *ngIf="!IsPhoneValid && IsPhoneNumberErrorsToShow">
+        {{ PhoneValidationMessage }}
+      </span>
+      <label class="small">{{AppointmentTexts.appointmentReviewPageDataMessage}}</label>
+    </div>
+  </div>
+  <div class="form-group row" *ngIf="ShowEmail == AllowEMail.YES">
+    <div class="col-1 pl-0 pt-3">
+      <input
+        id="chkEmail"
+        [ngStyle]="
+          AppointmentNotificationPreferences.isEmailAddressChecked
+            ? { backgroundColor: ActiveBackColor, color: ActiveTextColor }
+            : { backgroundColor: InActiveBackColor, color: InActiveTextColor }
+        "
+        type="checkbox"
+        (change)="OnEmailSelected()"
+        (change)="updateButton()"
+        (keyup)="updateButton()"
+
+        kendoCheckBox
+        [(ngModel)]="AppointmentNotificationPreferences.isEmailAddressChecked"
+        class="cursor-pointer"
+      />
+    </div>
+    <div class="col-xl-7 col-sm-11 pl-0 col-9 sm-email-field">
+      <kendo-textbox-container floatingLabel={{AppointmentTexts.appointmentReviewPageEmailField}} class="w-100">
+        <input
+          kendoTextBox
+          maxlength="50"
+          (change)="EMailChanged()"
+        (keyup)="updateButton()"
+
+          [(ngModel)]="AppointmentNotificationPreferences.emailAddress"
+        />
+      </kendo-textbox-container>
+      <div class="error-message" *ngIf="!IsEmailValid && IsEMailErrorsToShow">
+        {{ EmailValidationMessage }}
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="DisableTermsConditions">
+    <input
+      id="chk"
+      [ngStyle]="
+        AppointmentNotificationPreferences.isTermsAndConditionChecked
+          ? { backgroundColor: ActiveBackColor, color: ActiveTextColor }
+          : { backgroundColor: InActiveBackColor, color: InActiveTextColor }
+      "
+      type="checkbox"
+      (change)="OnIAgreeTermsChecked()"
+      kendoCheckBox
+      [(ngModel)]="
+        AppointmentNotificationPreferences.isTermsAndConditionChecked
+      "
+      class="cursor-pointer"
+    />
+    <label for="chk" class="small ml-3 cursor-pointer">
+      {{SelectedLanguage?.selectedLanguage == "es" ? "Estoy de acuerdo con los" : AppointmentTexts.appointmentAgreeMessage}} <a href="{{TermsAndConditionsUrl}}" target="_blank" > {{ SelectedLanguage?.selectedLanguage == "es" ? "términos y condiciones":AppointmentTexts.appointmentTermConditionMessage}}</a>.
+    </label>
+  </div>
+</div>

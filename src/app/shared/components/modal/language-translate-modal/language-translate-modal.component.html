@@ -1,0 +1,49 @@
+<ng-container>
+  <lavi-modal
+    [OpenDialog]="OpenDialog"
+    [Width]="'50%'"
+    [Height]="'auto'"
+    [Title]="Title"
+  >
+  <div  class="property-window-body">
+    <div
+      class="w-75"
+      *ngFor="let item of TextFormArray.controls; let i = index"
+    >
+      <div [formGroup]="item">
+        <label>Text ({{ item.value.language }})</label
+        >
+        <mwl-text-input-autocomplete-container>
+        <input class="text-left"
+          type="text"
+          [maxlength]="MaxLength"
+          formControlName="text"
+          placeholder="Text"
+          lavi-auto-focus
+          [AutoFocusRequired]="i === 0 ? OpenDialog : (!OpenDialog)"
+          mwlTextInputAutocomplete
+          triggerCharacter="%"
+          [findChoices]="findChoices"
+          [getChoiceLabel]="getChoiceLabel"
+        />
+      </mwl-text-input-autocomplete-container>
+        <span
+          *ngIf="i === 0 && TextFormArray.controls.length > 1"
+          (click)="Translate(item.value.text)"
+          class="text-blue cursor-pointer font-weight-bold"
+        >
+          Translate</span
+        >
+      </div>
+    </div>
+  </div>
+
+  <kendo-dialog-actions class="pb-0 pr-0">
+    <div class="float-right">
+      <input type="button" kendoButton class="secondary-button" (click)="CloseTranslateDialog()" value="Cancel" />
+      <input type="button" kendoButton class="primary-button" (click)="SaveTranslatedTexts(TextFormArray.controls)" value="Apply" />
+    </div>
+  </kendo-dialog-actions>
+
+  </lavi-modal>
+</ng-container>

@@ -1,0 +1,42 @@
+<div
+  class="newControl newLabel"
+  *ngFor="let control of Control"
+  [position]="control.styles | controlPosition"
+  rzContainment="#DivLayoutDesignContainer"
+  [style.width.px]="control.styles.width"
+  [style.height.px]="control.styles.height"
+  [style.z-index]="control.styles.zindex"
+  [style.color]="control.styles.color"
+  [style.background-color]="control.styles.backgroundColor"
+  [style.font-size]="
+    control.styles.fontSize ? control.styles.fontSize + 'px' : ''
+  "
+  [style.text-align]="control.alignment"
+  [style.font-style]="control.styles.fontStyle"
+  [style.font-weight]="control.styles.fontWeight"
+  [style.font-family]="control.styles.font"
+  [inBounds]="true"
+  [bounds]="DivLayoutDesignContainer"
+  [preventDefaultEvent]="true"
+  [gridSize]="IsOnlyGrid ? GridSize : null"
+  [rzGrid]="IsOnlyGrid ? GridSize : null"
+  (click)="onControlClick(control)"
+  (endOffset)="onControlMoveEnd($event, control)"
+  (rzStop)="onControlResizeStop($event, control)"
+  ngDraggable
+  ngResizable
+>
+  <button
+    type="button"
+    (click)="onControlRemove(control)"
+    class="close"
+    aria-label="Close"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <span class="wrap">{{
+    control.text[SelectedLanguage]
+      ? control.text[SelectedLanguage]
+      : control.text[DefaultLanguage]
+  }}</span>
+</div>

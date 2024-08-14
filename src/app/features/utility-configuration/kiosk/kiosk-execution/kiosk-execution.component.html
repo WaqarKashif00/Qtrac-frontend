@@ -1,0 +1,101 @@
+<ng-container *ngIf="!(IsOpened$ | async)">
+  <div *ngIf="{ kioskData: kioskData$ | async, Page: Page$ | async } as values">
+    <div
+      *ngIf="values.kioskData"
+      [style.color]="values.kioskData.designer.color"
+      [style.font-size]="values.kioskData.designer.fontSize ? values.kioskData.designer.fontSize + 'px' : ''"
+      [style.background-color]="values.kioskData.designer.backgroundColor"
+      [style.font-style]="values.kioskData.designer.fontStyle"
+      [style.background-image]="
+        'url(' + values.kioskData.designer.backGroundImage + ')'
+      "
+      [style.font-family]="values.kioskData.designer.font"
+      style=" width: 100%; position: absolute; overflow-y: auto;" 
+      [ngClass]="isEnableKeyboard == true ? isNumericKeyBoard == true ? 'h-80' :'h-75': 'h-100' "
+    >
+      <lavi-kiosk-pre-service-question
+        (NextPage)="ShowNextPage($event)"
+        (OnAppointment)="HaveAppointment($event)"
+        *ngIf="values.Page.IsPreServiceQuestionPage"
+        [Data]="values.kioskData.preServiceQuestionPage"
+        [SelectedLanguage]="LanguageId"
+        [DefaultLanguage]="DefaultLanguageId"
+        [BranchCountryCode]="BranchCountryCode"
+      ></lavi-kiosk-pre-service-question>
+      <lavi-kiosk-service-question
+        (NextPage)="ShowNextPage($event)"
+        [Data]="values.kioskData.serviceQuestion"
+        [SelectedLanguage]="LanguageId"
+        [DefaultLanguage]="DefaultLanguageId"
+        [BranchCountryCode]="BranchCountryCode"
+        *ngIf="values.Page.IsServiceQuestionPage"
+      ></lavi-kiosk-service-question>
+      <lavi-kiosk-service
+        (NextPage)="ShowNextPage($event)"
+        (OnAppointment)="HaveAppointment($event)"
+        [Data]="values.kioskData.servicePage"
+        [SelectedLanguage]="LanguageId"
+        [DefaultLanguage]="DefaultLanguageId"
+        *ngIf="values.Page.IsServicePage"
+      ></lavi-kiosk-service>
+      <lavi-kiosk-welcome
+        (ShowNextPage)="ShowNextPage($event)"
+        [Data]="values.kioskData.welcomePage"
+        [SelectedLanguage]="LanguageId"
+        [DefaultLanguage]="DefaultLanguageId"
+        *ngIf="values.Page.IsWelcomePage"
+      ></lavi-kiosk-welcome>
+      <lavi-kiosk-thank-you
+        [Data]="values.kioskData.thankYouPage"
+        [SelectedLanguage]="LanguageId"
+        [DefaultLanguage]="DefaultLanguageId"
+        (ShowNextPage)="ShowNextPage($event)"
+        *ngIf="values.Page.IsThankYouPage"
+      ></lavi-kiosk-thank-you>
+      <lavi-kiosk-language
+        [Data]="values.kioskData.languagePage"
+        [Languages]="LanguageList$ | async"
+        [SelectedLanguage]="LanguageId"
+        [DefaultLanguage]="DefaultLanguageId"
+        (NextPage)="ShowNextPage($event)"
+        *ngIf="values.Page.IsLanguagePage"
+      ></lavi-kiosk-language>
+      <lavi-kiosk-no-queue
+        (ExitButton)="ExitButton()"
+        [Data]="values.kioskData.noQueuePage"
+        [SelectedLanguage]="LanguageId"
+        [DefaultLanguage]="DefaultLanguageId"
+        *ngIf="values.Page.IsNoQueuePage"
+      ></lavi-kiosk-no-queue>
+      <lavi-kiosk-off-line
+      (BackButton)="BackButton()"
+      [showBackButton$]="showBackButton$"
+      [Data]="values.kioskData.offLinePage"
+      [SelectedLanguage]="LanguageId"
+      [DefaultLanguage]="DefaultLanguageId"
+      *ngIf="values.Page.IsOffLinePage"
+    ></lavi-kiosk-off-line>
+    </div>
+
+    <footer [ngClass]="{ 'd-none': !isEnableKeyboard  }" class="fixed-bottom h-25" style="position: fixed; height: 25vh;
+    left: 0; display: flex; bottom: 0; align-items: end; width: 100%; z-index: 999999"><!--height: 235px;-->
+      <div class="text-center text-muted w-100">
+          <div class="simple-keyboard"></div>
+      </div>
+    </footer>
+
+
+  </div>
+</ng-container>
+
+<lavi-modal [OpenDialog]="IsKioskDeviceStandByMode$|async" [Width]="'60%'">
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-12 p-0">
+            <div class="jumbotron text-center m-0 d-flex flex-column justify-content-center">
+                <h3>System is currently unavailable. Please contact Administrator</h3>
+            </div>
+        </div>
+    </div>
+</div>
+  </lavi-modal>

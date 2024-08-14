@@ -1,0 +1,25 @@
+<lavi-auth-container HeaderTitle="Slider">
+  <h2>Slider</h2>
+
+  <form [formGroup]="TestFormGroup" >
+    <div class="flex">
+      <div class="form-group mb-2">
+        <input type="text" formControlName="height" class="form-control" id="staticEmail2" placeholder="height">
+      </div>
+      <div class="form-group mx-sm-3 mb-2">
+        <input type="text"  formControlName="width" class="form-control" id="inputPassword2" placeholder="width">
+      </div>
+      <button (click)="OnSubmit()" class="btn btn-primary mb-2">submit</button>
+  </div>
+  </form>
+
+  <div class="flex center">
+    <div class="gallery-slider">
+      <lavi-image-video-slider
+        [Height]="ItemHeight"
+        [Width]="ItemWidth"
+        [Items]="Images"
+      ></lavi-image-video-slider>
+    </div>
+  </div>
+</lavi-auth-container>

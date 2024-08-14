@@ -1,0 +1,22 @@
+@import "src/stylings/primitives/primitives.scss";
+.banner-container{
+    border:1px solid;
+    border-radius: 5px;
+}
+.banner-header{
+    color: $color-text-white;
+    text-align:center;
+    justify-content: center;
+    padding: 0.1em;
+    text-transform: uppercase;
+    font-size: $font-size-smallest;
+    font-weight: $global-font-size;
+}
+.banner-body{
+    justify-content: center;
+    text-align: center;
+}
+.banner-container span {
+  font-size: $global-font-size;
+  line-height: normal;
+}

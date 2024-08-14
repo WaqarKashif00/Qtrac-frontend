@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="d-flex justify-content-center pb-5 pt-5">
+    <img src="../../../../../assets/img/qtracvr.png" />
+  </div>
+  <div
+    class="d-flex justify-content-center pb-5 pt-5"
+    *ngIf="IsKioskDeRegisteredSuccessFully$ | async; else loading"
+  >
+  <h5 class="card-title">Device deregister successfully.</h5>
+
+  </div>
+  <ng-template #loading>
+    <div class="d-flex justify-content-center pb-5 pt-5">
+      <h5 class="card-title">De register device from Server.......</h5>
+    </div>
+  </ng-template>
+</div>

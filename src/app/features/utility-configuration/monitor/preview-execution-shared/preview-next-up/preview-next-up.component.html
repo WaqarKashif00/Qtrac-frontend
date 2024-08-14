@@ -1,0 +1,112 @@
+
+
+<ng-container *ngIf="numberOfQueues > 0 || numberOfQueues" >
+      
+      <div class="d-flex position-absolute"  >
+    <ng-container *ngFor="let item of control.text; let i = index">
+      <div
+        [style.transform]="
+          'translate(' + (control.left ) + 'px, ' + control.top + 'px) scale(1)'
+        "
+        [style.width.px]="control.width / numberOfQueues "
+        [style.height.px]="control.height"
+        [style.background-color]="control.backgroundColor"
+        [style.background-image]="'url(' + control.backgroundImageURL + ')'"
+        [ngClass]="{ shadow: control.boxShadow === true }"
+        class="e-panel insideDiv next-up"
+        style="position:initial"
+      >
+        <p
+          [style.font-size]="control.titleFontSize ? control.titleFontSize + 'px' : ''"
+          [style.font-style]="control.titleFontStyle"
+          [style.font-family]="control.titleFont"
+          [style.color]="control.titleTextColor"
+          [style.font-weight]="control.titleFontWeight || ''"
+          class="heading-text"
+        >
+          {{ (control.text[SelectedLanguage] | uppercase) || (control.text[i][DefaultLanguage].queueName | uppercase) || ""}}
+        </p>
+        <div
+          [style.font-size]="control.fontSize ? control.fontSize + 'px' : ''"
+          [style.font-style]="control.fontStyle"
+          [style.font-family]="control.font"
+          [style.color]="control.color"
+          [style.font-weight]="control.fontWeight || ''"
+          class="list-container"
+        >
+          <div
+            class="custom-container-wrapper"
+            Autoscroller
+            [AutoscrollerscrollSpeed]="20"
+            [ngStyle]="bodyStyle"
+          >
+            <div class="h-100 overflow-hidden position-relative py-2">
+              
+              
+              <div *ngFor="let waiting of waitings | laviSortBy:'sortPosition' | slice:0: (control?.displayNoOfCustomers || 10) let j = index;" class="row">
+                <ng-container *ngIf="item[SelectedLanguage]? item[SelectedLanguage].queueId == waiting.queueId: item[DefaultLanguage].queueId == waiting.queueId">
+                  <div class="col-6">{{waiting.columnOne}}</div>
+                  <div class="col-6">{{waiting.columnTwo}}</div>
+              </ng-container>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="numberOfQueues == 0 || !numberOfQueues ">
+  <div class="position-absolute">
+    <div
+      [style.transform]="
+        'translate(' + control.left + 'px, ' + control.top + 'px) scale(1)'
+      "
+      [style.width.px]="control.width"
+      [style.height.px]="control.height"
+      [style.background-color]="control.backgroundColor"
+      [style.border-radius.px]="control.boxRoundCorners || 0"
+      [style.background-image]="'url(' + control.backgroundImageURL + ')'"
+      [ngClass]="{ shadow: control.boxShadow === true }"
+      class="e-panel insideDiv next-up"
+    >
+      <p
+        [style.font-size]="control.titleFontSize ? control.titleFontSize + 'px' : ''"
+        [style.font-style]="control.titleFontStyle"
+        [style.font-family]="control.titleFont"
+        [style.color]="control.titleTextColor"
+        [style.font-weight]="control.titleFontWeight || ''"
+        class="heading-text"
+      >
+        {{ (control.text[SelectedLanguage] | uppercase) || (control.text[DefaultLanguage] | uppercase) || ""}}
+      </p>
+      <div
+        [style.font-size]="control.fontSize ? control.fontSize + 'px' : ''"
+        [style.font-style]="control.fontStyle"
+        [style.font-family]="control.font"
+        [style.color]="control.color"
+        [style.font-weight]="control.fontWeight || ''"
+        class="list-container"
+      >
+        <div
+          class="custom-container-wrapper"
+          Autoscroller
+          [AutoscrollerscrollSpeed]="20"
+          [ngStyle]="bodyStyle"
+        >
+          <div class="h-100 overflow-hidden position-relative py-2">
+            <div *ngFor="let waiting of waitings | laviSortBy:'sortPosition' | slice:0: (control?.displayNoOfCustomers || 10)" class="row">
+              <div class="col-6">{{waiting.columnOne}}</div>
+              <div class="col-6">{{waiting.columnTwo}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+</ng-container>

@@ -1,0 +1,41 @@
+<ng-container>
+    <button
+    type="button"
+    (click)="RemoveControl()"
+    class="close"
+    aria-label="Close"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+    <video
+      *ngIf="GetUrl(Src) && UrlType?.other && Src.length >= 50"
+      [style.height.px]="Height"
+      [style.z-index]="zindex"
+      [style.border-radius.px]="BoxCorners || 0"
+      class="w-100 h-100"
+      autoplay
+      [muted]="true"
+      loop="true" controls="false"
+    >
+      <source src="{{GetUrl(Src)}}" type="video/mp4" />
+    </video>
+
+    <iframe *ngIf="GetUrl(Src) && UrlType?.youtube"
+    [style.height.px]="Height"
+    [style.z-index]="zindex"
+    [src]="GetUrl(Src)"
+    [style.border-radius.px]="BoxCorners || 0"
+    allow='autoplay'
+    loop="true" controls="false"
+    class="w-100 h-100"
+></iframe>
+
+    <img
+      *ngIf="!GetUrl(Src) && !UrlType?.other && !UrlType?.youtube"
+      [style.height.px]="Height"
+      [style.z-index]="zindex"
+      [style.border-radius.px]="BoxCorners || 0"
+      class="w-100 h-100"
+      src="/assets/video-icon.svg"
+    />
+</ng-container>

@@ -1,0 +1,20 @@
+<ng-container *ngIf="{
+    Items: Items$ | async,
+    Panel: Panel$ | async,
+    Buttons: Buttons$ | async,
+    SelectedLanguage: SelectedLanguage$ | async,
+    DefaultLanguage: DefaultLanguage$ | async
+  } as values">
+  <lavi-vertical-pre-question-mode [SelectedLanguage]="values.SelectedLanguage"
+    [DivLayoutDesignContainer]="DivLayoutDesignContainer"
+    [DefaultLanguage]="values.DefaultLanguage" [Items]="values.Items" [Panel]="values.Panel" [Buttons]="values.Buttons"
+    [GridSize]="GridSize" [IsOnlyGrid]="IsOnlyGrid" (ResizeStop)="OnResizeStop($event)" (MoveEnd)="OnMoveEnd($event)"
+    (ButtonResizeStop)="OnButtonResizeStop($event)" (ButtonMoveEnd)="OnButtonMoveEnd($event)" (OnPanelCLick)="OnPanelCLick()" [Workflow]="Workflow" (ButtonClick)="OnButtonClick()">
+  </lavi-vertical-pre-question-mode>
+  <lavi-single-pre-question-mode [SelectedLanguage]="values.SelectedLanguage" [DefaultLanguage]="values.DefaultLanguage"
+    [DivLayoutDesignContainer]="DivLayoutDesignContainer"
+    [GridSize]="GridSize" [IsOnlyGrid]="IsOnlyGrid" [Items]="values.Items" [Panel]="values.Panel"
+    [Buttons]="values.Buttons" [Workflow]="Workflow" (ResizeStop)="OnResizeStop($event)" (MoveEnd)="OnMoveEnd($event)" (OnPanelCLick)="OnPanelCLick()"
+    (ButtonResizeStop)="OnButtonResizeStop($event)" (ButtonMoveEnd)="OnButtonMoveEnd($event)" (ButtonClick)="OnButtonClick()">
+  </lavi-single-pre-question-mode>
+</ng-container>

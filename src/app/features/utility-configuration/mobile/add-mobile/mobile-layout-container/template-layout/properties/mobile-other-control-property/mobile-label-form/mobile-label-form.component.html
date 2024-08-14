@@ -1,0 +1,136 @@
+<div [formGroup]="Control.form">
+  <div>
+    <label>Name:</label
+    ><input
+      type="text"
+      placeholder="Label Name"
+      formControlName="name"
+      [value]="Control.name"
+      maxlength="15"
+    />
+    <span class="edit-icon"></span>
+
+  </div>
+  <div>
+    <label>Text</label
+    >
+    <div class="float-right">
+      <span
+            (click)="OpenTranslateDialog()"
+            class="text-blue cursor-pointer">
+            Edit text</span>
+    </div>
+  </div>
+  <div>
+    <label>Hyperlink</label
+    ><input
+      type="text"
+      formControlName="hyperLink"
+      placeholder="Add Link"
+      [value]="Control.hyperLink"
+    />
+    <span class="edit-icon"></span>
+  </div>
+  <div>
+  <label>Color</label
+  ><kendo-colorpicker formControlName="color"  class="cursor-pointer" [value]="Control.styles.color">
+  </kendo-colorpicker>
+  </div>
+  <div>
+    <label>Background color</label>
+    <kendo-colorpicker
+      formControlName="backgroundColor"
+      class="cursor-pointer"
+      [value]="Control.styles.backgroundColor"
+    >
+    </kendo-colorpicker>
+  </div>
+  <div>
+    <label>Top</label
+    ><input
+      type="text"
+      formControlName="top"
+      placeholder="Top"
+      [value]="Control.styles.top"
+      maxlength="3"
+    lavi-app-numbers-only
+    />
+    <span>px</span>
+  </div>
+  <div>
+    <label>Height</label
+    ><input
+      type="text"
+      formControlName="height"
+      placeholder="Height"
+      [value]="Control.styles.height"
+      lavi-app-numbers-only
+      maxlength="3"
+    />
+    <span>px</span>
+  </div>
+  <div>
+    <label>Vertical Padding </label
+    ><input
+      type="text"
+      maxlength="3"
+      formControlName="verticalPadding"
+      placeholder="Vertical Padding"
+      lavi-app-numbers-only
+      [value]="Control.verticalPadding"
+    /> <span>px</span>
+  </div>
+  <div>
+    <label>Horizontal Padding </label
+    ><input
+      type="text"
+      formControlName="horizontalPadding"
+      placeholder="Horizontal Padding"
+      lavi-app-numbers-only
+      maxlength="3"
+      [value]="Control.horizontalPadding"
+    />
+    <span>px</span>
+  </div>
+  <div>
+    <label>Box Round Corners:</label
+    ><input
+      type="text"
+      formControlName="boxRoundCorners"
+      [value]="Control.styles.boxRoundCorners"
+      placeholder="Box Round Corners"
+      lavi-app-numbers-only
+      maxlength="3"
+    />
+    <span>px</span>
+  </div>
+  <div>
+    <label>Alignment</label>
+    <select class="cursor-pointer text-capitalize" formControlName="alignment">
+      <option class="text-capitalize" *ngFor="let align of Alignments" [value]="align">
+        {{ align }}
+      </option>
+    </select>
+  </div>
+  <lavi-mobile-font FontMaxLength='3' [FormGroup]="Control.form"></lavi-mobile-font>
+  <div>
+    <label>Move control</label>
+    <div class="front-back-control" >  
+      <span class="k-i-forward-element k-icon move-to-front" title="Move to front" (click)="IncreaseZIndex()">
+      </span>
+      <span class="k-i-backward-element k-icon move-to-back" title="Move to back" (click)="DecreaseZIndex()">
+      </span>
+    </div>
+  </div>
+</div>
+
+
+<lavi-language-translate-modal
+Title="{{Control.name + ' Text'}}"
+[OpenDialog]="Open"
+[TextFormArray]="TextFormArray$ | async"
+[MaxLength]="400"
+[ConditionsName]="DynamicVariables$ | async"
+(Save)="UpdateTranslatedTexts($event)"
+(CloseTranslateTextDialog)="CloseTranslateDialog()"
+(TranslateText)="Translate($event)"></lavi-language-translate-modal>

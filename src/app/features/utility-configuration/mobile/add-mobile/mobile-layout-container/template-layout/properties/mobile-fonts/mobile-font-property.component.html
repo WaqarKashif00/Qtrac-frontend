@@ -1,0 +1,33 @@
+<ng-container [formGroup]="FormGroup">
+  <div class="font-container">
+    <div >
+      <label>Font</label>
+      <select class="cursor-pointer" formControlName="font">
+        <option *ngFor="let font of FontFamily" [value]="font">
+          {{ font }}
+        </option>
+      </select>
+    </div>
+    <div *ngIf="ShowFontSize">
+      <label>Font size</label>
+      <input type="text" lavi-app-numbers-only [maxlength]="FontMaxLength" formControlName="fontSize" placeholder="Font size" />
+      <span>px</span>
+    </div>
+    <div>
+      <label>Font style</label>
+      <select class="cursor-pointer" formControlName="fontStyle">
+        <option *ngFor="let font of FontStyle" [value]="font">
+          {{ font }}
+        </option>
+      </select>
+    </div>
+    <div>
+      <label>Font weight</label>
+      <select class="cursor-pointer text-capitalize" formControlName="fontWeight">
+        <option class="text-capitalize" *ngFor="let font of FontWeight" [value]="font">
+          {{ font }}
+        </option>
+      </select>
+    </div>
+  </div>
+</ng-container>

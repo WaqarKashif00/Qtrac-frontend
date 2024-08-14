@@ -1,0 +1,89 @@
+<ng-container
+  *ngIf="{
+    Page: CurrentPage$ | async,
+    controlSelection: OtherControlsSelection$ | async
+  } as values1"
+>
+  <ng-container *ngIf="values1.controlSelection">
+    <lavi-mobile-general-layout-properties
+      [DesignerPanel]="DesignerPanel$ | async"
+      (OnSendUpdatedDesignerPanelDetail)="
+        SendUpdatedDesignerPanelDetail($event)
+      "
+    ></lavi-mobile-general-layout-properties>
+    <lavi-mobile-layout-page-property
+    [PageProperties]="PageProperties$ | async"
+    ></lavi-mobile-layout-page-property>
+    <lavi-mobile-layout-page-header-property-control
+      [HeaderControl]="HeaderControl$ | async"
+      [(IsControlSelected)]="values1.controlSelection.IsHeaderSelected"
+      (OnSendUpdatedHeaderControlDetail)="UpdatedHeaderControlDetail($event)"
+    ></lavi-mobile-layout-page-header-property-control>
+    <lavi-mobile-layout-page-footer-property-control
+      *ngIf="!values1.Page.IsLanguagePage"
+      [FooterControl]="FooterControl$ | async"
+      [(IsControlSelected)]="values1.controlSelection.IsFooterSelected"
+      (OnSendUpdatedFooterControlDetail)="UpdatedFooterControlDetail($event)"
+    ></lavi-mobile-layout-page-footer-property-control>
+    <ng-content select="default-control-property"></ng-content>
+    <div
+      *ngIf="{
+        controls: OtherControlsData$ | async
+      } as values"
+      class="service-controls-properties"
+    >
+      <div *ngIf="values.controls.length > 0">
+        <lavi-form-panel
+          PanelHeader="Other Control Properties"
+          [(PanelExpand)]="values1.controlSelection.IsOtherControlSelected"
+        >
+          <lavi-form-content-panel>
+            <div class="property-window">
+              <div class="property-window-body">
+                <div>
+                  <label>Items</label>
+                  <select
+                    class="OtherItemDropdown"
+                    (change)="OnControlDropdownChange($event)"
+                  >
+                    <option
+                      *ngFor="let labelDiv of values.controls"
+                      [value]="labelDiv.control.name"
+                      [selected]="labelDiv.showPropertyWindow"
+                    >
+                      {{ labelDiv.control.name }}
+                    </option>
+                  </select>
+                </div>
+                <div *ngFor="let item of values.controls">
+                  <div *ngIf="item.showPropertyWindow">
+                    <div *ngIf="item.isLabelControl">
+                      <lavi-mobile-label-form
+                        [Control]="item.control"
+                      ></lavi-mobile-label-form>
+                    </div>
+                    <div *ngIf="item.isImageControl">
+                      <lavi-mobile-image-form
+                        [Item]="item.control"
+                      ></lavi-mobile-image-form>
+                    </div>
+                    <div *ngIf="item.isVideoControl">
+                      <lavi-mobile-video-form
+                        [Item]="item.control"
+                      ></lavi-mobile-video-form>
+                    </div>
+                    <div *ngIf="item.isSliderControl">
+                      <lavi-mobile-slider-form
+                        [Item]="item.control"
+                      ></lavi-mobile-slider-form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </lavi-form-content-panel>
+        </lavi-form-panel>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

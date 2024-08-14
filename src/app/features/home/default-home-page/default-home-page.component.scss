@@ -1,0 +1,9 @@
+@import "src/stylings/primitives/primitives.scss";
+
+.home-console{
+  border-radius: 5px;
+  width: 50%;
+  padding: 25px 0px 20px 19px;
+  background: white;
+  box-shadow: 0 0.125rem 0.25rem rgba($color-background-black, 0.075) !important;
+}

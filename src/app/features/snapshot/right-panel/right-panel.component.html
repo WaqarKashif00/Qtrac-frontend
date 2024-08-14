@@ -1,0 +1,24 @@
+<div class="container-fluid bg-white w-100 p-0">
+  <div>
+    <lavi-right-header
+    (Apply)=ApplyContext()
+    (Cancel)=CancelContext()
+    (Clear)="Clear()"
+    (AddEditContext)=AddEditContext()
+    [SnapshotState]="SnapshotState"
+    [Configurations]="Configurations"
+    [IsEditing]="IsEditing$ | async"
+    (ClearGranule)="ClearData($event)"
+    (CheckboxChanged)="SelectionChanged($event)"></lavi-right-header>
+  </div>
+  <div>
+    <lavi-right-content
+    (ClearGranule)="ClearData($event)"
+    (GranuleSelected)="SelectionChanged($event)"
+    [SnapshotGraph] = "SnapshotGraph"
+    [Configurations]="Configurations"
+    [SnapshotState]="SnapshotState"
+    [IsEditing]="IsEditing$ | async"
+    (AddEditContext)=AddEditContext()></lavi-right-content>
+  </div>
+</div>

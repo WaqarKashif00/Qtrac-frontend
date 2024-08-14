@@ -1,0 +1,60 @@
+<ng-container
+  *ngIf="Data.items.length > 0 && Data.panel.questionDisplayMode == 1"
+>
+  <div
+    [style.transform]="
+      'translate(' + Data.panel.left + 'px, ' + Data.panel.top + 'px) scale(1)'
+    "
+    [style.width.px]="Data.panel.width"
+    [style.height.px]="Data.panel.height"
+    [style.background-color]="Data.panel.backgroundColor"
+    [style.padding-left.px]="Data.panel.horizontalPadding || 0"
+    [style.padding-right.px]="Data.panel.horizontalPadding || 0"
+    [style.padding-top.px]="Data.panel.verticalPadding || 0"
+    [style.padding-bottom.px]="Data.panel.verticalPadding || 0"
+    [style.font-size]="Data.panel.fontSize ? Data.panel.fontSize +'px' : ''"
+    [style.font-style]="Data.panel.fontStyle"
+    [style.font-family]="Data.panel.font"
+    [style.font-weight]="Data.panel.fontWeight"
+    class="e-Data.panel text-center position-absolute overflow-overlay"
+  >
+    <UL class="UL">
+      <ng-container *ngFor="let item of Data.items">
+        <LI
+          class="LI pb-0 mb-0 pt-0"
+          [style.color]="item.color"
+          [style.font-size]="item.fontSize ? item.fontSize + 'px' : ''"
+          [style.font-style]="item.fontStyle"
+          [style.font-family]="item.font"
+          [style.font-weight]="item.fontWeight"
+          *ngIf="item.selected"
+          >
+          <lavi-preview-input-controls
+          [IsSaveClick]="IsSaveClick"
+          [Item]="item"
+          *ngIf="item.selected"
+          [BranchCountryCode]="BranchCountryCode"
+        ></lavi-preview-input-controls>
+        </LI>
+      </ng-container>
+    </UL>
+  </div>
+  <ng-container *ngFor="let button of Data?.buttons">
+    <lavi-preview-button
+    *ngIf="button.showButton"
+    [Button]="button"
+    [SelectedLanguage]="SelectedLanguage"
+    (ShowNextQuestion)="showNextPage(Buttons.includes(button.name) ? button.name : Data.id)"
+    [DefaultLanguage]="DefaultLanguage"
+  ></lavi-preview-button>
+  </ng-container>
+
+  <lavi-appointment-modal
+  Title="Appointment"
+  [ModalWidth]="'40%'"
+  [ModalHeight]="'40%'"
+  [OpenDialog]="OpenAppointmentModal"
+  (CloseModal)="CloseAppointmentDialog()"
+  (ApplyChanges)="HaveAppointment($event)">
+</lavi-appointment-modal>
+</ng-container>

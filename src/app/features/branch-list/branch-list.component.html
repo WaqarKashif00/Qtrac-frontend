@@ -1,0 +1,87 @@
+<lavi-list-screen-header
+Title="Locations"
+(OnAddNewButtonClick)="Redirect()"
+[PageName]="roleActions.Branches"
+[ActionName]="actionType.AddEdit"
+[ButtonValue]="'Add New Location'"
+></lavi-list-screen-header>
+
+
+  <div class="row d-flex justify-content-center flex-nowrap">
+    <lavi-filter-with-tags
+      searchTextTitle="Search Locations"
+      [tagList]="BranchTag$ | async"
+      [(filter)]="searchModel"
+    >
+    </lavi-filter-with-tags>
+  </div>
+
+  <div class="row mt-5 mr-2 ml-2 standardlist-grid" *ngIf="BranchList$ | async as List">
+      <kendo-grid
+      [kendoGridBinding]="
+        List | laviFilterListWithTags: searchModel:'tags':'branchName'
+      "
+      [pageSize]="100"
+      [sortable]="true"
+      [reorderable]="true"
+      [resizable]="true"
+      [selectable]="{ enabled: true, mode: 'multiple' }"
+      [(expandedDetailKeys)]="expansionManager.expandedIds"
+      [kendoGridExpandDetailsBy]="expansionManager.expandDetailsBy"
+      [rowClass]="listStyleManager.rowStyleCallBack"
+    >
+      <kendo-grid-column
+        field="branchName"
+        title="Location Name"
+        [headerClass]="listStyleManager.headerClass"
+        [style]="listStyleManager.columnStyle"
+      ></kendo-grid-column>
+
+
+      <kendo-grid-column
+        field="branchId"
+        title=""
+        [headerClass]="listStyleManager.headerClass"
+        [style]="listStyleManager.columnStyle"
+        [width]="editMenuColumnSize"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <lavi-list-menu
+            [dataItem]="dataItem"
+            [menuItems]="menuItems"
+            [roleActionView]="roleActions.Branches"
+            [menuItemValidator]="showMenuItem"
+            (showMenuItem)="onItemMenuSelect($event)"
+          >
+          </lavi-list-menu>
+        </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column
+        title=""
+        [headerClass]="listStyleManager.headerClass"
+        [width]="listStyleManager.expanderColumnSize"
+        [style]="listStyleManager.columnStyle"
+        field="id"
+      >
+        <ng-template kendoGridCellTemplate let-column>
+          <lavi-list-detail-expander
+            [expansionManager]="expansionManager"
+            [columnId]="column.id"
+          >
+          </lavi-list-detail-expander>
+        </ng-template>
+      </kendo-grid-column>
+
+      <ng-template kendoGridDetailTemplate let-dataItem>
+        <div>
+          <span *ngFor="let service of dataItem.services">
+            <button kendoButton class="service-button-unselected">
+              {{ service.name }}
+            </button>
+          </span>
+          <lavi-tag-display [tags]="dataItem.tags"> </lavi-tag-display>
+        </div>
+      </ng-template>
+    </kendo-grid>
+  </div>

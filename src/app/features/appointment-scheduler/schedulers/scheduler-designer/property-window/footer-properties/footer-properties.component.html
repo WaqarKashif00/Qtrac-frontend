@@ -1,0 +1,47 @@
+<ng-container *ngIf="FooterPropertiesPanel">
+  <form [formGroup]="FooterPropertiesPanel.form">
+    <lavi-form-panel PanelHeader="Footer Properties" [PanelExpand]="true">
+    <lavi-form-content-panel>
+      <div class="property-window-body">
+        <div>
+          <label>Text</label>
+            <div class="float-right">
+              <span
+                (click)="OpenTranslateDialog('Footer Text', 'footer')"
+                class="text-blue cursor-pointer">
+                Edit text</span>
+            </div>
+        </div>
+        <div>
+          <label>Back Color </label>
+          <kendo-colorpicker
+            formControlName="backColor"
+            [value]="FooterPropertiesPanel.backColor"
+            (valueChange)="ChangeColorPicker()"
+          >
+          </kendo-colorpicker>
+        </div>
+        <div>
+          <label>Text Color </label>
+          <kendo-colorpicker
+            [value]="FooterPropertiesPanel.color"
+            formControlName="color"
+            (valueChange)="ChangeColorPicker()"
+          >
+          </kendo-colorpicker>
+        </div>
+      </div>
+    </lavi-form-content-panel>
+</lavi-form-panel>
+  </form>
+</ng-container>
+
+<lavi-language-translate-modal
+Title="{{modelHeaderText}}"
+[OpenDialog]="OpenDialog$ | async"
+[TextFormArray]="TextFormArray$ | async"
+(CloseTranslateTextDialog)="CloseTranslateDialog('footer')"
+(Save)="UpdateFooterTranslatedTexts($event)"
+(TranslateText)="Translate($event)"
+comingFrom="footer">
+</lavi-language-translate-modal>

@@ -1,0 +1,61 @@
+<div class="row divLayoutTopSection">
+  <div class="divLayoutTopSectionContent">
+    <span>COMPONENTS</span>
+  </div>
+  <div class="divLayoutMiddleSectionContent">
+    <div class="row">
+      <div class="col-md-4 divServiceDropdown">
+        <div class="text-capitalize">
+          <kendo-dropdownlist
+            [data]="PageList$ | async"
+            [textField]="'text'"
+            [valueField]="'value'"
+            (valueChange)="OnPageListChange($event)"
+            [(ngModel)]="SelectedPage"
+          ></kendo-dropdownlist>
+        </div>
+      </div>
+      <div class="col-md-2"></div>
+
+      <div class="col-md-6 divLanguageDropdown">
+        <div class="text-capitalize w-auto float-right">
+          <kendo-dropdownlist
+            [data]="LanguageList$ | async"
+            [textField]="'language'"
+            [valueField]="'languageCode'"
+            (valueChange)="OnLanguageChange($event)"
+            [(ngModel)]="SelectedLanguage"
+          ></kendo-dropdownlist>
+        </div>
+        <div class="float-right preview-text">
+          <span class="cursor-pointer text-blue d-block text-right mr-3" (click)="OpenPreviewWindow()">Preview</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="right-section-header">
+    <span>DESIGN PROPERTIES</span>
+  </div>
+</div>
+<lavi-transparent-footer>
+  <div class="col-lg-12 col-sm-12 col-12 pt-2 pr-5">
+    <div class="row btncontainer transperant">
+      <div class="col-12 text-right">
+        <input
+          kendoButton
+          (click)="OnSaveAsDraftClick()"
+          type="button"
+          class="btn secondary-button mr-2"
+          value="Save as Draft"
+        />
+        <input
+          kendoButton
+          (click)="OnSaveClick()"
+          type="submit"
+          class="btn primary-button mr-3"
+          value="Publish"
+        />
+      </div>
+    </div>
+  </div>
+</lavi-transparent-footer>

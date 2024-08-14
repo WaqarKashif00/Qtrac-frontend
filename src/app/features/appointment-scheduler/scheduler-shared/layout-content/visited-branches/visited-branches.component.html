@@ -1,0 +1,17 @@
+<div class="visited-branch">
+  <p class="sub-heading">Select Previously Visited Locations</p>
+  <div class="list">
+    <ul class="p-0">
+      <ng-container *ngFor="let item of branches">
+        <li (click)="OnServiceClick(item.itemId)">
+            <span [class]="item.url"></span>
+            <span class="selected-service" [style.color]="ActiveBackGroundColor" *ngIf="item.isSelected"
+            >&#10003;</span
+          >
+            <p [style.color]="FormTextColor" class="heading">{{item.name}}</p>
+            <p [style.color]="InActiveTextColor" class="sub-text">{{item.description}}</p>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+@import "src/stylings/primitives/primitives.scss";
+.hours-of-operations {
+  .section-containers {
+    margin-top: 40px;
+  }
+}
+.f-14{
+  font-size: $font-size-small-4;
+}
+
+.date-padding{
+  padding: 0px 10px;
+}
+
+::ng-deep .k-textbox-container {
+  width: 100%;
+}
+
+::ng-deep .k-timepicker .k-picker-wrap > .k-dateinput{
+  padding-left: 10px;
+
+}

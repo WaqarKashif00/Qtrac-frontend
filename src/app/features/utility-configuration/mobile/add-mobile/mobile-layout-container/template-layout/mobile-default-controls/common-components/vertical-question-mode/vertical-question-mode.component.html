@@ -1,0 +1,203 @@
+<div
+  *ngIf="Panel && Panel.items.length != 0"
+  rzContainment="#DivLayoutDesignContainer"
+  (rzStop)="OnResizeStop($event)"
+  (endOffset)="OnMoveEnd($event)"
+  (click)="OnClick()"
+  [position]="{ x: Panel.styles.left, y: Panel.styles.top }"
+  [style.height.px]="Panel.styles.height"
+  [style.padding-left.px]="Panel.horizontalPadding || 0"
+  [style.padding-right.px]="Panel.horizontalPadding || 0"
+  [style.padding-top.px]="Panel.verticalPadding || 0"
+  [style.padding-bottom.px]="Panel.verticalPadding || 0"
+  [inBounds]="true"
+  lockAxis="x"
+  rzHandles="s,n"
+  class="e-panel insideDiv w-100 transperant position-absolute"
+  ngDraggable
+  ngResizable
+  [ngClass]="{ 'h-auto': Panel.styles.height == -1 }"
+>
+  <UL class="UL">
+    <ng-container *ngFor="let item of Panel.items">
+      <LI
+        class="LI text-center"
+        [style.color]="Panel.styles.color"
+        [style.background-color]="
+          CurrentPage &&
+          (CurrentPage.IsLanguagePage ||
+            (CurrentPage.IsServicePage && !Panel.showServiceIcons) ||
+            CurrentPage.IsTicketPage)
+            ? Panel.styles.backgroundColor
+            : Panel.showServiceIcons
+            ? 'white'
+            : 'transparent'
+        "
+        [style.font-size]="
+          Panel.styles.fontSize ? Panel.styles.fontSize + 'px' : ''
+        "
+        [style.font-style]="Panel.styles.fontStyle"
+        [style.font-family]="Panel.styles.font"
+        [style.font-weight]="Panel.styles.fontWeight"
+        [style.border-radius.px]="Panel.styles.boxRoundCorners || 0"
+        [style.background-image]="
+          CurrentPage?.IsServicePage && Panel.showServiceIcons
+            ? 'url(' + (item.icon[SelectedLanguage.selectedLanguage]|quoteString) + ')'
+            : ''
+        "
+        [ngClass]="{
+          'border border-dark': Panel.showServiceIcons,
+          'service-bg-img':
+            Panel.showServiceIcons &&
+            item.icon[SelectedLanguage.selectedLanguage]
+        }"
+        *ngIf="
+          item.visible &&
+          item.isSelected &&
+          (CurrentPage && (CurrentPage?.IsGlobalQuestionPage || CurrentPage?.IsServiceQuestionPage || CurrentPage?.IsSurveyPage
+          || CurrentPage?.IsServicePage)) &&
+          (item.text[SelectedLanguage.selectedLanguage] ||
+            item.text[SelectedLanguage.defaultLanguage])
+        "
+      >
+      <!-- global, service and survey question page -->
+        <ng-container *ngIf="CurrentPage?.IsGlobalQuestionPage || CurrentPage?.IsServiceQuestionPage || CurrentPage?.IsSurveyPage">
+          <lavi-preview-execution-input-controls
+          [Item]="GetItem(item)"
+          *ngIf="item.visible"
+          [Panel]="Panel"
+        ></lavi-preview-execution-input-controls>
+        </ng-container>
+        <!-- service page -->
+        <ng-container *ngIf="CurrentPage?.IsServicePage">
+          <ng-container
+            *ngIf="
+              !Panel.showServiceIcons ||
+              !item.icon[SelectedLanguage.selectedLanguage]
+            "
+          >
+            {{
+              item.text[SelectedLanguage.selectedLanguage] ||
+                item.text[SelectedLanguage.defaultLanguage]
+            }}
+          </ng-container>
+          <ng-container *ngIf="Panel.showServiceIcons">
+            <span></span>
+          </ng-container>
+        </ng-container>
+      </LI>
+      <!-- for language and ticket page -->
+      <LI
+        class="LI text-center"
+        [style.color]="
+          CurrentPage &&
+          (CurrentPage.IsTicketPage
+            ? item.itemId == 'primary_button'
+              ? Panel.styles.color
+              : Panel.dynamicTextColor
+            : Panel.styles.color)
+        "
+        [style.background-color]="
+          CurrentPage &&
+          (CurrentPage.IsLanguagePage ||
+            CurrentPage.IsServicePage ||
+            CurrentPage.IsTicketPage)
+            ? Panel.styles.backgroundColor
+            : 'transparent'
+        "
+        [style.font-size]="
+          Panel.styles.fontSize ? Panel.styles.fontSize + 'px' : ''
+        "
+        [style.font-style]="Panel.styles.fontStyle"
+        [style.font-family]="Panel.styles.font"
+        [style.font-weight]="Panel.styles.fontWeight"
+        [style.border-radius.px]="Panel.styles.boxRoundCorners || 0"
+        *ngIf="
+          CurrentPage &&
+          (CurrentPage.IsLanguagePage || CurrentPage.IsTicketPage)
+        "
+      >
+        {{ item.text }}
+      </LI>
+    </ng-container>
+  </UL>
+  <!-- <span
+    *ngIf="Panel.button"
+    [style.height.px]="Panel.button.styles.height"
+    [style.padding-left.px]="Panel.button.horizontalPadding"
+    [style.padding-right.px]="Panel.button.horizontalPadding"
+    [style.padding-top.px]="Panel.button.verticalPadding"
+    [style.padding-bottom.px]="Panel.button.verticalPadding"
+    [style.color]="Panel.button.styles.color"
+    [style.background-color]="Panel.button.styles.backgroundColor"
+    [style.font-size]="
+      Panel.button.styles.fontSize ? Panel.button.styles.fontSize + 'px' : ''
+    "
+    [style.font-style]="Panel.button.styles.fontStyle"
+    [style.font-family]="Panel.button.styles.font"
+    [style.font-weight]="Panel.button.styles.fontWeight"
+    [style.border-radius.px]="Panel.button.styles.boxRoundCorners"
+  >
+    {{ Panel.button.text }}
+  </span> -->
+  <div
+    *ngIf="Panel.button"
+    [position]="{ x: Panel.button.styles.left, y: Panel.button.styles.top }"
+    [style.height.px]="Panel.button.styles.height"
+    [style.padding-left.px]="Panel.button.horizontalPadding || 0"
+    class="newControl controls-width text-center w-100"
+    [style.padding-right.px]="Panel.button.horizontalPadding || 0"
+    [style.padding-top.px]="Panel.button.verticalPadding || 0"
+    [style.padding-bottom.px]="Panel.button.verticalPadding || 0"
+    [style.font-size]="
+      Panel.button.styles.fontSize ? Panel.button.styles.fontSize + 'px' : ''
+    "
+    [style.font-style]="Panel.button.styles.fontStyle"
+    [style.font-family]="Panel.button.styles.font"
+    [style.font-weight]="Panel.button.styles.fontWeight"
+  >
+    <input
+      [ngClass]="{
+        'bg-img':
+          (Panel.button.showPrimaryButtonIcon ||
+          Panel.button.showSecondaryButtonIcon), 'shadow': Panel.button.shadow
+      }"
+      [style.background-image]="
+        Panel.button.isPrimaryButtonSelected
+          ? Panel.button.showPrimaryButtonIcon &&
+            GetUrl(Panel.button.primaryButtonSrc)
+            ? 'url(' + GetUrl(Panel.button.primaryButtonSrc) + ')'
+            : ''
+          : Panel.button.showSecondaryButtonIcon &&
+            GetUrl(Panel.button.secondaryButtonSrc)
+          ? 'url(' + GetUrl(Panel.button.secondaryButtonSrc) + ')'
+          : ''
+      "
+      [style.background-color]="Panel.button.styles.backgroundColor"
+      [style.border-radius.px]="Panel.button.styles.boxRoundCorners || 0"
+      [style.font-style]="Panel.button.styles.fontStyle"
+      [style.font-weight]="Panel.button.styles.fontWeight"
+      [style.color]="Panel.button.styles.color"
+      [style.border]="Panel.button.border + 'px solid ' + Panel.button.borderColor"
+      [value]="
+        Panel.button.isPrimaryButtonSelected
+          ? Panel.button.showPrimaryButtonIcon &&
+            GetUrl(Panel.button.primaryButtonSrc)
+            ? ''
+            : (Panel.button.text[SelectedLanguage.selectedLanguage] ||
+                Panel.button.text[SelectedLanguage.defaultLanguage]
+              | laviEmptyString)
+          : Panel.button.showSecondaryButtonIcon &&
+            GetUrl(Panel.button.secondaryButtonSrc)
+          ? ''
+          : (Panel.button.secondaryButtonText[
+              SelectedLanguage.selectedLanguage
+            ] ||
+              Panel.button.secondaryButtonText[SelectedLanguage.defaultLanguage]
+            | laviEmptyString)
+      "
+      class="h-100 w-100"
+      type="button"
+    />
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="sidebar-icon-container pointer" *ngIf="IsAgentAvailable && IsAllowTicketFiltering">
+  <div class="sidebar-icon filter-icon" (click)="ToggleFilter()">
+    <div class="icon-label hide-text-selection">Filter</div>
+  </div>
+</div>
+<div class="sidebar-icon-container pointer" *ngIf="IsAgentAvailable && IsAllowGrouping && (Groups.length > 0 || IsAllowCreateGroup)">
+  <div class="sidebar-icon groups-icon" (click)="ToggleGroups()">
+    <div class="icon-label hide-text-selection" [translate]="currentLanguage == 'es'? false: true">{{ visitorTagText }}</div>
+  </div>
+</div>
+<div class="mt-29 sidebar-icon-container pointer" *ngIf="IsAgentAvailable && CanAddVisitor">
+  <div class="sidebar-icon visitor-icon" (click)="ToggleAddVisitor()">
+    <div class="icon-label hide-text-selection">Add Visitor</div>
+  </div>
+</div>
+<div class="mt-29 sidebar-icon-container pointer clear-icon clear-class" *ngIf="EnableEndOfDayButton && IsAgentAvailable && CanAddVisitor" (click)="onClickEndOfDay()">
+  <div class="sidebar-icon clear-queue-icon">
+    <div class="icon-label hide-text-selection mb-4" [translate]="currentLanguage == 'es'? false: true">{{clearText}}</div>
+  </div>
+</div>
+<div class="sidebar-footer" *ngIf="OpenQueueInNewTab">
+  <div class="cursor-pointer hide-text-selection setting-icon icon-div" (click)="IsSettingMenuShow=!IsSettingMenuShow">
+  </div>
+  <div class="sidebar-footer-popover-menu border p-2" *ngIf="IsSettingMenuShow">
+    <div class="container">
+      <div class="row" (click)="ChangeBranchDeskTemplate()">
+        <div class="col-12 cursor-pointer hide-text-selection">
+          CHANGE LOCATION
+        </div>
+      </div>
+      <div class="row mt-2" *ngIf="IsAgentAvailable" (click)="ToggleSmallQueue()">
+        <div class="col-12 cursor-pointer hide-text-selection">
+          VIEW {{IsSmallQueue?'LARGE':'SMALL'}} QUEUE
+        </div>
+      </div>
+      <div class="row mt-2" (click)="Logout()">
+        <div class="col-8 pl-0 cursor-pointer hide-text-selection color-red">
+          LOG OUT
+        </div>
+        <div class="col-4 cursor-pointer hide-text-selection color-red">
+          <div class="agent-logout-icon agent-icon-div"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

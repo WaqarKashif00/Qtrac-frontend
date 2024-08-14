@@ -1,0 +1,89 @@
+<div>
+  <lavi-form [FormGroup]="AgentForm">
+    <div class="col-lg-12 inner-panel-padding panel-border">
+      <div class="mb-3" *ngIf="ShowOverrideCheckbox">
+        <label class="k-label cursor-pointer checkbox-label d-inline">
+          <input
+            type="checkbox"
+            tabindex="11"
+            kendoCheckBox
+            [formControl] = "AgentForm.controls.isOverride"
+            (change)="BindAgentViewByRoleOnUncheck()"
+          />
+          Override Queue Views
+        </label>
+      </div>
+      <h6 class="panel-sub-header">Queue Views
+        <span class="text-warning float-right font-weight-normal" *ngIf="(showHintMessage)">
+          Press on the "Add button" to add Templates and Queues.
+        </span>
+      </h6>
+      <div class="col-lg-12">
+        <div class="row">
+          <div class="col-lg-1"></div>
+          <div class="col-lg-5">
+            <div class="form-group">
+              <kendo-textbox-container class="w-100" floatingLabel="Queue View Template">
+                <kendo-dropdownlist tabindex="12" [formControl]="AgentForm.controls.template"
+                  (valueChange)="BindQueues($event)"
+                  [defaultItem]="DefaultValues.AgentTemplateListDefaultValue"
+                  tabindex="11"
+                  [data]="AgentTemplate | laviSortBy:'name'"
+                  [textField]="'name'"
+                  [valueField]="'id'">
+                </kendo-dropdownlist>
+              </kendo-textbox-container>
+              <div class="h-10">
+                <lavi-validation-message-list [validation-form-group-name]="AgentForm"
+                validation-control-name="template"
+                  [validation-errorlist]="UserMessages.TemplateMessages">
+                </lavi-validation-message-list></div>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="col-lg-12 form-group">
+              <kendo-textbox-container floatingLabel="Queues">
+                <kendo-multiselect #queuesMultiselect [formControl]="AgentForm.controls.queues"
+                  [filterable]="true" tabindex="13"
+                  [data]="Queue"
+                  [textField]="'queueName'"
+                  (valueChange)="BindHintMessage()"
+                  [valueField]="'queueId'">
+                </kendo-multiselect>
+              </kendo-textbox-container>
+              <div class="h-10">
+                <lavi-validation-message-list [validation-form-group-name]="AgentForm"
+                validation-control-name="queues"
+                  [validation-errorlist]="UserMessages.QueueMessages">
+                </lavi-validation-message-list></div>
+            </div>
+          </div>
+          <div class="col-lg-1 mt-4">
+            <span *ngIf="AgentForm.controls.isOverride.value" class="text-blue cursor-pointer" (click)="Add()">Add</span>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="TemplateList && TemplateList.length > 0">
+
+        <div *ngFor="let list of TemplateList | laviSortBy:'templateName'">
+          <div class="col-lg-12 form-group">
+            <div class="row">
+              <div class="col-lg-1"></div>
+              <div class="col-lg-5 small">{{list.templateName}}</div>
+              <div class="col-lg-5 small pl-5">
+                <span *ngFor="let item of list.queues; let isLast=last">
+                  {{item.queueName}}{{isLast ? '' : ', '}}
+                </span>
+              </div>
+              <div class="col-lg-1">
+                <div class="float-right" *ngIf="AgentForm.controls.isOverride.value">
+                  <img (click)="Delete(list.templateCode)" tabindex="19" class="img-width no-outline cursor-pointer" src="../../../../assets/img/delete-icon.svg">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </lavi-form>
+</div>

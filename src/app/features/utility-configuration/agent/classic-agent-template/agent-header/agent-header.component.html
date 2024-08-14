@@ -1,0 +1,53 @@
+<div class="header-container border">
+  <div class="sidebar text-center border-right">
+    <img class="company-logo" src="..\..\..\assets\img\logo.png">
+  </div>
+  <div class="main-container">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-4">
+          <div *ngIf="IsOpenClassicView" class="container header">
+            <div class="row mb-1 mt-1"><span class="agent-header-title">{{ Title | uppercase }}</span></div>
+            <div class="row"> 
+              <div class="col-12 pl-0 mt-2 text-left d-flex ">
+                <label *ngFor="let tab of AgentAllHeaderTabs" (click)="TabClick(tab)"
+                  [translate]="currentLanguage == 'es' ? false: true"
+                  [class]="tab?.id == ActiveTab?.id ? 'header-tab active-tab mr-4':'header-tab mr-4'">{{tab?.name | uppercase }}
+              </label>
+                <span>
+                  <a target="_blank" rel="noopener noreferrer" [href]="CustomURL?.url">{{CustomURL?.tabName}}</a>
+                </span>
+              </div> 
+              </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div *ngIf="IsOpenClassicView" class="search-container mt-0">
+            <kendo-textbox-container class="pt-1 mt-1">
+              <input #filterBox kendoTextBox placeholder="    Search..."
+              [(ngModel)]="SearchText" />
+              <button kendoButton look="clear" icon="search" class="position-absolute" ></button>
+              <span class="k-icon k-i-close k-i-x close-icon" (click)="SearchCloseIconClick()"></span>
+            </kendo-textbox-container>
+          </div>
+        </div>
+        <div class="col-3 custome-k-switch p-0">
+          <div class="container  pr-0 pl-5 ml-3">
+            <div class="row">
+              <div class="col-12 text-center online-check">
+                <label class="mr-1" [translate]="currentLanguage == 'es'? false: true">{{awayText}}</label>
+                <kendo-switch [(ngModel)]="Available" (valueChange)="AgentStatusChanged($event)"></kendo-switch>
+                <label class="ml-1">Active</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-2">
+          <lavi-agent-user-information [OpenQueueInNewTab]="OpenQueueInNewTab">
+
+          </lavi-agent-user-information>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

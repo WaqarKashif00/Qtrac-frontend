@@ -1,0 +1,13 @@
+<ng-container
+  *ngIf="{
+    Panel: Panel$ | async,
+    ControlSelection: ControlSelection$ | async
+  } as values"
+>
+  <div class="property-window" *ngIf="values.Panel">
+    <lavi-kiosk-language-panel
+      [(IsOpenPropertyWindow)]="values.ControlSelection.IsPanelSelected"
+      [Panel]="values.Panel"
+    ></lavi-kiosk-language-panel>
+  </div>
+</ng-container>

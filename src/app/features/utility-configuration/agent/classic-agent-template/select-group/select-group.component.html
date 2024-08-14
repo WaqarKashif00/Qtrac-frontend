@@ -1,0 +1,29 @@
+<lavi-modal [OpenDialog]="GroupDialogVisible" [Width]="770">
+  <div [formGroup]='SelectGroupForm' class="container add-group-container">
+    <div class="container add-group-container">
+      <div class="row">
+        <p class="font20">Select Visitor Tag</p>
+      </div>
+      <div class="row">
+        <div class="col-5">
+          <kendo-dropdownlist  formControlName="group" tabindex="9"
+          [data]="GroupDropdownData | laviSortBy:'text'"
+          textField="text"  valueField="value"
+          [defaultItem]="DefaultDropDownData">
+        </kendo-dropdownlist>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col-5">
+          <p class="text-blue">{{DisplayMessage}}</p>
+        </div>
+        <div class="col-7">
+          <div class="float-right">
+            <button kendoButton class="secondary-button mr-2" (click)="Cancel()">Cancel</button>
+            <button kendoButton class="primary-button" type="submit" (click)='AddToGroup()'>Add To Visitor Tag</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</lavi-modal>

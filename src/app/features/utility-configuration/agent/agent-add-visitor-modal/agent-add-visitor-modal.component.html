@@ -1,0 +1,148 @@
+ <lavi-agent-dialog-box [Width]="'720px'" [Height]="'550px'" (OnClose)="Close()" [IsOpen]="true"
+[class]="GetDialogClassName()"
+>
+
+  <div header>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-left bold header">
+          <ul class="p-0 m-0">
+            <li>
+              {{title | uppercase}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div body class="container"  *ngIf="!(showEstimateWaitTime$ | async)">
+    <div class="row" >
+      <div class="col-12">
+        <h5>GENERAL QUESTIONNAIRE</h5>
+      </div>
+
+      <div class="col-12">
+        <div class="container global-question-container">
+          <div class="row">
+            <div class="col-6 pt-2" *ngFor="let preserviceQuestion of PreServiceQuestions">
+              <div class="col-12 text-left">
+                <p>{{preserviceQuestion.itemText}}</p>
+                <span *ngIf="preserviceQuestion.required" class="error-message">*</span>
+              </div>
+              <div class="col-12">
+                <lavi-preview-input-controls [Item]="preserviceQuestion" [DefaultCountry]="BranchCountryCode$ | async"></lavi-preview-input-controls>
+              </div>
+            </div>
+            <div class="col-6 pt-2">
+              <div class="col-12 text-left">
+                <p>Select Services</p>
+                <span class="error-message">*</span>
+              </div>
+              <div class="col-12">
+                <kendo-dropdownlist class="no-border mt-1" tabindex="1"
+                  [defaultItem]="DefaultAgentDropdownValue.Service" [data]="Services$ | async"
+                  [(ngModel)]='SelectedService' [textField]="'text'" (valueChange)="ServiceChanged()"
+                  [valueField]="'value'">
+                </kendo-dropdownlist>
+              </div>
+            </div>
+            <div class="col-6 pt-2">
+              <div class="col-12 text-left">
+                <p>Select Language</p>
+              </div>
+              <div class="col-12">
+                <kendo-dropdownlist class="no-border mt-1" tabindex="1"
+                  [defaultItem]="DefaultLanguage$ | async" [data]="LanguageList$ | async"
+                  [(ngModel)]='SelectedLanguage' [textField]="'language'"
+                  [valueField]="'languageCode'">
+                </kendo-dropdownlist>
+              </div>
+            </div>
+            <div class="col-6 pt-2" *ngIf="CanAddGroups">
+              <div class="col-12 text-left">
+                <p>Select Visitor Tags</p>
+              </div>
+              <div class="col-12">
+                <kendo-multiselect class="no-border mt-1" tabindex="1" placeholder="Select Visitor Tags"
+                  [data]="Groups$ | async" [(ngModel)]='SelectedGroups' [textField]="'text'" [valueField]="'value'">
+                </kendo-multiselect>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3 pt-3" *ngIf="IsServiceQuestionShow$| async">
+      <hr>
+      <div class="col-12">
+        <h5>SUPPLEMENTAL QUESTIONNAIRE</h5>
+      </div>
+
+      <div class="col-12">
+        <div class="container supplimental-question-container">
+          <div class="row">
+            <div class="col-6 pt-2" *ngFor="let question of PreviouslyAskedServiceQuestions">
+              <div class="col-12 text-left">
+                <p>{{question.itemText}}</p>
+                <span *ngIf="question.required" class="error-message">*</span>
+              </div>
+              <div class="col-12">
+                <lavi-preview-input-controls
+                [Item]="question"
+                (ControlChange)="ControlChange()"></lavi-preview-input-controls>
+              </div>
+            </div>
+
+            <div class="col-6  pt-2" *ngFor="let serviceQuestion of ServiceQuestions">
+              <div class="col-12 text-left">
+                <p>{{serviceQuestion.itemText}}</p>
+                <span *ngIf="serviceQuestion.required" class="error-message">*</span>
+              </div>
+              <div class="col-12">
+                <lavi-preview-input-controls
+                [Item]="serviceQuestion"
+                (ControlChange)="ControlChange()"></lavi-preview-input-controls>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div footer  *ngIf="!(showEstimateWaitTime$ | async)">
+    <div class="container-fluid">
+      <div class="row center">
+        <button class="btn primary-button" *ngIf="SelectedService?.value" (click)="Submit()">{{NextButtonText$ |
+          async}}</button>
+      </div>
+    </div>
+  </div>
+  <div body class="container row ml-0 mr-0 align-items-center h-100 justify-content-center"  *ngIf="showEstimateWaitTime$ | async" >
+    <div class="estimate-wait-time">
+      <div class="row p-3" >
+        <div class="col-12 font-20">
+          <p>You have successfully added a visitor  <span class="bold">({{DisplayTicketNumber$  | async }})</span> to the Queue ! </p>
+        </div>
+      </div>
+      <div class="row" >
+        <div class="col-12 font-20">
+          <p>The visitor's estimated wait time is:</p>
+        </div>
+      </div>
+      <div class="row p-3" >
+        <div class="col-7 text-right bold font-25">
+          <p class="mt-4" [innerHTML]="EstimateWaitTime$ | async"></p>
+        </div>
+        <div class=" col-5 text-left ">
+          <span class="watch-icon k-icon k-i-clock"  ></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</lavi-agent-dialog-box>
+
+
+

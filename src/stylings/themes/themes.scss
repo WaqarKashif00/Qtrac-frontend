@@ -1,0 +1,595 @@
+@import "./../primitives/primitives.scss";
+@import "./../shared/icons.scss";
+
+header {
+  height: auto;
+}
+
+footer {
+  height: 0;
+}
+main {
+  flex: 1;
+}
+
+// Scroll-bar
+/* width */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: $scroll-track-color;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $color-text-grey;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: $color-background-dark-grey;
+}
+
+.background-white {
+  background: $color-background-white;
+}
+
+.custom-dropdownlist {
+  padding: 0;
+  margin: 0;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.hide {
+  display: none;
+}
+
+/* Password icon starts */
+.eye-icon-password {
+  background-repeat: no-repeat;
+  background-size: 19px;
+  margin-top: 9px;
+}
+
+.show-hide-password-eye-icon {
+  cursor: pointer;
+  pointer-events: all;
+  line-height: 43px;
+  width: 39px;
+}
+
+.form-control-feedback {
+  position: absolute;
+  top: 12px;
+  right: 0;
+  z-index: 2;
+  display: block;
+  width: 25px;
+  height: 34px;
+  text-align: center;
+}
+
+.has-feedback label ~ .form-control-feedback {
+  top: 25px;
+}
+/* Password icon ends */
+
+/* Loading css start */
+
+.progress-loader {
+  position: fixed;
+  z-index: 99999;
+  height: 100px;
+  width: 100px;
+  overflow: hidden;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  outline-style: none;
+  box-shadow: none;
+  border-color: transparent;
+}
+/* Transparent Overlay */
+
+.progress-loader:before {
+  content: "";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba($color-text-black, 0.3);
+}
+
+/* Common button CSS starts */
+.add-button, .add-button:hover {
+  background: $color-form-primary-button;
+  border-color: $color-form-primary-button;
+  color: $color-text-white;
+  box-shadow: none;
+}
+.add-button:active:focus {
+  box-shadow: none;
+}
+.secondary-button, .primary-button {
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 9px 35px;
+  font-size: $font-size-small-4;
+  font-weight: $font-weight-500;
+  text-transform: capitalize;
+  letter-spacing: 0.1em;
+  line-height: 16px;
+  margin-left: 10px;
+}
+.primary-button {
+  background-color: $color-form-primary-button;
+  box-shadow: 0px 0px 2px rgba($_color-black, 0.12), 0px 2px 2px rgba($_color-black, 0.24);
+  border: solid 1px $color-form-primary-button;
+  color: $color-text-white;
+  min-width: 130px;
+}
+.primary-button:hover {
+  color: $color-text-white;
+}
+.secondary-button{
+  background-color: transparent;
+  border: 1px solid $color-form-secondary-button-text;
+  box-shadow: none;
+  color: $color-form-secondary-button-text;
+  min-width: 130px;
+}
+.secondary-button:hover {
+  color: $color-form-secondary-button-text;
+}
+.secondary-button.bg-grey {
+  background: $color-form-secondary-button-background;
+  border: 1px solid $color-form-secondary-button-text;
+  color: $color-form-secondary-button-text;
+  min-width: 170px;
+}
+.secondary-button.bg-grey:hover {
+  color: $color-form-secondary-button-text;
+}
+.secondary-button:focus, .primary-button:focus {
+  outline: none;
+}
+.btncontainer .add-button {
+  border-radius: 4px;
+  font-size: $font-size-small-4;
+  line-height: 16px;
+  padding: 9px 35px;
+}
+/* Common button css ends */
+
+/* Panel css starts */
+.panel-container {
+  margin: 85px 100px 0 70px;
+  padding-bottom: 60px;
+}
+.panel-sub-header {
+  font-size: $font-size-small-3;
+  font-weight: bold;
+}
+.panel-border {
+  border-radius: 4px;
+}
+.inner-panel-padding {
+  padding: 12px;
+}
+/* Panel css ends */
+
+/* Header */
+.sub-header {
+  font-weight: $font-weight-500;
+}
+.company-logo {
+  display: inline-block;
+  margin: 10px 32px 10px 24px;
+  img {
+    outline: none;
+    max-height: 36px !important;
+    width: 100%;
+  }
+
+}
+
+.top-navigation {
+  border-left: solid 1px $nav-border-color;
+  margin: 12px 0 0;
+  position: relative;
+  padding-left: 4%;
+  .head-search,
+  .head-LG,
+  .head-notification,
+  .head-companies,
+  .k-dropdown,
+  .head-username,
+  .head-user-icon {
+    margin-right: 16px;
+  }
+}
+
+a {
+  font-size: $font-size-small-3;
+}
+
+.custom-header-company-dropdown{
+  border: solid 1px $nav-border-color;
+  border-radius: 4px;
+  width:140px !important;
+}
+.custom-header-company-dropdown:hover {
+  border: solid 1px $nav-selected-text-color;
+}
+
+.head2 {
+  color: $color-header-text;
+  font-size: $font-size-small-2;
+  margin-left: 0;
+  padding: 0;
+  text-align: right;
+  margin-right: 125px;
+}
+
+.head-username-initial {
+  background: $top-nav-user-name-bg;
+  border: none;
+  border-radius: 50%;
+  display: inline-block;
+  font-size: $_font-size-small-4;
+  font-weight: 700;
+  padding: 5px 0 0;
+  width: 33px;
+  height: 33px;
+  text-align: center;
+}
+
+.head {
+  margin-right: 0px !important;
+  border-bottom: solid 2px $color-header-border-color;
+}
+.header-title {
+  font-size: $font-size-big-4; //n
+  margin-left: 80px;
+}
+.wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-container {
+  background-color: $color-background-light-blue;
+  overflow-x:hidden ;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.border-grey {
+  border: 1px solid $color-background-grey;
+}
+
+/* Side bar */
+// Side-bar styles
+.drawer-container {
+  width: 100%;
+  position: fixed;
+}
+.drawer-img {
+  height: 25px;
+  vertical-align: top;
+  outline: none;
+}
+.e-text {
+  color: $color-etext;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.side-bar-level-1 {
+  padding-left: 20px !important;
+}
+.side-bar-level-2 {
+  padding-left: 40px !important;
+}
+.side-bar-level-3 {
+  padding-left: 85px !important;
+}
+.side-bar-margin-level-3 {
+  margin-top: -5px !important;
+}
+
+/* Footer */
+div.transparentbox {
+  align-content: center;
+  height: 52px;
+  background: rgba(28, 28, 28, 0.1);
+  filter: alpha(opacity=60);
+}
+
+#footer {
+  position: fixed;
+  width: 100%;
+  bottom: 0.5%;
+  right: 0;
+  z-index: 9;
+}
+
+.link-text {
+    cursor: pointer;
+    color: $color-link-text-blue;
+    font-size: $font-size-small-3;
+    font-weight: $font-weight-700;
+    outline: none;
+  }
+
+.note-text{
+  color: $warning-color;
+  font-size: $font-size-smallest;
+
+}
+
+.footer {
+  bottom: 0.5%;
+}
+
+.clearfix {
+  display: block;
+  content: "";
+  clear: both;
+
+}
+.clearfix-y {
+  overflow-y: auto !important;
+}
+
+.no-outline, .no-outline :focus, img :focus {
+  outline: none;
+}
+
+.h-10 {
+  height: 10px;
+}
+
+.dropdown-label {
+  display: grid;
+  font-size: $font-size-small-1;
+  padding-left: 10px;
+  color: $color-header-text;
+}
+
+.text-orange{
+  color: $warning-color;
+}
+
+.text-blue,
+a.text-blue,
+a,
+a:not([href]) {
+  color: $color-link-text-blue;
+  font-weight: $font-weight-500;
+  cursor: pointer;
+}
+
+.text-blue:hover,
+a:hover,
+a:not([href]):hover {
+  color: $color-link-text-blue;
+}
+
+.text-blue:focus, input:focus, .wrap :focus {
+  outline: none;
+}
+
+.text-gray {
+  color: $color-text-grey;
+}
+
+.bg-gray {
+  background-color: $chip-background-color !important;
+}
+
+.no-border {
+  border: none;
+}
+
+.error-message {
+  color: $color-text-red;
+  font-size: $font-size-small-1;
+  width: max-content;
+}
+
+.error-text-color, .profile-error-msg {
+  color: $color-text-red;
+  font-size: $font-size-small-1;
+  width: max-content;
+}
+
+// User
+.f-20 {
+  font-size: $font-size-big-3;
+}
+
+
+.tag-container {
+  border-radius: 9px;
+  border: 1px $color-text-grey;
+  overflow-y: auto;
+  height: 75px;
+  min-height: 80px;
+  width: 100%;
+}
+
+.company-config,
+.branch {
+  lavi-form-content-panel > .content .row {
+    margin: 0 -15px;
+  }
+  .k-dropdown .k-dropdown-wrap,
+  .k-dropdowntree .k-dropdown-wrap {
+    padding-bottom: 2px;
+  }
+}
+
+.close {
+  cursor: pointer;
+  position: absolute;
+  top: -10px;
+  right: -20px;
+  padding: 5px 1px;
+  transform: translate(0%, -50%);
+}
+
+.close:focus {
+  outline: none;
+}
+
+.modal-body {
+  height: 380px;
+  overflow-y: scroll;
+}
+
+.company-grid .k-grid {
+  background: transparent;
+  border: none;
+}
+
+.grid-border-bottom {
+  border-bottom: 1px solid $color-border-form-element;
+}
+
+.grid-header-row.custom-header {
+  display: flex;
+  font-weight: bold;
+  padding-bottom:5px;
+  padding-top:5px;
+  font-size: $font-size-big-1; //n
+  color: $grid-header-text-color;
+}
+.grid-header-column, .grid-content {
+  font-weight: bold;
+  font-size: $global-font-size;
+  color: $grid-header-text-color;
+}
+.grid-content {
+  font-size: $global-font-size;
+}
+
+.btn:focus,
+.btn:hover,
+.btn:active {
+  box-shadow: none;
+  outline: none;
+}
+
+.agent-template .form-group .k-label {
+  color: $color-global-text;
+  font-size: $font-size-small-4;
+}
+
+.img-width :focus {
+  outline: none;
+}
+
+.img-width {
+  width: 20px;
+}
+
+.wrap{
+  overflow-wrap: break-word;
+  flex-wrap: nowrap;
+}
+.w-fit-content {
+  width: fit-content;
+}
+
+.k-stepper {
+  font-family: $global-font;
+}
+.font-size-small-1 {
+  font-size: $font-size-small-1;  //11px
+}
+.font-size-small-2{
+  font-size: $font-size-small-2; // 12px
+}
+.font-size-small-3{
+  font-size: $font-size-small-3; // 13px
+}
+.font-size-small-4 {
+  font-size: $font-size-small-4; // 14px
+}
+.font-15 {
+  font-size: $font-size-small-5;
+}
+.font-20 {
+  font-size: $font-size-big-2; //n
+}
+.font-25 {
+  font-size: $font-size-big-4; //n
+}
+.text-centered{
+  text-align: center;
+}
+.font-weight-500 {
+  font-weight: $font-weight-500;
+}
+
+.text-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px)
+  and (orientation: portrait)
+  and (-webkit-min-device-pixel-ratio: 1) {
+    .top-navigation .k-dropdown {
+      width: 25%;
+    }
+    .head2 {
+      margin-left: 0;
+      padding-left: 0;
+      padding-right: 0;
+    }
+}
+
+.preview-control-items.k-multiselect .k-multiselect-wrap {
+  width: 100% !important;
+}
+
+.disabled, :disabled {
+  cursor: default !important;
+  pointer-events: visible !important;
+}
+.preloader {
+  background-size: contain;
+  height: 20px;
+  width: 20px;
+}
+
+@media only screen and (min-device-width: 768px) and
+(max-device-width: 1024px) and (orientation: portrait) {
+  .custom-header-company-dropdown{
+    width: 100px !important;
+    margin-right: 5px;
+  }
+  .top-navigation {
+    padding-left: 2%;
+  }
+  .top-navigation .head-username, .top-navigation .head-user-icon {
+    margin-right: 10px;
+  }
+}

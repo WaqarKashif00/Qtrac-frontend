@@ -1,0 +1,18 @@
+<div class="find-branch-container position-relative">
+  <p class="sub-heading">{{(headerText[SelectedLanguage?.selectedLanguage] || headerText[SelectedLanguage?.defaultLanguage])}}</p>
+  <kendo-textbox-container floatingLabel="{{AppointmentTexts.appointmentLocationPlaceHolder}}"
+    class="w-100"
+  >
+    <input
+      kendoTextBox
+      tabindex="1"
+      maxlength="50"
+      type="text"
+      autofocus
+      class="mt-2"
+      [(ngModel)]="SearchText"
+      (keyup.enter)="OnEnter($event)"
+    />
+  </kendo-textbox-container>
+  <span class="k-i-search k-icon search-icon" (click)="OnSearchIconClick()"></span>
+</div>

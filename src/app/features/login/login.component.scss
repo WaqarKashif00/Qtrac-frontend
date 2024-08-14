@@ -1,0 +1,207 @@
+@import "src/stylings/primitives/primitives.scss";
+
+.field{
+  box-sizing: border-box;
+  width:40%;
+  height:371px;
+  max-height: 371px;
+  margin: 16px auto 0;
+  background-color: $color-background-white;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgb(0 0 0 / 5%);
+  box-shadow: 0 1px 1px rgb(0 0 0 / 5%);
+  border: solid 1px $login-field-border-color;
+  padding: 40px 30px;
+  max-width: 470px;
+}
+
+.login-background {
+  background: url(/../../assets/img/background.jpg) no-repeat center center;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ }
+
+#qtracvr-logo {
+  margin-top: 0;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 70px;
+}
+
+.login-container {
+  margin-top: 60px;
+}
+
+.basicControl {
+  background-color: $color-background-light-blue;
+  border-radius: 6px 6px 0 0;
+  padding: 11px 3px 5px 3px;
+}
+
+.e-info {
+  background-color: $color-info-button !important;
+  color: $color-text-white;
+  padding: 7px 30px 4px 30px;
+  font-size: $font-size-small-4;
+  float: right;
+  border-color: transparent;
+  border-radius: 4px;
+  width: 156px;
+  height: 40px;
+  box-shadow: 0 3px 1px -2px rgba($color-background-black, 0.2), 0 2px 2px 0 rgba($color-background-black, 0.14),
+    0 1px 5px 0 rgba($color-background-black, 0.12);
+  border: none !important;
+  outline: none !important;
+}
+
+.error-message-div {
+  margin-top: 43px;
+}
+
+.contentPasswordHeightFix {
+  height: 107px;
+}
+
+.Sign-In-btn,
+.Sign-In-btn:hover {
+  background-color: $color-info-button !important;
+  border-color: transparent;
+  box-shadow: 0 3px 1px -2px rgba($color-background-black, 0.2), 0 2px 2px 0 rgba($color-background-black, 0.14),
+    0 1px 5px 0 rgba($color-background-black, 0.12);
+  color: $color-text-white;
+  width: 100%;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 5px !important;
+  font-size: $font-size-small-4;
+  border-radius: 4px;
+  height: 47px;
+  border: none !important;
+  outline: none !important;
+}
+
+.forgot-password {
+  margin-top: 25px;
+  font-weight: $font-weight-500;
+  text-align: center;
+}
+.forgot-password-link,
+.forgot-password-link:hover {
+  font-size: $font-size-small-4;
+  color: #949090e3;
+  font-family: $global-font !important;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+}
+
+.password-hint-text {
+  color: $login-password-text-color;
+  font-size: $font-size-small-2;
+  font-family: $global-font !important;
+}
+
+.alerts-warning {
+  color: $warning-color;
+  background-color: $color-background-grey;
+  border-color: $color-border-form-element;
+}
+
+.alerts-okay {
+  /* transparent bg-color */
+  background-color: $color-background-black;
+}
+
+.message {
+  padding: 5px;
+}
+
+
+/*kendo ui css*/
+.k-textbox:focus {
+  box-shadow: none !important;
+  border-bottom: 2px solid $color-info-button !important;
+  background: transparent !important;
+}
+.k-textbox:hover {
+  background: transparent !important;
+}
+.k-textbox {
+  border-top-style: hidden !important;
+  border-right-style: hidden !important;
+  border-left-style: hidden !important;
+  border-bottom-style: groove !important;
+  font-size: $global-font-size !important;
+  font-family: $global-font !important;
+}
+
+.k-textbox-container.k-state-empty > .k-label,
+.k-floating-label-container.k-state-empty > .k-label {
+  transform: translate(0, 0) scale(1.4);
+  color: $color-form-disabled-element !important;
+}
+
+.k-textbox-container > .k-label,
+.k-textbox-container.k-state-focused > .k-label,
+.k-floating-label-container > .k-label,
+.k-floating-label-container.k-textbox:focus > .k-label {
+  transform: translate(0, -1.4285714286em) translate(0%, 0%) scale(1);
+  color: $color-info-button !important;
+  transform-origin: left top;
+}
+
+label {
+  margin-left: 2px !important ;
+  margin-top: -9px !important;
+}
+.k-textbox {
+  text-indent: 2px;
+  width: 100% !important;
+  border-width: 2px !important;
+  border-radius: 0px !important;
+}
+.k-textbox-container > .k-textbox {
+  height: 34px;
+  background: transparent;
+}
+.k-textbox-container {
+  flex: none !important;
+  width: 100% !important;
+}
+.k-textbox:hover {
+  background: transparent;
+}
+.k-textbox-container,
+.k-floating-label-container {
+  padding-top: 17px !important;
+  display: inline-flex;
+  vertical-align: middle;
+  position: relative;
+  flex-direction: column;
+  justify-content: stretch;
+  font-size: $font-size-small-3;
+}
+.k-textbox.k-invalid,
+.k-textbox.k-state-invalid,
+.k-textbox.ng-invalid.ng-touched,
+.k-textbox.ng-invalid.ng-dirty,
+.k-textarea.k-invalid,
+.k-textarea.k-state-invalid,
+.k-textarea.ng-invalid.ng-touched,
+.k-textarea.ng-invalid.ng-dirty {
+  border-bottom: 2px solid $color-border-form-element-focus !important;
+  box-shadow: none !important;
+}
+.k-button {
+  background-image: none !important;
+}
+.k-button:hover {
+  color: $color-text-white !important;
+  cursor: pointer !important;
+}
+
+::ng-deep #launcher {
+  display: none !important;
+}

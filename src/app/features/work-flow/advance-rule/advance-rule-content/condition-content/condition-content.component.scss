@@ -1,0 +1,171 @@
+@import "src/stylings/primitives/primitives.scss";
+select,
+input:not([type='button']),
+.multiselect-dropdown .dropdown-btn,
+.k-datepicker .k-picker-wrap,
+.k-timepicker .k-picker-wrap .k-dateinput-wrap {
+    background: $input-background-color;
+    border: 1px solid $input-border-color;
+    border-radius: 4px;
+    color: $input-text-color;
+    font-size: $global-font-size;
+    height: 34px;
+    padding: 3px 12px;
+}
+
+select:hover,
+input:not([type='button']):hover,
+select:focus,
+input:not([type='button']):focus,
+select:active,
+input:not([type='button']):active,
+textarea:focus,
+textarea:focus {
+    border: 1px solid $input-border-color;
+    outline: none;
+}
+
+.rule-state-container ::ng-deep .multiselect-dropdown {
+    color: $input-text-color;
+    top: 0;
+    margin-left: 0;
+}
+
+.slider {
+    ul {
+        background: $slider-background-color;
+        border-radius: 100px;
+        border: 1px solid $input-border-color;
+        margin: 0;
+        padding: 4px;
+        width: 250px;
+        li {
+            color: $slider-text-color;
+            list-style: none;
+            display: inline-block;
+            padding: 6px 8px;
+            width: 50%;
+            text-align: center;
+        }
+        li.selected {
+            background: $slider-active-color;
+            border-radius: 100px;
+            color: $color-text-white;
+        }
+    }
+}
+
+.when-conditional.slider {
+    ul {
+        white-space: nowrap;
+        list-style: none;
+        width: fit-content;
+        li {
+            width: auto;
+            padding: 2px 14px;
+            text-transform: uppercase;
+        }
+    }
+}
+
+.internal-condition {
+    z-index: 10;
+    position: absolute;
+    left: 80px;
+    top: 70px;
+}
+
+.rule-state-container {
+    background: $conditional-background;
+    border: solid 1px $input-border-color;
+    border-radius: 4px;
+    color: $input-text-color;
+    min-height: 104px;
+    padding: 28px 24px;
+    position: relative;
+}
+
+.remove-condition-internal {
+    display: inline-block;
+    margin-left: 30px;
+    width: 18px;
+    height: 18px;
+    border: 1px solid $slider-text-color;
+    border-radius: 12px;
+    position: relative;
+    top: 7px;
+}
+
+.add-state-condition {
+    background: $add-button-background;
+    border: solid 1px $slider-active-color;
+    border-radius: 100px;
+    box-shadow: inset 0px 0px 0px 1px $input-border-color, inset 0px 0px 4px 2px $slider-background-color;
+    color: $slider-active-color;
+    font-size: $font-size-small-4;
+    line-height: 20px;
+    padding: 5px 20px;
+    width: fit-content;
+    text-align: center;
+    margin-top: 15px;
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    cursor: pointer;
+    bottom: -16px;
+}
+
+.remove-condition {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    right: -16px;
+    border: 1px solid rgba(235, 11, 26, 0.25);
+    border-radius: 100px;
+    text-align: center;
+    cursor: pointer;
+    transform: translateY(-50%);
+    top: 50%;
+}
+
+.remove-condition-group {
+    right: 40px;
+}
+
+.rule-state-container ::ng-deep {
+    .k-dateinput .k-dateinput-wrap.k-state-focused,
+    .k-state-focused>.k-dateinput .k-dateinput-wrap,
+    .k-dateinput .k-picker-wrap.k-state-focused,
+    .k-state-focused>.k-dateinput .k-picker-wrap,
+    .k-datepicker .k-dateinput-wrap.k-state-focused,
+    .k-state-focused>.k-datepicker .k-dateinput-wrap,
+    .k-datepicker .k-picker-wrap.k-state-focused,
+    .k-state-focused>.k-datepicker .k-picker-wrap,
+    .k-datetimepicker .k-dateinput-wrap.k-state-focused,
+    .k-state-focused>.k-datetimepicker .k-dateinput-wrap,
+    .k-datetimepicker .k-picker-wrap.k-state-focused,
+    .k-state-focused>.k-datetimepicker .k-picker-wrap,
+    .k-timepicker .k-dateinput-wrap.k-state-focused,
+    .k-state-focused>.k-timepicker .k-dateinput-wrap,
+    .k-timepicker .k-picker-wrap.k-state-focused,
+    .k-state-focused>.k-timepicker .k-picker-wrap,
+    .k-dateinput .k-dateinput-wrap:hover,
+    .k-dateinput .k-dateinput-wrap.k-state-hover,
+    .k-dateinput .k-picker-wrap:hover,
+    .k-dateinput .k-picker-wrap.k-state-hover,
+    .k-datepicker .k-dateinput-wrap:hover,
+    .k-datepicker .k-dateinput-wrap.k-state-hover,
+    .k-datepicker .k-picker-wrap:hover,
+    .k-datepicker .k-picker-wrap.k-state-hover,
+    .k-datetimepicker .k-dateinput-wrap:hover,
+    .k-datetimepicker .k-dateinput-wrap.k-state-hover,
+    .k-datetimepicker .k-picker-wrap:hover,
+    .k-datetimepicker .k-picker-wrap.k-state-hover,
+    .k-timepicker .k-dateinput-wrap:hover,
+    .k-timepicker .k-dateinput-wrap.k-state-hover,
+    .k-timepicker .k-picker-wrap:hover,
+    .k-timepicker .k-picker-wrap.k-state-hover {
+        border: 1px solid $input-border-color;
+    }
+}

@@ -1,0 +1,58 @@
+@import "src/stylings/primitives/primitives.scss";
+@import "src/stylings/shared/agent-layout.scss";
+.filter-item-row{
+  background: $agent-grid-row-background;
+  border-radius: 10px;
+}
+.circle{
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+}
+.group-circle-container{
+  width: 25px;
+  height: 25px;
+  float: left;
+}
+
+.groups-list-container{
+  height:132px;
+  overflow-y: auto;
+}
+
+ul li {
+  list-style: none;
+  color: $color-text-white;
+  font-weight:  $font-weight-600;
+}
+li::before {
+  border-radius: 50%;
+  background-color: $sidebar-yellow-border;
+  content: " ";
+  display: inline-block;
+  height: 12px;
+  width: 12px;
+}
+.search-container {
+  margin-bottom: 20px;
+  .k-textbox {
+    width: 100%;
+    padding-left: 35px;
+  }
+  .k-button{
+      box-shadow: none !important;
+      border:none !important;
+      background: transparent;
+  }
+  .header-search-icon{
+    position: absolute;
+  }
+}
+
+.close-icon{
+  position: absolute;
+  top: 16px;
+  right: 0px;
+  cursor: pointer;
+}
+

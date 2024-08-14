@@ -1,0 +1,385 @@
+<lavi-modal
+  class="scroll"
+  [Title]="Mode == 'Add' ? 'Add New User' : 'Update User'"
+  [Width]="'60%'"
+  [OpenDialog]="OpenDialog"
+>
+  <lavi-form [FormGroup]="UserForm">
+    <div class="user-screen">
+      <div class="col-lg-12">
+        <div class="row">
+          <div class="col-lg-5">
+            <div class="row">
+              <div class="col-lg-8">
+                <div class="form-group">
+                  <kendo-textbox-container
+                    class="w-100"
+                    floatingLabel="First Name"
+                  >
+                    <input
+                      kendoTextBox
+                      tabindex="1"
+                      maxlength="50"
+                      lavi-auto-focus
+                      [AutoFocusRequired]="OpenDialog"
+                      [formControl]="UserForm.controls.firstName"
+                      lavi-trim-value
+                    />
+                  </kendo-textbox-container>
+                  <div class="h-10 pt-1">
+                    <lavi-validation-message-list
+                      [validation-form-group-name]="UserForm"
+                      validation-control-name="firstName"
+                      [validation-errorlist]="
+                        UserMessages.FirstNameMessages
+                      "
+                    >
+                    </lavi-validation-message-list>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <kendo-textbox-container
+                    class="w-100"
+                    floatingLabel="Last Name"
+                  >
+                    <input
+                      kendoTextBox
+                      maxlength="50"
+                      tabindex="2"
+                      [formControl]="UserForm.controls.lastName"
+                      lavi-trim-value
+                    />
+                  </kendo-textbox-container>
+                  <div class="h-10 pt-1">
+                    <lavi-validation-message-list
+                      [validation-form-group-name]="UserForm"
+                      validation-control-name="lastName"
+                      [validation-errorlist]="
+                        UserMessages.LastNameMessages
+                      "
+                    >
+                    </lavi-validation-message-list>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 mx-auto col-sm-4 profile-padding  position-relative">
+                <lavi-file-upload
+                  [IfRoundedImage]="true"
+                  [ImageSrc]="UserForm.controls.profileImageUrl.value"
+                  [formControl]="UserForm.controls.profileImageUrl"
+                  [ImageTitle]="'Upload Photo'"
+                  [ImageWidth]="80"
+                  [ImageHeight]="80"
+                ></lavi-file-upload>
+                <div class="h-10 profile-error-msg pl-2">
+                  <span
+                    *ngIf="
+                      UserForm.get('profileImageUrl').errors?.requiredFileType
+                    "
+                  >
+                    Upload only .png, .jpg, .jpeg file.
+                  </span>
+                  <span
+                    *ngIf="
+                      UserForm.get('profileImageUrl').errors?.requiredFileSize
+                    "
+                  >
+                    Image size exceeds maximum limit 4 MB.
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <kendo-textbox-container
+                class="w-100"
+                floatingLabel="Display Name"
+              >
+                <input
+                  kendoTextBox
+                  maxlength="50"
+                  tabindex="3"
+                  [formControl]="UserForm.controls.displayName"
+                  lavi-trim-value
+                />
+              </kendo-textbox-container>
+            </div>
+            <div lavi-text-field-loader [show-text-field-loading]="EmailFormControl.pending">
+              <div class="col-lg-12 col-md-12 float-left pr-0 pl-0 lavi-text-field-loader-container">
+                <div class="form-group">
+                  <kendo-textbox-container
+                class="w-100"
+                floatingLabel="Email Address"
+                [class.k-state-invalid]="EmailFormControl.invalid && EmailFormControl.dirty"
+              >
+                <input
+                  kendoTextBox
+                  maxlength="150"
+                  tabindex="4"
+                  [formControl]="UserForm.controls.email"
+                  lavi-trim-value
+                />
+              </kendo-textbox-container>
+              <div class="h-10">
+                <lavi-validation-message-list
+                  [validation-form-group-name]="UserForm"
+                  validation-control-name="email"
+                  [validation-errorlist]="UserMessages.EmailMessages"
+                >
+                </lavi-validation-message-list>
+              </div>
+                </div>
+            </div>
+          </div>
+            <div class="form-group" [ngClass]="{ hide: PasswordNotAllow, show: !PasswordNotAllow }">
+              <kendo-textbox-container class="w-100" floatingLabel="Password">
+                <span>
+                  <input
+                    kendoTextBox
+                    type="password"
+                    tabindex="5"
+                    autocomplete="off"
+                    maxlength="16"
+                    [formControl]="UserForm.controls.password"
+                    lavi-trim-value
+                    autocomplete="new-password"
+                  />
+                </span>
+              </kendo-textbox-container>
+              <div class="h-10 pt-1 d-flex">
+                <span
+                  *ngIf="UserForm.controls.password?.errors?.pattern"
+                  title="The password must be between 8 and 16 characters and must have at least 4 of the following: lowercase letter, an uppercase letter, a digit, and a symbol."
+                  class="k-icon k-i-information cursor-pointer text-info mr-2"
+                ></span>
+                <lavi-validation-message-list
+                  [validation-form-group-name]="UserForm"
+                  validation-control-name="password"
+                  [validation-errorlist]="UserMessages.PasswordMessages"
+                >
+                </lavi-validation-message-list>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-1"></div>
+          <div class="col-lg-5">
+              <div class="col-lg-12 col-md-12 float-left pr-0 pl-0">
+                <div class="form-group">
+                  <kendo-textbox-container
+                class="w-100"
+                floatingLabel="Email Address (for Alerts)"
+              >
+                <input
+                  kendoTextBox
+                  maxlength="150"
+                  tabindex="6"
+                  [formControl]="UserForm.controls.alertEmail"
+                  lavi-trim-value
+                />
+              </kendo-textbox-container>
+              <div class="h-10">
+                <lavi-validation-message-list
+                  [validation-form-group-name]="UserForm"
+                  validation-control-name="alertEmail"
+                  [validation-errorlist]="UserMessages.EmailMessages"
+                >
+                </lavi-validation-message-list>
+              </div>
+            </div> 
+          </div>
+          <div class="col-lg-12 col-md-12 float-left pr-0 pl-0 ">
+            <div class="form-group">
+              <div class="col-12 text-left w-100 text font-size-small-2">
+                <p [ngStyle]="{ 'color': (AlertPhoneNumberFormControl?.invalid ? 'red' :'#6b6b6b')}" class="phone-label">Phone Number  (for Alerts)</p>
+              </div>
+              <lavi-phone-number
+              class="preview-control-items p-0"
+              [PhoneNumber]="UserForm.controls.alertPhoneNumber.value"
+              [Invalid]="AlertPhoneNumberFormControl?.invalid"
+              (OnValidPhoneNumber)="PhoneNumberChanged($event)"
+              (OnInvalidPhoneNumber)="InvalidPhoneNumberChanged($event)"
+            ></lavi-phone-number>
+              <div class="h-10 error-text-color w-auto" *ngIf="AlertPhoneNumberFormControl?.invalid">
+                <span>Invalid Phone Number</span>
+            </div>
+          </div>
+          </div>
+            <div class="form-group">
+              <kendo-textbox-container class="w-100" floatingLabel="Type">
+                <kendo-dropdownlist
+                  [formControl]="UserForm.controls.type"
+                  tabindex="7"
+                  (valueChange)="ResetControlsOnType()"
+                  [data]="UserDropdownData?.userTypes | laviSortBy:'text'"
+                  [textField]="'text'"
+                  [valueField]="'value'"
+                  [defaultItem]="DefaultData.TypesDefaultValue"
+                >
+                </kendo-dropdownlist>
+              </kendo-textbox-container>
+              <div class="h-10 pt-1">
+                <lavi-validation-message-list
+                  [validation-form-group-name]="UserForm"
+                  validation-control-name="type"
+                  [validation-errorlist]="UserMessages.typeMessages"
+                >
+                </lavi-validation-message-list>
+              </div>
+            </div>
+            <div class="form-group" *ngIf="IsCustomerUserType">
+              <kendo-textbox-container class="w-100" floatingLabel="Company">
+                <kendo-dropdownlist
+                  [formControl]="UserForm.controls.company"
+                  isRequired="true"
+                  tabindex="8"
+                  [data]="UserDropdownData?.companies | laviSortBy:'companyName'"
+                  [textField]="'companyName'"
+                  [valueField]="'companyId'"
+                  [defaultItem]="DefaultData.CompanyDefaultValue"
+                  (valueChange)="BindRoleByCompany($event)"
+                >
+                </kendo-dropdownlist>
+              </kendo-textbox-container>
+              <div class="h-10 pt-1">
+                <lavi-validation-message-list
+                  [validation-form-group-name]="UserForm"
+                  validation-control-name="company"
+                  [validation-errorlist]="UserMessages.companyMessages"
+                >
+                </lavi-validation-message-list>
+              </div>
+            </div>
+
+            <div class="form-group" *ngIf="IsCustomerUserType">
+              <kendo-textbox-container class="w-100" floatingLabel="Role">
+                <kendo-dropdownlist
+                  [formControl]="UserForm.controls.role"
+                  tabindex="9"
+                  [data]="Roles | laviSortBy:'roleName'"
+                  [textField]="'roleName'"
+                  [valueField]="'roleId'"
+                  [defaultItem]="DefaultData.RoleListDefaultValue"
+                  (valueChange)="BindAgentViewByRole($event)"
+                >
+                </kendo-dropdownlist>
+              </kendo-textbox-container>
+              <div class="h-10 pt-1">
+                <lavi-validation-message-list
+                  [validation-form-group-name]="UserForm"
+                  validation-control-name="role"
+                  [validation-errorlist]="UserMessages.RoleMessages"
+                >
+                </lavi-validation-message-list>
+              </div>
+            </div>
+            <div class="form-group mt-5">
+              <label class="k-label cursor-pointer checkbox-label">
+                <input
+                  type="checkbox"
+                  tabindex="10"
+                  [formControl]="UserForm.controls.isUserInactive"
+                  kendoCheckBox
+                />
+                User Inactive
+              </label>
+            </div>
+            <div class="form-group" *ngIf="IsInternalAuthentication">
+              <label class="k-label cursor-pointer checkbox-label">
+                <input
+                  type="checkbox"
+                  tabindex="11"
+                  [formControl]="UserForm.controls.changePasswordInFirstLogin"
+                  kendoCheckBox
+                />
+                User must change password in first login
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12" *ngIf="IsCustomerUserType">
+        <div class="col-lg-4 form-group pl-0">
+          <label class="k-label cursor-pointer checkbox-label">
+            <input
+              type="checkbox"
+              tabindex="12"
+              (click)="DisableBranches()"
+              [formControl]="UserForm.controls.isAllBranches"
+              kendoCheckBox
+            />
+            All Locations
+          </label>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <div class="row">
+          <ng-container *ngIf="IsCustomerUserType">
+            <div class="col-12">
+              <div class="form-group" *ngIf="!(isAllBranchesControl.value)">
+                <kendo-textbox-container floatingLabel="Locations">
+                  <kendo-multiselect
+                    [formControl]="UserForm.controls.branches"
+                    [kendoMultiSelectSummaryTag]="3"
+                    [filterable]="true"
+                    [data]="BranchSearchList"
+                    tabindex="13"
+                    [textField]="'name'"
+                    [valueField]="'id'"
+                    (filterChange)="FilterBranch($event)"
+                  >
+                  </kendo-multiselect>
+                </kendo-textbox-container>
+                <lavi-validation-message-list
+                  [validation-form-group-name]="UserForm"
+                  validation-control-name="branches"
+                  [validation-errorlist]="UserMessages.BranchesMessages"
+                >
+                </lavi-validation-message-list>
+                <div class="h-10 pl-2 text-muted small">
+                  <span>Search for location name or tags</span>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col-lg-12 mb-5" *ngIf="IsCustomerUserType">
+        <lavi-form-panel PanelHeader="Advanced Settings" [PanelExpand]="false">
+          <lavi-form-content-panel>
+            <div>
+              <lavi-user-advance-settings
+                [AgentForm]="UserForm.controls.agentTemplate"
+                [AgentTemplate]="AgentDropDownData"
+                [Queue]="Queues"
+                (Queues)="BindQueues($event)"
+                [TemplateList]="TemplateList"
+                [HideIsOverride]="HideIsOverride"
+                (UncheckOverride)="UnCheckIsOverrideBindAgentView()"
+              >
+              </lavi-user-advance-settings>
+            </div>
+          </lavi-form-content-panel>
+        </lavi-form-panel>
+      </div>
+    </div>
+      <div class="pb-5 pt-4">
+        <div class="col-lg-12">
+          <div class="row float-right">
+              <input
+                type="button"
+                kendoButton
+                class="secondary-button mr-2"
+                (click)="OnCancel()"
+                value="Cancel"
+              />
+              <input
+                type="button"
+                kendoButton
+                (click)="OnSave()"
+                class="primary-button"
+                [value]="Mode == 'Add' ? 'Save' : 'Update'"
+              />
+          </div>
+        </div>
+      </div>
+  </lavi-form>
+</lavi-modal>

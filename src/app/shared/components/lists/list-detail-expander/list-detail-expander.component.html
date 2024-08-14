@@ -1,0 +1,16 @@
+<span>
+  <button
+  kendoButton look='flat'
+  icon='arrow-60-down'
+  *ngIf='!expansionManager.isExpanded(columnId)'
+  (click)='expansionManager.expand(columnId)'
+  >
+</button>
+<button
+  kendoButton look='flat'
+  *ngIf='expansionManager.isExpanded(columnId)'
+  (click)='expansionManager.collapse(columnId)'
+  icon='arrow-60-up'>
+</button>
+
+</span>

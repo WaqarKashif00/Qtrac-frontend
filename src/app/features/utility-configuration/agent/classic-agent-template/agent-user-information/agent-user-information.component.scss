@@ -1,0 +1,32 @@
+@import "src/stylings/primitives/primitives.scss";
+.half-font{
+  font-size: $font-size-small-1;
+}
+.icon{
+    width: 56px;
+    height: 56px;
+}
+.vertical-center{
+    justify-content: center;
+    text-align: center;
+    display: flex;
+    align-items: center;
+  }
+.text-color-black{
+    color: $agent-default-font-color;
+}
+.text-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.head-username-initial  {
+    border: 2px solid #efefef;
+    border-radius: 20px;
+    display: inline-block;
+    padding: 5px 0 0;
+  }
+.mr-105 {
+  margin-right: 105px;
+}

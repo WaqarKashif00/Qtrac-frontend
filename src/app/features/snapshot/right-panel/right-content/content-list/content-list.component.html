@@ -1,0 +1,106 @@
+<div class="content-list-container">
+  <!-- context current snapshot selected data -->
+  <div class="row content-list" [ngClass]="{'p-10px': (Scopes || TimePeriod || Tags || DataView)}">
+    <div class="col col-md-6 col-lg-2" *ngIf="Scopes">
+      <p class="heading">
+        Scope
+      </p>
+      <p class="values">
+        {{Scopes}}
+      </p>
+    </div>
+    <div class="col col-md-6 col-lg-2" *ngIf="TimePeriod">
+      <p class="heading">
+        Time Period
+      </p>
+      <p class="values">
+        {{TimePeriod}}
+      </p>
+    </div>
+    <div class="col col-md-6 col-lg-3" *ngIf="Tags">
+      <p class="heading">
+        Tags
+      </p>
+      <p class="values">
+        {{Tags}}
+      </p>
+    </div>
+    <div class="col col-md-6 col-lg-3" *ngIf="Locations">
+      <p class="heading">
+        Location
+      </p>
+      <p class="values">
+        {{Locations}}
+      </p>
+    </div>
+    <div class="col col-md-6 col-lg-2" *ngIf="DataView">
+      <p class="heading">
+        data view
+      </p>
+      <p class="values">
+        {{DataView}}
+      </p>
+    </div>
+  </div>
+
+  <!-- Current Snapshot graph data -->
+  <div class="content-graph" *ngIf="GraphData && GraphData[0]">
+
+    <ng-container *ngTemplateOutlet="SnapShotGraph; context: GraphContext"></ng-container>
+
+    <ng-template #SnapShotGraph let-graphItems="graphItems">
+      <div class="pb-2 mt-2 mb-2 pl-3" *ngFor="let graph of graphItems | laviSortBy:'chartTitle'; let i = index">
+        <ng-container *ngTemplateOutlet="GraphTitle; context:GraphTitleContext(graph)"></ng-container>
+        <div *ngIf="!graph.isCollapsed">
+          
+          <div *ngIf="!graph.isOneDimensional">
+            <ng-container *ngTemplateOutlet="ChartGraph; context:GraphContextData(graph)"></ng-container>
+          </div>
+
+          <div *ngIf="graph.isOneDimensional" class="main-one-dimensional-div" [ngStyle]="{'margin-left': ((graph.level+1)*4)+'%'}">
+            <ng-container *ngTemplateOutlet="OneDimensionalGraph; context:OneDimensionalGraphContext(graph)">
+            </ng-container>
+          </div>
+
+          <div >
+            <ng-container *ngTemplateOutlet="SnapShotGraph; context:GraphContextMain(graph)"></ng-container>
+          </div>
+
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template #ChartGraph let-graph="graph" let-level="level">
+      <lavi-line-chart [Level]='level' *ngIf="(graph?.xData?.data && graph?.xData?.data[0])"
+        [TooltipData]="graph?.chartTooltip" [LegendData]="graph?.chartLegend" [XAxisData]="graph?.xData"
+        [Title]="graph.chartTitle" [YAxisData]="graph?.yData" [Style]="graph?.style" [ChartType]="graph.chartType">
+      </lavi-line-chart>
+    </ng-template>
+
+    <ng-template #GraphTitle let-title="title" let-level="level" let-graph="graph">
+      <span class="accordion k-icon k-i-minus cursor-pointer"
+        [ngClass]="{ 'k-i-minus' : !graph.isCollapsed , 'k-i-plus': graph.isCollapsed }"
+        [ngStyle]="{'margin-left': ((level)*3)+'%'}" (click)="ExpandAndCollapse(graph)"></span>
+      <h6 class="k-label cursor-pointer pt-1" (click)="ExpandAndCollapse(graph)">{{title}}</h6>
+    </ng-template>
+
+    <ng-template #OneDimensionalGraph let-graph="graph" let-level="level">
+      <div class="one-dimensional-div" *ngFor="let xd of graph">
+        <div align="center" class="heading">{{xd.xHeader}}</div>
+        <div class="one-dimensional-sub-div">
+          <div class="number-heading" align="center">{{xd.data}}</div>
+          <div align="right" class="arrow-div">
+            <div [ngClass]="{ 
+                              'less-than-arrow' : (xd.trending == arrowType.lessThan) ,
+                              'greater-than-arrow' : (xd.trending == arrowType.greaterThan) ,
+                              'equal-arrow' : (xd.trending == arrowType.equal) 
+                            }">{{GetArrowCode(xd.trending)}}</div>
+          </div>
+        </div>
+        <div>
+          <kendo-sparkline [data]="xd.sparkline"></kendo-sparkline>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

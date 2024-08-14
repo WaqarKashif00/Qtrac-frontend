@@ -1,0 +1,51 @@
+<div class="button-container">
+  <div class="row m-0 ml-3 mb-3 validation-message" *ngIf="ValidationMessage?.showValidationMessage">{{ValidationMessage?.message}}</div>
+  <div class="row m-0" [ngClass]="{'position-relative': ShowSubmitButton && CaptchaFormControl.invalid }">
+    <div class="col-6" [ngClass]="{'button-sm-position': ShowSubmitButton && CaptchaFormControl.invalid }">
+      <div class="float-left">
+        <input
+          type="button"
+          kendoButton
+          [style.color]="SecondaryButtonColor"
+          [style.background-color]="SecondaryButtonBackColor"
+          (click)="OnBackButtonClick()"
+          *ngIf="ShowCancelButton"
+          [value]="(SecondaryButtonText[SelectedLanguage?.selectedLanguage] || SecondaryButtonText[SelectedLanguage?.defaultLanguage])"
+          class="lavi-secondary-button"
+        />
+      </div>
+    </div>
+    <div class="col-6" >
+      <div class="float-right" [ngClass]="{'float-none': ShowSubmitButton && CaptchaFormControl.invalid }">
+        <input
+          kendoButton
+          *ngIf='ShowContinueButton'
+          [style.color]="PrimaryButtonColor"
+          [style.background-color]="PrimaryButtonBackColor"
+          type="button"
+          [value]="(PrimaryButtonText[SelectedLanguage?.selectedLanguage] || PrimaryButtonText[SelectedLanguage?.defaultLanguage])"
+          (click)="OnNextButtonClick()"
+          class="lavi-primary-button"
+        />
+        <div *ngIf="ShowSubmitButton && CaptchaFormControl.invalid && IsEnforceReCaptcha$ | async as boolean">
+          <re-captcha
+            [formControl]="CaptchaFormControl"
+            class="d-inline-block"
+          ></re-captcha>
+        </div>
+        <div *ngIf="ShowSubmitButton">
+          <input
+              kendoButton
+              id="submitButton"
+              *ngIf="!ShowContinueButton && CaptchaFormControl.valid ||  !ShowContinueButton && !(IsEnforceReCaptcha$ | async) as boolean"
+              [ngStyle]="{'color': DisableSubmitButton? PrimaryButtonColor: '', 'background-color': DisableSubmitButton? PrimaryButtonBackColor : '' }"
+              type="button"
+              [value]="SelectedLanguage?.selectedLanguage == 'es' ? 'Enviar' :AppointmentTexts.appointmentReviewPageSubmitButton"
+              (click)="OnSubmitButtonClick()"
+              [ngClass]="DisableSubmitButton  ?  'lavi-primary-button':'disabled-button'  "
+            />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

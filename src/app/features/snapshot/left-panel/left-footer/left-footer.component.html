@@ -1,0 +1,10 @@
+<ng-container *ngIf="!(IsEditing$ | async)">
+  <div class="footer-icon">
+    <ul class="d-flex justify-content-around" *ngIf="(SnapshotList$ | async) as dataItems">      
+        <li *ngIf="IsShowEditConditions"><span class="archive-icon" (click)="ShowSaveDraftScreen()" ></span></li>
+        <li *ngIf="dataItems[0]"><span class="share-icon" (click)="ShowSnapshotLoadScreen()" ></span></li>
+        <li *ngIf="IsShowEditConditions"><span class="export-icon" ></span></li>      
+    </ul>
+  </div>
+</ng-container>
+

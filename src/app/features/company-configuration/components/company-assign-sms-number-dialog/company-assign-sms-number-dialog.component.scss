@@ -1,0 +1,19 @@
+@import "src/stylings/primitives/primitives.scss";
+.grid-header-row{
+    display: flex !important;
+    font-weight: bold;
+}
+.assign-numbers-grid-body {
+  height: 225px;
+  overflow-y: scroll;
+  width: 100%;
+}
+.assign-numbers-grid-header {
+  border-bottom: solid 1px $color-border-form-element;
+}
+.assign-numbers-grid-header:first-of-type {
+  border-bottom: none;
+}
+::ng-deep .company-sms-number-container .k-window-actions>.k-button-icon.k-dialog-close{
+  display: block !important;
+}

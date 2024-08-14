@@ -1,0 +1,60 @@
+@import "src/stylings/primitives/primitives.scss";
+.visited-branch {
+  padding-top: 0 !important;
+}
+.list {
+  ul {
+    list-style: none;
+    li {
+      display: inline-block;
+      margin: 0 35px 25px 0;
+      text-align: center;
+      width: 180px;
+      position: relative;
+      cursor: pointer;
+      .heading {
+        color: $scheduler-default-font-color;
+        font-size: $font-size-big-3;
+        font-weight: $font-weight-500;
+        margin: 0;
+      }
+      .sub-text {
+        color: $color-text-light-grey;
+        font-size: $global-font-size;
+        line-height: 20px;
+      }
+    }
+  }
+  .thumbnail1, .thumbnail2 {
+    background-size: contain;
+    border: none;
+    border-radius: 85px;
+    display: block;
+    height: 170px;
+    margin: 0 auto 15px;
+    width: 170px;
+  }
+  .selected-service {
+    color: $color-text-white;
+    position: absolute;
+    height: 166px;
+    display: inline-block;
+    background: rgba(112, 112, 112, 0.7);
+    width: 170px;
+    top: 0;
+    border-radius: 105px;
+    left: 6px;
+    padding-top: 6px;
+    font-size: $font-size-big-7;
+    font-weight: $font-weight-500;
+  }
+}
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation:portrait) {
+  .list {
+    ul {
+      li {
+        margin: 0 0 25px 0;
+      }
+    }
+  }
+}

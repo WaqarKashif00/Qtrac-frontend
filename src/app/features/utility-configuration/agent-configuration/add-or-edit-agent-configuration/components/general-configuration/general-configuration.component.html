@@ -1,0 +1,111 @@
+<div [formGroup]="GeneralConfigForm">
+  <div class="p-4 panel-border">
+    <div class="col-lg-6">
+      <div lavi-text-field-loader [show-text-field-loading]="GeneralConfigNameFormControl.pending" [text-field-loading-settings]="LoaderSettings">
+        <div class="col-lg-12 col-md-12 float-left pr-0 pl-0 lavi-text-field-loader-container">
+          <div class="form-group">
+            <kendo-textbox-container class="w-100" floatingLabel="Template Name" [class.k-state-invalid]="GeneralConfigNameFormControl?.invalid&&GeneralConfigNameFormControl?.dirty">
+              <input
+                type="text"
+                lavi-auto-focus
+                tabindex="1"
+                [formControl]="GeneralConfigForm.controls.name"
+                maxlength="50"
+                kendoTextBox
+                lavi-trim-value
+              />
+            </kendo-textbox-container>
+            <div class="h-10">
+              <lavi-validation-message-list
+                [validation-form-group-name]="GeneralConfigForm"
+                validation-control-name="name"
+                [validation-errorlist]="
+                  ValidationMessages.TemplateNameMessages
+                "
+              >
+              </lavi-validation-message-list>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <kendo-textbox-container class="w-100" floatingLabel="Workflow">
+          <kendo-dropdownlist
+            [formControl]="GeneralConfigForm.controls.workflow"
+            [defaultItem]="DefaultValues.WorkflowDefaultValue"
+            (valueChange)="WorkflowChange()"
+            [data]="WorkflowList | laviSortBy:'name'"
+            tabindex="2"
+            [textField]="'name'"
+            [valueField]="'workFlowId'"
+          >
+          </kendo-dropdownlist>
+        </kendo-textbox-container>
+        <div class="h-10">
+          <lavi-validation-message-list
+            [validation-form-group-name]="GeneralConfigForm"
+            validation-control-name="workflow"
+            [validation-errorlist]="
+              ValidationMessages.WorkflowMessages
+            "
+          >
+          </lavi-validation-message-list>
+        </div>
+        <div *ngIf="(GeneralConfigForm.controls.workflow.status != 'DISABLED')" class="note-text mt-1">
+          Note: You will not be able to change the workflow once the template is created.
+        </div>
+      </div>
+      <!-- TODO: May need in future for lite agent -->
+      <!-- <div class="form-group ">
+        <kendo-textbox-container class="w-100"  floatingLabel="Queue View Type">
+          <kendo-dropdownlist
+            [formControl]="GeneralConfigForm.controls.viewType"
+            (valueChange)="OnChangeOfAgentView($event)"
+            [data]="AgentViewList | laviSortBy:'text'"
+            tabindex="3"
+            [textField]="'text'"
+            [valueField]="'value'"
+          >
+          </kendo-dropdownlist>
+        </kendo-textbox-container>
+        <div class="h-10">
+          <lavi-validation-message-list
+            [validation-form-group-name]="GeneralConfigForm"
+            validation-control-name="viewType"
+            [validation-errorlist]="
+              ValidationMessages.AgentViewMessages
+            "
+          >
+          </lavi-validation-message-list>
+        </div>
+      </div> -->
+
+      <div class="form-group">
+        <kendo-textbox-container class="w-100"  floatingLabel="Mobile Templates">
+          <kendo-dropdownlist
+            [formControl]="GeneralConfigForm.controls.mobileTemplate"
+            [defaultItem]="DefaultValues.AgentMobileTemplateDefaultValue"
+s           [data]="MobileTemplatesList | laviSortBy:'templateName'"
+            tabindex="4"
+            [textField]="'templateName'"
+            [valueField]="'templateId'"
+          >
+          </kendo-dropdownlist>
+        </kendo-textbox-container>
+      </div>
+      <div class="form-group">
+        <kendo-textbox-container class="w-100"  floatingLabel="Scheduler Template">
+          <kendo-dropdownlist
+            [formControl]="GeneralConfigForm.controls.schedulerTemplate"
+            [defaultItem]="DefaultValues.AgentSchedulerTemplateDefaultValue"
+            [data]="SchedulerTemplatesList | laviSortBy:'schedulerName'"
+            tabindex="5"
+            [textField]="'schedulerName'"
+            [valueField]="'schedulerId'"
+          >
+          </kendo-dropdownlist>
+        </kendo-textbox-container>
+      </div>
+    </div>
+  </div>
+</div>

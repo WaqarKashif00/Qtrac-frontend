@@ -1,0 +1,16 @@
+@import "src/stylings/primitives/primitives.scss";
+.property-window-bg {
+  background: $color-background-white;
+  border: solid 2px $scheduler-border-color;
+  padding: 0 5px 5px;
+}
+.property-window-header {
+  color: $color-text-light-grey;
+  border-bottom: solid 1px $scheduler-header-border-color;
+  margin: 5px 0 3px 5px;
+}
+.float-clear {
+  display: block;
+  content: "";
+  clear: both;
+}

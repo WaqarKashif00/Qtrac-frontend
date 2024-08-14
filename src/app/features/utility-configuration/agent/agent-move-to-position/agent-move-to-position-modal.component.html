@@ -1,0 +1,54 @@
+<lavi-agent-dialog-box  [Width]="'500px'" [Height]="'300px'" [IsOpen]="true" [IsFooterRequired]="false"
+class="move-to-position-modal"  
+*ngIf="IsDialogShow$ | async " (OnClose)="Close()">
+  <div header>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-left header">
+          <ul class="m-0 p-0">
+            <li>
+              {{CustomerName$|async | uppercase}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div body>
+    <div class="container text-left" [formGroup]='MoveForm'>
+      <div class="row mt-2">
+        <div class="col-12 bold text-uppercase text-left font-size-small-4">
+          MOVE VISITOR MANUALLY
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-6">
+          <kendo-textbox-container floatingLabel="Enter Number of Places">
+            <input kendoTextBox tabindex="1" maxlength="5" lavi-app-numbers-only laviTrimValue
+              [formControl]="MoveForm.controls.numberOfPlacesToMove" />
+          </kendo-textbox-container>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-12">
+          <button class="btn default-agent-add-btn" (click)="MoveUp()">MOVE UP</button>
+          <button class="btn default-agent-add-btn ml-2" (click)="MoveDown()">MOVE DOWN</button>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="container text-left" [formGroup]='MoveForm'>
+      <div class="row mt-2">
+        <div class="col-12 bold text-uppercase text-left font-size-small-4">
+          MOVE VISITOR AUTOMATICALLY
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-12">
+          <button class="btn default-agent-add-btn" (click)="MoveToFront()">FRONT OF THE QUEUE</button>
+          <button class="btn default-agent-add-btn ml-2" (click)="MoveToBack()">BACK OF THE QUEUE</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</lavi-agent-dialog-box>

@@ -1,0 +1,21 @@
+<label>
+  <kendo-menu
+    class="cursor-pointer text-blue"
+    [items]="menuItems"
+    (select)="onItemMenuSelect($event, dataItem)"
+  >
+    <ng-template kendoMenuItemLinkTemplate let-item="item" let-index="index">
+      <span
+        [kendoMenuItemLink]="index"
+        [ngClass]="{
+          'menu-style': item.text === '...',
+          'menu-list-style': item.text != '...'
+        }"
+        *ngIf="onShownMenuItem(dataItem, item)"
+      >
+        {{ item.text }}
+        <span *ngIf="item.items && item.items.length"></span>
+      </span>
+    </ng-template>
+  </kendo-menu>
+</label>

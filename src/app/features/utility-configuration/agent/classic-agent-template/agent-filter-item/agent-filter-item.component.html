@@ -1,0 +1,24 @@
+<div class="container-fluid">
+  <div class="row border mt-1 filter-item-row">
+    <div class="col-2 p-0 border-right vertical-center" (click)="Checked()">
+      <div  [class]="IsSelected
+      ?'select-box selected'
+      :'select-box'"></div>
+    </div>
+    <div class="col-10 pt-2 pb-2 pl-2 pr-2">
+      <div class="container-fluid">
+        <div class="row mb-1" (click)="Checked()">
+          <div class="col-10 p-0 filter-label">
+            <ng-content></ng-content>
+          </div>
+          <div class="col-2 p-0 filter-label text-right">
+            {{Count}}
+          </div>
+        </div>
+        <div *ngIf="CanCall" class="row">
+            <button class="col-12 btn filter-call-btn" (click)="CallNext()">Call Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

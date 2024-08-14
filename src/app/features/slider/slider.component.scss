@@ -1,0 +1,25 @@
+.SliderContainerDiv {
+  position: relative;
+  overflow: hidden;
+}
+.SliderContentDiv {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+}
+.SliderImage{
+  vertical-align: top;
+}
+.gallery-slider {
+  margin: auto;
+  position: relative;
+  top: 0;
+}
+.center{
+  align-items: center;
+  justify-content: center;
+}
+.flex{
+  display: flex;
+}

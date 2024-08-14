@@ -1,0 +1,70 @@
+<ng-container
+  *ngIf="{
+    isEditMode: IsEditMode$ | async,
+    opened: IsModalOpened$ | async,
+    workflowList: WorkFlowList$ | async
+  } as value"
+>
+  <lavi-auth-container
+    [HeaderTitle]="'Monitor Interface Designer'"
+    [ExitURL]="'/manage/monitor-template/'"
+  >
+    <lavi-monitor-layout *ngIf="!value.opened"></lavi-monitor-layout>
+    <lavi-modal
+      [OpenDialog]="value.opened && !value.isEditMode"
+      Title="{{
+        value?.workflowList.length > 0 ? 'Select a workflow and continue.' : ''
+      }}"
+      [MinWidth]="250"
+      [Width]="750"
+    >
+      <ng-container *ngIf="value.workflowList.length > 0">
+        <div class="text-center">
+          <kendo-textbox-container class="w-50">
+            <kendo-dropdownlist
+              tabindex="4"
+              [data]="value.workflowList | laviSortBy: 'name'"
+              textField="name"
+              valueField="workFlowId"
+              (valueChange)="OnWorkFlowChange($event)"
+              [(ngModel)]="SelectedValue"
+              placeholder="Select Workflow"
+            >
+            </kendo-dropdownlist>
+          </kendo-textbox-container>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="value.workflowList.length === 0">
+        <div class="text-center f-20">
+          <span>No workflow to continue.</span>
+        </div>
+      </ng-container>
+      <kendo-dialog-actions>
+        <div class="col-lg-12 col-sm-12 col-12 pt-5">
+          <div class="row">
+            <div class="col-lg-5 col-4"></div>
+            <div class="col-lg-7 col-8">
+              <div class="float-right">
+                <input
+                  kendoButton
+                  type="button"
+                  (click)="Cancel()"
+                  class="secondary-button"
+                  value="Cancel"
+                />
+                <input
+                  *ngIf="value.workflowList.length > 0"
+                  type="button"
+                  (click)="OnAction()"
+                  kendoButton
+                  class="primary-button mr-4"
+                  value="Continue"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </kendo-dialog-actions>
+    </lavi-modal>
+  </lavi-auth-container>
+</ng-container>

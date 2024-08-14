@@ -1,0 +1,1 @@
+export const SnapGridSizes = [20,25,30,50,100];

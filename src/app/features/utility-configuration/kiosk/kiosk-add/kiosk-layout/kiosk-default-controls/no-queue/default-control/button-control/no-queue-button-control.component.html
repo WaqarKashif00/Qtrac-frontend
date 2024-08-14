@@ -1,0 +1,32 @@
+<div *ngFor="let Button of Buttons">
+  <div
+  rzContainment="#DivLayoutDesignContainer"
+  [inBounds]="true"
+  [bounds]="DivLayoutDesignContainer"
+  [preventDefaultEvent]="true"
+  [gridSize]="IsOnlyGrid? GridSize:null"
+  [rzGrid]="IsOnlyGrid? GridSize:null"
+  (endOffset)="OnButtonMoveEnd($event, Button.name)"
+  (rzStop)="OnButtonResizeStop($event, Button.name)"
+  ngDraggable
+  ngResizable
+  [style.width.px]="Button.styles.width"
+  [style.height.px]="Button.styles.height"
+  [position]="{ x: Button.styles.left, y: Button.styles.top }"
+>
+  <input type="button"  class="clearfix"
+  [ngClass]="{'bg-img': Button.showIcon, 'shadow': Button.shadow}"
+  [style.background-image]="(Button.showIcon && GetUrl(Button.src)) ? 'url('+ GetUrl(Button.src) +')' : ''"
+  [style.color]="Button.styles.color"
+  [style.background-color]="Button.styles.backgroundColor"
+  [style.font-size]="Button.styles.fontSize ? Button.styles.fontSize + 'px' : ''"
+  [style.font-style]="Button.styles.fontStyle"
+  [style.font-family]="Button.styles.font"
+  [style.font-weight]="Button.styles.fontWeight"
+  [style.width.px]="Button.styles.width"
+  [style.height.px]="Button.styles.height"
+  [position]="{ x: Button.styles.left, y: Button.styles.top }"
+  [style.border]="Button.border + 'px solid ' + Button.borderColor"
+  [style.border-radius.px]="Button.styles.boxRoundCorners || 0"
+  [value]="(Button.showIcon && GetUrl(Button.src)) ? '' : (Button.text[SelectedLanguage] || Button.text[DefaultLanguage]) | laviEmptyString" />
+</div>

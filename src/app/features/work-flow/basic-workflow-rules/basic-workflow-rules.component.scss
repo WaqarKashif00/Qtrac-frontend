@@ -1,0 +1,54 @@
+@import "src/stylings/primitives/primitives.scss";
+.k-panelbar .k-panelbar-expand,
+.k-panelbar .k-panelbar-collapse{
+    right: 75%  !important;
+    position: unset;
+}
+
+.marginleft-10 {
+  margin-left: 10%;
+}
+
+.additional-language-div{
+    width: 105%;
+    padding-top: 0%;
+}
+
+.main-div{
+    width: 100%;
+}
+
+.additional-language {
+  font-size: $font-size-small-2;
+  font-weight: $font-weight-500;
+}
+
+.div-additional-language {
+  margin-left: 8.3%;
+  width: auto;
+}
+
+.textarea-style {
+  margin-left: 10% !important;
+  width: 75% !important;
+  padding-top: 28px;
+  min-height: 80px;
+}
+.full-expand-style{
+  height: 100% !important;
+  width: 100% !important; 
+ }
+
+.full-expand-style-text-area{
+ height: 100% !important;
+ width: 100% !important;
+ overflow-y: scroll!important;
+}
+::ng-deep .setting-data .k-panelbar .k-panelbar-expand, ::ng-deep .setting-data .k-panelbar .k-panelbar-collapse {
+  top: 51%;
+  left: 31%;
+}
+::ng-deep .k-floating-label-container.k-textarea-container .k-label,
+::ng-deep .k-textbox-container.k-textarea-wrapper .k-label {
+  left: 0
+}

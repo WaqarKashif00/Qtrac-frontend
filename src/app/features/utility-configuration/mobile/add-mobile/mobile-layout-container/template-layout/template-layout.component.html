@@ -1,0 +1,109 @@
+<ng-container
+  *ngIf="{
+    designerPanel: DesignerPanel$ | async,
+    currentPage: CurrentPage$ | async,
+    headerControl: HeaderControl$ | async,
+    footerControl: FooterControl$ | async
+  } as values"
+>
+  <div id="container" class="row divLayoutTopMiddleSection">
+    <div class="column left divLayoutToolbar">
+      <lavi-mobile-toolbox
+        [DivLayoutDesignContainer]="DivLayoutDesignContainer"
+      ></lavi-mobile-toolbox>
+    </div>
+    <div class="middle-outer-div"
+    [style.background-image]="'url(' + (values.designerPanel.backgroundImage|quoteString) + ')'"
+    [style.background-color]="values.designerPanel.styles.backgroundColor">
+      <lavi-designer-screens>
+        <lavi-middle-screens>
+          <div
+            id="DivLayoutDesignContainer"
+            class="control-section clearfix-y border border-0 divLayoutDesignContainer w-100"
+            [ngClass]="{
+              'h-100': (!values.headerControl.isVisible) ||
+              (values.currentPage.IsLanguagePage && !values.headerControl.isVisible),
+              'h-91': (!values.currentPage.IsLanguagePage && !values.headerControl.isVisible )
+            }"
+            [style-height.px]="values.designerPanel.styles.height"
+            [style.color]="values.designerPanel.styles.color"
+            [style.font-size]="values.designerPanel.styles.fontSize ? values.designerPanel.styles.fontSize + 'px' :''"
+            [style.font-style]="values.designerPanel.styles.fontStyle"
+            (rzStop)="test()"
+            [style.font-family]="values.designerPanel.styles.font"
+            [style.font-weight]="values.designerPanel.styles.fontWeight"
+            #DivLayoutDesignContainer
+          >
+            <lavi-middle-designer-screens
+              [DivLayoutDesignContainer]="DivLayoutDesignContainer"
+            ></lavi-middle-designer-screens>
+            <default-control>
+              <lavi-service-default-control
+                *ngIf="values.currentPage.IsServicePage"
+              ></lavi-service-default-control>
+              <lavi-mobile-service-question-default-control
+                *ngIf="values.currentPage.IsServiceQuestionPage"
+              ></lavi-mobile-service-question-default-control>
+              <lavi-global-question-default-control
+                *ngIf="values.currentPage.IsGlobalQuestionPage"
+              ></lavi-global-question-default-control>
+              <lavi-welcome-default-control
+                *ngIf="values.currentPage.IsWelcomePage"
+              ></lavi-welcome-default-control>
+              <lavi-language-default-control
+              *ngIf="values.currentPage.IsLanguagePage"
+            ></lavi-language-default-control>
+              <lavi-ticket-default-control
+                *ngIf="values.currentPage.IsTicketPage"
+              ></lavi-ticket-default-control>
+              <lavi-no-queue-default-control
+              *ngIf="values.currentPage.IsNoQueuePage"
+              ></lavi-no-queue-default-control>
+              <lavi-mobile-survey-question-default-control
+              *ngIf="values.currentPage.IsSurveyPage"
+            ></lavi-mobile-survey-question-default-control>
+            <lavi-mobile-off-line-default-control
+            *ngIf="values.currentPage.IsOffLinePage"
+          ></lavi-mobile-off-line-default-control>
+            </default-control>
+          </div>
+        </lavi-middle-screens>
+      </lavi-designer-screens>
+    </div>
+    <div class="column right divLayoutPropertyContainer">
+      <div class="property-window">
+        <lavi-mobile-properties>
+          <default-control-property>
+            <lavi-service-property-control
+              *ngIf="values.currentPage.IsServicePage"
+            ></lavi-service-property-control>
+            <lavi-service-question-property-control
+              *ngIf="values.currentPage.IsServiceQuestionPage"
+            ></lavi-service-question-property-control>
+            <lavi-global-question-property-control
+              *ngIf="values.currentPage.IsGlobalQuestionPage"
+            ></lavi-global-question-property-control>
+            <lavi-welcome-property-control
+              *ngIf="values.currentPage.IsWelcomePage"
+            ></lavi-welcome-property-control>
+            <lavi-language-property-control
+            *ngIf="values.currentPage.IsLanguagePage"
+          ></lavi-language-property-control>
+            <lavi-ticket-property-control
+            *ngIf="values.currentPage.IsTicketPage"
+          ></lavi-ticket-property-control>
+          <lavi-no-queue-property-control
+          *ngIf="values.currentPage.IsNoQueuePage"
+        ></lavi-no-queue-property-control>
+        <lavi-survey-question-property-control
+        *ngIf="values.currentPage.IsSurveyPage"
+      ></lavi-survey-question-property-control>
+      <lavi-mobile-off-line-property-control
+      *ngIf="values.currentPage.IsOffLinePage"
+    ></lavi-mobile-off-line-property-control>
+          </default-control-property>
+        </lavi-mobile-properties>
+      </div>
+    </div>
+  </div>
+</ng-container>

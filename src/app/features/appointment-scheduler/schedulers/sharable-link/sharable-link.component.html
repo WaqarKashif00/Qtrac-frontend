@@ -1,0 +1,87 @@
+<kendo-dialog
+  title="Appointment Scheduler Share Link"
+  [minWidth]="250"
+  [width]="'50%'"
+>
+  <div class="row">
+    <div class="col-md-2 pt-4">
+      <span> General link for </span>
+    </div>
+    <div class="col-md-4">
+      <kendo-textbox-container class="w-100" floatingLabel="Select Type">
+        <kendo-dropdownlist
+          [data]="LinkTypeList"
+          textField="text"
+          valueField="value"
+          [(ngModel)]="Binding"
+          (valueChange)="OnSharableLinkTypeDropdownChange($event)"
+        >
+        </kendo-dropdownlist>
+      </kendo-textbox-container>
+    </div>
+    <div class="col-md-3" *ngIf="ShowBranchDropdown">
+      <kendo-textbox-container class="w-100" floatingLabel="Select Location">
+        <kendo-dropdownlist
+          [data]="BranchList"
+          textField="branchName"
+          valueField="branchId"
+          [(ngModel)]="selectedBranchData"
+          (valueChange)="OnBranchDropdownChange($event)"
+        >
+        </kendo-dropdownlist>
+      </kendo-textbox-container>
+    </div>
+    <div class="col-md-3" *ngIf="ShowServiceDropdown">
+      <kendo-textbox-container class="w-100" floatingLabel="Select Service">
+        <kendo-dropdownlist
+          [data]="ServiceList"
+          textField="serviceName"
+          valueField="id"
+          [(ngModel)]="selectedServiceData"
+          (valueChange)="OnServiceDropdownChange($event)"
+        >
+        </kendo-dropdownlist>
+      </kendo-textbox-container>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="input-group margin-top60-bottom40">
+      <span class="form-control input-copy-cost-calculator">{{
+        SharableLink
+      }}</span>
+      <span
+        class="input-group-addon span-copy-cost-calculator-icon cursor-pointer"
+        (click)="CopyMessageAndShowCopiedDialog()"
+        ><img
+          class="copy-icon"
+          src="../../../../../assets/img/copytoclippboard.png"
+          height="25px"
+      /></span>
+    </div>
+  </div>
+  <div class="row">
+    <label class="lbl-copy-cost-calculator-text">
+      This is the customize link for Appointment Scheduler
+      <b> {{ this.MessageText }}</b>
+    </label>
+  </div>
+  <kendo-dialog-actions>
+    <div class="col-lg-12 col-sm-12 col-12 pt-2">
+      <div class="row">
+        <div class="col-lg-5 col-4"></div>
+        <div class="col-lg-7 col-8 col-sm-12">
+          <div class="float-right">
+            <input
+              kendoButton
+              type="button"
+              (click)="Cancel()"
+              class="secondary-button"
+              value="Cancel"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </kendo-dialog-actions>
+</kendo-dialog>

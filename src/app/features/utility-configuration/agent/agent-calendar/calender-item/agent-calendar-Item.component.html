@@ -1,0 +1,10 @@
+<div class="container-fluid appointment-item-container" (dblclick)="OpenAppointmentDetailsDialog()">
+  <div class="p-1">
+    <div [class]="StatusStyle + ' circle'"></div>
+  </div>
+  <div class="p-1">
+    <div class="appointment-content">
+      {{SchedulerEvent.title}}
+    </div>
+  </div>
+</div>

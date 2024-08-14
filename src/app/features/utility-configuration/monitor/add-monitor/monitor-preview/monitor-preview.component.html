@@ -1,0 +1,54 @@
+<ng-container *ngIf="MonitorPageData$ | async as MonitorPageData">
+  <div
+    *ngIf="MonitorPageData"
+    [style.color]="MonitorPageData.designerScreen.color"
+    [style.font-size]="MonitorPageData.designerScreen.fontSize ? MonitorPageData.designerScreen.fontSize + 'px' : ''"
+    [style.background-color]="MonitorPageData.designerScreen.backgroundColor"
+    [style.font-style]="MonitorPageData.designerScreen.fontStyle"
+    [style.background-image]="
+      'url(' + (MonitorPageData.designerScreen.backGroundImageSrc|quoteString )+ ')'
+    "
+    [style.background-size]='"cover"'
+    [style.font-family]="MonitorPageData.designerScreen.font"
+    class="h-100 w-100 position-absolute overflow-hidden"
+  >
+    <lavi-preview-label
+      [Labels]="MonitorPageData.monitorPageData.labels"
+      [SelectedLanguage]="SelectedLanguage"
+      [DefaultLanguage]="DefaultLanguage"
+    ></lavi-preview-label>
+    <lavi-preview-image
+      [Images]="MonitorPageData.monitorPageData.images"
+      [SelectedLanguage]="SelectedLanguage"
+      [DefaultLanguage]="DefaultLanguage"
+    ></lavi-preview-image>
+    <lavi-preview-video
+      [Videos]="MonitorPageData.monitorPageData.videos"
+      [SelectedLanguage]="SelectedLanguage"
+      [DefaultLanguage]="DefaultLanguage"
+    ></lavi-preview-video>
+    <lavi-preview-slider
+      [Sliders]="MonitorPageData.monitorPageData.sliders"
+      [SelectedLanguage]="SelectedLanguage"
+      [DefaultLanguage]="DefaultLanguage">
+    </lavi-preview-slider>
+    <lavi-preview-next-up *ngIf="MonitorPageData.designerScreen.showNextUpPanel"
+      [control]="MonitorPageData.monitorPageData.nextUp"
+      [waitings]="Waitings$ | async"
+      [SelectedLanguage]="SelectedLanguage"
+      [DefaultLanguage]="DefaultLanguage"
+    ></lavi-preview-next-up>
+    <lavi-preview-calling-now *ngIf="MonitorPageData.designerScreen.showNowCallingPanel"
+      [control]="MonitorPageData.monitorPageData.nowCalling"
+      [nowCallings]="NowCallings$ | async"
+      [SelectedLanguage]="SelectedLanguage"
+      [DefaultLanguage]="DefaultLanguage"
+    ></lavi-preview-calling-now>
+    <lavi-preview-helping-now *ngIf="MonitorPageData.designerScreen.showNowHelpingPanel"
+      [control]="MonitorPageData.monitorPageData.nowHelping"
+      [nowServings]="NowServings$ | async"
+      [SelectedLanguage]="SelectedLanguage"
+      [DefaultLanguage]="DefaultLanguage"
+    ></lavi-preview-helping-now>
+  </div>
+</ng-container>

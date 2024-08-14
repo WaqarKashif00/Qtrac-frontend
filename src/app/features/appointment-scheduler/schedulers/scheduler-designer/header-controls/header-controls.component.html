@@ -1,0 +1,16 @@
+<div class="row btncontainer">
+  <div class="col-xl-5 col-lg-5 col-sm-6">
+    <div class="nav-pages">
+      <div class="text-capitalize">
+        <kendo-dropdownlist
+          [data]="PageList$ | async"
+          [textField]="'text'"
+          [valueField]="'value'"
+          [(ngModel)]="InitialSelectedPageObject"
+          (valueChange)="ChangePage($event)"
+        ></kendo-dropdownlist>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="SelectedPage$ | async"></ng-container>
+</div>

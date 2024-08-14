@@ -1,0 +1,42 @@
+<div class="position-absolute">
+  <div
+    [style.transform]="
+      'translate(' + Data.panel.left + 'px, ' + Data.panel.top + 'px) scale(1)'"
+    [style.width.px]="Data.panel.width"
+    [style.height.px]="Data.panel.height"
+    [style.background-color]="Data.panel.backgroundColor"
+    [style.padding-left.px]="Data.panel.horizontalPadding || 0"
+    [style.padding-right.px]="Data.panel.horizontalPadding || 0"
+    [style.padding-top.px]="Data.panel.verticalPadding || 0"
+    [style.padding-bottom.px]="Data.panel.verticalPadding || 0"
+    [style.font-size]="Data.panel.fontSize ? Data.panel.fontSize + 'px' : ''"
+    [style.font-style]="Data.panel.fontStyle"
+    [style.font-weight]="Data.panel.fontWeight"
+    [style.font-family]="Data.panel.font" class="e-Data.panel insideDiv clearfix">
+
+    <ul class="UL">
+      <ng-container *ngFor="let lang of Languages">
+        <li
+          class="LI cursor-pointer"
+          (click)="ShowNextPage(lang.languageCode)"
+          [style.color]="Data.panel.color"
+          [style.background-color]="Data.panel.itemBackgroundColor"
+          [style.font-size]="Data.panel.fontSize ? Data.panel.fontSize + 'px' : ''"
+          [style.font-style]="Data.panel.fontStyle"
+          [style.font-family]="Data.panel.font"
+          [style.font-weight]="Data.panel.fontWeight"
+        >
+          {{ translatedLanguageName[lang.languageCode] }}
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+  <lavi-preview-label
+    [Labels]="Data?.labels"
+    [SelectedLanguage]="SelectedLanguage"
+    [DefaultLanguage]="DefaultLanguage"
+  ></lavi-preview-label>
+  <lavi-preview-image [Images]="Data?.images" [SelectedLanguage]="DefaultLanguage"></lavi-preview-image>
+  <lavi-preview-video [Videos]="Data?.videos" [SelectedLanguage]="DefaultLanguage"></lavi-preview-video>
+  <lavi-preview-slider [Sliders]="Data?.sliders" [SelectedLanguage]="DefaultLanguage"></lavi-preview-slider>
+</div>

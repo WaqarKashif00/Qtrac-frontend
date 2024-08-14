@@ -1,0 +1,74 @@
+@import "src/stylings/primitives/primitives.scss";
+.list {
+  ul {
+    list-style: none;
+    li {
+      display: inline-block;
+      position: relative;
+      text-align: center;
+      width: 220px;
+      cursor: pointer;
+      vertical-align: top;
+      .heading {
+        color: $scheduler-default-font-color;
+        font-size: $font-size-big-3;
+        font-weight: $font-weight-500;
+        margin: 0;
+        padding-top:25px;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+      }
+      .sub-text {
+        color: $color-text-light-grey;
+        font-size: $global-font-size;
+        line-height: 20px;
+      }
+    }
+  }
+  .selected-service {
+    color: $color-text-white;
+    position: absolute;
+    height: 170px;
+    display: inline-block;
+    background: rgba(112, 112, 112, 0.7);
+    width: 170px;
+    top: 0;
+    border-radius: 105px;
+    left: 24px;
+    padding-top: 12px;
+    font-size: $font-size-big-7;
+    font-weight: 500;
+  }
+}
+.thumbnail1, .thumbnail2, .services .thumbnail3 , .thumbnails {
+  background-size: contain;
+  border: solid thin #707070;
+  border-radius: 85px;
+  display: block;
+  height: 170px;
+  margin: 0 auto 15px;
+  width: 170px;
+  background: round;
+}
+.services .thumbnail1, .services .thumbnail2, .services .thumbnail3  {
+  border-radius: 105px;
+  width: 210px;
+  height: 210px;
+}
+/* Portrait and Landscape */
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    .list {
+      ul {
+        text-align: center;
+        li .heading {
+          padding-bottom: 30px;
+          padding-top: 0;
+        }
+      }
+    }
+}

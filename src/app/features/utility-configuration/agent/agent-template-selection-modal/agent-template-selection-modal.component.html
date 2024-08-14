@@ -1,0 +1,95 @@
+<lavi-modal [OpenDialog]="OpenAgentTemplateDialog" [Width]="550">
+  <div class="add-agent-modal">
+    <div [formGroup]='SelectTemplateFormGroup'>
+
+      <div class="row mt-4 justify-content-center">
+        <div class="col-lg-9">
+          <kendo-textbox-container [floatingLabel]="searchByTagText" [translate]="currentLanguage == 'es'? false: true">
+            <kendo-multiselect
+            [data]="Tags"
+            [filterable]="true"
+            (valueChange)="TagChange($event)"
+            tabindex="1"
+            translate="yes"
+          ></kendo-multiselect>
+          </kendo-textbox-container>
+        
+        </div>
+      </div>
+
+      <div class="row mt-4 justify-content-center branchDropDown">
+        <div class="col-lg-9">
+          <kendo-textbox-container [floatingLabel]="searchLocationText" [translate]="currentLanguage == 'es'? false: true">
+          <kendo-dropdownlist class="no-border mt-1" tabindex="2"
+            [formControlName]="'Branch'" [data]="Branches | laviFilterListWithTags: searchModel:'tags':'branchName' | laviSortBy:'branchName'"
+            [textField]="'branchName'" (open)="onOpen($event)" (filterChange)="handleFilter($event)" [filterable]="true" (valueChange)="BranchChanged($event)" [valueField]="'branchId'">
+          </kendo-dropdownlist>
+        </kendo-textbox-container>
+          <lavi-validation-message-list [validation-form-group-name]="SelectTemplateFormGroup"
+            validation-control-name="Branch" [validation-errorlist]="ValidationMessages.BranchMessages">
+          </lavi-validation-message-list>
+        </div>
+      </div>
+      <div class="row mt-4 justify-content-center" >
+        <div class="col-lg-9">
+          <kendo-textbox-container [floatingLabel]="searchTemplateText" [translate]="currentLanguage == 'es'? false: true">
+          <kendo-dropdownlist class="no-border mt-1" tabindex="3"
+            [data]="Templates | laviSortBy:'name'" [formControlName]="'Template'"
+            (valueChange)="TemplateChange($event)"
+            [textField]="'name'" [valueField]="'id'">
+          </kendo-dropdownlist>
+        </kendo-textbox-container>
+          <lavi-validation-message-list [validation-form-group-name]="SelectTemplateFormGroup"
+            validation-control-name="Template"
+            [validation-errorlist]="ValidationMessages.AgentTemplateRequiredMessage">
+          </lavi-validation-message-list>
+        </div>
+      </div>
+      <div class="row mt-4 justify-content-center" >
+        <div [ngClass]="LoinTypeClass" *ngIf='SelectedTemplateDetails?.displayDeskLogin'>
+          <input class="mt-0"
+          type="radio"
+          [formControlName]="'LoginAs'"
+          kendoRadioButton
+          id="desk"
+          value="desk"
+          (click)="LoginAsDeskClick()"
+        />
+        <label class="ml-2" for="desk" [translate]="currentLanguage == 'es'? false: true">{{deskText}}</label>
+        </div>
+        <div  [ngClass]="LoinTypeClass" *ngIf='SelectedTemplateDetails?.displayAgentLogin'>
+          <input class="mt-0"
+          type="radio"
+          [formControlName]="'LoginAs'"
+          kendoRadioButton
+          (click)="LoginAsAgentClick()"
+          id="agent"
+          value="agent"
+        />
+        <label class="ml-2" for="agent">Agent </label>
+        </div>
+
+      </div>
+
+      <div class="row mt-2 justify-content-center" *ngIf='SelectTemplateFormGroup.controls.LoginAs.value == "desk"' >
+        <div class="col-lg-9">
+          <kendo-textbox-container [floatingLabel]="selectDeskText" [translate]="currentLanguage == 'es'? false: true">
+           <kendo-dropdownlist  class="no-border mt-1" tabindex="4"
+            [data]="Desks | laviSortBy:'text'" [formControlName]="'Desk'"
+            [textField]="'text'" [valueField]="'value'">
+          </kendo-dropdownlist>
+            <lavi-validation-message-list [validation-form-group-name]="SelectTemplateFormGroup"
+            validation-control-name="Desk" [validation-errorlist]="ValidationMessages.DeskMessages">
+            </lavi-validation-message-list>
+            </kendo-textbox-container>
+        </div>
+      </div>
+      <div class="row mt-5 justify-content-center">
+        <div class="col-12 text-right">
+          <button *ngIf="IsCancel" (click)="Cancel()" class="secondary-button w-25 mr-2">Cancel</button>
+          <button (click)="Submit()" tabindex="5" class="btn submit-button w-25" [translate]="currentLanguage == 'es'? false: true">{{submitText}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</lavi-modal>

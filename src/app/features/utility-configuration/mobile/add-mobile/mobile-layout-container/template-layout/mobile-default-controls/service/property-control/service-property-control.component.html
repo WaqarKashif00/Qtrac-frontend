@@ -1,0 +1,25 @@
+<ng-container
+  *ngIf="{
+    Buttons: Buttons$ | async,
+    ControlSelection: ControlSelection$ | async
+  } as values"
+>
+  <ng-container *ngIf="values.ControlSelection">
+    <lavi-item-property-panel
+      [Panel]="Panel$ | async"
+      [SelectedLanguage]="SelectedLanguage$ | async"
+      [CurrentPage]="CurrentPage$ | async"
+      (OnDataChange)="UpdatePanelData($event)"
+      [(IsControlSelected)]="values.ControlSelection.IsPanelSelected"
+    ></lavi-item-property-panel>
+
+    <ng-container *ngFor="let button of values.Buttons">
+      <lavi-mobile-button-form
+        *ngIf="button"
+        [Control]="button"
+        (OnDataChange)="OnButtonDataChange($event)"
+        [(IsButtonSelected)]="values.ControlSelection.IsButtonSelected"
+      ></lavi-mobile-button-form>
+    </ng-container>
+  </ng-container>
+</ng-container>

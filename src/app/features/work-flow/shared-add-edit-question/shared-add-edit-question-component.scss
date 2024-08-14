@@ -1,0 +1,101 @@
+@import "src/stylings/primitives/primitives.scss";
+.border-round-style{
+    display: block !important;
+    border-color: $workflow-row-border !important;
+    border-style: solid !important;
+    border-width: thin !important;
+    border-radius: 4% !important;
+}
+
+.padding-top-4{
+    padding-top: 4% !important;
+}
+
+.margin-left-7{
+    margin-left: 7% !important;
+}
+
+.width-40{
+    width: 40% !important;
+}
+
+.button-style{
+    min-width: auto;
+    padding: 9px 15px;
+    width: 55% !important;
+}
+
+.padding-0{
+  padding: 0;
+}
+
+.padding-left-10{
+    padding-left: 10% !important;
+}
+
+.pd-mg-0{
+    padding: 0;
+    margin: 0;
+}
+
+.padding-bottom-10{
+    padding-bottom: 10% !important;
+}
+
+.padding-right-17{
+    padding-right: 17%;
+}
+
+.padding-right-19{
+    padding-right: 19%;
+}
+
+.modal1 {
+  z-index: 1;
+  top: -9px;
+  background: $color-background-white;
+  width: auto;
+  left: 4%;
+  max-width: 100%;
+  position: absolute;
+}
+
+.modal2 {
+  z-index: 1;
+  top: -9px;
+  position: absolute;
+  padding-left: 3%;
+  width: 29%;
+  left: 4%;
+  max-width: 100%;
+  background: $color-background-white;
+}
+
+.translate-div-q {
+  top: 78%;
+  position: absolute;
+  right: 5px;
+  z-index: 99;
+}
+
+.translate-div-pq {
+  top: 50%;
+  right: 14px;
+}
+
+.height-324-px {
+  height: 324px;
+  overflow-y: auto;
+}
+
+.question-type {
+  font-size: $font-size-small-2;
+  padding: 0 10px;
+  p {
+    margin-bottom: 0;
+  }
+}
+
+input:disabled {
+  background: $input-disabled-background-color;
+}

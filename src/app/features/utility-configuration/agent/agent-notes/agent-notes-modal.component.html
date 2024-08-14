@@ -1,0 +1,31 @@
+<lavi-agent-dialog-box [ModalColor]="'#ff5e00'" [Width]="'530px'" [Height]="'460px'" [IsOpen]="true"
+class="agent-notes-modal"  
+[IsFooterRequired]="false" *ngIf="IsChatDialogShow$ | async " (OnClose)="Close()">
+  <div header>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-left header">
+          <ul class="m-0 p-0">
+            <li>
+              {{CustomerName$|async | uppercase}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div body class="container agent-notes h-100">
+    <kendo-chat class="k-chat-custom" [messages]="ChatMessages$ | async" [user]="User"
+      (sendMessage)="SendMessage($event)">
+
+      <ng-template kendoChatMessageTemplate let-message>
+        <div [innerHTML]="RenderMarkdown(message)"></div>
+      </ng-template>
+
+      <kendo-chat-messages
+        send=""
+        messagePlaceholder="Type a note..."
+      ></kendo-chat-messages>
+    </kendo-chat>
+  </div>
+</lavi-agent-dialog-box>

@@ -1,0 +1,74 @@
+<ng-container *ngIf="MonitorLayoutData$ | async as MonitorPageData">
+  <div
+    *ngIf="MonitorPageData.designerScreen"
+    [style.color]="MonitorPageData.designerScreen.color"
+    [style.font-size]="MonitorPageData.designerScreen.fontSize ? MonitorPageData.designerScreen.fontSize + 'px' : ''"
+    [style.background-color]="MonitorPageData.designerScreen.backgroundColor"
+    [style.font-style]="MonitorPageData.designerScreen.fontStyle"
+    [style.background-image]="
+      'url(' + (MonitorPageData.designerScreen.backGroundImageSrc|quoteString) + ')'
+    "
+    [style.font-family]="MonitorPageData.designerScreen.font"
+    class="monitor-execution"
+  >
+
+    <ng-container
+      *ngIf="{
+        language: SelectedLanguage$ | async,
+        defaultLanguage: DefaultLanguage$ | async
+      } as values"
+    >
+      <lavi-preview-label-announcement
+        [Labels]="MonitorPageData.monitorPageData.labels"
+        [SelectedLanguage]="values.language"
+        [DefaultLanguage]="values.defaultLanguage"
+      ></lavi-preview-label-announcement>
+      <lavi-preview-image
+        [Images]="MonitorPageData.monitorPageData.images"
+        [SelectedLanguage]="values.language"
+        [DefaultLanguage]="values.defaultLanguage"
+      ></lavi-preview-image>
+      <lavi-preview-video
+        [Videos]="MonitorPageData.monitorPageData.videos"
+        [SelectedLanguage]="values.language"
+        [DefaultLanguage]="values.defaultLanguage"
+      ></lavi-preview-video>
+      <lavi-preview-slider
+        [Sliders]="MonitorPageData.monitorPageData.sliders"
+        [SelectedLanguage]="values.language"
+        [DefaultLanguage]="values.defaultLanguage"
+      ></lavi-preview-slider>
+      <lavi-preview-next-up *ngIf="MonitorPageData.designerScreen.showNextUpPanel"
+        [control]="MonitorPageData.monitorPageData.nextUp"
+        [waitings]="Waitings$ | async"
+        [SelectedLanguage]="values.language"
+        [DefaultLanguage]="values.defaultLanguage"
+      ></lavi-preview-next-up>
+      <lavi-preview-calling-now *ngIf="MonitorPageData.designerScreen.showNowCallingPanel"
+        [control]="MonitorPageData.monitorPageData.nowCalling"
+        [nowCallings]="NowCallings$ | async"
+        [SelectedLanguage]="values.language"
+        [DefaultLanguage]="values.defaultLanguage"
+      ></lavi-preview-calling-now>
+      <lavi-preview-helping-now *ngIf="MonitorPageData.designerScreen.showNowHelpingPanel"
+        [control]="MonitorPageData.monitorPageData.nowHelping"
+        [nowServings]="NowServings$ | async"
+        [SelectedLanguage]="values.language"
+        [DefaultLanguage]="values.defaultLanguage"
+      ></lavi-preview-helping-now>
+    </ng-container>
+  </div>
+</ng-container>
+<lavi-modal [OpenDialog]="IsMonitorDeviceStandByMode$ | async" [Width]="'60%'">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 p-0">
+        <div
+          class="jumbotron text-center m-0 d-flex flex-column justify-content-center"
+        >
+          <h3>System is currently unavailable. Please contact Administrator</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</lavi-modal>

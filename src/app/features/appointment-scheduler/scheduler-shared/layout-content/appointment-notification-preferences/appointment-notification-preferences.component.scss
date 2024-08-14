@@ -1,0 +1,82 @@
+@import "src/stylings/primitives/primitives.scss";
+.form-group {
+  margin-bottom: 40px;
+}
+.form-group:last-child {
+  margin-bottom: 0;
+}
+ul.appointment-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 40px 0;
+  li {
+    background: $scheduler-background;
+    color: $scheduler-default-font-color;
+    border: solid thin $color-border-form-element-active;
+    display: inline-block;
+    font-size: $font-size-big-1;
+    padding: 9px 35px;
+  }
+  .selected {
+    background: $color-background-yellow;
+    border: solid 1px $color-background-yellow;
+  }
+  :first-child {
+    border-radius: 19px 0 0 19px;
+  }
+  :last-child {
+    border-radius: 0 19px 19px 0;
+    padding: 9px 23px;
+  }
+}
+.country-code {
+  background: $scheduler-background;
+  border-radius: 8px 0 0 8px;
+  border: solid thin $color-border-form-element-active;
+  display: inline-block;
+  font-size: $font-size-big-1;
+  padding: 6px 10px;
+  width: auto;
+}
+.w-10 {
+  width: 10%;
+}
+input[type=text].phone-number {
+  display: inline-block;
+  border-radius: 0 8px 8px 0;
+  width: auto;
+}
+.phone-number {
+  display: inline-block;
+  border-radius: 0 8px 8px 0;
+}
+input[type=checkbox]{
+  margin: 3px 0 0 20px;
+}
+label {
+  display: block;
+}
+::ng-deep .appointment-notification .wrapper-phone-number input {
+  margin-left: 48px;
+  font-size: $global-font-size;
+}
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation:portrait) {
+  input[type=text].phone-number {
+    width: 215px;
+  }
+  ul.appointment-list {
+    li {
+      padding: 9px 25px;
+    }
+  }
+}
+ /* Portrait and Landscape */
+ @media only screen
+ and (min-device-width: 320px)
+ and (max-device-width: 667px)
+ and (-webkit-min-device-pixel-ratio: 2) {
+  ::ng-deep .appointment-notification .wrapper-phone-number,
+  ::ng-deep .appointment-notification .sm-email-field {
+     margin-left: 20px;
+   }
+ }

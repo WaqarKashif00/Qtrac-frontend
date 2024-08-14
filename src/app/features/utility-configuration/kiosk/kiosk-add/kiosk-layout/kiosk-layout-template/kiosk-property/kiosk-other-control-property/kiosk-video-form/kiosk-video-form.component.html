@@ -1,0 +1,86 @@
+<div [formGroup]="Item.form" class="property-container">
+  <div>
+    <label>Name</label
+    ><input
+      type="text"
+      placeholder="Label Name"
+      formControlName="name"
+      [value]="Item.name"
+      maxlength="50"
+    />
+    <span class="edit-icon"></span>
+  </div>
+  <div class="position-relative">
+  <label>src</label>
+  <div class="float-right text-right upload-button-container">
+    <span class="browse-button">
+      <ng-container><span (click)="OpenVideoDialog()" class="text-blue">Click to add</span></ng-container>
+    </span>
+    <span class="edit-icon bg-image"></span>
+  </div>
+  </div>
+  <div>
+    <label>Top</label
+    ><input
+      type="text"
+      formControlName="top"
+      placeholder="Top"
+      [value]="Item.styles.top"
+      maxlength="3"
+    />
+    <span>px</span>
+  </div>
+  <div>
+    <label>Left</label
+    ><input
+      type="text"
+      formControlName="left"
+      placeholder="Left"
+      [value]="Item.styles.left"
+      maxlength="3"
+    />
+    <span>px</span>
+  </div>
+  <div>
+    <label>Width</label
+    ><input
+      type="text"
+      formControlName="width"
+      placeholder="Width"
+      [value]="Item.styles.width"
+      maxlength="3"
+    />
+    <span>px</span>
+  </div>
+  <div>
+    <label>Height</label
+    ><input
+      type="text"
+      formControlName="height"
+      placeholder="Height"
+      [value]="Item.styles.height"
+      maxlength="3"
+    />
+    <span>px</span>
+  </div>
+  <div>
+    <label>Move control</label>
+    <div class="front-back-control" >  
+      <span class="k-i-forward-element k-icon move-to-front" title="Move to front" (click)="IncreaseZIndex()">
+      </span>
+      <span class="k-i-backward-element k-icon move-to-back" title="Move to back" (click)="DecreaseZIndex()">
+      </span>
+    </div>
+  </div>
+</div>
+
+
+<lavi-language-video-modal
+[OpenDialog]="Open"
+[VideoHeight]="120"
+[VideoWidth]="120"
+[Title]="'Upload Videos'"
+[VideoFormArray]="VideoFormArray$ | async"
+(Save)="Save($event)"
+(CloseVideoModal)="CloseVideoDialog()"
+></lavi-language-video-modal>

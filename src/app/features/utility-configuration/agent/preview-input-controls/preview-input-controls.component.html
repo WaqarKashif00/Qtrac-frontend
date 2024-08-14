@@ -1,0 +1,172 @@
+<div class="preview-control">
+  <ng-container *ngIf="Item.itemType == QuestionTypes.Text.value">
+    <input
+      kendoTextBox
+      class="preview-control-items p-0"
+      [style.color]="Item.backgroundColor"
+      autocomplete="false"
+      [maxlength]="Item.itemTypeSetting ? Item.itemTypeSetting: 50"
+      [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''"
+      [style.font-style]="Item.fontStyle"
+      [style.font-family]="Item.font"
+      [(ngModel)]="Item.answer"
+      [disabled]="IsDisabled"
+      (valueChange)="Changed()"
+    /> 
+  </ng-container>
+  <ng-container *ngIf="Item.itemType == QuestionTypes.LongText.value">
+    <textarea
+      class="preview-control-items"
+      [style.color]="Item.backgroundColor"
+      autocomplete="false"
+      maxlength="500"
+      [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''"
+      [style.font-style]="Item.fontStyle"
+      [style.font-family]="Item.font"
+      [style.margin-bottom]="'-5px'"
+      [disabled]="IsDisabled"
+      [(ngModel)]="Item.answer"
+      (valueChange)="Changed()"
+      rows="4"
+    ></textarea>
+  </ng-container>
+  <ng-container *ngIf="Item.itemType == QuestionTypes.URL.value">
+    <input
+      kendoTextBox
+      class="preview-control-items p-0"
+      [style.color]="Item.backgroundColor"
+      autocomplete="false"
+      [maxlength]="Item.itemTypeSetting ? Item.itemTypeSetting: 50"
+      [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''"
+      [style.font-style]="Item.fontStyle"
+      [style.font-family]="Item.font"
+      [(ngModel)]="Item.answer"
+      [disabled]="IsDisabled"
+      (valueChange)="Changed()"
+    /> 
+  </ng-container>
+  <ng-container *ngIf="Item.itemType == QuestionTypes.DropDown.value">
+    <kendo-dropdownlist
+      class="preview-control-items p-0"
+      [style.color]="Item.backgroundColor"
+      [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''"
+      [style.font-style]="Item.fontStyle"
+      [style.font-family]="Item.font"
+      [data]="Item.itemTypeSetting"
+      [(ngModel)]="Item.answer"
+      [disabled]="IsDisabled"
+      (valueChange)="Changed()"
+    >
+    </kendo-dropdownlist>
+  </ng-container>
+  <ng-container *ngIf="Item.itemType == QuestionTypes.Options.value">
+    <ng-container *ngFor="let option of Item.itemTypeSetting">
+      <div class="container-fluid">
+        <div class="row p-1">
+          <input
+            [id]="Item.itemId"
+            class="mt-1"
+            type="radio"
+            [name]="Item.itemId"
+            [value]="option"
+            [(ngModel)]="Item.answer"
+            [disabled]="IsDisabled"
+            kendoRadioButton
+            (click)="RadioClick(option)"
+            [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''"
+          />
+          <label [for]="option" class="ml-1">{{ option }}</label>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="Item.itemType == QuestionTypes.MultiSelect.value">
+    <kendo-multiselect
+      [style.color]="Item.backgroundColor"
+      class="preview-control-items p-0"
+      [data]="Item.itemTypeSetting"
+      [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''"
+      [style.font-style]="Item.fontStyle"
+      [style.font-family]="Item.font"
+      [(ngModel)]="Item.answer"
+      [disabled]="IsDisabled"
+      (valueChange)="Changed()"
+    ></kendo-multiselect>
+  </ng-container>
+  <ng-container *ngIf="Item.itemType == QuestionTypes.Number.value">
+    <kendo-numerictextbox
+      class="preview-control-items p-0"
+      format="n"
+      [min]="Item.itemTypeSetting.min"
+      [max]="Item.itemTypeSetting.max"
+      [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''"
+      [style.font-style]="Item.fontStyle"
+      [style.font-family]="Item.font"
+      [style.color]="Item.backgroundColor"
+      [autoCorrect]="true"
+      [(ngModel)]="Item.answer"
+      [disabled]="IsDisabled"
+      (valueChange)="Changed()"
+    >
+    </kendo-numerictextbox>
+  </ng-container>
+  <ng-container *ngIf="Item.itemType == QuestionTypes.Email.value">
+    <input
+      class="preview-control-items"
+      kendoTextBox
+      [maxLength]="Item.itemTypeSetting ? Item.itemTypeSetting : 50"
+      [style.color]="Item.backgroundColor"
+      [value]="Item.itemTypeSetting"
+      [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''"
+      [style.font-style]="Item.fontStyle"
+      [style.font-family]="Item.font"
+      [(ngModel)]="Item.answer"
+      [disabled]="IsDisabled"
+      (change)="Changed()"
+      [pattern]="ValidationPatterns.EmailRegX"
+      #previewEmail="ngModel"
+    />
+  </ng-container>
+  <ng-container
+    *ngIf="
+      Item.itemType == QuestionTypes.PhoneNumber.value ||
+      Item.itemType == QuestionTypes.SMSPhoneNumber.value
+    "
+  >
+    <lavi-phone-number
+      class="preview-control-items p-0"
+      [DefaultCountry]="DefaultCountry"
+      [PhoneNumber]="Item.answer"
+      [IsDisabled]="IsDisabled"
+      (OnValidPhoneNumber)="PhoneNumberChanged($event)"
+      (OnInvalidPhoneNumber)="InvalidPhoneNumberChanged($event)"
+    ></lavi-phone-number>
+  </ng-container>
+  <ng-container *ngIf="Item.itemType == QuestionTypes.Date.value">
+    <kendo-datepicker
+      class="preview-control-items p-0"
+      [style.color]="Item.backgroundColor"
+      [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''"
+      [style.font-style]="Item.fontStyle"
+      [value]="GetDateTime(Item.answer)"
+      [disabled]="IsDisabled"
+      (valueChange)="Changed($event)"
+      [style.font-family]="Item.font"
+    ></kendo-datepicker>
+  </ng-container>
+  <ng-container *ngIf="Item.itemType == QuestionTypes.Time.value">
+    <kendo-timepicker
+      class="preview-control-items p-0"
+      [style.color]="Item.backgroundColor"
+      [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''"
+      [style.font-style]="Item.fontStyle"
+      [style.font-family]="Item.font"
+      [value]="GetDateTime(Item.answer)"
+      [disabled]="IsDisabled"
+      (valueChange)="Changed($event)"
+    ></kendo-timepicker>
+  </ng-container>
+  <div class="error-message" *ngIf="!IsValid && IsErrorsToShow">
+    {{ ValidationMessage }}
+  </div>
+</div>

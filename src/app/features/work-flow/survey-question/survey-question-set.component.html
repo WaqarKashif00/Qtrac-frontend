@@ -1,0 +1,26 @@
+<div class="col-lg-12 inner-panel-padding right-column-width">
+    <div class="mb-5">
+      <div class="row mb-4">
+        <div class="col-lg-9">
+          <div class="font-weight-500">Survey Questions</div>
+        </div>
+        <div class="col-lg-3">
+          <span class="text-blue pl-4 cursor-pointer font-weight-bold" (click)="OpenModal()"
+            >Add Survey Question</span>
+        </div>
+        <lavi-add-survey-question-set
+        [IsSurveyQuestionSetDialogOpen]="OpenQuestionModal$ |async"
+        [SupportedLanguages]="SupportedLanguages$| async"
+        [Questions]="Questions$ | async"
+        [QuestionTabSelected]="QuestionTabSelected$ |async"
+        [Mode]="Mode"
+        (Save)="Save()"
+        (Close)="CloseModal()"></lavi-add-survey-question-set>
+      </div>
+      <div>
+        <lavi-survey-question-list (edit)="Edit($event)" (delete)="Delete($event)"
+        [QuestionSets]="QuestionSets$ | async"></lavi-survey-question-list>
+      </div>
+    </div>
+  </div>
+

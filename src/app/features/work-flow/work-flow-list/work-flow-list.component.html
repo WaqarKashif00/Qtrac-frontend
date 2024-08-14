@@ -1,0 +1,95 @@
+<lavi-list-screen-header
+Title="Workflows"
+(OnAddNewButtonClick)="NavigateToAddPage()"
+[PageName]="roleActions.WorkflowTemplates"
+[ActionName]="actionType.AddEdit"
+[ButtonValue]="'Add New Workflow'"
+></lavi-list-screen-header>
+
+  <div class="row d-flex justify-content-center flex-nowrap">
+    <lavi-filter-with-tags
+      searchTextTitle="Search Workflows"
+      [(filter)]="searchModel"
+    >
+    </lavi-filter-with-tags>
+  </div>
+
+
+  <div class="row mt-5 mr-2 ml-2 standardlist-grid" *ngIf="workflowList$ | async as List">
+    <kendo-grid
+      [kendoGridBinding]="List | laviFilterListWithTags: searchModel:'':'name'"
+      [pageSize]="100"
+      [sortable]="true"
+      [reorderable]="true"
+      [resizable]="true"
+      [selectable]="{ enabled: true, mode: 'multiple' }"
+      [(expandedDetailKeys)]="expansionManager.expandedIds"
+      [kendoGridExpandDetailsBy]="expansionManager.expandDetailsBy"
+      [rowClass]="listStyleManager.rowStyleCallBack"
+    >
+      <kendo-grid-column
+        title="Name"
+        field="name"
+        width="300"
+        [headerClass]="listStyleManager.headerClass"
+        [style]="listStyleManager.columnStyle"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <span class="data-style">{{ dataItem.name }}</span>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column
+        title="Description"
+        [headerClass]="listStyleManager.headerClass"
+        [style]="listStyleManager.columnStyle"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <span class="data-style">{{ dataItem?.generalSetting?.description }}</span>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column
+        title="Services"
+        [headerClass]="listStyleManager.headerClass"
+        [style]="listStyleManager.columnStyle"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <span>{{ generateServiceNameCSV(dataItem.services) }}</span>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column
+        field="id"
+        title=""
+        width="200"
+        [headerClass]="listStyleManager.headerClass"
+        [style]="listStyleManager.columnStyle"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <label>
+            <kendo-menu
+              class="cursor-pointer text-blue"
+              [items]="items"
+              (select)="OnSelect($event, dataItem)"
+            >
+              <ng-template
+                kendoMenuItemLinkTemplate
+                let-item="item"
+                let-index="index"
+              >
+                <span
+                  [kendoMenuItemLink]="index"
+                  *ngIf="ShowMenuItem(item)"
+                  [ngClass]="{
+                    'menu-style': item.text === '...',
+                    'menu-list-style': item.text != '...'
+                  }"
+                >
+                  {{ item.text }}
+                  <span *ngIf="item.items && item.items.length"></span>
+                </span>
+              </ng-template>
+            </kendo-menu>
+          </label>
+        </ng-template>
+      </kendo-grid-column>
+    </kendo-grid>
+  </div>

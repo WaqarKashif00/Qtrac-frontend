@@ -1,0 +1,144 @@
+$row-grid-template-columns:3% repeat(13,minmax(95px,1fr));
+$customer-row-more-information-container-columns:3% auto;
+$agent-buttons-row-grid-template-columns:15% 5% repeat(6,10%);
+
+$header-column-font-family: 'arial';
+$header-column-font-size: '20px';
+
+$sidebar-width:75px;
+$filters-width:250px;
+$agent-header-height:120px;
+$bold-font-weight:600;
+
+$agent-custom-model-header-height:45px;
+$agent-custom-model-borer-radius:10px;
+$agent-custom-model-footer-height:60px;
+
+
+$agent-sidebar-width:75px;
+$agent-custom-k-switch-back-color:$agent-row-border;
+$agent-custom-k-switch-fore-color:$sidebar-yellow-border;
+$agent-title-font-family:'Inter';
+
+
+$sidebar-icon-size:27px;
+
+.data-list-container {
+  height: 100%;
+  flex:1;
+  overflow-y: auto;
+  position: relative;
+}
+
+.data-list-items-container {
+  width: 100%;
+}
+
+.total-height {
+  width: 1px;
+  opacity: 0;
+}
+
+.more-information-button{
+  font-weight: $font-weight-600;
+  border-radius: 5px;
+  margin-right: 5px;
+  color:$color-text-white;
+}
+
+.select-box{
+    border: thin solid $color-border-form-element-active;
+    width: 11px;
+    height: 11px;
+    cursor: pointer;
+  }
+
+  .select-box.selected{
+    background-color: $button-yellow-background-color;
+    outline: $color-background-white solid 1px;
+    outline-offset: -2px;
+  }
+
+  .select-box[data-selected="True"]{
+    background-color: $button-yellow-background-color;
+  }
+
+.pointer{
+    cursor: pointer;
+}
+
+.default-agent-add-btn{
+  background-color: $button-yellow-background-color;
+  font-weight: 600;
+  font-size:$font-size-small-2;
+}
+
+.start-button{
+  background-color: $button-green-background-color;
+}
+
+.move-button{
+  background-color: $button-purple-background-color;
+}
+
+.transfer-button{
+  background-color: $button-light-purple-background-color;
+}
+
+.message-button{
+  background-color: $button-light-green-background-color;
+}
+
+.notes-button{
+  background-color: $button-orange-background-color;
+}
+
+.more-information-button.info-button{
+  background-color: $button-yellow-background-color;
+  color:$agent-button-text;
+}
+
+.remove-button{
+  background-color: $button-red-background-color;
+}
+
+.end-service-button{
+  background-color: $button-red-background-color;
+}
+
+.call-button{
+  background-color: $button-light-blue-background-color;
+}
+
+.group-button{
+  background-color: $button-orange-background-color;
+}
+
+.text-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+
+
+
+
+
+
+
+.appointment-checked-in{
+  background-color: $_color-green-100;
+}
+
+.appointment-not-in-branch{
+  background-color: $color-background-dark-grey;
+}
+
+.appointment-missed{
+  background-color:$color-text-red-100
+}
+
+
+
+

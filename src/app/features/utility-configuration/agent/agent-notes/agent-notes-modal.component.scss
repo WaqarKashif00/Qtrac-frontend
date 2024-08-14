@@ -1,0 +1,99 @@
+@import "src/stylings/primitives/primitives.scss";
+
+$notes-button-background-color:$button-orange-background-color;
+
+.header{
+  color:$agent-header-column-font-color;
+}
+::ng-deep .preview-control {
+  input[type="radio"] + label {
+    margin-top: 4px;
+  }
+}
+.center{
+  justify-content: center;
+  vertical-align: middle;
+}
+
+ul li {
+  list-style: none;
+  color: $color-text-white;
+}
+li::before {
+  border-radius: 50%;
+  background-color: $sidebar-yellow-border;
+  content: " ";
+  display: inline-block;
+  height: 12px;
+  width: 12px;
+}
+
+::ng-deep .k-chat .k-bubble{
+  background-color:$agent-chat-bubble;
+}
+
+.h-100{
+  height:100%;
+}
+
+.k-chat-custom{
+  border:none;
+  margin-left: -15px;
+  margin-right: -15px;
+  max-width: unset;
+}
+
+::ng-deep {
+
+  .agent-notes{
+    .k-chat .k-message-group.k-alt .k-first .k-bubble, .k-chat .k-message-group.k-alt .k-only .k-bubble {
+      border-bottom-right-radius: 0;
+    border-radius: 18px;
+  }
+
+  .k-chat .k-message-group:not(.k-alt) .k-middle .k-bubble, .k-chat .k-message-group:not(.k-alt) .k-last .k-bubble {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-radius: 18px;
+  }
+
+  .k-chat .k-message-group:not(.k-alt) .k-first .k-bubble, .k-chat .k-message-group:not(.k-alt) .k-only .k-bubble {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-radius: 18px;
+  }
+
+  .k-chat .k-alt .k-bubble {
+    border: none;
+    color: $color-global-text;
+    background-color: $agent-chat-bubble;
+    box-shadow: 0 1px 2px rgb(63 81 181 / 20%);
+  }
+
+  .k-message-box .k-button-send.k-button.k-flat svg *{
+    color: $notes-button-background-color !important;
+  }
+
+  .unread-label{
+    width: 500px;
+    text-align: center;
+    font-weight: $font-weight-600;
+  }
+
+}
+}
+
+
+
+::ng-deep{
+  .agent-notes-modal{
+    .custom-modal-header-close-btn{ 
+      span{
+        color:$color-text-white !important;
+      }
+    }
+  }
+}
+
+
+

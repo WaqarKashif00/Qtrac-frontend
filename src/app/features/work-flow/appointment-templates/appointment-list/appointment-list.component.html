@@ -1,0 +1,22 @@
+<div>
+    <div class="pre-service-question-list " >
+
+      <kendo-grid [data]="gridData" [height]="540">
+        <kendo-grid-column field="templateName" title="Template Name" width="150">
+        </kendo-grid-column>
+
+        <kendo-grid-column field="id" title="" width="20" class="fload-right">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <img class="img-width cursor-pointer" (click)="DeleteAppointmentTemplate(dataItem.id)" src="../../../../assets/img/delete-icon.svg">
+            <img class="img-width cursor-pointer ml-2" (click)="EditAppointmentTemplate(dataItem)" src="../../../../assets/img/edit-icon.svg">
+          </ng-template>
+        </kendo-grid-column>
+
+        <ng-template kendoGridNoRecordsTemplate>
+          No Template Added.
+       </ng-template>
+      </kendo-grid>
+
+    </div>
+  </div>
+

@@ -1,0 +1,115 @@
+@import "src/stylings/primitives/primitives.scss";
+.branch-map {
+  .sub-heading {
+    font-size: $font-size-small-5;
+    font-weight: $font-weight-600;
+  }
+  .branch-details-container {
+    height: 390px;
+    overflow-y: auto;
+  }
+  .branch-details {
+    background: $scheduler-background;
+    border: solid thin $color-border-form-element-active;
+    border-radius: 5px;
+    font-size: $font-size-smallest;
+    margin-bottom: 15px;
+    margin-right: 5px;
+    padding: 12px 8px;
+    text-align: left;
+    .heading-text {
+      font-size: $font-size-small-2;
+      font-weight: bold;
+    }
+    .small-text {
+      font-size: 6px;
+    }
+    .col-6 {
+      padding: 0;
+    }
+    .row {
+      margin: 0;
+    }
+    p {
+      line-height: 12px;
+      margin-bottom: 0;
+    }
+    .visited-branch-indication {
+      margin-top: 33px;
+    }
+    .visited-branch-indication::before {
+      content: '';
+      background: $button-yellow-background-color;
+      border-radius: 4px;
+      display: inline-block;
+      height: 6px;
+      line-height: normal;
+      margin-right: 3px;
+      width: 6px;
+    }
+    input[type="button"]{
+      border-radius: 5px;
+    }
+  }
+  .branch-details:last-child {
+    margin-bottom: 0;
+  }
+  .google-map {
+    border: solid thin $panel-border-color;
+    color: transparent;
+    margin-left: 15px;
+    height: 92%;
+    min-height: 300px;
+  }
+
+}
+
+.address-row{
+  max-width: 75% !important;
+  padding-left: 0 !important;
+}
+::ng-deep .google-maps{
+    height: 100%;
+    overflow: hidden;
+    position: relative !important;
+  }
+::ng-deep ul#mapDistance {
+    list-style: none;
+    padding: 0 0 0 20px;
+    li {
+      background: $scheduler-background;
+      color: $scheduler-default-font-color;
+      font-size: $font-size-small-2;
+      height: 29px;
+      margin: 0 20px 10px 0;
+      padding: 4px 0 0;
+      text-align: center;
+      width: 69px;
+    }
+    li.selected {
+      background: $button-yellow-background-color;
+    }
+  }
+
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+    ::ng-deep ul#mapDistance {
+      padding: 0 0 0 10px;
+      text-align: left;
+      li {
+        margin: 5px 9px 2px 0;
+      }
+    }
+    .branch-map .google-map {
+      margin-left: 0;
+    }
+  }
+
+  /* Portrait and Landscape */
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 667px)
+and (-webkit-min-device-pixel-ratio: 2) {
+  .branch-map .google-map {
+    margin-left: 0;
+  }
+}

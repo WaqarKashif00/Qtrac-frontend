@@ -1,0 +1,80 @@
+<lavi-list-screen-header
+Title="Hours of Operations"
+(OnAddNewButtonClick)="NavigateToTemplate()"
+[PageName]="roleActions.HOOTemplates"
+[ActionName]="actionType.AddEdit"
+[ButtonValue]="'Add New Template'"
+></lavi-list-screen-header>
+
+  <div class="row d-flex justify-content-center flex-nowrap">
+    <lavi-filter-with-tags
+      searchTextTitle="Search Hours of Operations"
+      [(filter)]="searchModel"
+    >
+    </lavi-filter-with-tags>
+  </div>
+  <div class="row mt-5 mr-2 ml-2 standardlist-grid">
+    <kendo-grid
+      [kendoGridBinding]="
+        SchedulerList$ | async | laviFilterListWithTags: searchModel:'':'generalConfiguration.templateName' | laviSortBy: 'generalConfiguration.templateName'
+      "
+      [pageSize]="100"
+      [sortable]="true"
+      [reorderable]="true"
+      [resizable]="true"
+      [selectable]="{ enabled: true, mode: 'multiple' }"
+      [(expandedDetailKeys)]="expansionManager.expandedIds"
+      [kendoGridExpandDetailsBy]="expansionManager.expandDetailsBy"
+      [rowClass]="listStyleManager.rowStyleCallBack"
+    >
+      <kendo-grid-column
+        field="generalConfiguration.templateName"
+        title="Template Name"
+        [headerClass]="listStyleManager.headerClass"
+        [style]="listStyleManager.columnStyle"
+      ></kendo-grid-column>
+
+      <kendo-grid-column
+        field="generalConfiguration.description"
+        title="Description"
+        [headerClass]="listStyleManager.headerClass"
+        [style]="listStyleManager.columnStyle"
+      ></kendo-grid-column>
+
+      <kendo-grid-column
+        field="id"
+        title=""
+        width="200"
+        [headerClass]="listStyleManager.headerClass"
+        [style]="listStyleManager.columnStyle"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <label>
+            <kendo-menu
+              class="cursor-pointer text-blue"
+              [items]="items"
+              (select)="OnSelect($event, dataItem)"
+            >
+              <ng-template
+                kendoMenuItemLinkTemplate
+                let-item="item"
+                let-index="index"
+              >
+                <span
+                  [kendoMenuItemLink]="index"
+                  *ngIf="ShowMenuItem(item)"
+                  [ngClass]="{
+                    'menu-style': item.text === '...',
+                    'menu-list-style': item.text != '...'
+                  }"
+                >
+                  {{ item.text }}
+                  <span *ngIf="item.items && item.items.length"></span>
+                </span>
+              </ng-template>
+            </kendo-menu>
+          </label>
+        </ng-template>
+      </kendo-grid-column>
+    </kendo-grid>
+  </div>

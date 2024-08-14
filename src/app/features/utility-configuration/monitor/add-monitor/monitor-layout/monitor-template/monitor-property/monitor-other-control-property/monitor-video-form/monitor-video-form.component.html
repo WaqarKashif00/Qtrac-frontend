@@ -1,0 +1,89 @@
+
+    <div [formGroup]="Item.form">
+      <div>
+        <label>Name</label
+        ><input
+          type="text"
+          placeholder="Label Name"
+          formControlName="name"
+          [value]="Item.name"
+          maxlength="50"
+        /><span class="edit-icon"></span>
+      </div>
+      <div class="position-relative">
+        <label>src</label>
+        <div class="float-right text-right upload-button-container">
+          <span class="browse-button">
+            <span class="text-blue" (click)="OpenVideoDialog()">Click to add</span>
+          </span>
+          <span *ngIf="!FileName" class="edit-icon bg-image"></span>
+        </div>
+        </div>
+      <div>
+        <label>Top</label
+        ><input
+          type="text"
+          formControlName="top"
+          placeholder="Top"
+          maxlength="3"
+          [value]="Item.styles.top"
+          lavi-app-numbers-only
+        />
+        <span>px</span>
+      </div>
+      <div>
+        <label>Left</label
+        ><input
+          type="text"
+          formControlName="left"
+          placeholder="Left"
+          maxlength="3"
+          [value]="Item.styles.left"
+          lavi-app-numbers-only
+        />
+        <span>px</span>
+      </div>
+      <div>
+        <label>Width</label
+        ><input
+          type="text"
+          formControlName="width"
+          placeholder="Width"
+          maxlength="3"
+          [value]="Item.styles.width"
+          lavi-app-numbers-only
+        />
+        <span>px</span>
+      </div>
+      <div>
+        <label>Height</label
+        ><input
+          type="text"
+          formControlName="height"
+          placeholder="Height"
+          maxlength="3"
+          [value]="Item.styles.height"
+          lavi-app-numbers-only
+        />
+        <span>px</span>
+      </div>
+      <div>
+        <label>Move control</label>
+        <div class="front-back-control" >  
+          <span class="k-i-forward-element k-icon move-to-front" title="Move to front" (click)="IncreaseZIndex()">
+          </span>
+          <span class="k-i-backward-element k-icon move-to-back" title="Move to back" (click)="DecreaseZIndex()">
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <lavi-language-video-modal
+    [OpenDialog]="Open"
+    [VideoHeight]="120"
+    [VideoWidth]="120"
+    [Title]="'Upload Videos'"
+    [VideoFormArray]="VideoFormArray$ | async"
+    (Save)="Save($event)"
+    (CloseVideoModal)="CloseVideoDialog()"
+    ></lavi-language-video-modal>

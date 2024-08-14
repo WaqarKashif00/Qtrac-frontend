@@ -1,0 +1,38 @@
+<div
+  *ngIf="Button"
+  [position]="{ x: Button.styles.left, y: Button.styles.top }"
+  [style.height.px]="Button.styles.height"
+  [style.padding-left.px]="Button.horizontalPadding || 0"
+  class="newControl newLabel position-absolute controls-width text-center w-100"
+  [style.padding-right.px]="Button.horizontalPadding || 0"
+  [style.padding-top.px]="Button.verticalPadding || 0"
+  [style.padding-bottom.px]="Button.verticalPadding || 0"
+  [style.font-size]="Button.styles.fontSize ? Button.styles.fontSize +'px' : ''"
+  [style.font-style]="Button.styles.fontStyle"
+  [style.font-family]="Button.styles.font"
+  [style.font-weight]="Button.styles.fontWeight"
+  rzContainment="#DivLayoutDesignContainer"
+  [inBounds]="true"
+  (endOffset)="onControlMoveEnd($event)"
+  (rzStop)="onControlResizeStop($event)"
+  (click)="onControlClick()"
+  lockAxis="x"
+  rzHandles="s,n"
+  ngDraggable
+  ngResizable
+>
+  <input
+    [ngClass]="{'bg-img': Button.showPrimaryButtonIcon, 'shadow': Button.shadow}"
+    [style.background-image]="(Button.showPrimaryButtonIcon && GetUrl(Button.primaryButtonSrc)) ? 'url('+ GetUrl(Button.primaryButtonSrc) +')' : ''"
+    [style.background-color]="Button.styles.backgroundColor"
+    [style.color]="Button.styles.color"
+    [style.border-radius.px]="Button.styles.boxRoundCorners || 0"
+    [style.font-style]="Button.styles.fontStyle"
+    [style.font-weight]="Button.styles.fontWeight"
+    [style.border]="Button.border + 'px solid ' + Button.borderColor"
+    [value]="(Button.showPrimaryButtonIcon && GetUrl(Button.primaryButtonSrc)) ? '' :
+    (Button.text[SelectedLanguage.selectedLanguage] || Button.text[SelectedLanguage.defaultLanguage]) | laviEmptyString"
+    class="h-100 w-100"
+    type="button"
+  />
+</div>

@@ -1,0 +1,74 @@
+<div class="pt-3">
+  <div class="pre-service-question-list">
+    <div class="question-list-add">
+      <div class="col-lg-12">
+        <div class="row header-row">
+          <kendo-grid [data]="gridData" [height]="540" [rowClass]="rowCallback" (dataStateChange)="dataStateChange($event)">
+            <kendo-grid-column width="30">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <img class="drag-icon cursor-pointer mr-2" src="../../../../assets/drag-indicator.png">
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Service Name" width="120">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <span *ngFor="let ques of dataItem?.serviceNames,let i = index">
+                  <span *ngIf="ques.isDefault">
+                    {{ques.serviceName}}
+                  </span>
+                </span>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Routing" width="120">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <span [ngClass]="{'no-routing-specified': IsNoRoutingSpecifiedType(dataItem)}">
+                  {{ GetRoutingType(dataItem) }}
+                </span>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Appointment/ Walk ins" width="120">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <span >
+                  {{ ScheduleTypeText(dataItem) }}
+                </span>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Survey Template" width="120">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <span >
+                  {{ dataItem?.surveyTemplate?.questionSetName }}
+                </span>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column title="Ticket Template" width="120">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <span >
+                  {{ dataItem?.ticketTemplate?.type }}
+                </span>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column field="id" title="" width="90" class="fload-right">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <img class="img-width cursor-pointer" (click)="Delete(dataItem?.id)" src="../../../../assets/img/delete-icon.svg">
+                <img class="img-width cursor-pointer ml-2" (click)="Edit(dataItem)" src="../../../../assets/img/edit-icon.svg">
+                <img class="img-width cursor-pointer ml-2" (click)="Copy(dataItem)" src="../../../../assets/img/duplicate-icon.svg">
+              </ng-template>
+            </kendo-grid-column>
+
+            <ng-template kendoGridNoRecordsTemplate>
+              No Services Added.
+           </ng-template>
+          </kendo-grid>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+

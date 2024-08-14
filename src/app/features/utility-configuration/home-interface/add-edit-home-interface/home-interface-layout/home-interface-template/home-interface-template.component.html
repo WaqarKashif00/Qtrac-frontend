@@ -1,0 +1,53 @@
+<div id="container" class="row divLayoutTopMiddleSection">
+  <ng-container
+    *ngIf="{
+      designerPanel: DesignerPanel$ | async
+    } as values"
+  >
+    <div class="column left divLayoutToolbar">
+      <lavi-home-interface-toolbox
+        [DivLayoutDesignContainer]="DivLayoutDesignContainer"
+      >
+      </lavi-home-interface-toolbox>
+    </div>
+    <div class="column center middle-outer-div">
+      <div
+        id="DivLayoutDesignContainer"
+        [style.width.px]="values.designerPanel.styles.width"
+        [style.height.px]="values.designerPanel.styles.height"
+        [style.background-image]="
+          'url(' + (values.designerPanel.backgroundImage|quoteString) + ')'
+        "
+        [style.color]="values.designerPanel.styles.color"
+        [style.font-size]="values.designerPanel.styles.fontSize ? values.designerPanel.styles.fontSize + 'px' : ''"
+        [style.background-color]="values.designerPanel.styles.backgroundColor"
+        [style.font-style]="values.designerPanel.styles.fontStyle"
+        [style.font-family]="values.designerPanel.styles.font"
+        [style.font-weight]="values.designerPanel.styles.fontWeight"
+        class="control-section divLayoutDesignContainer"
+        #DivLayoutDesignContainer
+      >
+      <div *ngFor="let x of Columns">
+        <div *ngFor="let y of Rows">
+          <div [ngDraggable]="false" [position]="{x: x, y: y }" [preventDefaultEvent]="true" [class]="GridClass"
+            [style.width.px]="GridSize" [style.height.px]="GridSize">
+
+          </div>
+        </div>
+      </div>
+        <lavi-home-interface-middle-container
+          [DivLayoutDesignContainer]="DivLayoutDesignContainer"
+        >
+        </lavi-home-interface-middle-container>
+        <lavi-home-interface-designer-footer></lavi-home-interface-designer-footer>
+      </div>
+
+    </div>
+    <div class="column right divLayoutPropertyContainer">
+      <lavi-home-interface-property>
+        <default-control-property>
+        </default-control-property>
+      </lavi-home-interface-property>
+    </div>
+  </ng-container>
+</div>

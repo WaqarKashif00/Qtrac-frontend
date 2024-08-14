@@ -1,0 +1,77 @@
+<ng-container *ngIf="Items.length > 0 && Panel.mode == 1">
+<div
+  rzContainment="#DivLayoutDesignContainer"
+  (rzStop)="OnResizeStop($event)"
+  (endOffset)="OnMoveEnd($event)"
+  (click)="OnClick()"
+  [position]="{ x: Panel.styles.left, y: Panel.styles.top }"
+  [style.width.px]="Panel.styles.width"
+  [style.height.px]="Panel.styles.height"
+  [style.background-color]="Panel.styles.backgroundColor"
+  [style.padding-left.px]="Panel.horizontalPadding || 0"
+  [style.padding-right.px]="Panel.horizontalPadding || 0"
+  [style.padding-top.px]="Panel.verticalPadding || 0"
+  [style.padding-bottom.px]="Panel.verticalPadding || 0"
+  [style.font-size]="Panel.styles.fontSize ? Panel.styles.fontSize + 'px' : ''"
+  [style.font-style]="Panel.styles.fontStyle"
+  [style.font-family]="Panel.styles.font"
+  [style.font-weight]="Panel.styles.fontWeight"
+  [inBounds]="true"
+  [bounds]="DivLayoutDesignContainer"
+  [preventDefaultEvent]="true"
+  [gridSize]="IsOnlyGrid? GridSize:null"
+  [rzGrid]="IsOnlyGrid? GridSize:null"
+  class="e-panel insideDiv overflow-auto"
+  [ngDraggable]="allowDrag"
+  ngResizable
+  (click)="DraggableDivClick()"
+>
+  <UL class="UL">
+    <ng-container *ngFor="let item of Items">
+      <LI
+        class="LI"
+        ><lavi-preview-input-controls *ngIf="item.selected"
+        [Item]="GetItem(item)" (ControlClick)="OnControlClick()"
+      ></lavi-preview-input-controls>
+      </LI>
+    </ng-container>
+  </UL>
+</div>
+<ng-container *ngFor="let button of Buttons">
+<div
+  rzContainment="#DivLayoutDesignContainer"
+  [inBounds]="true"
+  [bounds]="DivLayoutDesignContainer"
+  [preventDefaultEvent]="true"
+  [gridSize]="IsOnlyGrid? GridSize:null"
+  [rzGrid]="IsOnlyGrid? GridSize:null"
+  (endOffset)="OnButtonMoveEnd($event, button.name)"
+  (rzStop)="OnButtonResizeStop($event, button.name)"
+  ngDraggable
+  ngResizable
+  [style.width.px]="button.styles.width"
+  [style.height.px]="button.styles.height"
+  [position]="{ x: button.styles.left, y: button.styles.top }"
+  *ngIf="button.showButton"
+>
+  <input
+    type="button"
+    class="clearfix"
+    [ngClass]="{'bg-img': button.showIcon, 'shadow': button.shadow}"
+    [style.background-image]="(button.showIcon && GetUrl(button.src)) ? 'url(' + GetUrl(button.src) + ')' : ''"
+    [style.color]="button.styles.color"
+    [style.background-color]="button.styles.backgroundColor"
+    [style.font-size]="button.styles.fontSize ? button.styles.fontSize + 'px' : ''"
+    [style.width.px]="button.styles.width"
+    [style.height.px]="button.styles.height"
+    [style.font-style]="button.styles.fontStyle"
+    [style.font-family]="button.styles.font"
+    [style.font-weight]="button.styles.fontWeight"
+    [style.border]="button.border + 'px solid ' + button.borderColor"
+    [style.border-radius.px]="button.styles.boxRoundCorners || 0"
+    [value]="(button.showIcon && GetUrl(button.src)) ? '' : (button.text[SelectedLanguage] || button.text[DefaultLanguage]) | laviEmptyString"
+    [position]="{ x: button.styles.left, y: button.styles.top }"
+  />
+</div>
+</ng-container>
+</ng-container>

@@ -1,0 +1,73 @@
+<ng-container *ngIf="{Panel:Panel$ | async,currentLanguage:SelectedLanguage$ | async} as values">
+  <div
+    *ngIf="values.Panel"
+    rzContainment="#DivLayoutDesignContainer"
+    (rzStop)="OnResizeStop($event)"
+    (endOffset)="OnMoveEnd($event)"
+    (click)="OnClick()"
+    [position]="{ x: values.Panel.styles.left, y: values.Panel.styles.top }"
+    [style.height.px]="values.Panel.styles.height"
+    [style.padding-left.px]="values.Panel.horizontalPadding || 0"
+    [style.padding-right.px]="values.Panel.horizontalPadding || 0"
+    [style.padding-top.px]="values.Panel.verticalPadding || 0"
+    [style.padding-bottom.px]="values.Panel.verticalPadding || 0"
+    [style.font-style]="values.Panel.styles.fontStyle"
+    [style.font-family]="values.Panel.styles.font"
+    [style.font-weight]="values.Panel.styles.fontWeight"
+    [style.font-size]="
+    values.Panel.styles.fontSize ? values.Panel.styles.fontSize + 'px' : ''
+  "
+    [inBounds]="true"
+    lockAxis="x"
+    rzHandles="s,n"
+    class="e-Panel insideDiv w-100 transperant position-absolute"
+    ngDraggable
+    ngResizable
+  >
+    <UL class="UL">
+      <ng-container *ngFor="let item of values.Panel.items">
+        <LI
+          class="LI m-auto text-center"
+          [style.height.px]="item.styles.height"
+          [style.width.px]="item.styles.width"
+          [style.background-color]="item.styles.backgroundColor"
+          [style.font-style]="item.styles.fontStyle"
+          [style.font-family]="item.styles.font"
+          [style.font-weight]="item.styles.fontWeight"
+          [style.font-size]="
+          item.styles.fontSize ? item.styles.fontSize + 'px' : ''"
+          [style.padding-top.px]="item.verticalPadding || 0"
+          [style.padding-bottom.px]="item.verticalPadding || 0"
+          [style.padding-left.px]="item.horizontalPadding || 0"
+          [style.padding-right.px]="item.horizontalPadding || 0"
+          [style.border-radius.px]="item.styles.boxRoundCorners || 0"
+          *ngIf="item.visible && item.showItem"
+        >
+          <div [style.color]="item.styles.color"
+          [ngClass]="{ 'pr-2': item.type === ItemType.TicketNumber }">{{
+            item.text[values.currentLanguage.selectedLanguage] || item.text[values.currentLanguage.defaultLanguage]
+          }}</div>
+          <div [style.color]="item.styles.color"
+          [style.font-style]="item.valuesFontStyle"
+          [style.font-family]="item.valuesFont"
+          [style.font-weight]="item.valuesFontWeight"
+          [style.font-size]="item.valuesFontSize ? item.valuesFontSize + 'px' : ''">{{
+            item.value
+          }}</div>
+        </LI>
+      </ng-container>
+      </UL>
+  </div>
+</ng-container>
+<ng-container *ngIf="ButtonPanel$ | async as buttons">
+  <div *ngFor="let button of buttons">
+    <lavi-button-control
+      *ngIf="button"
+      [Button]="button"
+      (OnButtonClick)="OnButtonClick(button.name)"
+      [SelectedLanguage]="SelectedLanguage$ | async"
+      (OnButtonResize)="OnButtonPanelResizeStop($event, button.name)"
+      (OnButtonMove)="OnButtonPanelMoveEnd($event, button.name)"
+    ></lavi-button-control>
+  </div>
+</ng-container>

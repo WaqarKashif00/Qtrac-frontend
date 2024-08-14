@@ -1,0 +1,10 @@
+<div class="position-absolute">
+  <lavi-vertical-question-mode [DefaultLanguage]="DefaultLanguage" [SelectedLanguage]="SelectedLanguage" 
+  [BranchCountryCode]="BranchCountryCode" [Data]="Data" (ShowNextPage)="ShowNextPage($event)"></lavi-vertical-question-mode>
+  <lavi-single-question-mode [DefaultLanguage]="DefaultLanguage" [SelectedLanguage]="SelectedLanguage" 
+  [BranchCountryCode]="BranchCountryCode" (ShowNextPage)="ShowNextPage($event)" [Data]="Data"></lavi-single-question-mode>
+  <lavi-preview-label [Labels]="Data?.labels" [DefaultLanguage]="DefaultLanguage" [SelectedLanguage]="SelectedLanguage"></lavi-preview-label>
+  <lavi-preview-image [Images]="Data?.images" [SelectedLanguage]="SelectedLanguage"></lavi-preview-image>
+  <lavi-preview-video [Videos]="Data?.videos" [SelectedLanguage]="SelectedLanguage"></lavi-preview-video>
+  <lavi-preview-slider [Sliders]="Data?.sliders" [SelectedLanguage]="SelectedLanguage"></lavi-preview-slider>
+</div>

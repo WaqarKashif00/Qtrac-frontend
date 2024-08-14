@@ -1,0 +1,70 @@
+<div class="property-window">
+  <div class="property-window-body">
+    <form [formGroup]="DesignerPanel.form" autocomplete="off">
+      <div>
+        <label>Name</label
+        ><input
+          type="text"
+          formControlName="name"
+          maxlength="50"
+          [value]="DesignerPanel.name"
+          placeholder="Name"
+        />
+        <span class="edit-icon"></span>
+      </div>
+      <div>
+        <label>Workflow</label
+        ><input
+          type="text"
+          placeholder="Workflow"
+          [value]="DesignerPanel.workFlowName"
+          disabled
+        />
+      </div>
+      <div class="position-relative">
+        <label>Background Image</label>
+        <div class="float-right text-right upload-button-container">
+          <span class="browse-button mobile-browse-button">
+            <ng-container *ngIf="FileName"><span class="pull-right-32 mr-10">{{ FileName }}</span></ng-container>
+            <ng-container *ngIf="!FileName"><span class="text-blue">Click to add</span></ng-container>
+            <span *ngIf="!FileName" class="edit-icon"></span>
+          </span>
+          <input
+            type="file"
+            placeholder="background color"
+            accept="image/*"
+            (change)="GetFileURL($event)"
+          />
+          <span
+            *ngIf="FileName"
+            class="close background-img-close-icon close-image"
+            (click)="Remove()"
+            >&times;</span
+          >
+        </div>
+      </div>
+      <div>
+        <label>Background Color</label>
+        <kendo-colorpicker
+          formControlName="backgroundColor"
+          class="cursor-pointer"
+          [value]="DesignerPanel.styles.backgroundColor"
+        >
+        </kendo-colorpicker>
+      </div>
+      <span class="properties-separation"></span>
+      <div>
+        <label>Waiting Time</label
+        ><input
+          type="text"
+          formControlName="waitingTime"
+          placeholder="Waiting Time"
+          lavi-app-numbers-only
+          maxlength="3"
+          [value]="DesignerPanel.waitingTime"
+        />
+        <span>hours</span>
+      </div>
+    </form>
+  </div>
+</div>

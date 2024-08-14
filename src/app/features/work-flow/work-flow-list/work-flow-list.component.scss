@@ -1,0 +1,39 @@
+@import "src/stylings/primitives/primitives.scss";
+
+
+.content {
+    padding: 30px;
+    color: $_color-light-grey-200;
+    background-color: $workflow-background;
+    border: 1px solid rgba($color-text-black,.05);
+  }
+
+
+  /*
+::ng-deep .k-grid tbody tr {
+    height: 40px;
+}
+
+::ng-deep .k-grid tbody tr td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+} */
+
+.service-div{
+  height: 26px;
+  margin-left: 0%;
+}
+
+.menu-style, .menu-list-style, .data-style {
+  color: $workflow-menu-text-color;
+  font-weight: $font-weight-800;
+}
+
+.menu-list-style{
+  font-weight: $font-weight-600;
+}
+
+.data-style{
+  font-weight: $font-weight-500;
+}

@@ -1,0 +1,106 @@
+  <div [formGroup]="Item.form">
+    <div>
+      <label>Name</label
+      ><input
+        type="text"
+        placeholder="Label Name"
+        formControlName="name"
+        [value]="Item.name"
+      />
+      <span class="edit-icon"></span>
+    </div>
+    <div class="position-relative">
+      <label>src:</label>
+      <div class="float-right text-right upload-button-container">
+        <span class="browse-button mobile-browse-button">
+          <span class="text-blue" (click)="OpenImageDialog()">Click to add</span>
+          <span class="edit-icon"></span>
+        </span>
+      </div>
+    </div>
+    <div>
+      <label>Hyperlink</label
+      ><input
+        type="text"
+        formControlName="hyperLink"
+        placeholder="Add Link"
+        [value]="Item.hyperLink"
+      />
+      <span class="edit-icon"></span>
+    </div>
+    <div>
+      <label>Top</label
+      ><input
+        type="text"
+        formControlName="top"
+        placeholder="Top"
+        [value]="Item.styles.top"
+        lavi-app-numbers-only
+        maxlength="3"
+      />
+      <span>px</span>
+    </div>
+    <div>
+      <label>Height</label
+      ><input
+        type="text"
+        formControlName="height"
+        placeholder="Height"
+        [value]="Item.styles.height"
+        lavi-app-numbers-only
+        maxlength="3"
+      />
+      <span>px</span>
+    </div>
+<div>
+  <label>Vertical Padding </label
+  ><input
+    type="text"
+    maxlength="3"
+    formControlName="verticalPadding"
+    placeholder="Vertical Padding"
+    lavi-app-numbers-only
+    [value]="Item.verticalPadding"
+  /> <span>px</span>
+</div>
+<div>
+  <label>Horizontal Padding </label
+  ><input
+    type="text"
+    formControlName="horizontalPadding"
+    placeholder="Horizontal Padding"
+    lavi-app-numbers-only
+    maxlength="3"
+    [value]="Item.horizontalPadding"
+  />
+  <span>px</span>
+</div>
+<div>
+  <label>Box Round Corners:</label
+  ><input
+    type="text"
+    formControlName="boxRoundCorners"
+    [value]="Item.styles.boxRoundCorners"
+    placeholder="Box Round Corners"
+    lavi-app-numbers-only
+    maxlength="3"
+  />
+  <span>px</span>
+</div>
+<div>
+  <label>Move control</label>
+  <div class="front-back-control" >  
+    <span class="k-i-forward-element k-icon move-to-front" title="Move to front" (click)="IncreaseZIndex()">
+    </span>
+    <span class="k-i-backward-element k-icon move-to-back" title="Move to back" (click)="DecreaseZIndex()">
+    </span>
+  </div>
+</div>
+</div>
+
+<lavi-language-image-modal [OpenDialog]="OpenImageModal"
+[Title]="'Upload Images'"
+[ImageFormArray]="ImageFormArray$ | async"
+(Save)="Save($event)"
+(CloseImageModal)="CloseImageDialog()"
+></lavi-language-image-modal>

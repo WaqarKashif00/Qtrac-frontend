@@ -1,0 +1,128 @@
+<div [formGroup]="Panel.form">
+  <lavi-form-panel
+    PanelHeader="Thank You Properties"
+    [(PanelExpand)]="IsPanelExpand"
+  >
+    <lavi-form-content-panel>
+    <div class="property-window-body">
+      <div>
+        <label>Display time in seconds</label
+        ><input
+          type="text"
+          maxlength="2"
+          lavi-app-numbers-only
+          placeholder="Message display time"
+          formControlName="messageDisplayTimeInSeconds"
+          [value]="Panel.messageDisplayTimeInSeconds"
+          /><span class="edit-icon"></span>
+      </div>
+      <div>
+        <label>Top</label
+        ><input
+          type="text"
+          formControlName="top"
+          [value]="Panel.styles.top"
+          placeholder="Top"
+          lavi-app-numbers-only
+          maxlength="3"
+        />
+        <span>px</span>
+      </div>
+      <div>
+        <label>Left</label
+        ><input
+          type="text"
+          formControlName="left"
+          [value]="Panel.styles.left"
+          placeholder="Left"
+          lavi-app-numbers-only
+          maxlength="3"
+        />
+        <span>px</span>
+      </div>
+      <div>
+        <label>Width</label
+        ><input
+          type="text"
+          formControlName="width"
+          [value]="Panel.styles.width"
+          placeholder="Width"
+          lavi-app-numbers-only
+          maxlength="3"
+        />
+        <span>px</span>
+      </div>
+      <div>
+        <label>Height</label
+        ><input
+          type="text"
+          formControlName="height"
+          [value]="Panel.styles.height"
+          placeholder="Height"
+          lavi-app-numbers-only
+          maxlength="3"
+        />
+        <span>px</span>
+      </div>
+      <div>
+        <label>Panel Background Color</label>
+        <kendo-colorpicker
+          formControlName="backgroundColor"
+          [value]="Panel.styles.backgroundColor"
+        >
+        </kendo-colorpicker>
+      </div>
+      <div>
+        <label>Item Background Color</label>
+        <kendo-colorpicker
+          formControlName="itemBackgroundColor"
+          [value]="Panel.itemBackgroundColor"
+        >
+        </kendo-colorpicker>
+      </div>
+      <div>
+        <label>Primary Color</label>
+        <kendo-colorpicker
+          formControlName="color"
+          class="cursor-pointer"
+          [value]="Panel.styles.color"
+        >
+        </kendo-colorpicker>
+      </div>
+      <div>
+        <label>Secondary Color</label>
+        <kendo-colorpicker
+          formControlName="dynamicTextColor"
+          class="cursor-pointer"
+          [value]="Panel.dynamicTextColor"
+        >
+        </kendo-colorpicker>
+      </div>
+      <div>
+        <label>Vertical Padding</label
+        ><input
+          type="text"
+          formControlName="verticalPadding"
+          placeholder="Vertical Padding"
+          [value]="Panel.verticalPadding"
+          lavi-app-numbers-only
+          maxlength="5"
+        />
+        <span>px</span>
+      </div>
+      <div>
+        <label>Horizontal Padding</label
+        ><input
+          type="text"
+          formControlName="horizontalPadding"
+          placeholder="Horizontal Padding"
+          [value]="Panel.horizontalPadding"
+          lavi-app-numbers-only
+          maxlength="5"
+        />
+        <span>px</span>
+      </div>
+      </div>
+    </lavi-form-content-panel>
+  </lavi-form-panel>
+</div>

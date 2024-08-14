@@ -1,0 +1,94 @@
+<ng-container *ngIf="NowHelpingControl$ | async as control">
+  <div [formGroup]="control.form" class="position-relative">
+    <!-- <div>
+      <label>Service Arrangement</label
+      ><select>
+        <option>All Services in one column</option>
+      </select>
+    </div> -->
+    <div>
+      <label>Text</label>
+      <div class="float-right">
+        <span (click)="OpenTranslateDialog()" class="text-blue cursor-pointer">
+          Edit text</span>
+      </div>
+    </div>
+    <div>
+      <label>Top</label><input type="text" formControlName="top" [value]="control.styles.top" placeholder="Top"
+        maxlength="4" lavi-app-numbers-only />
+      <span>px</span>
+    </div>
+    <div>
+      <label>Left</label><input type="text" formControlName="left" [value]="control.styles.left" placeholder="Left"
+        maxlength="4" lavi-app-numbers-only />
+      <span>px</span>
+    </div>
+    <div>
+      <label>Width</label><input type="text" lavi-app-numbers-only formControlName="width"
+        [value]="control.styles.width" placeholder="Width" maxlength="4" />
+      <span>px</span>
+    </div>
+    <div>
+      <label>Height</label><input type="text" formControlName="height" lavi-app-numbers-only
+        [value]="control.styles.height" placeholder="Height" maxlength="4" />
+      <span>px</span>
+    </div>
+    <div>
+      <label>Box Shadow</label>
+      <select formControlName="boxShadow">
+        <option [ngValue]="true">True</option>
+        <option [ngValue]="false">False</option>
+      </select>
+    </div>
+    <div>
+      <label>Box Round Corners</label><input type="text" formControlName="boxRoundCorners"
+        [value]="control.styles.boxRoundCorners" placeholder="Box Round Corners" lavi-app-numbers-only maxlength="5" />
+      <span>px</span>
+    </div>
+    <div>
+      <label>Background color</label><kendo-colorpicker formControlName="backgroundColor"
+        [value]="control.styles.backgroundColor">
+      </kendo-colorpicker>
+    </div>
+    <div class="position-relative">
+      <label>Background image</label>
+      <div class="float-right text-right upload-button-container">
+        <span class="browse-button">
+          <ng-container *ngIf="FileName"><span class="pull-right-32 mr-10">{{FileName}}</span></ng-container>
+          <ng-container *ngIf="!FileName"><span class="text-blue">Click to add</span></ng-container>
+        </span>
+        <input type="file" placeholder="background color" (change)="SetFileURL($event)" />
+        <span *ngIf="FileName" class="close background-img-close-icon" (click)="Remove()">&times;</span>
+        <span *ngIf="!FileName" class="edit-icon bg-image"></span>
+      </div>
+    </div>
+    <lavi-title-font [FormGroup]="control.form"></lavi-title-font>
+    <lavi-font [FormGroup]="control.form"></lavi-font>
+
+    <div>
+      <label>Column One Value</label>
+
+      <mwl-text-input-autocomplete-container>
+        <input type="text" mwlTextInputAutocomplete triggerCharacter="%" required [findChoices]="findChoices"
+          [getChoiceLabel]="getChoiceLabel" formControlName="columnOne" [value]="control.columnOne"
+          placeholder="Column One">
+      </mwl-text-input-autocomplete-container>
+    </div>
+
+    <div>
+      <label>Column Two Value</label>
+
+      <mwl-text-input-autocomplete-container>
+        <input type="text" mwlTextInputAutocomplete triggerCharacter="%" required [findChoices]="findChoices"
+          [getChoiceLabel]="getChoiceLabel" formControlName="columnTwo" [value]="control.columnTwo"
+          placeholder="Column Two">
+      </mwl-text-input-autocomplete-container>
+    </div>
+  </div>
+</ng-container>
+
+
+<lavi-language-translate-modal Title="Now Helping Text" [OpenDialog]="OpenDialog$ | async"
+  [TextFormArray]="TextFormArray$ | async" (CloseTranslateTextDialog)="CloseTranslateDialog()"
+  (TranslateText)="Translate($event)" (Save)="UpdateTranslatedTextsInForm($event)">
+</lavi-language-translate-modal>

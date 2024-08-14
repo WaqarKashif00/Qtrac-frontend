@@ -1,0 +1,39 @@
+<ng-container >
+  <lavi-modal
+  [OpenDialog]="OpenDialog"
+  [Width]="ModalWidth"
+  [Height]="ModalHeight"
+  [Title]="Title"
+>
+
+<div class="h-50">
+  <kendo-textbox-container class="w-100 font-weight-normal  key{{AppointmentId}}" floatingLabel="Appointment Id">
+    <input kendoTextBox tabindex="1" maxlength="50"
+    lavi-auto-focus
+    [(ngModel)]="AppointmentId"
+    [AutoFocusRequired]="OpenDialog"
+    type="text"
+
+    (focus)="inputFocus($event)"
+    (input)="inputChange($event)" 
+    (focusout)="inputFocusOut($event)" 
+    id="key{{inputId}}"
+    />
+  </kendo-textbox-container>
+</div>
+
+<kendo-dialog-actions class="pb-0 pr-0">
+  <div class="col-lg-12 p-0">
+    <div class="row float-right" [ngClass]="{'mobile-appointment-buttons': ModalForMobile}">
+      <div class="col-6 col-sm-6 col-lg-6">
+          <input type="button" kendoButton class="secondary-button" (click)="CloseDialog()" value="Cancel" />
+          </div>
+          <div class="col-6 col-sm-6 col-lg-6 pl-0">
+          <input type="button" kendoButton class="primary-button" (click)="Apply()" value="Apply" />
+        </div>
+      </div>
+  </div>
+</kendo-dialog-actions>
+
+</lavi-modal>
+</ng-container>

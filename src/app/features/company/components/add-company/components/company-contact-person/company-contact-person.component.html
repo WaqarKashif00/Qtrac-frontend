@@ -1,0 +1,83 @@
+<div [formGroup]="CompanyContactPersonForm">
+  <div class="col-lg-12 inner-panel-padding panel-border">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="row mt-3">
+          <div class="col-lg-6 form-group">
+            <kendo-textbox-container class="w-100" floatingLabel="First Name">
+              <input kendoTextBox tabindex="12" maxlength="50"
+                formControlName="firstName" lavi-trim-value />
+            </kendo-textbox-container>
+          </div>
+          <div class="col-lg-6 form-group">
+            <kendo-textbox-container class="w-100" floatingLabel="Last Name">
+              <input kendoTextBox maxlength="50" tabindex="13"
+              formControlName="lastName" lavi-trim-value/>
+            </kendo-textbox-container>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-lg-9 form-group">
+            <kendo-textbox-container class="w-100" floatingLabel="Office Number">
+              <kendo-maskedtextbox floatingLabel="Office Number" placeholder="Office Number"
+                [mask]="Validation.PhoneNoMask" formControlName="officeNumber"
+                tabindex="14">
+              </kendo-maskedtextbox>
+            </kendo-textbox-container>
+            <div class="h-10">
+              <lavi-validation-message-list [validation-form-group-name]="CompanyContactPersonForm"
+                validation-control-name="officeNumber"
+                [validation-errorlist]="CompanyMessages.OfficePhoneNoMessages">
+              </lavi-validation-message-list>
+            </div>
+          </div>
+          <div class="col-lg-3 form-group">
+            <kendo-textbox-container class="w-100" floatingLabel="Extension">
+              <input kendoTextBox maxlength="4" lavi-app-numbers-only tabindex="15"
+              formControlName="extension" lavi-trim-value/>
+            </kendo-textbox-container>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-lg-9 form-group">
+            <kendo-textbox-container class="w-100" floatingLabel="Cellphone Number">
+              <kendo-maskedtextbox [mask]="Validation.PhoneNoMask" placeholder="Cellphone Number"
+              formControlName="cellPhoneNumber" tabindex="16">
+              </kendo-maskedtextbox>
+            </kendo-textbox-container>
+            <div class="h-10">
+              <lavi-validation-message-list [validation-form-group-name]="CompanyContactPersonForm"
+                validation-control-name="cellPhoneNumber"
+                [validation-errorlist]="CompanyMessages.CellPhoneNoMessages">
+              </lavi-validation-message-list>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-lg-9 form-group">
+            <kendo-textbox-container class="w-100" floatingLabel="Email Address">
+              <input kendoTextBox maxlength="100" tabindex="17"
+              formControlName="emailAddress"/>
+            </kendo-textbox-container>
+            <div class="h-10">
+              <lavi-validation-message-list [validation-form-group-name]="CompanyContactPersonForm"
+                validation-control-name="emailAddress"
+                [validation-errorlist]="CompanyMessages.EmailMessages">
+              </lavi-validation-message-list>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="row mt-3">
+          <div class="col-lg-7 col-sm-12">
+            <kendo-textbox-container class="w-100" floatingLabel="Role in the company">
+              <input kendoTextBox maxlength="50" tabindex="18"
+              formControlName="roleInCompany" lavi-trim-value/>
+            </kendo-textbox-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

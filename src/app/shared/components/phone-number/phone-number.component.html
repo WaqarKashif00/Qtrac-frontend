@@ -1,0 +1,22 @@
+<div [ngClass]="{'error-border':Invalid}" class="wrapper-phone-number clearfix" >
+  <input
+    #inputfield
+    class="lavi-custom-phone"
+    [disabled]="IsDisabled"
+    type="tel"
+    maxlength="15"
+    [value]="PhoneNumber || ''"
+    ng2TelInput
+    [style.color]="TextColor"
+    (hasError)="hasError($event)"
+    [ng2TelInputOptions]="GetInitialDetails()"
+    (keypress)="keyPressNumbersDecimal($event)"
+    (ng2TelOutput)="getNumber($event)"
+    (intlTelInputObject)="telInputObject($event)"
+    (countryChange)="onCountryChange($event)"
+    (focus)="inputFocus($event)"
+    (input)="inputChange($event)"
+    (focusout)="inputFocusOut($event)"
+    id="key{{ItemId}}"
+  />
+</div>

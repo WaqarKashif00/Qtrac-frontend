@@ -1,0 +1,18 @@
+.mobile-preview-footer {
+ // position: absolute;
+  position: fixed;
+ // bottom: 0px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  overflow: hidden; 
+  //height: 9%;
+  height: 9vh;
+}
+
+.footer-text{
+  text-align: center;
+  word-break: break-word;
+  padding: 0;
+}

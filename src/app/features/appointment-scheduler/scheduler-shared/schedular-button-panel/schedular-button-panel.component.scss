@@ -1,0 +1,44 @@
+@import "src/stylings/primitives/primitives.scss";
+.button-container {
+  padding-bottom: 50px;
+}
+.lavi-primary-button, .lavi-secondary-button{
+  border-radius: 5px;
+  border: solid thin $color-border-form-element-active;
+  height: 42px;
+  width: 138px;
+}
+.lavi-primary-button {
+  background: $scheduler-primary-button-color;
+  color: $color-text-white;
+}
+.lavi-secondary-button {
+  background: $scheduler-background;
+  color: $scheduler-default-font-color;
+}
+
+.disabled-button {
+  border-radius: 5px;
+  border: solid thin $color-border-form-element-active;
+  height: 42px;
+  width: 138px;
+  background: $color-form-disabled-button-text;
+  color: $scheduler-default-font-color;
+
+}
+
+.validation-message{
+  margin-left: 5px;
+  margin-bottom: 14px;
+  font-size: 11px;
+  color: $color-text-red;
+}
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+.button-sm-position {
+  position: absolute;
+  top: 100px;
+}
+}

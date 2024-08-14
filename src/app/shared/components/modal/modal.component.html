@@ -1,0 +1,12 @@
+<kendo-dialog
+title="{{Title}}"
+[minWidth]="MinWidth"
+[minHeight]="MinHeight"
+[width]="Width"
+[height]="Height"
+*ngIf="OpenDialog"
+(close)="CloseDialog()"
+>
+  <ng-content></ng-content>
+
+</kendo-dialog>

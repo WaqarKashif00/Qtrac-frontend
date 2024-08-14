@@ -1,0 +1,29 @@
+<ng-container *ngIf="FooterControl$ | async as footerControl">
+
+<div 
+  class="row col-lg-12 mobile-layout-footer p-0 m-0"
+  [style.width.px]="footerControl.styles.width"
+  [style.height.px]="footerControl.styles.height"
+  [style.color]="footerControl.styles.color"
+  [style.font-size]="
+  footerControl.styles.fontSize ? footerControl.styles.fontSize + 'px' : ''
+  "
+  [style.font-style]="footerControl.styles.fontStyle"
+  [style.font-family]="footerControl.styles.font"
+  [style.font-weight]="footerControl.styles.fontWeight"
+  (click)="OnClick()"
+>
+<div class="col-2 mt-3 pr-0 text-left" *ngIf="ShowFooterBackButtonImage && footerControl.isFooterImageVisible">
+  <img class="w-75" [src]="footerControl.footerImage" />
+</div>
+<ng-container *ngIf="SelectedLanguage$ | async as SelectedLanguage">
+  <div *ngIf="footerControl.isTextVisible" class="footer-text w-50 px-2 mt-2">
+    <span> {{footerControl.text[SelectedLanguage.selectedLanguage] ||
+      footerControl.text[SelectedLanguage.defaultLanguage]}} </span>
+  </div>
+</ng-container>
+  <div class="col p-0 h-75 text-right">
+    <a href="https://qtrac.com/welcome-to-the-virtual-queue/"><img class="h-100 pt-2 pr-2 w-auto" [src]='getQtracLogo()' /></a>
+  </div>
+</div>
+</ng-container>

@@ -1,0 +1,87 @@
+@import "src/stylings/primitives/primitives.scss";
+@import "src/stylings/shared/agent-layout.scss";
+
+.modal-bg{
+    width: 100%;
+    height: 100%;
+    background-color: $agent-modal-bg;
+    opacity: 0.38;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+  }
+.custom-modal-container{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+.custom-modal{
+    border-radius: #{$agent-custom-model-borer-radius};
+    z-index: 10;
+    background: $color-background-white;
+}
+
+.custom-modal-header{
+    padding:10px;
+    height: #{$agent-custom-model-header-height};
+    border-radius: #{$agent-custom-model-borer-radius};
+    display: flex;
+}
+.header-bottom-filling{
+    width: 100%;
+    margin-top: calc(0px - #{$agent-custom-model-borer-radius});
+    height: #{$agent-custom-model-borer-radius};
+}
+
+.custom-modal-header-content{
+    width: calc(100% - 30px);
+}
+
+.custom-modal-header-close-btn{
+    float: right;
+    width: 20px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    .close {
+      right: 0;
+      top: 10px;
+    }
+    span {
+      color: $agent-default-font-color;
+      text-shadow: none;
+      font-size: 30px;
+      font-weight: 600;
+    }
+}
+.custom-modal-body{
+    justify-content: center;
+    padding:5px;
+    height:calc(100% - #{$agent-custom-model-header-height} - #{$agent-custom-model-footer-height});
+    overflow-y: scroll;
+}
+.custom-modal-body.no-footer{
+  justify-content: center;
+  padding:5px;
+  height:calc(100% - #{$agent-custom-model-header-height});
+  overflow-y: auto;
+}
+
+.custom-modal-footer{
+    height:#{$agent-custom-model-footer-height};
+}
+::ng-deep {
+  .custom-modal-body .container {
+    font-size: $font-size-small-1;
+  }
+}
+
+

@@ -1,0 +1,38 @@
+@import "src/stylings/primitives/primitives.scss";
+@import "src/stylings/shared/tags.scss";
+
+.filter-search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 12px;
+}
+
+.filter_tags_container {
+  display: flex;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  justify-content: center;
+}
+
+.filter_tags_row_container {
+  display: grid;
+  grid-template-columns: repeat(4, 126px);
+}
+
+.filter_tags_items_container {
+  padding-top: 8px;
+}
+
+.filter-tags-search-inner {
+  display: flex;
+}
+
+.filter-tags-filter-limiter {
+  width: 420px;
+}
+
+.filter-tags-tag-item {
+  padding-top: 8px;
+}
+

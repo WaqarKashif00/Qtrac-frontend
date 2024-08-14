@@ -1,0 +1,81 @@
+<lavi-modal class="companies-sms-number-container" [OpenDialog]='OpenDialog' [Title]='"Assign SMS Phone Numbers To Location"' (CloseModal)="Close()" [Width]="1080" [Height]="500">
+    <div class="container">
+        <div class="row mt-1 ml-3">
+            <div class="assign-numbers-grid-header container  pb-3">
+                <div class="grid-header-row d-flex">
+                    <div class="grid-header-column col-3 offset-1 text-left">
+                        <kendo-textbox-container floatingLabel="Search Phone">
+                            <input tabindex="25" kendoTextBox maxlength="12" [(ngModel)]="CurrentFilter" />
+                        </kendo-textbox-container>
+                    </div>
+                    <div class="grid-header-column col-5 text-right">
+
+                    </div>
+                </div>
+            </div>
+            <div class="assign-numbers-grid-header container pb-2">
+                <div class="grid-header-row custom-header" >
+                    <div class="grid-header-column col-3 offset-1 text-left">
+                        Phone Number
+                    </div>
+                    <div class="grid-header-column col-5 text-left">
+                        Assigned To
+                    </div>
+                    <div class="col-4 text-left">
+                        <span tabindex="1" *ngIf="FilterId!=CompanyAssignNumberFilter.UnAssigned" class="text-blue no-outline cursor-pointer"
+                            (click)="ShowAllDetails()"><u>All</u></span>
+                        <span tabindex="1" *ngIf="FilterId==CompanyAssignNumberFilter.UnAssigned" class="text-blue no-outline cursor-pointer"
+                            (click)="ShowAllDetails()">All</span>
+                        /
+                        <span tabindex="1" *ngIf="FilterId!=CompanyAssignNumberFilter.UnAssigned" class="text-blue no-outline cursor-pointer"
+                            (click)="ShowOnlyUnassignedDetails()">Unassigned</span>
+                        <span tabindex="1" *ngIf="FilterId==CompanyAssignNumberFilter.UnAssigned" class="text-blue no-outline cursor-pointer"
+                            (click)="ShowOnlyUnassignedDetails()"><u>Unassigned</u></span>
+                    </div>
+                </div>
+            </div>
+            <div class="assign-numbers-grid-body container">
+                <div *ngIf="FilterId==CompanyAssignNumberFilter.All||FilterId==CompanyAssignNumberFilter.UnAssigned">
+                    <div class="d-block"
+                        *ngFor="let Number of AllUnAssignedNumbers | laviFilterListBy : CurrentFilter : 'phone_number';trackBy:IdentifyChange ">
+                        <lavi-company-assign-sms-number-grid-row [Number]="Number.phone_number" #PhoneNumberRow
+                            [BranchList]="BranchList" [IsActive]='true' (OnDelete)="DeleteNumber($event)"
+                            (OnUpdate)="Update($event)" [BranchId]="Number.lavi_branchId"
+                            (OnBranchChange)="UpdateOptionDetails($event)"
+                            (OnEdit)="OnEditBranch($event)"
+                            [BranchId]="Number.lavi_branchId" [DefaultValues]="DefaultValues">
+                        </lavi-company-assign-sms-number-grid-row>
+                    </div>
+                </div>
+                <div *ngIf="(FilterId== CompanyAssignNumberFilter.All)||FilterId== CompanyAssignNumberFilter.Assigned">
+                    <div class="d-block"
+                        *ngFor="let Number of AllAssignedToBranchNumbers | laviFilterListBy : CurrentFilter : 'phone_number';trackBy:IdentifyChange">
+                        <lavi-company-assign-sms-number-grid-row [Number]="Number.phone_number" #PhoneNumberRow
+                            [BranchList]="BranchList" (OnDelete)="DeleteNumber($event)" (OnUpdate)="Update($event)"
+                            (OnBranchChange)="UpdateOptionDetails($event)"
+                            (OnEdit)="OnEditBranch($event)"
+                            [IsActive]='IsActive(Number)' [BranchId]="Number.lavi_branchId" [DefaultValues]="DefaultValues">
+                        </lavi-company-assign-sms-number-grid-row>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row mt-5">
+            <div class="col-12">
+                <span *ngIf="InActiveNumberCount > 0" class="text-orange bold">
+                    <b>
+                        Warning! There {{(InActiveNumberCount > 1 ? "are" : "is" )}} {{InActiveNumberCount}}
+                        number{{(InActiveNumberCount > 1 ? "s" : "" )}} that have
+                        been
+                        removed from your SMS account.</b>
+                </span>
+                <div class="float-right">
+                    <!-- <button kendoButton class="save mr-3" (click)="Close()">Cancel</button> -->
+                     <!-- TODO : Need to bind save all API -->
+                    <!-- <input type="button" kendoButton class="save" (click)="SavePhoneNumbers()" value="Save" /> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</lavi-modal>

@@ -1,0 +1,10 @@
+<div class="panel-header mt-3 mb-2">
+  <kendo-panelbar  (stateChange)="StateChange()" [keepItemContent]="true" >
+    <kendo-panelbar-item (click)="ShowPanel1()" class="panel-expand" [title]="PanelHeader" [expanded]="PanelExpand">
+      <ng-template kendoPanelBarContent>
+          <ng-content>
+          </ng-content>
+      </ng-template>
+    </kendo-panelbar-item>
+  </kendo-panelbar>
+</div>

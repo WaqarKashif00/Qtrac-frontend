@@ -1,0 +1,282 @@
+<div>
+  <div class="row p-4 ml-4 header-row">
+    <div class="col-sm-5">
+      <div *ngIf="BranchList$ | async as branchList">
+        <kendo-dropdownlist placeholder="Select Location" tabindex="2"
+          [data]="BranchList$ | async | laviFilterListWithTags: searchModel:'tags':'branchName' | laviSortBy:'branchName'"
+          [(ngModel)]='selectedBranch' [textField]="'branchName'" (filterChange)="handleFilter($event)"
+          [filterable]="true" (open)="onOpen($event)" (valueChange)="DropDownSelected($event, true, branchList)"
+          [valueField]="'branchId'">
+        </kendo-dropdownlist>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <span *ngFor="let timeScope of timeScopes">
+        <span *ngIf="timeScope.isSelected == true && timeScope.period == 'Day'">
+          <kendo-datepicker [weekNumber]="true" [value]="value" (valueChange)="dateChanged($event)">
+          </kendo-datepicker>
+        </span>
+        <span *ngIf="timeScope.isSelected == true && timeScope.period == 'Week'">
+          <label (click)="open()">
+            Week:
+            <kendo-dateinput [(value)]="range.start" (selectionRangeChange)="handleSelectionRange($event)">
+            </kendo-dateinput>
+            - <kendo-dateinput [(value)]="range.end"></kendo-dateinput>
+          </label>
+        </span>
+        <span *ngIf="timeScope.isSelected == true && timeScope.period == 'Month'">
+          <label>
+            Month:
+            <kendo-datepicker bottomView="year" [(value)]="monthValue" topView="decade" format="MMMM yyyy"
+              placeholder="Pick A Month" (valueChange)="monthChanged($event)"></kendo-datepicker>
+          </label>
+        </span>
+      </span>
+    </div>
+    <div class="col-sm-3 tab-content">
+      <div class="slider">
+        <ul>
+          <li *ngFor="let timeScope of timeScopes" [ngClass]="{ selected: timeScope.isSelected }"
+            (click)="timeScopeChecked(timeScope, true, timeScopes)">
+            {{ timeScope.period }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row ml-4">
+    <div class="col-sm-9">
+      <div class="row p-2">
+        <kendo-card width="300px" class="col mr-2">
+          <kendo-card-header>
+            <h3>Visitor Breakdown</h3>
+          </kendo-card-header>
+          <kendo-card-body class="row">
+            <kendo-chart [seriesColors]="seriesColors" (seriesClick)="GetDetailedVisitor($event)" style="width: 100%">
+              <kendo-chart-legend position="bottom" orientation="horizontal">
+              </kendo-chart-legend>
+              <kendo-chart-tooltip [shared]="true">
+              </kendo-chart-tooltip>
+              <kendo-chart-value-axis>
+                <kendo-chart-value-axis-item [title]="{ text: '# of Visitors' }">
+                </kendo-chart-value-axis-item>
+              </kendo-chart-value-axis>
+              <kendo-chart-series>
+                <kendo-chart-series-item *ngFor="let item of dailyVisitorData | async" [data]="item.items"
+                  [name]="item.value" [stack]="{ group: this.timeScopes[0].isSelected ? item.value : item.date }"
+                  field="count" categoryField="categoryDate">
+
+                </kendo-chart-series-item>
+              </kendo-chart-series>
+            </kendo-chart>
+          </kendo-card-body>
+          <div class=""></div>
+          <kendo-card-body class="row" *ngIf="detailedVisitor | async">
+            <span class="k-icon k-i-close k-i-x close-icon cross-position" title="Close detail visitor graph"
+              (click)="closeVisitorDetailGraph()"></span>
+            <kendo-chart [seriesColors]="selectedColor" style="width: 100%">
+              <kendo-chart-title [text]="detailedVisitorChartTitle" position="bottom">
+              </kendo-chart-title>
+              <kendo-chart-legend position="bottom" orientation="horizontal">
+              </kendo-chart-legend>
+              <kendo-chart-tooltip [shared]="true">
+              </kendo-chart-tooltip>
+              <kendo-chart-category-axis>
+                <kendo-chart-category-axis-item>
+                  <kendo-chart-category-axis-item-labels *ngIf="timeScopes[2].isSelected !== true" [rotation]="-55">
+                  </kendo-chart-category-axis-item-labels>
+                </kendo-chart-category-axis-item>
+              </kendo-chart-category-axis>
+
+              <kendo-chart-series>
+                <kendo-chart-series-item [markers]="false" type="line" *ngFor="let item of detailedVisitorData | async"
+                  [data]="item.items" [name]="item.value" field="count" categoryField="categoryDate">
+                </kendo-chart-series-item>
+
+              </kendo-chart-series>
+            </kendo-chart>
+          </kendo-card-body>
+        </kendo-card>
+        <kendo-card width="250px" class="col">
+          <kendo-card-header>
+            <h3>Service Performance</h3>
+            <label class="floatingText">Click and drag any empty area on the chart to scroll and see more information (only once exceeding 5 values)</label>
+          </kendo-card-header>
+          <kendo-card-body class="row">
+            <kendo-chart [pannable]="true" [seriesColors]="servicePerformanceChartColors"
+              (seriesClick)="GetDetailedService($event)" style="width: 100%; ">
+              <kendo-chart-tooltip [shared]="true"> </kendo-chart-tooltip>
+              <kendo-chart-legend position="bottom" orientation="horizontal">
+                <kendo-chart-tooltip> </kendo-chart-tooltip>
+              </kendo-chart-legend>
+              <kendo-chart-title text="Minutes" position="bottom">
+              </kendo-chart-title>
+
+              <kendo-chart-category-axis>
+                <kendo-chart-category-axis-item [min]="0" [max]="5">
+                </kendo-chart-category-axis-item>
+              </kendo-chart-category-axis>
+              <kendo-chart-series>
+                <kendo-chart-series-item type="bar" *ngFor="let item of servicePerformanceData | async"
+                  [data]="item.items" [name]="item.value" [stack]="{ group: item.name }" field="data"
+                  categoryField="serviceName">
+                </kendo-chart-series-item>
+              </kendo-chart-series>
+            </kendo-chart>
+          </kendo-card-body>
+          <kendo-card-body class="row" *ngIf="detailedService | async">
+            <span class="k-icon k-i-close k-i-x close-icon cross-position" title="Close detail service graph"
+              (click)="closeServiceDetailGraph()"></span>
+            <kendo-chart [seriesColors]="servicePerformanceChartColors" style="width: 100%">
+              <kendo-chart-legend position="bottom" orientation="horizontal">
+              </kendo-chart-legend>
+              <kendo-chart-tooltip [shared]="true">
+              </kendo-chart-tooltip>
+              <kendo-chart-category-axis>
+                <kendo-chart-value-axis-item [title]="{ text: 'Minutes' }">
+                </kendo-chart-value-axis-item>
+                <kendo-chart-title [text]="detailedServiceChartTitle" position="bottom">
+                </kendo-chart-title>
+                <kendo-chart-category-axis-item>
+                  <kendo-chart-category-axis-item-labels *ngIf="timeScopes[0].isSelected == true" [rotation]="-55">
+                  </kendo-chart-category-axis-item-labels>
+                </kendo-chart-category-axis-item>
+              </kendo-chart-category-axis>
+              <kendo-chart-series>
+                <kendo-chart-series-item [markers]="false" type="line"
+                  *ngFor="let item of servicePerformanceDetailData | async" [data]="item.items" [name]="item.value"
+                  field="data" categoryField="category">
+                </kendo-chart-series-item>
+              </kendo-chart-series>
+            </kendo-chart>
+          </kendo-card-body>
+        </kendo-card>
+      </div>
+
+      <div class="row p-2">
+        <kendo-card width="250px" class="col mr-2">
+          <kendo-card-header>
+            <h3>Employee/Service Breakdown</h3>
+            <label
+              class="floatingText">Click and drag any empty area on the chart to scroll and see more information (only once exceeding 5 values)</label>
+          </kendo-card-header>
+          <kendo-card-body class="row">
+            <kendo-chart [pannable]="true" [seriesColors]="employeeBreakdownChartColors" style="width: 100%">
+              <kendo-chart-title text="Tickets Served" position="bottom">
+              </kendo-chart-title>
+              <kendo-chart-tooltip [shared]="true"> </kendo-chart-tooltip>
+              <kendo-chart-legend position="bottom" orientation="horizontal" [visible]="false">
+              </kendo-chart-legend>
+              <kendo-chart-category-axis>
+                <kendo-chart-category-axis-item [min]="0" [max]="5">
+                </kendo-chart-category-axis-item>
+              </kendo-chart-category-axis>
+              <kendo-chart-series>
+                <kendo-chart-series-item type="bar" *ngFor="let item of employeeService | async" [data]="item.items"
+                  [name]="item.value" [stack]="{ group: item.firstName }" field="servicesPerformed"
+                  categoryField="firstName">
+                </kendo-chart-series-item>
+
+              </kendo-chart-series>
+            </kendo-chart>
+          </kendo-card-body>
+        </kendo-card>
+        <kendo-card width="250px" class="col">
+        </kendo-card>
+      </div>
+    </div>
+    <div class="col-sm-3 p-2">
+      <kendo-card class="liveBar pl-2">
+        <div class="row ml-4 mt-4">
+          <h3>Live Stats</h3>
+        </div>
+        <kendo-card-body class="ml-2">
+          <p class="stats-name">Queue Length</p>
+          <div class="row live-stat-desc">
+            <h5 *ngIf="liveQueueCount | async as dataValue">{{ dataValue[0].length }}</h5>
+            <span>
+              <p class="">
+                Visitors
+              </p>
+            </span>
+            <div class="col">
+              <kendo-sparkline [data]="queueCountSpark"> </kendo-sparkline>
+            </div>
+          </div>
+          <hr>
+          <p class="stats-name">Now Serving</p>
+          <div class="row live-stat-desc">
+            <h5 *ngIf="liveServingCount | async as dataValue">{{ dataValue[0].servingNow }} </h5>
+            <span>
+              <p>Visitors</p>
+            </span>
+          </div>
+          <hr>
+
+          <p class="stats-name">Abandoned</p>
+          <div class="row live-stat-desc">
+            <h5 *ngIf="liveAbandonCount | async as dataValue">
+              {{ dataValue[0].abandon }}
+            </h5>
+            <span>
+              <p>Visitors</p>
+            </span>
+            <div class="col">
+              <kendo-sparkline [seriesColors]="seriesColors" [data]="abandonSpark"> </kendo-sparkline>
+            </div>
+          </div>
+          <hr>
+
+          <p class="stats-name">No Shows</p>
+          <div class="row live-stat-desc">
+
+            <h5 *ngIf="liveNoShowCount | async as dataValue; else default">
+              {{ dataValue }}
+            </h5>
+            <ng-template #default>
+              <h5>
+                0
+              </h5>
+            </ng-template>
+            <span>
+              <p>Visitors</p>
+            </span>
+            <div class="col">
+              <kendo-sparkline [seriesColors]="seriesColors" [data]="noShowSpark"> </kendo-sparkline>
+            </div>
+          </div>
+          <hr>
+
+          <p class="stats-name">Active Staff</p>
+          <div class="row live-stat-desc">
+            <h5 *ngIf="liveActiveCount | async as dataValue">{{ dataValue[0].activeNow }} </h5>
+            <span>
+              <p>Agents</p>
+            </span>
+
+          </div>
+          <hr>
+          <p class="stats-name">Served</p>
+          <div class="row live-stat-desc">
+            <h5 *ngIf="liveServedCount | async as dataValue">{{ dataValue[0].length }}</h5>
+            <span>
+              <p>Visitors</p>
+            </span>
+          </div>
+        </kendo-card-body>
+      </kendo-card>
+    </div>
+  </div>
+  <!-- Weekly Calendar PopUp -->
+  <kendo-dialog *ngIf="opened" (close)="close('cancel')" [minWidth]="250" [width]="900">
+    <kendo-multiviewcalendar kendoDateRangeSelection [selectionRange]="range"
+      (selectionRangeChange)="handleSelectionRange($event)"></kendo-multiviewcalendar>
+    <kendo-dialog-actions>
+      <button kendoButton (click)="getWeekSelectGraphData('yes')" themeColor="primary">
+        Confirm
+      </button>
+    </kendo-dialog-actions>
+  </kendo-dialog>
+
+  <!-- {{ graphVisitorData | json }} -->
+</div>

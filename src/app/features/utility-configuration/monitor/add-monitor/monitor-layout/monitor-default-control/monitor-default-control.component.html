@@ -1,0 +1,29 @@
+<div class="service-controls-properties">
+  <div class="property-window">
+
+      <lavi-form-panel PanelHeader="Next Up" [(PanelExpand)]="ControlSelection.IsNextUpControlSelected" *ngIf="DesignerPanel.showNextUpPanel">
+        <div class="property-window-body" >
+          <lavi-form-content-panel>
+            <lavi-next-up-property></lavi-next-up-property>
+          </lavi-form-content-panel>
+        </div>
+      </lavi-form-panel>
+
+      <lavi-form-panel PanelHeader="Now Calling" [(PanelExpand)]="ControlSelection.IsNowCallingControlSelected" *ngIf="DesignerPanel.showNowCallingPanel">
+        <div class="property-window-body" >
+          <lavi-form-content-panel>
+            <lavi-now-calling-property></lavi-now-calling-property>
+          </lavi-form-content-panel>
+        </div>
+      </lavi-form-panel>
+
+      <lavi-form-panel PanelHeader="Now Helping" [(PanelExpand)]="ControlSelection.IsNowHelpingControlSelected" *ngIf="DesignerPanel.showNowHelpingPanel">
+        <div class="property-window-body" >
+          <lavi-form-content-panel>
+            <lavi-now-helping-property></lavi-now-helping-property>
+          </lavi-form-content-panel>
+        </div>
+      </lavi-form-panel>
+
+   </div>
+</div>

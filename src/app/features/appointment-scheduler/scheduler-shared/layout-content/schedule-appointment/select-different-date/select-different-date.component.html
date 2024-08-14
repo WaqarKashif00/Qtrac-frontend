@@ -1,0 +1,34 @@
+<div class="select-different-date">
+  <div class="row mt-4">
+    <div class="col-xl-6 col-lg-12 col-sm-12 mb-md-3 text-center">
+      <kendo-calendar [(ngModel)]="SelectedDate"  [value]="SelectedDate"[disabledDates]="disabledDates" [focusedDate]="SelectedDate" (valueChange)="onAppointmentDateChange($event)">
+        <ng-template kendoCalendarNavigationItemTemplate let-title let-date="date" let-view="activeView">
+          {{view === 'month' && date.getMonth() === 0 ? 'Jan '+title : title}}
+      </ng-template>
+      </kendo-calendar>
+    </div>
+    <div class="col-xl-6 col-lg-12 col-sm-12 different-date mt-0">
+      <p *ngIf="!AvailableSlots">{{AppointmentTexts.appointmentNotAvailable}}</p>
+
+        <ng-container *ngIf="AvailableSlots">
+          <p>{{AvailableSlots.selectedDateText}} </p>
+          <div class="different-date-list">
+          <ng-container *ngFor="let item of AvailableSlots.availableSpots">
+          <lavi-list-item
+            [Value]="item.value"
+            [Text]="item.text"
+            [IsSelected]="item.isSelected"
+            [InActiveBackColor]="InActiveBackColor"
+            [InActiveTextColor]="InActiveTextColor"
+            [ActiveBackColor]="ActiveBackColor"
+            [ActiveTextColor]="ActiveTextColor"
+            (OnSelectingMile)="onChange($event)"
+          ></lavi-list-item>
+          </ng-container>
+        </div>
+        </ng-container>
+
+
+    </div>
+  </div>
+</div>

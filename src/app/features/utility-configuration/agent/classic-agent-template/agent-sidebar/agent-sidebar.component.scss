@@ -1,0 +1,84 @@
+@import "src/stylings/primitives/primitives.scss";
+@import "src/stylings/shared/agent-layout.scss";
+
+
+.sidebar-icon-container{
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: grid;
+    padding: 10px;
+    margin-bottom: 10px;
+    // height: 70px;
+}
+.sidebar-icon{
+    height:$sidebar-icon-size;
+    width:$sidebar-icon-size;
+}
+.sidebar-active{
+    border-left: 0.3em solid $sidebar-yellow-border;
+    padding-bottom: 0.3em;
+}
+.sidebar-footer{
+    position: fixed;
+    font-size: $global-font-size;
+    bottom: 10px;
+    width: 40px;
+    left: 16px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.sidebar-footer-popover-menu{
+    position: fixed;
+    bottom: 25px;
+    box-shadow: 0px 0px 10px -5px;
+    left: 25px;
+    background: $color-background-white;
+    font-size:0.8em;
+    z-index: 1000;
+}
+.sidebar-footer-popover-menu *{
+    z-index: 1000;
+}
+.hide-text-selection{
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* */
+  }
+
+  .agent-icon-div{
+    height: 20px;
+    width: 20px;
+  }
+
+.icon-div{
+    height: 30px;
+    width: 30px;
+}
+.icon-label{
+    position: relative;
+    top: 100%;
+    width: 200%;
+    text-align: center;
+    font-size: $font-size-small-3;
+    margin-left: -15px;
+}
+
+.mt-29 {
+  margin-top: 29px;
+}
+.clear-icon{
+    position: absolute;
+bottom: 0;
+margin-left: -3px;
+}
+
+.clear-class {
+    margin-bottom: 30px;
+}

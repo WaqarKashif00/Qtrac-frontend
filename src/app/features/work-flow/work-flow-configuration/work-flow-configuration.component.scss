@@ -1,0 +1,256 @@
+@import "src/stylings/primitives/primitives.scss";
+.full-height {
+    height: -webkit-fill-available;
+}
+
+.right-column {
+    background-color: $color-background-white;
+    flex-grow: 1;
+    position: fixed;
+    padding: 15px 0 20px 60px;
+    right: 0;
+    height: calc(100vh - 120px);
+    overflow-y: auto;
+    overflow-x: clip;
+    width: calc(100vw - 245px);
+    z-index: 10;
+}
+
+.left-column-section {
+    margin: 25px 18px 0;
+}
+
+.right-column-width {
+    width: 100% !important;
+}
+
+.left-column {
+    background: $workflow-left-column-color;
+    border-right: 1px solid $color-text-light-blue;
+    width: 245px;
+    position: fixed;
+    padding-bottom: 20px;
+    height: calc(100vh - 120px);
+    overflow-y: auto;
+    z-index: 10;
+    h3,
+    li {
+        font-size: $font-size-small-2;
+    }
+    h3 {
+        border-bottom: 1px solid $color-text-light-blue;
+        color: $workflow-heading-text-color;
+        margin-top: 10px;
+        padding-bottom: 14px;
+        text-transform: uppercase;
+    }
+    ul {
+        list-style: none;
+        margin: 5px 15px 0 25px;
+        padding: 0;
+        li {
+            color: $color-link-text-blue;
+            margin: 10px 0;
+            .count {
+                float: right;
+            }
+        }
+    }
+    .active,
+    .active :hover {
+        font-weight: bolder;
+    }
+}
+
+::ng-deep .k-grid tr.dragging {
+    background-color: $color-background-blue;
+}
+
+;
+.drag-icon {
+    width: 10px;
+}
+
+.setting-data .col-12 {
+    padding: 15px 30px 13px 35px;
+     ::ng-deep .k-dropdown,
+    .k-textbox-container {
+        width: auto;
+        min-width: 80px;
+        height: 24px;
+    }
+    .numericTextbox {
+        font-size: $font-size-small-2;
+        width: 60px !important;
+        text-align: center;
+    }
+     ::ng-deep .k-numerictextbox .k-numeric-wrap .k-input {
+        text-align: center;
+    }
+     ::ng-deep .k-dropdown .k-dropdown-wrap {
+        height: auto;
+    }
+     ::ng-deep .k-dropdown .k-dropdown-wrap .k-input {
+        border-color: $color-border-form-element;
+        height: auto;
+    }
+     ::ng-deep .k-checkbox {
+        margin-right: 20px;
+        float: left;
+        margin-top: 3px;
+    }
+     ::ng-deep .k-dropdown .k-dropdown-wrap.k-state-focused,
+    .k-dropdowntree .k-dropdown-wrap.k-state-focused {
+        border-color: $color-border-form-element;
+    }
+     ::ng-deep kendo-dropdownlist.number-dropdown {
+        min-width: 48px;
+    }
+    >span {
+        line-height: 21px;
+        vertical-align: middle;
+        display: inline-block;
+        width: 92%;
+    }
+     ::ng-deep .k-textbox-container {
+        height: 24px;
+        padding-top: 0;
+        vertical-align: middle;
+        .k-textbox {
+            font-size: $font-size-small-2;
+            padding: 5px 0 0 10px;
+            width: 100%;
+        }
+    }
+     ::ng-deep span,
+     ::ng-deep .k-dropdown .k-dropdown-wrap .k-input {
+        font-size: $font-size-small-2;
+    }
+}
+
+.workflow,
+.workflow lavi-form-content-panel>.content>.row {
+    margin: 0;
+}
+
+.add-question-modal,
+.add-queues-modal {
+    .question-type-options>.row .row {
+        margin: 0 0 5px;
+    }
+    .question-type-options .option-list .col-5.row,
+    .question-type-options .option-list .col-7 {
+        padding: 0 3px;
+    }
+    .checkbox-container {
+        margin-top: 50px;
+    }
+    .option-list .col-7 p {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+}
+
+::ng-deep .workflow {
+    .k-panelbar {
+        border: none;
+        background-color: transparent !important;
+    }
+}
+
+.workflow {
+    background: transparent;
+    height: calc(100vh - 64px);
+    padding-bottom: 60px;
+    padding-right: 30px;
+    .k-grid td,
+    .k-grid th {
+        border: none;
+    }
+    .k-content .header-row {
+        color: $workflow-text-color;
+        font-weight: $font-weight-500;
+    }
+    .pre-service-question-list {
+        padding: 0 15px;
+        .k-grid td:first-child {
+            text-overflow: clip;
+        }
+        .k-grid td {
+            padding: 10px 5px;
+        }
+        >.col-lg-12 {
+            padding-bottom: 8px;
+            >.row {
+                div:nth-child(3) {
+                    padding: 0 2px;
+                }
+            }
+        }
+        .k-panelbar>.k-item>.k-link {
+            padding-bottom: 7px;
+        }
+        .k-panelbar,
+        .k-panelbar>.k-item,
+        .k-panelbar>.k-item>.k-link:hover {
+            background-color: transparent;
+        }
+        .k-panelbar>.k-item+.k-item {
+            border: none;
+        }
+        .question-list-add,
+        .k-panelbar>.k-item>.k-link,
+        .k-content span,
+        .service-ques li {
+            color: rgba($color-text-black, 0.6);
+            font-size: $font-size-small-2;
+        }
+        .k-grid-content {
+            height: 450px;
+            overflow-y: visible;
+            white-space: nowrap;
+            padding-left: 2%;
+        }
+    }
+    .question-set-modal {
+        height: 316px;
+        overflow-y: auto;
+        overflow-x: clip;
+        .k-tabstrip-top>.k-tabstrip-items .k-item.k-state-active {
+            color: $color-link-text-blue;
+            font-size: $font-size-small-4;
+        }
+        .k-grid td {
+            padding: 10px 5px;
+        }
+    }
+    .modal-body {
+        height: 320px;
+        overflow-y: auto;
+        margin: 10px 0;
+    }
+}
+
+.img-width-10 {
+    width: 10px;
+}
+
+.img-width-15 {
+    width: 15px;
+}
+
+.bottom-15 {
+    bottom: 15px;
+}
+
+::ng-deep .dropdown-menu {
+    max-height: 100px !important;
+    padding-left: 8px !important;
+}
+
+@media screen and (min-width: 1700px) {
+    #footer {
+        left: 40px;
+    }
+}

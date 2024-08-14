@@ -1,0 +1,36 @@
+<ng-container *ngIf="HomeInterfacePageData$ | async as HomeInterfacePageData">
+  <div
+    *ngIf="HomeInterfacePageData"
+    [style.color]="HomeInterfacePageData.designerScreen.color"
+    [style.font-size]="HomeInterfacePageData.designerScreen.fontSize ? HomeInterfacePageData.designerScreen.fontSize + 'px' : ''"
+    [style.background-color]="HomeInterfacePageData.designerScreen.backgroundColor"
+    [style.font-style]="HomeInterfacePageData.designerScreen.fontStyle"
+    [style.background-image]="
+      'url(' + (HomeInterfacePageData.designerScreen.backGroundImageSrc|quoteString) + ')'
+    "
+    [style.font-family]="HomeInterfacePageData.designerScreen.font"
+    class="h-100 w-100 position-absolute overflow-hidden"
+  >
+    <lavi-home-interface-preview-label
+      [Labels]="HomeInterfacePageData.homeInterfacePageData.labels"
+      [SelectedLanguage]="SelectedLanguage"
+      [DefaultLanguage]="DefaultLanguage"
+    ></lavi-home-interface-preview-label>
+    <lavi-home-interface-preview-image
+      [Images]="HomeInterfacePageData.homeInterfacePageData.images"
+      [SelectedLanguage]="SelectedLanguage"
+      [DefaultLanguage]="DefaultLanguage"
+    ></lavi-home-interface-preview-image>
+    <lavi-home-interface-preview-video
+      [Videos]="HomeInterfacePageData.homeInterfacePageData.videos"
+      [SelectedLanguage]="SelectedLanguage"
+      [DefaultLanguage]="DefaultLanguage"
+    ></lavi-home-interface-preview-video>
+    <lavi-home-interface-preview-slider
+      [Sliders]="HomeInterfacePageData.homeInterfacePageData.sliders"
+      [SelectedLanguage]="SelectedLanguage"
+      [DefaultLanguage]="DefaultLanguage">
+    </lavi-home-interface-preview-slider>
+    <lavi-home-interface-preview-footer></lavi-home-interface-preview-footer>
+  </div>
+</ng-container>

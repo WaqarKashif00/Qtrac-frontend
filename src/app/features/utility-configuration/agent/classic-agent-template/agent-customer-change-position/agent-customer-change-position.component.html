@@ -1,0 +1,21 @@
+<lavi-modal [OpenDialog]="IsDialogOpen" [Width]="770">
+  <div [formGroup]='ChangePositionForm' class="container add-group-container">
+    <div class="row">
+      <p class="font20">Change Position</p>
+    </div>
+    <div class="row">
+      <div class="col-5">
+        <label>New Position</label>
+        &nbsp;&nbsp;<input type="number" tabindex="1" min="1" max="5"/>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-7">
+        <div class="float-right">
+          <button kendoButton class="secondary-button mr-2" (click)="Cancel()">Cancel</button>
+          <button kendoButton class="primary-button" type="submit" (click)='ChangePosition()'>Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</lavi-modal>

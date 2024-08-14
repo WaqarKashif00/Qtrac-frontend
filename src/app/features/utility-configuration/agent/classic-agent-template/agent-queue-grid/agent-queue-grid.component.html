@@ -1,0 +1,135 @@
+<div class="container-fluid">
+  <ng-container *ngIf="Customers$ | async as customers">
+    <div class="row agent-buttons-row" *ngIf="!(IsAnySelected$ | async) && customers?.length > 0">
+      <button class="more-information-button btn call-next-button width-200" (click)="CallNext()">
+        CALL NEXT
+      </button>
+    </div>
+    <div class="row agent-buttons-row" *ngIf="(IsAnySelected$ | async) && customers?.length > 0">
+      <div class="col-2 pl-0">
+        <button *ngIf="(AllowSelectedVisitorCalling$ | async)" class="more-information-button btn call-button width-200"
+          (click)="CallSelected()">
+          CALL
+        </button>
+      </div>
+      <div class="col-1"></div>
+      <div class="col-9">
+        <ng-container *ngIf="allowServeMultiple && ServeButtonLabel$ | async as ServeButtonLabel">
+          <button
+          *ngIf="(ServeButtonLabel === ServeButtonText.Start) && AllowSelectedVisitorCalling$ | async"
+          class="more-information-button btn start-button"
+          (click)="ServeSelected()">
+            {{ ServeButtonText.Start }}
+          </button>
+
+          <button *ngIf="ServeButtonLabel === ServeButtonText.Served" class="more-information-button btn start-button"
+            (click)="ServeSelected()">
+            {{ ServeButtonText.Served }}
+          </button>
+
+        </ng-container>
+
+        <button *ngIf="AllowSMS$ | async" class="more-information-button btn message-button uppercase"
+          [translate]="currentLanguage == 'es'? false: true"
+          (click)="FeatureIsComingSoonNotification()">
+          {{messageText}}
+        </button>
+        <button *ngIf="(AllowGrouping$ | async) && ((AllowToCreateGroup$ | async) || (Groups$ | async).length > 0)"
+          class="more-information-button btn group-button" (click)="OpenGroupsDialog()">
+          VISITOR TAG
+        </button>
+        <button *ngIf="(AllowTicketDeletion$ | async)" class="more-information-button btn remove-button"
+          (click)="DeleteSelected()">
+          DELETE
+        </button>
+      </div>
+    </div>
+  </ng-container>
+  <div class="row mt-3" [ngClass]="{ 'horizontal-scroll': (Customers$ | async)?.length > 0 }">
+    <div class="container-fluid grid-container">
+      <div class="grid-header row">
+        <div class="grid-header-column">
+          <div (click)="SelectAll()" *ngIf="
+  !(
+  (Customers$ | async).length <=
+  (SelectedCustomers$ | async).length &&
+  (Customers$ | async).length > 0
+  )
+  " class="select-box bg-white"></div>
+          <div (click)="DeSelectAll()" *ngIf="
+  (Customers$ | async).length <=
+  (SelectedCustomers$ | async).length &&
+  (Customers$ | async).length > 0
+  " class="select-box selected"></div>
+        </div>
+
+        <div class="grid-header-column" *ngIf="!(HideTicketNumber$ | async)">Ticket</div>
+        <div class="grid-header-column" *ngFor="let question of DisplayFieldsHeaders$ | async">
+          {{ question.shortName }}
+        </div>
+        <div class="grid-header-column text-capitalize" [translate]="currentLanguage == 'es'? false: true">{{queueText}}</div>
+        <div class="grid-header-column">Service</div>
+        <div class="grid-header-column" [translate]="currentLanguage == 'es'? false: true"
+          *ngIf="(AllowGrouping$ | async) && ((AllowToCreateGroup$ | async) || (Groups$ | async).length > 0)">
+          {{visitorTagText}}
+        </div>
+        <div class="grid-header-column" *ngIf="IsAppointmentTemplateExist">Appointment</div>
+        <div class="grid-header-column">{{(IsDisplayWaitTime$|async)?"Wait Time":"Checked-in Time"}}</div>
+        <div class="grid-header-column" *ngIf="AllowSMS$ | async">
+          Client Message
+        </div>
+        <div class="grid-header-column text-capitalize" *ngIf="AllowNotes$ | async">Notes</div>
+        <div class="grid-header-column">Expand</div>
+      </div>
+      <div appendOnly [class]="
+      IsFiltersShow || IsGroupsSidebarShow
+        ? 'main-div-scroll-model'
+        : 'main-div-scroll'">
+        <!-- Use filter pipe : laviFilterList -->
+        <lavi-agent-customer-list-item
+          *ngFor="let customer of Customers$ | async | laviFilterList: (SearchData$ | async): 'ticketNumber': 'queueName': 'serviceName': 'groupNames': 'branchTimeForAppointment': 'displayFields answer' | paginate: { itemsPerPage: 25, currentPage: PageNumber }; trackBy: trackByCustomer"
+          [IsSmallQueue]="IsSmallQueue"
+          [IsCanServe]="IsCanServe$ | async" 
+          [timeZone]="BranchTimeZone$ | async"
+          [ServeButtonLabel]="ServeButtonLabel$ | async"
+          [AllowTransferBetweenServices]="AllowTransferBetweenServices$ | async"
+          [DisplayFieldsHeaders]="DisplayFieldsHeaders$ | async" 
+          [SelectedCustomers]="SelectedCustomers$ | async"
+          [ExpandedCustomers]="ExpandedCustomers$ | async" 
+          [AllowedNotes]="AllowNotes$ | async"
+          [AllowTicketDeletion]="AllowTicketDeletion$ | async"
+          [AllowTicketRepositioning]="AllowTicketRepositioning$ | async" 
+          [AllowedSMS]="AllowSMS$ | async"
+          [AllowedGrouping]="AllowGrouping$ | async" 
+          [AllowToCreateGroup]="AllowToCreateGroup$ | async"
+          [AllowSelectedVisitorCalling]="AllowSelectedVisitorCalling$ | async"
+          [HideTicketNumber]="HideTicketNumber$ | async" 
+          [IsDisplayWaitTime]="IsDisplayWaitTime$|async"
+          [IsAppointmentTemplateExist]="IsAppointmentTemplateExist" 
+          [Customer]="customer" 
+          [viewText]="viewText"
+          [currentLanguage]="currentLanguage"
+          [teamNotesText]="teamNotesText"
+          [messageText]="messageText"
+          [Groups]="Groups$ | async"
+          [Queues]="Queues$ | async" 
+          (OnExpand)="Expanded(customer.id)" 
+          (OnCollapse)="Collapsed(customer.id)"
+          (OnCall)="Call(customer)" 
+          (OnServe)="Serve(customer)" 
+          (OnAddToGroup)="AddToCustomerToGroup(customer)"
+          (OnShowInformation)="ShowInformation(customer)" 
+          (OnShowSMSChat)="ShowSMSChat(customer)"
+          (OnShowNotes)="ShowNotes(customer)" 
+          (OnTransferServiceDailog)="ShowTransferServiceDialog(customer)"
+          (OnChecked)="Checked(customer.id, $event)" 
+          (OnRemove)="Remove(customer)"
+          (OnShowMoveToPosition)="ShowMoveToPositionDialog(customer)" 
+          (OnShowGroupsDialog)="OpenGroupsDialog()"
+          >
+        </lavi-agent-customer-list-item>
+        <pagination-controls autoHide="true" class="paginator" (pageChange)="PageNumber = $event"></pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>

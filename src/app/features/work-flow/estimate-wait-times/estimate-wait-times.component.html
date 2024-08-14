@@ -1,0 +1,223 @@
+<lavi-form-content-panel [formGroup]="EstimateWaitSettingsForm">
+  <div class="col-12 inner-panel-padding right-column-width">
+    <div class="mb-5">
+      <div class="row">
+        <div class="col-lg-9">
+          <div class="font-weight-500">Estimated Wait Time</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 mt-3">
+          <input
+            type="checkbox"
+            tabindex="1"
+            id="isCalculateEstimateWaitTime"
+            kendoCheckBox
+            [formControl]="
+              EstimateWaitSettingsForm.controls.allowCalculateEstimateWaitTime
+            "
+          />
+          <label class="cursor-pointer" for="isCalculateEstimateWaitTime"
+            ><span>Calculate Estimated Wait Time</span></label
+          >
+        </div>
+      </div>
+      <div class="pl-4 pt-4" *ngIf="IsAllowCalculateEstimateWaitTime$ | async">
+        <div class="row">
+          <div class="col-12">
+            <input
+              type="checkbox"
+              tabindex="1"
+              id="isTakeAppointments"
+              [disabled]
+              kendoCheckBox
+              [formControl]="
+                EstimateWaitSettingsForm.controls
+                  .isIncludeAppointmentsIntoConsiderations
+              "
+            />
+            <label class="cursor-pointer" for="isTakeAppointments"
+              ><span
+                >Include booked but not checked in appointments in
+                calculation</span
+              ></label
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="pl-4 pt-5" *ngIf="IsAllowCalculateEstimateWaitTime$ | async">
+        <div class="row mb-3">
+          <div class="col-lg-9">
+ 
+            <div class="font-weight-500" *ngIf="IsAnyNonDeletedService">Services</div>
+            </div>
+        </div>
+        <div
+          class="row mt-1"
+          *ngFor="let service of Services$ | async; let i = index" 
+        >      
+        <div class="row col-lg-12" *ngIf="!service.isDeleted">
+          <div class="col-2 pr-0">
+            <label for="isTakeAppointments"
+              ><span>{{ service.serviceNames[0].serviceName }}</span></label
+            >
+          </div>
+          <div class="col-3">
+            <input
+              type="text"
+              tabindex="1"
+              maxlength="3"
+              id="isTakeAppointments"
+              [value]="service.averageWaitTime"
+              (change)="WaitTimeChanged($event,service.id)"
+              kendoTextBox
+              lavi-app-numbers-only
+            />
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="pl-4 pt-5" *ngIf="IsAllowCalculateEstimateWaitTime$ | async">
+        <div
+          class="row"
+        >
+          <div class="col-2">
+            <label class="mt-1">Default Range</label
+            >
+          </div>
+          <div class="col-2">
+            <input
+              type="text"
+              tabindex="1"
+              [formControl]="EstimateWaitSettingsForm.controls.defaultRange"
+              maxlength="3"
+              kendoTextBox
+              lavi-app-numbers-only
+              class="d-inline w-25"
+            />
+            minutes
+          </div>
+          <div class="col-3 offset-1 pr-0">
+            <label class="mt-1">Idle time between services</label
+            >
+          </div>
+          <div class="col-2">
+            <input
+              type="text"
+              tabindex="1"
+              [formControl]="EstimateWaitSettingsForm.controls.idleTimeBetweenServices"
+              maxlength="3"
+              kendoTextBox
+              lavi-app-numbers-only
+              class="d-inline w-25"
+            />
+            minutes
+          </div>
+        </div>
+      </div>
+
+      <div class="pl-4 pt-5" *ngIf="IsAllowCalculateEstimateWaitTime$ | async">
+        <div class="row">
+          <div class="col-lg-9">
+            <div class="font-weight-500">Custom ranges</div>
+            </div>
+            <div class="col-lg-3 ">
+              <span
+                (click)="AddRange()"
+                class="text-blue pl-4 cursor-pointer font-weight-bold"
+                >Add range</span
+              >
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 mt-3">
+            <div formArrayName="customRangesForTimeDisplayMessages">
+              <div
+                *ngFor="
+                  let x of customRangesForTimeDisplayMessages.controls;
+                  let i = index
+                "
+              >
+                <div [formGroupName]="i">
+                  <div class="row mb-1">
+                    <div class="col-12 pt-2 pr-0">
+                      <div class="row">
+                        <div class="row pr-2 col-10">
+                          <label class="mt-2 pl-3">
+                            <span>From</span>
+                          </label>
+
+                          <input
+                            kendoTextBox
+                            maxlength="2"
+                            formControlName="from"
+                            class="col-1 ml-3"
+                            tabindex="9"
+                            lavi-app-numbers-only
+                          />
+
+                          <label class="mt-2 ml-2">
+                            <span>To</span>
+                          </label>
+
+                          <input
+                            kendoTextBox
+                            maxlength="2"
+                            formControlName="to"
+                            class="col-1 ml-3"
+                            tabindex="9"
+                            lavi-app-numbers-only
+                          />
+
+                          <label class="mt-2 ml-2">
+                            <span>Minutes</span>
+                          </label>
+
+                          <div class="col-4 mt-2">
+                            <div class="float-right w-50">
+                              <label class="mr-2">Messages</label>
+                              <span
+                                (click)="OpenTranslateDialog(i)"
+                                class="text-blue cursor-pointer text-right"
+                              >
+                                Edit text</span
+                              >
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-1 p-0 mr-2">
+                          <img
+                            class="img-width cursor-pointer"
+                            (click)="DeleteRange(i)"
+                            src="../../../../assets/img/delete-icon.svg"
+                          />
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</lavi-form-content-panel>
+
+
+<lavi-language-translate-modal
+Title="Messages"
+[OpenDialog]="OpenDialog$ | async"
+[TextFormArray]="TextFormArray$ | async"
+[MaxLength]="400"
+[ConditionsName]="DynamicVariables$ | async"
+(CloseTranslateTextDialog)="CloseTranslateDialog()"
+(Save)="Save($event)"
+(TranslateText)="Translate($event)"></lavi-language-translate-modal>

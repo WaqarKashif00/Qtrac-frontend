@@ -1,0 +1,22 @@
+<lavi-form-content-panel>
+  <div class="col-lg-12 inner-panel-padding right-column-width">
+    <div class="mb-5">
+      <div class="row mb-4">
+        <div class="col-lg-9">
+          <div class="font-weight-500">General Questions</div>
+        </div>
+        <div class="col-lg-3 ">
+          <span (click)="OpenAddQuestion()" class="text-blue pl-4 cursor-pointer font-weight-bold">Add Question</span>
+        </div>
+        <lavi-pre-service-questions-add [SupportedLanguages]="supportedLanguageList$ | async" [Mode]="Mode"
+          [OpenQuestionDialog]="openQuestionDial$ | async" (SaveForm)="save($event)" (Close)="closeModal()">
+        </lavi-pre-service-questions-add>
+      </div>
+      <div>
+        <lavi-pre-service-questions-list (edit)="Edit($event)" (delete)="Delete($event)"
+          [preServiceQuestionList]="preServiceQuestionList$ | async">
+        </lavi-pre-service-questions-list>
+      </div>
+    </div>
+  </div>
+</lavi-form-content-panel>

@@ -1,0 +1,54 @@
+@import "src/stylings/primitives/primitives.scss";
+.appointment-scheduler {
+  background: transparent;
+  padding-bottom: 20px;
+  p {
+    margin-bottom: 0;
+  }
+  .middle-outer-div {
+    border-radius: 10px;
+    box-shadow: 0px 0px 7px $layout-content-border;
+    border: solid 2px $panel-border-color;
+    display: flex;
+  }
+  .divLayoutPropertyContainer {
+    overflow-x: clip !important;
+  }
+  .divLayoutTopMiddleSection {
+    > .column.center, > .column.right {
+      height: 100% !important;
+      max-height: calc(100vh - 190px);
+      border: none;
+    }
+  }
+}
+.appointment-scheduler {
+  select {
+    border: none;
+    background: transparent;
+    outline: none;
+  }
+  .edit-icon  {
+    cursor: pointer;
+  }
+
+  .property-window-body select {
+    margin-top: 5px;
+  }
+  lavi-layout-container, .middle-outer-div, .divLayoutDesignContainer {
+    display: block;
+    width: 100%;
+  }
+  .divLayoutTopMiddleSection {
+    > .column.center {
+      margin-right: 20px;
+    }
+  }
+  .middle-outer-div, .layout-header, .layout-footer {
+    margin: 0;
+  }
+  .middle-outer-div, .divLayoutDesignContainer {
+    border: none;
+  }
+
+}

@@ -1,0 +1,16 @@
+
+@font-face {
+  font-family: 'Neue Haas Unica W1G';
+  font-style: normal;
+  src: url('/../../assets/fonts/Linotype-NeueHaasUnicaPro.otf'); /* IE9 Compat Modes */
+}
+
+@font-face {
+  font-family: 'Houschka Rounded Alt';
+  font-style: normal;
+  src: url('/../../assets/fonts/Houschka Rounded Alt Medium.ttf'); /* IE9 Compat Modes */
+}
+
+$font: 'Neue Haas Unica W1G';
+
+$global-font: $font;

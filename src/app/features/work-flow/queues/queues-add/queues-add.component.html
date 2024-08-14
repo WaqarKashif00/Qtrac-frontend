@@ -1,0 +1,91 @@
+<lavi-modal
+  Title="Add Queue"
+  [OpenDialog]="OpenQueueDialog"
+  [Width]="600"
+>
+  <div class="add-queues-modal">
+    <lavi-form [FormGroup]="AddQueuesForm" (OnSubmit)="SaveQueue()">
+      <div class="row">
+        <div class="col-6 padding-top-6">
+          <kendo-textbox-container floatingLabel="Queue Name">
+            <input
+              kendoTextBox
+              [formControl]="AddQueuesForm.controls.name"
+              tabindex="1"
+              maxlength="50"
+              lavi-auto-focus
+              [AutoFocusRequired]="OpenQueueDialog"
+              lavi-trim-value
+            />
+          </kendo-textbox-container>
+          <lavi-validation-message-list
+            [validation-form-group-name]="AddQueuesForm"
+            validation-control-name="name"
+            [validation-errorlist]="WorkflowMessage.queueNameMessage"
+
+          >
+          </lavi-validation-message-list>
+        </div>
+        <div class="col-6 queue-format" *ngIf="HideNumberingFormat">
+        <p class="font-weight-bold font-size-small-4 col-12">Ticket Number Format</p>
+        <div class="row">
+          <div class="col-lg-4 col-4">
+            <kendo-textbox-container floatingLabel="Prefix" class="margin-left-6">
+              <input
+                kendoTextBox
+                [formControl]="AddQueuesForm.get('numberingRule.prefix')"
+                tabindex="3"
+                maxlength="5"
+                lavi-trim-value
+              />
+            </kendo-textbox-container>
+          </div>
+          <div class="w-auto">
+            <label class="mt-4 mr-2">{{ MiddlefixNumberFormat }}</label>
+          </div>
+          <div class="col-lg-4 col-4 pl-0">
+            <kendo-textbox-container floatingLabel="Postfix">
+              <input
+                kendoTextBox
+                [formControl]="AddQueuesForm.get('numberingRule.postfix')"
+                tabindex="3"
+                maxlength="5"
+                lavi-trim-value
+              />
+            </kendo-textbox-container>
+          </div>
+
+          <div class="margin-left-6">
+            <lavi-validation-message-list
+              [validation-form-group-name]="AddQueuesForm.get('numberingRule')"
+              validation-control-name="prefix"
+              [validation-errorlist]="
+                WorkflowMessage.preFixNumberingFormatMessage
+              "
+            >
+            </lavi-validation-message-list>
+            <lavi-validation-message-list
+              [validation-form-group-name]="AddQueuesForm.get('numberingRule')"
+              validation-control-name="postfix"
+              [validation-errorlist]="
+                WorkflowMessage.postFixNumberingFormatMessage
+              "
+            >
+            </lavi-validation-message-list>
+          </div>
+        </div>
+
+        </div>
+
+      </div>
+
+      <div class="col-8 col-md-9 col-lg-12 mt-4 margin-top-5">
+        <div class="float-right">
+          <button kendoButton class="secondary-button mr-2" type="button" (click)="Cancel()">Cancel</button>
+          <button kendoButton class="primary-button" *ngIf="Mode=='ADD'" type="submit"   >Add</button>
+          <button kendoButton class="primary-button"  *ngIf="Mode=='EDIT'" type="submit" >Update</button>
+        </div>
+      </div>
+    </lavi-form>
+  </div>
+</lavi-modal>

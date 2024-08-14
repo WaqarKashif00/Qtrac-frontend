@@ -1,0 +1,64 @@
+<div class="agent-view-container border-grey">
+  <div class="row" [formGroup]="AgentTemplateForm">
+    <div class="col-12">
+      <h6 class="heading-text">Queue Views
+        <span class="text-warning float-right font-weight-normal" *ngIf="(showHintMessage)">
+          Press on the "{{(EditedTemplateId)? 'Update':'Add'}} button" to {{(EditedTemplateId)? 'Update':'Add'}} Templates and Queues.
+        </span>
+      </h6>
+      <div class="row agent-columns">
+        <div class="clearfix"></div>
+        <div class="col-6">
+          <kendo-textbox-container class="w-100" floatingLabel="Queue View Template">
+            <kendo-dropdownlist placeholder="[Select  template]" class="no-border" textField="name" tabindex="2"
+              [defaultItem]="DefaultTemplate" valueField="id" [data]="AgentTemplateDropdownList | laviSortBy:'name'" 
+              [disabled]='(EditedTemplateId)? true:false'
+              formControlName="template" (valueChange)="TemplateChanged($event,true)">
+            </kendo-dropdownlist>
+          </kendo-textbox-container>
+          <div class="h-10">
+            <lavi-validation-message-list [validation-form-group-name]="AgentTemplateForm"
+              validation-control-name="template"
+              [validation-errorlist]="ConfigMessages.AgentTemplateRequiredMessage">
+            </lavi-validation-message-list>
+          </div>
+        </div>
+        <div class="col-6">
+          <kendo-textbox-container floatingLabel="Queues">
+            <kendo-multiselect [data]=" AgentQueueDropdownList | laviSortBy:'templateName' " [filterable]="true" tabindex="3"
+              formControlName="queues" [textField]="'queueName'" [valueField]="'queueId'" (valueChange)="BindHintMessage()">
+            </kendo-multiselect>
+          </kendo-textbox-container>
+          <a class="link-text ml-3" (click)="AddAgentTemplate()">{{(EditedTemplateId)? 'Update':'Add'}}</a>
+          <div class="h-10">
+            <lavi-validation-message-list [validation-form-group-name]="AgentTemplateForm"
+              validation-control-name="queues"
+              [validation-errorlist]="ConfigMessages.QueueMessages">
+            </lavi-validation-message-list>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="agent-view-template-list list-heading">
+            <div class="row" *ngFor="let template of agentTemplates | laviSortBy:'templateName'">
+              <div class="col-1"></div>
+              <div class="col-5 template-name">
+                {{template.templateName}}
+              </div>
+              <div class="col-4 template-name">
+                <p class="ml-5"> {{GenerateCSVStringForService(template.queues)}}</p>
+              </div>
+              <div class="col-2">
+                <img class="img-width cursor-pointer float-right mr-1" src="../../../../assets/img/delete-icon.svg"
+                  (click)="DeleteTemplate(template.templateCode)">
+                  <img class="img-width cursor-pointer float-right mr-1" src="../../../../assets/img/edit-icon.svg"
+                  (click)="UpdateTemplate(template)">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

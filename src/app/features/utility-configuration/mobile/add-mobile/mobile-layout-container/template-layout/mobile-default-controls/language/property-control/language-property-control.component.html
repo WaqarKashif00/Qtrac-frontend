@@ -1,0 +1,18 @@
+<ng-container
+  *ngIf="{
+    Panel: Panel$ | async,
+    ControlSelection: ControlSelection$ | async,
+    SelectedLanguage:SelectedLanguage$ | async,
+    CurrentPage:CurrentPage$ | async
+  } as values"
+>
+<ng-container *ngIf="values.ControlSelection && values.Panel">
+  <lavi-item-property-panel
+    [Panel]="values.Panel"
+    [(IsControlSelected)]="values.ControlSelection.IsPanelSelected"
+    [SelectedLanguage]="values.SelectedLanguage"
+    [CurrentPage]="values.CurrentPage"
+    (OnDataChange)="UpdatePanelData($event)"
+  ></lavi-item-property-panel>
+</ng-container>
+</ng-container>

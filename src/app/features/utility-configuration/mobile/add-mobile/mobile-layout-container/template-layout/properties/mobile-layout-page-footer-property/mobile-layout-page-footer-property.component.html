@@ -1,0 +1,97 @@
+
+<lavi-form-panel PanelHeader="Footer Properties" [(PanelExpand)]="IsControlSelected">
+  <lavi-form-content-panel>
+    <div class="property-window">
+      <div class="property-window-body">
+        <form [formGroup]="FooterControl.form" autocomplete="off">
+          <div>
+            <label>Text</label>
+            <div class="float-right">
+              <span
+                (click)="OpenTranslateDialog()"
+                class="text-blue cursor-pointer"
+              >
+                Edit text</span
+              >
+            </div>
+          </div>
+          <div>
+            <label class="cursor-pointer"
+             for="VisibleText">Display Text</label>
+          <div class="float-right mr-3">
+            <input
+              id="VisibleText"
+              type="checkbox"
+              kendoCheckBox
+              formControlName="isTextVisible"
+            />
+            </div>
+          </div>
+          <div>
+            <label class="cursor-pointer"
+             for="VisibleImage">Display Footer Image</label>
+          <div class="float-right mr-3">
+            <input
+              id="VisibleImage"
+              type="checkbox"
+              kendoCheckBox
+              formControlName="isFooterImageVisible"
+            />
+            </div>
+          </div>
+          <div class="position-relative">
+            <label>Footer Image</label>
+            <div class="float-right text-right upload-button-container">
+              <span class="browse-button mobile-browse-button">
+                <ng-container *ngIf="FileName"
+                  ><span class="pull-right-32 mr-10">{{
+                    FileName
+                  }}</span></ng-container
+                >
+                <ng-container *ngIf="!FileName"
+                  ><span class="text-blue">Click to add</span
+                  ><span class="edit-icon"></span
+                ></ng-container>
+              </span>
+              <input
+                type="file"
+                placeholder="background color"
+                accept="image/*"
+                (change)="GetFileURL($event)"
+              />
+              <span
+                *ngIf="FileName"
+                class="close background-img-close-icon"
+                (click)="Remove()"
+                >&times;</span
+              >
+            </div>
+          </div>
+          <div>
+            <label>Color</label>
+            <kendo-colorpicker
+              formControlName="color"
+              class="cursor-pointer"
+              [value]="FooterControl.styles.color"
+            >
+            </kendo-colorpicker>
+          </div>
+          <lavi-mobile-font
+            [ShowFontSize]="false"
+            [FormGroup]="FooterControl.form"
+          ></lavi-mobile-font>
+        </form>
+      </div>
+    </div>
+  </lavi-form-content-panel>
+</lavi-form-panel>
+
+<lavi-language-translate-modal
+  Title="{{ 'Footer Text' }}"
+  [OpenDialog]="OpenModal"
+  [TextFormArray]="FooterTextFormArray$ | async"
+  [MaxLength]="100"
+  (Save)="UpdateTranslatedTexts($event)"
+  (CloseTranslateTextDialog)="CloseFooterTranslateDialog()"
+  (TranslateText)="Translate($event)"
+></lavi-language-translate-modal>

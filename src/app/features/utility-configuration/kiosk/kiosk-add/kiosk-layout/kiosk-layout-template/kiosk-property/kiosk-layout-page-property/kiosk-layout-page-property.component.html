@@ -1,0 +1,16 @@
+<lavi-form-panel PanelHeader="Page Property" [PanelExpand]="true">
+  <lavi-form-content-panel>
+    <div class="property-window-body">
+      <div class="property-window">
+        <form [formGroup]="PageProperties.form" autocomplete="off">
+          <div>
+            <label>Hide Welcome Page</label>
+            <span class="float-right mr-3 mt-2">
+              <input type="checkbox" kendoCheckBox formControlName="hideWelcomePage" />
+            </span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </lavi-form-content-panel>
+</lavi-form-panel>

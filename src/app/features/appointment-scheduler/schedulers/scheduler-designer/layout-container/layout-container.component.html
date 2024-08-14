@@ -1,0 +1,66 @@
+<div
+  *ngIf="{
+    DesignerPanel: DesignerPanel$ | async,
+    TicketProperty: TicketPropertyPanel$ | async
+  } as values"
+  class="column center middle-outer-div"
+>
+  <div class="control-section divLayoutDesignContainer">
+    <lavi-layout-header
+      [Color]="values.DesignerPanel.headerColor"
+      [BackgroundColor]="values.DesignerPanel.headerBackgroundColor"
+      [LogoURL]="values.DesignerPanel.imageFileURL"
+      comingFrom="Designer"
+    ></lavi-layout-header>
+    <lavi-layout-content
+      [SelectedPageName]="SelectedPage$ | async"
+      [SchedulerServices]="SchedulerServices$ | async"
+      [DesignerPanel]="values.DesignerPanel"
+      [TicketPropertyPanel]="values.TicketProperty"
+      [ShowCancelButton]="ShowCancelButton$ | async"
+      [ShowContinueButton]="ShowContinueButton$ | async"
+      [ShowSubmitButton]="ShowSubmitButton$ | async"
+      [NearestBranchList]="NearestBranchList$ | async"
+      [GlobalQuestions]="GlobalQuestions$ |async"
+      [Miles]="Miles$ | async"
+      [FirstAvailableTimeSlots]="AvailableTimeSlot$ | async"
+      [SelectedDatesAvailableTimeSlots]="SelectedDatesTimeSlot$ | async"
+      [AppointmentNotificationPreferences]="AppointmentNotificationPreferences$ |async"
+      [StepsDetails]="StepDetails$ | async"
+      [Announcement]="Announcement$ | async"
+      (OnStepChange)="ChangePage($event)"
+    ></lavi-layout-content>
+    <lavi-layout-footer
+     
+      [ShowLaviIconInFooter]="values.DesignerPanel.showLaviIconInFooter"
+      [FooterProperties]="FooterProperties$ | async"
+      [SelectedLanguage]="SelectedLanguage$ | async"
+    ></lavi-layout-footer>
+  </div>
+</div>
+<lavi-transparent-footer>
+  <div class="col-lg-12 col-sm-12 col-12 pt-2 pr-5">
+
+    <div class="row btncontainer transperant">
+      <div class="col-6"></div>
+      <div class="col-6">
+        <div class="float-right">
+          <input
+            kendoButton
+            (click)="SaveAsDraft()"
+            type="submit"
+            class="btn secondary-button mr-2"
+            value="Save as Draft"
+          />
+          <input
+            kendoButton
+            (click)="Save()"
+            type="submit"
+            class="btn primary-button mr-4"
+            value="Publish"
+          />
+        </div>
+      </div>
+  </div>
+</div>
+</lavi-transparent-footer>

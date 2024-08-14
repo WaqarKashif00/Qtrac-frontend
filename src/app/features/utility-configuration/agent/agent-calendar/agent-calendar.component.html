@@ -1,0 +1,39 @@
+<div class="container-fluid">
+  <div class="row mt-3">
+    <kendo-scheduler [kendoSchedulerBinding]="Events$ | async | laviFilterList: (SearchData$ | async): 'title' : 'serviceName' : 'preServiceQuestions answer' : 'serviceQuestions answer'" [selectedDate]="SelectedDate" scrollTime="07:00"
+    [timezone]='BranchTimeZone$ | async' class='agent-calendar'>
+      <ng-template kendoSchedulerEventTemplate let-event="event" let-resources="resources">
+        <lavi-agent-calendar-item [SchedulerEvent]='event' [Appointment]="event?.dataItem?.dataItem"
+        (OnOpenAppointmentDetails)="OpenAppointmentDetails($event)"
+        >
+        
+        </lavi-agent-calendar-item>
+      </ng-template>
+
+      <kendo-scheduler-day-view workDayStart="07:00" workDayEnd="19:00" [showWorkHours]="true"> </kendo-scheduler-day-view>
+
+      <kendo-scheduler-week-view> </kendo-scheduler-week-view>
+
+      <kendo-scheduler-month-view> </kendo-scheduler-month-view>
+
+      <kendo-scheduler-timeline-view> </kendo-scheduler-timeline-view>
+
+      <kendo-scheduler-agenda-view> </kendo-scheduler-agenda-view>
+    </kendo-scheduler>
+  </div>
+  <div class="row">
+    <div class="col-12" style="padding:9px">
+      <div class="float-right mr-4">
+        <input
+          type="button"
+          class="btn btn-warning"
+          value="Add Appointment"
+          (click)="OnAddAppointmentClick()"
+        />
+      </div>
+      <div class="float-right col-2">
+        <div class="float-right refresh-icon cursor-pointer" (click)="RefreshAppointments()" title="Refresh Appointments"></div>
+      </div>
+    </div>
+  </div>
+</div>

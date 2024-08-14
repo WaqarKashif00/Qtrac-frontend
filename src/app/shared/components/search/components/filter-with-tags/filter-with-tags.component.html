@@ -1,0 +1,70 @@
+<div class="filter-adorner">
+  <div class="filter-search-container">
+    <div class="filter-tags-search-inner">
+      <div class="filter-tags-filter-limiter">
+        <input
+          kendoTextBox
+          placeholder="{{ searchTextTitle }}"
+          (changed)='onTextFilterChanged()'
+          [(ngModel)]="filter.FilterText"
+          />
+      </div>
+      <kendo-icon [name]="'search'"></kendo-icon>
+      <button
+        class="filter-search-buttons"
+        kendoButton look="flat"
+        (click)='resetFilter()'
+        [disabled]="!filter.isFilterApplied()"
+        >Reset</button>
+      <button
+        class="filter-search-buttons"
+        kendoButton
+        look="flat"
+        *ngIf='filter.hasAdvancedFilter()'
+        >Advanced</button>
+    </div>
+  </div>
+
+  <div class="filter_tags_container">
+      <div class="filter_tags_items_container">
+        <span class="filter-tags-tag-item"
+          *ngFor='let item of tagList; let i = index'
+        >
+          <span *ngIf='isExpanded? true: i<4'>
+            <button
+              *ngIf='!filter.isTagSelected(item)'
+              kendoButton
+              class="tag-button-unselected"
+              (click)='selectTag(item)'
+              >{{ item }}</button>
+            <button
+              *ngIf='filter.isTagSelected(item)'
+              kendoButton
+              icon="tick"
+              class="tag-button-selected"
+              (click)='deselectTag(item)'
+              >{{ item }}</button>
+          </span>
+        </span>
+      </div>
+        <span class="filter-search-action-buttons-block">
+          <button
+          class="filter-search-buttons"
+          kendoButton
+          look="flat"
+          *ngIf='!isExpanded && tagList !== null ? tagList.length>4 : false'
+          (click)='expand()'
+          >More...</button>
+          <button
+          class="filter-search-buttons"
+          kendoButton
+          look="flat"
+          *ngIf='isExpanded'
+          (click)='collapse()'
+          >Less...</button>
+        </span>
+
+  </div>
+
+</div>
+

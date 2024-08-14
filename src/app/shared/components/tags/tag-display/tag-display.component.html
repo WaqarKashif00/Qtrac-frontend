@@ -1,0 +1,11 @@
+<div *ngIf="hasTags">
+  <span class='tag-display-icon-block'>
+    <kendo-icon name='images'></kendo-icon>
+  </span>
+  <span *ngFor="let item of tags" class="tag-display-tag-block">
+    <button
+      kendoButton
+      class="tag-button-unselected"
+    >{{ item.value || item}}</button>  <!-- By adding these tags visible but not sure is right way to do or not-->
+  </span>
+</div>

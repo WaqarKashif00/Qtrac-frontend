@@ -1,0 +1,87 @@
+<lavi-auth-container HeaderTitle="Hours of Operations" [ExitURL]="'/manage/hours-of-operations'">
+<lavi-form
+  [FormGroup]="MyHoursOfOperationForm" [FocusInValidInput]="FocusIfTemplateNameRequired" (OnSubmit)="save()"
+>
+<div class="panel-container hours-of-operations">
+  <div class="col-12">
+    <div class="section-containers">
+      <lavi-form-panel PanelHeader="General Configuration" [PanelExpand]="true">
+        <lavi-form-content-panel>
+          <div class="col-lg-12 inner-panel-padding panel-border">
+            <div>
+              <lavi-general-configuration
+                [GeneralFormGroup]="
+                  MyHoursOfOperationForm.controls.generalConfiguration
+                "
+              ></lavi-general-configuration>
+            </div>
+          </div>
+        </lavi-form-content-panel>
+      </lavi-form-panel>
+    </div>
+
+    <div class="section-containers">
+      <lavi-form-panel PanelHeader="Business Hours">
+        <lavi-form-content-panel>
+          <div class="col-lg-12 inner-panel-padding panel-border">
+            <div class="mb-5">
+              <lavi-working-hours [WorkingHourForm]="
+              MyHoursOfOperationForm.controls.workingHours"
+              [SaturdayTimeFrameArray]="SaturdayFormArray"
+              [SundayTimeFrameArray]="SundayFormArray"
+              [MondayTimeFrameArray]="MondayFormArray"
+              [TuesdayTimeFrameArray]="TuesdayFormArray"
+              [WednesdayTimeFrameArray]="WednesdayFormArray"
+              [ThursdayTimeFrameArray]="ThursdayFormArray"
+              [FridayTimeFrameArray]="FridayFormArray"
+              (AddHours)="AddHours($event)"
+              (RemoveHours)="RemoveTimeFrame($event)">
+            </lavi-working-hours>
+            </div>
+          </div>
+        </lavi-form-content-panel>
+      </lavi-form-panel>
+    </div>
+
+    <div class="section-containers">
+      <lavi-form-panel PanelHeader="Non-working Days">
+        <lavi-form-content-panel>
+          <div class="col-lg-12 inner-panel-padding panel-border">
+            <div class="mb-2">
+              <lavi-non-working-days
+                [defaultHolidayList]="HolidayList$ | async"
+                [countries]="BranchCountries$ | async"
+                (AddNonWorkingDay)="AddNonWorkingHoliday($event)"
+                (LoadHolidayData)="LoadHolidayListData($event)"
+                (DeleteNonWorkingDay)="DeleteNonWorkingDays($event)"
+              ></lavi-non-working-days>
+            </div>
+          </div>
+        </lavi-form-content-panel>
+      </lavi-form-panel>
+    </div>
+    <div class="section-containers"></div>
+  </div>
+
+
+<div>
+  <lavi-transparent-footer>
+
+    <div class="col-lg-12 col-sm-12 col-12 pt-2 pr-5">
+      <div class="row">
+        <div class="col-12 text-right">
+        <input
+              type="submit"
+              kendoButton
+              class="primary-button mr-4"
+              [value]="(IsEditedMode$ | async) ? 'Update' : 'Save'"
+            />
+        </div>
+      </div>
+    </div>
+  </lavi-transparent-footer>
+</div>
+</div>
+</lavi-form>
+
+</lavi-auth-container>

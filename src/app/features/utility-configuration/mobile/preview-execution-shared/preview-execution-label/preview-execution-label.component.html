@@ -1,0 +1,26 @@
+<div
+  class="newControl text-center position-absolute w-100"
+  *ngFor="let control of Labels"
+  [style.transform]="
+    'translate(' + control.left + 'px, ' + control.top + 'px) scale(1)'
+  "
+  [style.height.px]="control.height"
+  [style.z-index]="control.zindex"
+  [style.color]="control.color"
+  [style.font-size]="control.fontSize ? control.fontSize + 'px' : ''"
+  [style.font-family]="control.font"
+  [style.font-weight]="control.fontWeight"
+  [style.font-style]="control.fontStyle"
+  [style.padding-left.px]="control.horizontalPadding || 0"
+  [style.padding-right.px]="control.horizontalPadding || 0"
+  [style.padding-top.px]="control.verticalPadding || 0"
+  [style.padding-bottom.px]="control.verticalPadding || 0"
+>
+  <div [innerHTML]="(control.text[SelectedLanguage] || control.text[DefaultLanguage]) | laviEmptyString"
+  [style.border-radius.px]="control.boxCorner || 0"
+  [style.background-color]="control.backgroundColor"
+  [style.text-align]="control.alignment"
+  class="w-100 h-100 wrap"
+  
+  (click)="OnClickLabel(control.hyperLink)"></div>
+</div>

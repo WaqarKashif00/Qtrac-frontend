@@ -1,0 +1,54 @@
+<div class="filtes-container">
+  <div class="container p-0">
+
+    <div class="row mt-3" *ngIf='Queues?.length > 0'>
+      <div class="col-12">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 bold text-uppercase" [translate]="currentLanguage == 'es'? false: true">
+              {{byQueueText}}
+            </div>
+          </div>
+          <div class="row">
+            <lavi-agent-filter-item class="col-12 mt-2" *ngFor="let queue of Queues" [Count]="QueueCount(queue.id) | async"
+              [IsSelected]="IsQueueSelected(queue)"
+              (OnCall)='CallNextFromQueue(queue.id)' (OnChecked)='QueueChecked(queue,$event)' [FilterName]="queue.queueNumber">
+              {{queue.queueNumber}}
+            </lavi-agent-filter-item>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!--TODO: Group implementation is pending-->
+    <div class="row mt-3" *ngIf='IsAllowGrouping && Groups?.length > 0'>
+      <div class="col-12">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 bold text-uppercase" [translate]="currentLanguage == 'es'? false: true">
+              {{byVisitorTagText}}
+            </div>
+          </div>
+          <div class="row">
+            <lavi-agent-filter-item class="col-12 mt-2" *ngFor="let group of Groups" [Count]="GroupCount(group.id) | async"
+            [IsSelected]="IsGroupSelected(group)"
+            (OnCall)='CallNextFromGroup(group.id)' (OnChecked)='GroupChecked(group,$event)' [FilterName]="group.groupName">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-9 p-0 text-ellipsis">{{group.groupName}}</div>
+                  <div class="col-3 p-0  vertical-center">
+                    <div class="circle" [ngStyle]="{
+                      backgroundColor:group.color
+                    }"></div>
+                  </div>
+                </div>
+              </div>
+            </lavi-agent-filter-item>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

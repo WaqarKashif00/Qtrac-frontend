@@ -1,0 +1,133 @@
+<ng-container *ngIf="HeaderDetails$ | async as headerDetails">
+  <div
+    class="head row"
+    *ngIf="!(IsAgentRoute$ | async) || !(OpenQueueInNewTab$ | async)"
+  >
+    <div class="col-sm-6">
+      <ng-container *ngIf="!headerDetails.isShowConfigurationHeader">
+        <div class="row">
+          <div class="col-auto">
+            <span class="company-logo">
+              <img [src]="CompanyLogoURL$ | async" style="width: auto !important;"/>
+            </span>
+          </div>
+
+          <div class="col-auto">
+            <ul class="navigation">
+              <li
+                class="nav-icon home-icon"
+                [routerLink]="['/home']"
+                routerLinkActive="active"
+                [translate]="(currentLanguage$ | async) == 'es'? false: true"
+              >
+                <span></span>{{homeText$ | async}}
+              </li>
+              <ng-container *ngIf="IsCustomerUserType">
+                <ng-container *ngIf="this.OpenQueueInNewTab$ | async">
+                  <li
+                    class="nav-icon queue-icon text-capitalize"
+                    *laviHasRoleAccess="
+                      roleActions.AgentTemplates;
+                      actionName: actionType.Run
+                    "
+                    (click)="OnQueueRouteClick()"
+                    [translate]="(currentLanguage$ | async) == 'es'? false: true"
+                  >
+                    <span></span>{{queueText$ | async}}
+                  </li>
+                </ng-container>
+              </ng-container>
+              <ng-container *ngIf="!(this.OpenQueueInNewTab$ | async)">
+                <li
+                  class="nav-icon queue-icon text-capitalize"
+                  *laviHasRoleAccess="
+                    roleActions.AgentTemplates;
+                    actionName: actionType.Run
+                  "
+                  [routerLink]="['/agent']"
+                  routerLinkActive="active"
+                  [translate]="(currentLanguage$ | async) == 'es'? false: true"
+                >
+                  <span></span>{{queueText$ | async }}
+                </li>
+              </ng-container>
+                  <ng-container *ngIf="IsCustomerUserType">
+                    <li
+                      class="nav-icon snapshot-icon"
+                      *laviHasRoleAccess="
+                        roleActions.SnapshotTemplate;
+                        actionName: actionType.Run
+                      "
+                      [routerLink]="['/snap-shot']"
+                      routerLinkActive="active"
+                    >
+                      <span></span>Snapshot
+                    </li>
+                  </ng-container>
+                  <!-- <ng-container *ngIf="IsCustomerUserType">
+                    <li
+                      class="nav-icon snapshot-icon"
+                      *laviHasRoleAccess="
+                        roleActions.Snap2Template;
+                        actionName: actionType.Run
+                      "
+                      [routerLink]="['/snap-shot']"
+                      routerLinkActive="active"
+                    >
+                      <span></span>Snapshots-New
+                    </li>
+                  </ng-container> -->
+    
+            </ul>
+          </div>
+        </div>
+        
+        
+      </ng-container>
+      <lavi-header-title
+        *ngIf="headerDetails.isShowConfigurationHeader"
+        [Title]="headerDetails.title"
+        [ExitPath]="headerDetails.exitPath"
+      ></lavi-header-title>
+    </div>
+    <div class="col-sm-6">
+      <div class="row">
+        <div class="col-sm head2">
+          <lavi-header-right
+            [IsSmallQueue]="IsSmallQueue$ | async"
+            [currentLanguage]="currentLanguage$ | async"
+            [changeLocationText]="changeLocationText$ | async"
+            [profileSettingText]="profileSettingText$ | async"
+            [changePasswordText]="changePasswordText$ | async"
+            [signOutText]="signOutText$ | async"
+            [viewSmallQueueText]="viewSmallQueueText$ | async"
+          ></lavi-header-right>
+          <ul
+            class="navigation float-right"
+            *ngIf="!headerDetails.isShowConfigurationHeader"
+          >
+            <li
+              class="nav-icon insights-icon"
+              *laviHasRoleAccess="
+                roleActions.Insights;
+                actionName: actionType.Run
+              "
+              [translate]="(currentLanguage$ | async) == 'es'? false: true"
+            >
+              <span></span>{{insightText$ | async }}
+            </li>
+            <li
+              class="nav-icon manage-icon"
+              [routerLink]="['/manage']"
+              routerLinkActive="active"
+              *ngIf="ShowManage$ | async"
+              [translate]="(currentLanguage$ | async) == 'es'? false: true"
+            >
+              <span></span>{{manageText$ | async }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,7 @@
+@import "src/stylings/primitives/primitives.scss";
+::ng-deep .k-textbox {
+  width: 100% !important;
+  font-family: $global-font;
+  font-size: $global-font-size;
+  padding: 8px 0px 8px 10px;
+}

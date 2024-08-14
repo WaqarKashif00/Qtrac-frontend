@@ -1,0 +1,165 @@
+@import "src/stylings/primitives/primitives.scss";
+.appointment-scheduler {
+  background: transparent;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  p {
+    margin-bottom: 0;
+  }
+  .content-area, .button-container {
+    margin: 0 auto;
+    width: 100%;
+  }
+  .middle-outer-div {
+    border-radius: 10px;
+    box-shadow: 0px 0px 7px #00000029;
+    border: solid 2px #eaeaea;
+    display: block;
+    height: calc(100vh - 4px);
+  }
+  .divLayoutTopMiddleSection {
+    margin: 0;
+    padding: 0;
+  }
+  .divLayoutTopMiddleSection {
+    > .column.center, > .column.right {
+      height: 420px;
+      border: 1px solid rgb(234, 234, 234);
+    }
+  }
+}
+::ng-deep .find-branch-container,
+::ng-deep .appointment-notification {
+  .k-textbox, .k-textbox-container > .k-label {
+    color: unset !important;
+  }
+  .k-textbox, .k-textbox:focus, .k-textbox:focus-within,
+  .k-textbox.k-state-focus, .k-textbox.k-state-focused, .k-textbox-container.k-state-focused {
+    border-color: inherit !important;
+  }
+  .k-textbox-container:after {
+    background-color: inherit !important;
+  }
+  .wrapper-phone-number{
+    border-bottom-color: inherit !important;
+  }
+}
+.layout-content ::ng-deep {
+  height: calc(100vh - 136px);
+  overflow-y: auto;
+  input[type='text'], .k-textbox-container > .k-label, .k-floating-label-container > .k-label,
+  .k-radio:checked, .k-multiselect-wrap .k-floatwrap, .k-header, .k-multiselect .k-multiselect-wrap,
+  .k-multiselect-wrap .k-floatwrap .k-reset .k-button, .k-radio, .k-textbox {
+    border-color: inherit !important;
+    color: inherit !important;
+  }
+  .k-textbox:focus, .k-textbox:focus-within, .k-textbox.k-state-focus, .k-textbox.k-state-focused, .k-textarea:focus, .k-textarea:focus-within {
+    border-color:inherit !important;
+  }
+  .k-textbox-container::after, .k-floating-label-container::after{
+    background-color: inherit;
+ }
+ .wrapper-phone-number{
+  border-bottom-color: inherit !important;
+}
+}
+.notification-banner  {
+  background: $scheduler-notification-banner-color;
+  position: absolute;
+  width: 100%;
+  z-index: 999;
+  p {
+    margin-bottom: 0;
+    display: inline-block;
+    color: $scheduler-notification-color;
+    font-size: $_font-size-small-2;
+  }
+  span {
+    cursor: pointer !important;
+    float: right;
+  }
+}
+
+.divLayoutContainer.appointment-scheduler {
+  margin-left: 0;
+}
+.appointment-scheduler .divLayoutTopMiddleSection > .column.center{
+  margin-right: 0px;
+}
+
+.find-branch-container .search-icon{
+  position: absolute;
+  cursor: pointer;
+  bottom: 30px;
+  right: 5px;
+  font-size: $font-size-big-3;
+  color: inherit;
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1023px) and (orientation: portrait) {
+  .layout-content {
+    height: calc(100vh - 192px);
+  }
+  .branch-map .branch-details-container {
+    height: auto;
+    margin-bottom: 30px;
+  }
+}
+/* Portrait and Landscape */
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    .find-branch-container, .branch-map {
+      margin: 5px;
+    }
+    .layout-content .content-area, .layout-content .button-container {
+      padding: 5px 7px;
+      width: 94%;
+      margin: 0 auto;
+    }
+    .layout-content {
+      height: calc(100vh - 189px);
+    }
+    ul#mapDistance {
+      padding: 5px 0 0 0;
+      text-align: left;
+    }
+    ul#mapDistance li {
+      margin: 0 10px 10px 0;
+    }
+    .branch-map .branch-details-container {
+      height: auto;
+      margin-bottom: 30px;
+    }
+    ul.appointment-list {
+      li {
+        font-size: $global-font-size;
+        padding: 9px 11px;
+      }
+      :last-child {
+        border-radius: 0 19px 19px 0;
+        padding: 9px 11px;
+      }
+    }
+    .appointment-scheduler {
+      .divLayoutTopMiddleSection {
+        > .column.center, > .column.right {
+          height: 100%;
+        }
+      }
+    }
+    ::ng-deep .select-different-date .k-calendar {
+      margin-bottom: 30px;
+      width: 301px;
+    }
+    .different-date {
+      padding-left: 30px;
+    }
+    .layout-content ::ng-deep {
+      input[type='text'], .k-textbox-container > .k-label, .k-floating-label-container > .k-label {
+        white-space: nowrap !important;
+        font-size: 11px !important;
+      }
+    }
+}

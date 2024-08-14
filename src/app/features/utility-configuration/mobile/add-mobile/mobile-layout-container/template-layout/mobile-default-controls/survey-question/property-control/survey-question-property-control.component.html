@@ -1,0 +1,154 @@
+<ng-container *ngIf="{
+    panel: Panel$ | async,
+    controlSelection: ControlSelection$ | async,
+    QuestionSet: QuestionSet$ | async,
+    SelectedLanguage: SelectedLanguage$ | async,
+    CurrentPage: CurrentPage$ | async
+  } as values">
+    <ng-container *ngIf="values.controlSelection">
+        <lavi-item-property-panel [Panel]="values.panel" [Items]="values.QuestionSet"
+            [SelectedLanguage]="values.SelectedLanguage" [CurrentPage]="values.CurrentPage"
+            [(IsControlSelected)]="values.controlSelection.IsPanelSelected" (OnDataChange)="UpdatePanelData($event)"
+            (OnItemChange)="OnItemChange($event)"></lavi-item-property-panel>
+        <div *ngIf="values.panel && values.panel.items.length != 0">
+            <lavi-form-panel *ngIf="values.panel.button as Control" PanelHeader="Button Properties"
+                [(PanelExpand)]="values.controlSelection.IsPanelSelected">
+                <lavi-form-content-panel>
+                    <div class="property-window">
+                        <div class="property-window-body">
+                            <div>
+                                <label>Buttons</label>
+                                <select (change)="OnItemsDropDownChange($event.target.value)">
+                                    <option [value]="'primary'">Exit</option>
+                                    <option [value]="'secondary'">Submit</option>
+                                </select>
+                            </div>
+                            <div [formGroup]="Control.form">
+                                <div *ngIf="PrimaryButton">
+                                    <label>Show Icon</label>
+                                    <span class="float-right mr-3 mt-1">
+                                        <input type="checkbox" kendoCheckBox formControlName="showPrimaryButtonIcon" />
+                                    </span>
+                                </div>
+                                <div *ngIf="!PrimaryButton">
+                                    <label>Show Icon</label>
+                                    <span class="float-right mr-3 mt-1">
+                                        <input type="checkbox" kendoCheckBox
+                                            formControlName="showSecondaryButtonIcon" />
+                                    </span>
+                                </div>
+                                <div *ngIf="
+                    PrimaryButton
+                      ? !Control.showPrimaryButtonIcon
+                      : !Control.showSecondaryButtonIcon
+                  ">
+                                    <label>Text</label>
+                                    <div class="float-right">
+                                        <span (click)="OpenTranslateDialog()" class="text-blue cursor-pointer">
+                                            Edit text</span>
+                                    </div>
+                                </div>
+                                <div class="position-relative" *ngIf="
+                    PrimaryButton
+                      ? Control.showPrimaryButtonIcon
+                      : Control.showSecondaryButtonIcon
+                  ">
+                                    <label>src</label>
+                                    <div class="float-right text-right upload-button-container">
+                                        <span class="mr-n3 browse-button">
+                                            <ng-container><span (click)="OpenImageDialog()" class="text-blue">Click to
+                                                    add</span></ng-container>
+                                            <span class="edit-icon"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <hr class="mb-0" />
+                                <div>
+                                    <label>Top</label><input type="text" formControlName="top" placeholder="Top"
+                                        [value]="Control.styles.top" appNumbersOnly maxlength="3" />
+                                    <span>px</span>
+                                </div>
+                                <div>
+                                    <label>Height</label><input type="text" formControlName="height"
+                                        placeholder="Height" [value]="Control.styles.height" appNumbersOnly
+                                        maxlength="3" />
+                                    <span>px</span>
+                                </div>
+                                <ng-container *ngIf="
+                    PrimaryButton
+                      ? !Control.showPrimaryButtonIcon
+                      : !Control.showSecondaryButtonIcon
+                  ">
+                                    <div>
+                                        <label>Color</label>
+                                        <kendo-colorpicker formControlName="color" class="cursor-pointer"
+                                            [value]="Control.styles.color">
+                                        </kendo-colorpicker>
+                                    </div>
+                                    <div>
+                                        <label>Background color</label>
+                                        <kendo-colorpicker formControlName="backgroundColor" class="cursor-pointer"
+                                            [value]="Control.styles.backgroundColor">
+                                        </kendo-colorpicker>
+                                    </div>
+
+                                    <lavi-mobile-font [FormGroup]="Control.form"></lavi-mobile-font>
+                                </ng-container>
+                                <span class="properties-separation"></span>
+                                <div>
+                                    <label>Vertical Padding </label><input type="text" maxlength="3"
+                                        formControlName="verticalPadding" placeholder="Vertical Padding" appNumbersOnly
+                                        [value]="Control.verticalPadding" />
+                                    <span>px</span>
+                                </div>
+                                <div>
+                                    <label>Horizontal Padding </label><input type="text"
+                                        formControlName="horizontalPadding" placeholder="Horizontal Padding"
+                                        appNumbersOnly maxlength="3" [value]="Control.horizontalPadding" />
+                                    <span>px</span>
+                                </div>
+                                <div>
+                                    <label>Box Round Corners</label><input type="text" formControlName="boxRoundCorners"
+                                        [value]="Control.styles.boxRoundCorners" placeholder="Box Round Corners"
+                                        lavi-app-numbers-only maxlength="2" />
+                                    <span>px</span>
+                                </div>
+                                <div>
+                                    <label>Border</label>
+                                    <select class="cursor-pointer" formControlName="border">
+                                        <option *ngFor="let size of BorderSizes" [value]="size">
+                                            {{ size }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label>Border color</label>
+                                    <kendo-colorpicker formControlName="borderColor" class="cursor-pointer"
+                                        [value]="Control.borderColor">
+                                    </kendo-colorpicker>
+                                </div>
+                                <div>
+                                    <label>Box Shadow</label>
+                                    <select formControlName="shadow">
+                                        <option [ngValue]="true">True</option>
+                                        <option [ngValue]="false">False</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </lavi-form-content-panel>
+            </lavi-form-panel>
+
+            <lavi-language-translate-modal Title="{{ 'Button' + ' Text' }}" [OpenDialog]="OpenDialog$ | async"
+                [TextFormArray]="TextFormArray$ | async" (CloseTranslateTextDialog)="CloseTranslateDialog()"
+                (Save)="UpdateTranslatedTexts($event)" (TranslateText)="Translate($event)">
+            </lavi-language-translate-modal>
+
+            <lavi-language-image-modal [OpenDialog]="OpenButtonImageDialog$ | async" [Title]="'Upload Images'"
+                [ImageFormArray]="ButtonImageFormArray$ | async" (Save)="Save($event)"
+                (CloseImageModal)="CloseImageDialog()">
+            </lavi-language-image-modal>
+        </div>
+    </ng-container>
+</ng-container>

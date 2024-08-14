@@ -1,0 +1,84 @@
+
+<lavi-list-screen-header
+  Title="Scheduler Interfaces"
+  (OnAddNewButtonClick)="RedirectToAddNewAppointmentSchedulerTemplate()"
+  [PageName]="roleActions.SchedulerTemplates"
+  [ActionName]="actionType.AddEdit"
+  [ButtonValue]="'Add New Scheduler'"
+></lavi-list-screen-header>
+<div class="row mt-5 mr-2 ml-2 standardlist-grid" *ngIf="AppointmentSchedulers$ | async as List">
+  <kendo-grid
+    [kendoGridBinding]="List"
+    [pageSize]="100"
+    [sortable]="true"
+    [reorderable]="true"
+    [resizable]="true"
+    [selectable]="{ enabled: true, mode: 'multiple' }"
+  >
+    <kendo-grid-column title="Name">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <span>{{ dataItem.designerPanel.name }}</span>
+      </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column>
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <span
+          *ngIf="ShowSharableLink(dataItem?.schedulerId)"
+          (click)="
+            OpenShareLinkModel(
+              dataItem.designerPanel.workflowId,
+              dataItem.schedulerId
+            )
+          "
+          class="cursor-pointer text-blue m-5"
+          >Get Sharable Link</span
+        >
+      </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column field="id" title="" width="200">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <label>
+          <kendo-menu
+            class="cursor-pointer text-blue"
+            [items]="items"
+            (select)="OnSelect($event, dataItem)"
+          >
+            <ng-template
+              kendoMenuItemLinkTemplate
+              let-item="item"
+              let-index="index"
+            >
+              <span
+                [kendoMenuItemLink]="index"
+                *ngIf="ShowMenuItem(item)"
+                [ngClass]="{
+                  'menu-style': item.text === '...',
+                  'menu-list-style': item.text != '...'
+                }"
+              >
+                {{ item.text }}
+                <span *ngIf="item.items && item.items.length"></span>
+              </span>
+            </ng-template>
+          </kendo-menu>
+        </label>
+      </ng-template>
+    </kendo-grid-column>
+  </kendo-grid>
+</div>
+
+<lavi-sharable-link
+  *ngIf="IsShareLinkModelOpened$ | async"
+  [BranchList]="BranchDropdownList$ | async"
+  [ServiceList]="Services$ | async"
+  [LinkTypeList]="SharableLinkTypeList$ | async"
+  [SchedulerId]="SelectedSchedulerIdForShareLink"
+  [CompanyId]="SelectedCompanyId"
+  (OnCancelClick)="CloseShareLinkModel()"
+  (OnMessageCopy)="ShowMessageCopied()"
+  (SetWorkFlowServices)="SetWorkFlowServices()"
+  (SetBranchServices)="SetBranchServices($event)"
+></lavi-sharable-link>
+

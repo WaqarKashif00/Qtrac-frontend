@@ -1,0 +1,61 @@
+<div id="container" class="row divLayoutTopMiddleSection">
+  <ng-container
+    *ngIf="{
+      designerPanel: DesignerPanel$ | async
+    } as values"
+  >
+    <div class="column left divLayoutToolbar">
+      <lavi-monitor-tool-box
+        [DivLayoutDesignContainer]="DivLayoutDesignContainer"
+      >
+      </lavi-monitor-tool-box>
+    </div>
+    <div class="column center middle-outer-div">
+      <div
+        id="DivLayoutDesignContainer"
+        [style.width.px]="values.designerPanel.styles.width"
+        [style.height.px]="values.designerPanel.styles.height"
+        [style.background-image]="
+          'url(' + (values.designerPanel.backgroundImage|quoteString) + ')'
+        "
+        [style.color]="values.designerPanel.styles.color"
+        [style.font-size]="values.designerPanel.styles.fontSize ? values.designerPanel.styles.fontSize + 'px' : ''"
+        [style.background-color]="values.designerPanel.styles.backgroundColor"
+        [style.font-style]="values.designerPanel.styles.fontStyle"
+        [style.font-family]="values.designerPanel.styles.font"
+        [style.font-weight]="values.designerPanel.styles.fontWeight"
+        class="control-section divLayoutDesignContainer"
+        #DivLayoutDesignContainer
+      >
+      <div *ngFor="let x of Columns">
+        <div *ngFor="let y of Rows">
+          <div [ngDraggable]="false" [position]="{x: x, y: y }" [preventDefaultEvent]="true" [class]="GridClass"
+            [style.width.px]="GridSize" [style.height.px]="GridSize">
+
+          </div>
+        </div>
+      </div>
+        <lavi-monitor-middle-container
+          [DivLayoutDesignContainer]="DivLayoutDesignContainer"
+        >
+          <default-control>
+            <lavi-monitor-layout-header></lavi-monitor-layout-header>
+            <lavi-next-up *ngIf="values.designerPanel.showNextUpPanel" [DivLayoutDesignContainer]="DivLayoutDesignContainer"
+            [IsOnlyGrid]="IsOnlyGrid$ | async" [GridSize]="GridSize$ |async"></lavi-next-up>
+            <lavi-now-calling *ngIf="values.designerPanel.showNowCallingPanel" [DivLayoutDesignContainer]="DivLayoutDesignContainer"
+            [IsOnlyGrid]="IsOnlyGrid$ | async" [GridSize]="GridSize$ |async"></lavi-now-calling>
+            <lavi-now-helping *ngIf="values.designerPanel.showNowHelpingPanel" [DivLayoutDesignContainer]="DivLayoutDesignContainer"
+            [IsOnlyGrid]="IsOnlyGrid$ | async" [GridSize]="GridSize$ |async"></lavi-now-helping>
+          </default-control>
+        </lavi-monitor-middle-container>
+      </div>
+    </div>
+    <div class="column right divLayoutPropertyContainer">
+      <lavi-monitor-property>
+        <default-control-property>
+          <lavi-monitor-default-control [ControlSelection]="ControlSelection$ | async" [DesignerPanel]="values.designerPanel"></lavi-monitor-default-control>
+        </default-control-property>
+      </lavi-monitor-property>
+    </div>
+  </ng-container>
+</div>

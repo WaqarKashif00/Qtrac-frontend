@@ -1,0 +1,150 @@
+@import "src/stylings/primitives/primitives.scss";
+@import "src/stylings/shared/agent-layout.scss";
+
+.customer-container{
+  display: inline flex;
+}
+
+.small-text .queue-column.with-small-text{
+  font-size: $font-size-small-2;
+}
+
+.small-text .more-information-button{
+  font-size: $font-size-small-2;
+  height: 25px;
+}
+.roundedcircle{
+  height: 20px;
+  width: 20px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  margin-top: -4px;
+  margin-left: -150px;
+  border: 1px solid red;
+  }
+
+.queue-column{
+  text-align: center;
+  justify-content: center;
+  // height: 30px;
+  display: flex;
+  align-items: center;
+  font-size: $font-size-small-4;
+  word-break: break-word;
+}
+.round-circle{
+  margin-left: -50%;
+  margin-top: -9%;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  background-color: red;
+}
+
+.round-circle .number{
+  margin-top: -13%;
+  margin-left: 25%;
+}
+.select-column{
+  border: none;
+  // border-right: 1px solid;
+}
+
+.customer-row{
+  display: grid;
+  grid-template-columns: $row-grid-template-columns;
+  column-gap: 7px;
+  margin-left: 0%;
+  margin-top: 10px;
+  min-height: 100px;
+  border-radius: 5px 5px 0;
+  background: $agent-grid-row-background;
+}
+
+.customer-row.small-text{
+  min-height: auto;
+}
+
+.customer-row-more-information{
+  background: $agent-grid-row-background;
+  display: grid;
+  grid-template-columns: repeat(8,10%);
+  box-shadow: 0px 0px 15px #00000029;
+  border-radius: 0 0 10px 10px;
+}
+.customer-row-more-information-container{
+  display: grid;
+  grid-template-columns: $customer-row-more-information-container-columns;
+}
+
+.more-information-button{
+  text-align: center;
+  text-transform: uppercase;
+  justify-content: center;
+  height: 30px;
+  display: flex;
+  font-weight: $font-weight-600;
+  align-items: center;
+  border-radius: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+  color:$color-text-white;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* */
+}
+
+
+.sms-chat-grid-icon{
+  width: 15px;
+  height: 15px;
+  margin: auto;
+}
+
+.agent-notes-grid-icon{
+  width: 15px;
+  height: 15px;
+  margin: auto;
+}
+
+
+.circle{
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+}
+
+.groups-ul{
+  display: grid;
+  grid-template-columns:auto auto auto;
+  list-style-type: none;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  padding-inline-start: 0;
+  width:auto;
+}
+
+.add-group-plus-icon{
+  background-image: url("./../../../../../../assets/img/add-group-plus.png");
+  background-size: 100%;
+}
+
+.customer-group{
+  display: inline;
+}
+
+.customer-group-ul{
+  display: grid;
+  grid-template-columns:auto auto auto;
+}
+
+.groups-ul>li{
+  float:left;
+}

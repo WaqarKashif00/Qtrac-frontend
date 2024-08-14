@@ -1,0 +1,91 @@
+<div [formGroup]="Item.form" class="property-container">
+  <div>
+    <label>Name</label
+    ><input
+      type="text"
+      placeholder="Slider Name"
+      formControlName="name"
+      maxlength="50"
+      [value]="Item.name"
+    />
+    <span class="edit-icon"></span>
+  </div>
+  <div class="position-relative">
+    <label>src </label>
+    <div class="float-right text-right upload-button-container">
+      <span class="mr-n3 browse-button cursor-pointer">
+        <span (click)="OpenSliderModal()">Manage Files</span>
+        <span class="edit-icon"></span>
+      </span>
+    </div>
+  </div>
+  <div>
+    <label>Top</label
+    ><input
+      type="text"
+      formControlName="top"
+      placeholder="Top"
+      [value]="Item.styles.top"
+      maxlength="3"
+      lavi-app-numbers-only
+    />
+    <span>px</span>
+  </div>
+  <div>
+
+    <label>Left</label
+    ><input
+      type="text"
+      formControlName="left"
+      placeholder="Left"
+      [value]="Item.styles.left"
+      maxlength="3"
+      lavi-app-numbers-only
+    />
+    <span>px</span>
+  </div>
+  <div>
+    <label>Width</label
+    ><input
+      type="text"
+      formControlName="width"
+      placeholder="Width"
+      [value]="Item.styles.width"
+      maxlength="3"
+      lavi-app-numbers-only
+    />
+    <span>px</span>
+  </div>
+  <div>
+    <label>Height</label
+    ><input
+      type="text"
+      formControlName="height"
+      placeholder="Height"
+      [value]="Item.styles.height"
+      maxlength="3"
+      lavi-app-numbers-only
+    />
+    <span>px</span>
+  </div>
+  <div>
+    <label>Move control</label>
+    <div class="front-back-control" >  
+      <span class="k-i-forward-element k-icon move-to-front" title="Move to front" (click)="IncreaseZIndex()">
+      </span>
+      <span class="k-i-backward-element k-icon move-to-back" title="Move to back" (click)="DecreaseZIndex()">
+      </span>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="OpenModal">
+  <lavi-language-slider-modal [OpenDialog]="OpenModal"
+  Title="Upload Sliders"
+  [SliderHeight]="120"
+  [SliderWidth]="120"
+  [SliderFormArray]="SliderFormArray$ | async"
+  (Save)="Save($event)"
+  (CloseSliderModal)="CloseSliderModal()"
+  ></lavi-language-slider-modal>
+  </ng-container>

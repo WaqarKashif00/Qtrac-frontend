@@ -1,0 +1,27 @@
+<div class="left-nav">
+  <ul>
+    <ng-container *ngFor="let items of ManageSideBarItems">
+      <li
+        *ngIf="!items.parentId && items.level == '1'"
+        (click)="OnParentItemClick(items.id)"
+        class="nav-icon"
+      >
+        <span
+          class="nav-main {{ items.icon }}"
+          [ngClass]="{ selected: items.isParentSelected }"
+          ><span></span>{{ items.text }}</span
+        >
+        <ul *ngIf="items.isParentSelected" class="sub-menu">
+          <ng-container *ngFor="let subItems of ManageSideBarItems">
+            <li
+              *ngIf="subItems.parentId == items.id"
+              (click)="OnChildItemClick(subItems.path)"
+            >
+              {{ subItems.text }}
+            </li>
+          </ng-container>
+        </ul>
+      </li>
+    </ng-container>
+  </ul>
+</div>

@@ -1,0 +1,345 @@
+<lavi-modal
+  [OpenDialog]="OpenDialog"
+  Title="Lavi SMTP Configuration Setting ({{
+    VerificationDisplayText$ | async
+  }})"
+  [Width]="'60%'"
+>
+  <div [formGroup]="CompanySMTPConfigForm">
+    <div class="smtp-config-modal">
+      <div class="row">
+        <div class="col-lg-6 mt-4">
+          <kendo-textbox-container
+            class="w-100"
+            floatingLabel="Service provider"
+          >
+            <kendo-dropdownlist
+              tabindex="23"
+              formControlName="serviceProvider"
+              [defaultItem]="DefaultValue.SMTPServiceProviderDefaultValue"
+              [data]="SMTPServiceProviders | laviSortBy: 'text'"
+              [textField]="'text'"
+              [valueField]="'value'"
+            >
+            </kendo-dropdownlist>
+          </kendo-textbox-container>
+          <div class="h-10">
+            <lavi-validation-message-list
+              [validation-form-group-name]="CompanySMTPConfigForm"
+              validation-control-name="serviceProvider"
+              [validation-errorlist]="CompanyMessages.ServiceProviderMessages"
+            >
+            </lavi-validation-message-list>
+          </div>
+        </div>
+      </div>
+
+      <!-- #region GMAIL and General SMTP-->
+      <ng-container
+        *ngIf="
+          [
+            SMTPServiceProvider.GeneralSMTP.value,
+            SMTPServiceProvider.Gmail.value
+          ].includes(SelectedSMTPServiceProvider$ | async)
+        "
+      >
+        <div class="row">
+          <div class="col-lg-6 col-sm-7 mt-4">
+            <kendo-textbox-container class="w-100" floatingLabel="SMTP Server">
+              <input
+                maxlength="50"
+                tabindex="24"
+                kendoTextBox
+                formControlName="smtpServer"
+              />
+            </kendo-textbox-container>
+            <div class="h-10">
+              <lavi-validation-message-list
+                [validation-form-group-name]="CompanySMTPConfigForm"
+                validation-control-name="smtpServer"
+                [validation-errorlist]="CompanyMessages.SMTPServerMessages"
+              >
+              </lavi-validation-message-list>
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-3 mt-4">
+            <kendo-textbox-container floatingLabel="Port">
+              <input
+                tabindex="25"
+                kendoTextBox
+                maxlength="5"
+                formControlName="portNumber"
+              />
+            </kendo-textbox-container>
+            <lavi-validation-message-list
+              [validation-form-group-name]="CompanySMTPConfigForm"
+              validation-control-name="portNumber"
+              [validation-errorlist]="CompanyMessages.PortMessages"
+            >
+            </lavi-validation-message-list>
+          </div>
+          <div class="col-lg-3 mt-4">
+            <kendo-textbox-container class="w-100" floatingLabel="Encryption">
+              <kendo-dropdownlist
+                tabindex="26"
+                formControlName="encryption"
+                [defaultItem]="DefaultValue.EncryptionListDefaultValue"
+                [data]="EncryptionList | laviSortBy: 'text'"
+                placeholder="Encryption"
+                [textField]="'text'"
+                [valueField]="'value'"
+              >
+              </kendo-dropdownlist>
+            </kendo-textbox-container>
+            <lavi-validation-message-list
+              [validation-form-group-name]="CompanySMTPConfigForm"
+              validation-control-name="encryption"
+              [validation-errorlist]="CompanyMessages.EncryptionMessages"
+            >
+            </lavi-validation-message-list>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 mt-4">
+            <kendo-textbox-container
+              class="w-100"
+              floatingLabel="Username/Email"
+            >
+              <input
+                kendoTextBox
+                maxlength="50"
+                tabindex="27"
+                autocomplete="off"
+                formControlName="username"
+              />
+            </kendo-textbox-container>
+            <div class="h-10">
+              <lavi-validation-message-list
+                [validation-form-group-name]="CompanySMTPConfigForm"
+                validation-control-name="username"
+                [validation-errorlist]="CompanyMessages.UsernameMessages"
+              >
+              </lavi-validation-message-list>
+            </div>
+          </div>
+          <div class="col-lg-5 mt-4">
+            <kendo-textbox-container class="w-100" floatingLabel="Password">
+              <span>
+                <input
+                  kendoTextBox
+                  type="password"
+                  tabindex="28"
+                  autocomplete="off"
+                  maxlength="50"
+                  formControlName="password"
+                />
+              </span>
+            </kendo-textbox-container>
+            <div class="h-10">
+              <lavi-validation-message-list
+                [validation-form-group-name]="CompanySMTPConfigForm"
+                validation-control-name="password"
+                [validation-errorlist]="CompanyMessages.PasswordMessages"
+              >
+              </lavi-validation-message-list>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <!-- #endregion GMAIL and General SMTP-->
+
+      <!-- #region SendGrid-->
+      <ng-container
+        *ngIf="
+          (SelectedSMTPServiceProvider$ | async) ===
+          SMTPServiceProvider.SendGrid.value
+        "
+      >
+        <div class="row">
+          <div class="col-lg-6 mt-4">
+            <kendo-textbox-container
+              class="w-100"
+              floatingLabel="Username/Email"
+            >
+              <input
+                kendoTextBox
+                maxlength="50"
+                tabindex="27"
+                autocomplete="off"
+                formControlName="username"
+              />
+            </kendo-textbox-container>
+            <div class="h-10">
+              <lavi-validation-message-list
+                [validation-form-group-name]="CompanySMTPConfigForm"
+                validation-control-name="username"
+                [validation-errorlist]="CompanyMessages.UsernameMessages"
+              >
+              </lavi-validation-message-list>
+            </div>
+          </div>
+          <div class="col-lg-5 mt-4">
+            <kendo-textbox-container class="w-100" floatingLabel="API key">
+              <input
+                kendoTextBox
+                maxlength="100"
+                tabindex="28"
+                autocomplete="off"
+                formControlName="sendGridAPIKey"
+              />
+            </kendo-textbox-container>
+            <div class="h-10">
+              <lavi-validation-message-list
+                [validation-form-group-name]="CompanySMTPConfigForm"
+                validation-control-name="sendGridAPIKey"
+                [validation-errorlist]="CompanyMessages.APIkeyMessages"
+              >
+              </lavi-validation-message-list>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <!-- #endregion SendGrid-->
+
+      <!-- #region GMAIL OAuth2-->
+      <div
+        class="gmailConfiguration"
+        *ngIf="
+          (SelectedSMTPServiceProvider$ | async) ===
+          SMTPServiceProvider.GmailOAuth2.value
+        "
+      >
+        <div class="row mt-4">
+          <div class="col-3">
+            <kendo-textbox-container class="w-100" floatingLabel="SMTP Server">
+              <input
+                maxlength="50"
+                tabindex="24"
+                kendoTextBox
+                lavi-trim-value
+                formControlName="smtpServer"
+              />
+            </kendo-textbox-container>
+            <div class="h-10">
+              <lavi-validation-message-list
+                [validation-form-group-name]="CompanySMTPConfigForm"
+                validation-control-name="smtpServer"
+                [validation-errorlist]="CompanyMessages.SMTPServerMessages"
+              >
+              </lavi-validation-message-list>
+            </div>
+          </div>
+          <div class="col-4">
+            <kendo-textbox-container
+              class="w-100"
+              floatingLabel="Username/Email"
+            >
+              <input
+                kendoTextBox
+                maxlength="50"
+                tabindex="25"
+                autocomplete="off"
+                formControlName="username"
+              />
+            </kendo-textbox-container>
+            <div class="h-10">
+              <lavi-validation-message-list
+                [validation-form-group-name]="CompanySMTPConfigForm"
+                validation-control-name="username"
+                [validation-errorlist]="CompanyMessages.UsernameMessages"
+              >
+              </lavi-validation-message-list>
+            </div>
+          </div>
+          <div class="col-4">
+            <kendo-textbox-container
+              class="w-100"
+              floatingLabel="Client Secret"
+            >
+              <input
+                kendoTextBox
+                maxlength="50"
+                tabindex="26"
+                autocomplete="off"
+                formControlName="clientSecret"
+              />
+            </kendo-textbox-container>
+            <div class="h-10">
+              <lavi-validation-message-list
+                [validation-form-group-name]="CompanySMTPConfigForm"
+                validation-control-name="clientSecret"
+                [validation-errorlist]="CompanyMessages.ClientSecretMessages"
+              >
+              </lavi-validation-message-list>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-11">
+            <kendo-textbox-container class="w-100" floatingLabel="Client ID">
+              <input
+                kendoTextBox
+                maxlength="100"
+                tabindex="27"
+                autocomplete="off"
+                formControlName="clientId"
+              />
+            </kendo-textbox-container>
+            <div class="h-10">
+              <lavi-validation-message-list
+                [validation-form-group-name]="CompanySMTPConfigForm"
+                validation-control-name="clientId"
+                [validation-errorlist]="CompanyMessages.ClientIdMessages"
+              >
+              </lavi-validation-message-list>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-11">
+            <kendo-textbox-container
+              class="w-100"
+              floatingLabel="Refresh Token"
+            >
+              <input
+                kendoTextBox
+                maxlength="150"
+                tabindex="28"
+                autocomplete="off"
+                formControlName="refreshToken"
+              />
+            </kendo-textbox-container>
+            <div class="h-10">
+              <lavi-validation-message-list
+                [validation-form-group-name]="CompanySMTPConfigForm"
+                validation-control-name="refreshToken"
+                [validation-errorlist]="CompanyMessages.RefreshTokenMessages"
+              >
+              </lavi-validation-message-list>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- #endregion GMAIL OAuth2-->
+    </div>
+
+    <div class="col-lg-12 mt-5">
+      <div class="float-right">
+        <input
+          type="button"
+          kendoButton
+          class="secondary-button mr-2"
+          value="Cancel"
+          (click)="Close()"
+        />
+        <input
+          type="button"
+          kendoButton
+          class="primary-button"
+          value="Save"
+          (click)="Save()"
+        />
+      </div>
+    </div>
+  </div>
+</lavi-modal>

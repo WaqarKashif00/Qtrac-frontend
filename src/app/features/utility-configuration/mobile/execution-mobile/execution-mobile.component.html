@@ -1,0 +1,108 @@
+<ng-container
+  *ngIf="{
+    MobilePreviewData: MobilePreviewData$ | async,
+    CurrentPage: CurrentPage$ | async,
+    SelectedLanguageId: SelectedLanguageId$ | async
+  } as values"
+>
+  <div *ngIf="values.MobilePreviewData" class="mobile-preview-dimension w-100"
+  [style.background-color]="values.MobilePreviewData.designerScreen.backgroundColor"
+  [style.background-image]="'url(' + (values.MobilePreviewData.designerScreen.backGroundImage|quoteString) + ')'">
+    <lavi-preview-execution-header
+      [HeaderData]="values.MobilePreviewData.headerData"
+    ></lavi-preview-execution-header>
+    <div
+      [style.color]="values.MobilePreviewData.designerScreen.color"
+      [style.font-size]="values.MobilePreviewData.designerScreen.fontSize ? values.MobilePreviewData.designerScreen.fontSize +'px' : ''"
+      [style.font-style]="values.MobilePreviewData.designerScreen.fontStyle"
+      [ngClass]="{
+        'h-100': (!values.MobilePreviewData.headerData.isVisible) ||
+        (values.CurrentPage.IsLanguagePage && !values.MobilePreviewData.headerData.isVisible),
+        'h-91': (!values.CurrentPage.IsLanguagePage && !values.MobilePreviewData.headerData.isVisible )       
+      }"
+      [style.font-family]="values.MobilePreviewData.designerScreen.font" 
+      class="w-100 position preview preview-middle-designer"
+      id="divContentContainer"
+    >
+    <!--
+       [ngClass]="{
+        'h-100': (!values.MobilePreviewData.headerData.isVisible && !values.MobilePreviewData.footerData.isVisible) ||
+        (values.CurrentPage.IsLanguagePage && !values.MobilePreviewData.headerData.isVisible),
+        'h-91': (!values.CurrentPage.IsLanguagePage && !values.MobilePreviewData.headerData.isVisible && values.MobilePreviewData.footerData.isVisible),
+        'h-90': (!values.MobilePreviewData.footerData.isVisible && values.MobilePreviewData.headerData.isVisible)
+         || (values.CurrentPage.IsLanguagePage && values.MobilePreviewData.headerData.isVisible)
+      }"
+    -->
+      <lavi-preview-execution-language-page
+        [Data]="values.MobilePreviewData.languagePAge"
+        [SelectedLanguage]="values.SelectedLanguageId"
+        [DefaultLanguage]="DefaultLanguageCode"
+        (OnSelectLanguage)="ShowNextPage($event)"
+        *ngIf="values.CurrentPage.IsLanguagePage"
+      ></lavi-preview-execution-language-page>
+      <lavi-preview-execution-welcome-page
+        [Data]="values.MobilePreviewData.welcomePage"
+        [SelectedLanguage]="values.SelectedLanguageId"
+        [DefaultLanguage]="DefaultLanguageCode"
+        (OnNextButtonClick)="ShowNextPage($event)"
+        *ngIf="values.CurrentPage.IsWelcomePage"
+      ></lavi-preview-execution-welcome-page>
+      <lavi-preview-execution-global-question-page
+        [Data]="values.MobilePreviewData.globalQuestionPage"
+        [SelectedLanguage]="values.SelectedLanguageId"
+        [DefaultLanguage]="DefaultLanguageCode"
+        [BranchCountryCode]="BranchCountryCode"
+        (NextButtonClick)="ShowNextPage($event)"
+        (OnAppointment)="HaveAppointment($event)"
+        [companyId]="companyId"
+        *ngIf="values.CurrentPage.IsGlobalQuestionPage"
+      ></lavi-preview-execution-global-question-page>
+      <lavi-preview-execution-service-page
+        [Data]="values.MobilePreviewData.servicePage"
+        [SelectedLanguage]="values.SelectedLanguageId"
+        [DefaultLanguage]="DefaultLanguageCode"
+        (OnItemSelect)="ShowNextPage($event)"
+        (OnAppointment)="HaveAppointment($event)"
+        *ngIf="values.CurrentPage.IsServicePage"
+      ></lavi-preview-execution-service-page>
+      <lavi-preview-execution-service-question-page
+        [Data]="values.MobilePreviewData.serviceQuestion"
+        [SelectedLanguage]="values.SelectedLanguageId"
+        [DefaultLanguage]="DefaultLanguageCode"
+        [BranchCountryCode]="BranchCountryCode"
+        (OnNextButtonClick)="ShowNextPage($event)"
+        *ngIf="values.CurrentPage.IsServiceQuestionPage"
+        [companyId]="companyId"
+      ></lavi-preview-execution-service-question-page>
+      <lavi-preview-execution-ticket-page
+        [Data]="values.MobilePreviewData.ticketPage"
+        [SelectedLanguage]="values.SelectedLanguageId"
+        [DefaultLanguage]="DefaultLanguageCode"
+        *ngIf="values.CurrentPage.IsTicketPage"
+      ></lavi-preview-execution-ticket-page>
+      <lavi-preview-execution-no-queue-page
+        [Data]="values.MobilePreviewData.noQueuePage"
+        [SelectedLanguage]="values.SelectedLanguageId"
+        [DefaultLanguage]="DefaultLanguageCode"
+        (OnExitButtonClick)="ExitButtonClick()"
+        *ngIf="values.CurrentPage.IsNoQueuePage"
+      ></lavi-preview-execution-no-queue-page>
+      <lavi-preview-execution-offline-page
+      [Data]="values.MobilePreviewData.offlinePage"
+      [showBackButton$]="showBackButton$"
+      [SelectedLanguage]="values.SelectedLanguageId"
+      [DefaultLanguage]="DefaultLanguageCode"
+      (OnExitButtonClick)="ShowPreviousPage()"
+      *ngIf="values.CurrentPage.IsOffLinePage"
+    ></lavi-preview-execution-offline-page>
+    </div>
+    <lavi-preview-execution-footer
+      [footerData]="values.MobilePreviewData.footerData"
+      [SelectedLanguage]="values.SelectedLanguageId"
+      [DefaultLanguage]="DefaultLanguageCode"
+      [ShowFooterBackButtonImage]="ShowBackButtonInFooter()"
+      (OnBackButtonClick)="ShowPreviousPage()"
+      *ngIf="!values.CurrentPage.IsLanguagePage"
+    ></lavi-preview-execution-footer>
+  </div>
+</ng-container>

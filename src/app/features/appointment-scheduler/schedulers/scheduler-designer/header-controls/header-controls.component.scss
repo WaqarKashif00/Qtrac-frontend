@@ -1,0 +1,15 @@
+@import "src/stylings/primitives/primitives.scss";
+.btncontainer {
+  .secondary-button {
+    min-width: 135px !important;
+  }
+}
+.nav-pages {
+  select {
+    background: $color-background-white;
+    margin: 20px 0 0 15px;
+    color: $color-text-light-grey;
+    font-size: $font-size-small-4;
+    padding: 3px 10px 3px 0;
+  }
+}

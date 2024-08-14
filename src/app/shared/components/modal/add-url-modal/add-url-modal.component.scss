@@ -1,0 +1,12 @@
+.add-url-modal {
+  label {
+    width: 10%;
+  }
+  input[type=url] {
+    border-width: 0 0 1px;
+    width: 89%;
+  }
+  .error-message {
+    margin: 3px 0 0 10%;
+  }
+}

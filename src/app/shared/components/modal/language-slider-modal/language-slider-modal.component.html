@@ -1,0 +1,79 @@
+<ng-container>
+  <lavi-modal [OpenDialog]="OpenDialog" [Width]="ModalWidth" [Height]="ModalHeight" [Title]="Title">
+    <div class="slider">
+      <div class="col-lg-12">
+        <div class="row">
+          <ng-container *ngFor="let item of SliderFormArray.controls; let i = index">
+            <ng-container [formGroup]="item">
+              <div class='col-4 col-lg-4 col-sm-4 pt-3'>
+                <input class="hide" [id]="item.value.languageCode" (click)="Open(item.value.languageCode, i)" />
+                <label [for]="item.value.languageCode" class="slider-upload h-100 w-100 text-center cursor-pointer" (click)="UploadSlider()">
+                  <div class="file-size cursor-pointer">
+                    <img src="/assets/slideshow-icon.svg" [style.width.px]="SliderWidth" [style.height.px]="SliderHeight"
+                      *ngIf="item.value.url.length == 0" />
+                    <lavi-image-video-slider *ngIf="item.value.url && item.value.url.length > 0" [Height]="SliderHeight"
+                      [Width]="SliderWidth" [Items]="item.value.url"></lavi-image-video-slider>
+                    <div class="pt-2">
+                      <label [for]="item.value.languageCode"
+                        class="cursor-pointer text-center w-100 lbl-upload-new">{{'Upload Slider (' + item.value.language
+                        +')'}}</label>
+                    </div>
+                  </div>
+                </label>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <kendo-dialog-actions class="pb-0 pr-0">
+        <div class="float-right">
+          <span class="error-message d-block" *ngIf="IsErrorsToShow">Please Upload Slider.</span> 
+          <input type="button" kendoButton class="secondary-button" (click)="CloseSliderDialog()" value="Cancel" />
+          <input type="button" kendoButton class="primary-button" (click)="Apply(SliderFormArray.controls)" value="Apply" />
+        </div>
+      </kendo-dialog-actions>
+    </div>
+  </lavi-modal>
+
+  <lavi-modal [OpenDialog]="Opened" Title="Add / Remove Control Files" MinWidth="30%" Width="40%" Height="50%">
+    <div class="control-container">
+      <div class="row col-md-12 position-relative">
+        <span class="file slider-file upload-button">
+          Click here to upload</span>
+        <input type="file" class="w-100 cursor-pointer" multiple
+          accept="image/png,image/jpeg,image/gif,image/jpg,image/bmp,video/mp4,video/mov,video/flv,video/avi,video/mkv,video/3gp"
+          (change)="FileUploadChange($event)" />
+      </div>
+      <div class="row col-md-12 mt-5 mr-3">
+        <kendo-grid [data]="FileNamesAccToLanguage">
+          <kendo-grid-column title="File Name">
+            <ng-template kendoGridCellTemplate let-dataItem>
+              <span>{{ dataItem.name }}</span>
+            </ng-template>
+          </kendo-grid-column>
+          <kendo-grid-column>
+            <ng-template kendoGridCellTemplate let-dataItem>
+              <span (click)="RemoveFiles(dataItem.name)" class="cursor-pointer text-blue">Remove</span>
+            </ng-template>
+          </kendo-grid-column>
+        </kendo-grid>
+      </div>
+    </div>
+
+    <kendo-dialog-actions>
+      <div class="col-lg-12 col-sm-12 col-12 pt-2">
+        <div class="row">
+          <div class="col-lg-5 col-4"></div>
+          <div class="col-lg-7 col-8">
+            <div class="float-right">
+              <input kendoButton type="button" (click)="Close()" class="secondary-button" value="Close" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </kendo-dialog-actions>
+  </lavi-modal>
+</ng-container>

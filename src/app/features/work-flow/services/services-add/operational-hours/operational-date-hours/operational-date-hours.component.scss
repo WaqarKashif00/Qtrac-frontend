@@ -1,0 +1,14 @@
+@import "src/stylings/primitives/primitives.scss";
+
+p {
+  font-size: $global-font-size;
+  margin: 23px 0 0 20px;
+}
+
+.h-60{
+  height: 60px;
+}
+
+.text-right{
+  text-align: right;
+}

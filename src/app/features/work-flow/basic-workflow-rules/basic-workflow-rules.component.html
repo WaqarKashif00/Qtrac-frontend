@@ -1,0 +1,1647 @@
+<lavi-form-content-panel>
+  <div class="col-lg-12 inner-panel-padding main-div">
+    <div class="mb-1 col-lg-9 pl-0">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="font-weight-500">Basic Communications</div>
+        </div>
+        <div class="col-lg-5 text-right pr-0">
+          <label class="cursor-pointer text-blue font-size-small-2 hide">
+            <span>What are the dynamic field I can use in templates?</span>
+          </label>
+        </div>
+      </div>
+      <div class="pl-4 pt-3 pb-4 mb-5">
+
+        <form [formGroup]="BasicWorkflowRulesForm" autocomplete="off">
+          <div class="setting-data">
+
+            <div>
+              <!-- Send registration -->
+              <div>
+                <!-- Send registration SMS -->
+                <div class="col-12">
+
+                  <label class="cursor-pointer checkbox-label"
+                    (change)="OnSelectionChangeSMSValidation(SendSMSRegistrationTemplateArray,BasicWorkflowRulesForm.controls.enableSendRegistrationSms.value)">
+                    <input type="checkbox" tabindex="1" kendoCheckBox lavi-auto-focus
+                      [formControl]="BasicWorkflowRulesForm.controls.enableSendRegistrationSms" />
+                    <span>Send Confirmation SMS</span>
+                  </label>
+                </div>
+                <div formArrayName="sendRegistrationSmsTemplate"
+                  *ngFor="let regsms of SendSMSRegistrationTemplateArray.controls; let r=index">
+                  <div [formGroupName]="r" *ngIf="regsms.value.isDefault">
+                    <kendo-floatinglabel text="SMS Template ({{regsms.value.language}})" class="textarea-style">
+                      <mwl-text-input-autocomplete-container class="full-expand-style">
+
+                        <textarea class="full-expand-style-text-area" mwlTextInputAutocomplete triggerCharacter="%"
+                          [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel" kendoTextArea tabindex="2"
+                          formControlName="smsTemplate" maxlength="500" rows="4" [autoSize]="true">
+                        </textarea>
+                      </mwl-text-input-autocomplete-container>
+                    </kendo-floatinglabel>
+
+                    <div class="marginleft-10">
+
+                      <lavi-validation-message-list [validation-form-group-name]="regsms"
+                        validation-control-name="smsTemplate"
+                        [validation-errorlist]="WorkflowMessage.SMSTemplateMessage">
+                      </lavi-validation-message-list>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="w-100" *ngIf="IsAdditionalLanguageAvailable">
+                  <kendo-panelbar>
+                    <kendo-panelbar-item title="">
+                      <ng-template kendoPanelBarItemTitle>
+                        <div class="div-additional-language">
+                          <div class="error-message"
+                            *ngIf="SendSMSRegistrationTemplateArray.hasError('invalidTranslation')">
+                            Please check the additional languages.
+                          </div>
+                          <label class="cursor-pointer ">
+                            <span class="additional-language">Additional Languages</span>
+                          </label>
+                        </div>
+
+                      </ng-template>
+
+
+                      <ng-template kendoPanelBarContent>
+                        <div formArrayName="sendRegistrationSmsTemplate" class="w-100"
+                          *ngFor="let regsms of SendSMSRegistrationTemplateArray.controls; let r=index">
+                          <label class="col-10 cursor-pointer text-blue pr-0"
+                            (click)="translate(regsms.value.smsTemplate, SendSMSRegistrationTemplateArray,'smsTemplate')"
+                            *ngIf="regsms.value.isDefault">
+                            <span class="font-size-small-1 float-right">Translate</span>
+                          </label>
+
+                          <div [formGroupName]="r" class="mb-4" *ngIf="!regsms.value.isDefault">
+                            <kendo-floatinglabel text="SMS Template ({{regsms.value.language}})" class="textarea-style">
+                              <mwl-text-input-autocomplete-container class="full-expand-style">
+
+                                <textarea class="full-expand-style-text-area" mwlTextInputAutocomplete
+                                  triggerCharacter="%" [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel"
+                                  kendoTextArea tabindex="2" formControlName="smsTemplate" maxlength="500" rows="4"
+                                  [autoSize]="true">
+                                                  </textarea>
+                              </mwl-text-input-autocomplete-container>
+
+                            </kendo-floatinglabel>
+                            <div class="marginleft-10">
+
+                              <lavi-validation-message-list [validation-form-group-name]="regsms"
+                                validation-control-name="smsTemplate"
+                                [validation-errorlist]="WorkflowMessage.SMSTemplateMessage">
+                              </lavi-validation-message-list>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </kendo-panelbar-item>
+                  </kendo-panelbar>
+                </div>
+
+                <div formArrayName="smsAtPositionTemplate"
+                  *ngFor="let itemrow of SmsAtPositionFormArray.controls; let i=index">
+                  <div [formGroupName]="i">
+                    <div class="col-12">
+
+                      <label class="cursor-pointer checkbox-label"
+                        (change)="OnSelectionChangeSMSValidation(itemrow.controls?.sendSmsWhenCustomerIsAtLineTemplate,itemrow.controls.enableSendSmsWhenCustomerIsAtLine.value)">
+                        <input type="checkbox" kendoCheckBox tabindex="3"
+                          formControlName="enableSendSmsWhenCustomerIsAtLine" />
+                        <span>Send SMS when visitor is at certain position in line</span>
+                      </label>
+                      <br>
+
+                      <div class="col-lg-12 col-12">
+                        <div class="row">
+                          <div class="col-lg-8 col-6">
+                            <label class="cursor-pointer">
+                              <span class="d-inline"> At position
+                                <kendo-textbox-container class="w-20 ml-2">
+                                  <input kendoTextBox maxlength="3" class="numericTextbox pl-0" tabindex="3"
+                                    formControlName="sendSmsWhenCustomerIsAtLine" lavi-app-numbers-only
+                                    lavi-trim-value />
+                                </kendo-textbox-container>send the following SMS
+                              </span>
+                            </label>
+                          </div>
+                          <div class="col-lg-3 col-5">
+                            <label class="cursor-pointer float-right text-blue" (click)="deleteRule('SMS',i)">
+                              <span>Delete</span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div formArrayName="sendSmsWhenCustomerIsAtLineTemplate"
+                      *ngFor="let x of itemrow.controls?.sendSmsWhenCustomerIsAtLineTemplate?.controls; let j=index">
+                      <div [formGroupName]="j" *ngIf="x.value.isDefault">
+                        <kendo-floatinglabel text="SMS Template ({{x.value.language}})" class="textarea-style">
+                          <mwl-text-input-autocomplete-container class="full-expand-style">
+
+                            <textarea class="full-expand-style-text-area" mwlTextInputAutocomplete triggerCharacter="%"
+                              [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel" kendoTextArea rows="4"
+                              tabindex="4" formControlName="smsTemplate" maxlength="500" rows="4"
+                              [autoSize]="true"></textarea>
+                          </mwl-text-input-autocomplete-container>
+                        </kendo-floatinglabel>
+                        <div class="marginleft-10">
+                          <lavi-validation-message-list [validation-form-group-name]="x"
+                            validation-control-name="smsTemplate"
+                            [validation-errorlist]="WorkflowMessage.SMSTemplateMessage">
+                          </lavi-validation-message-list>
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                    <div class="w-100" *ngIf="IsAdditionalLanguageAvailable">
+                      <kendo-panelbar>
+                        <kendo-panelbar-item title="">
+                          <ng-template kendoPanelBarItemTitle>
+                            <div class="div-additional-language">
+                              <div class="error-message"
+                                *ngIf="itemrow.controls?.sendSmsWhenCustomerIsAtLineTemplate.hasError('invalidTranslation')">
+                                Please check the additional languages.
+                              </div>
+                              <label class="cursor-pointer ">
+                                <span class="additional-language">Additional Languages</span>
+                              </label>
+                            </div>
+                          </ng-template>
+
+                          <ng-template kendoPanelBarContent>
+                            <div formArrayName="sendSmsWhenCustomerIsAtLineTemplate" class="w-100"
+                              *ngFor="let x of itemrow.controls?.sendSmsWhenCustomerIsAtLineTemplate?.controls; let j=index">
+                              <label class="col-10 cursor-pointer text-blue pr-0"
+                                (click)="translate(x.value.smsTemplate, itemrow.controls?.sendSmsWhenCustomerIsAtLineTemplate, 'smsTemplate')"
+                                *ngIf="x.value.isDefault">
+                                <span class="font-size-small-1 float-right">Translate</span>
+                              </label>
+                              <div [formGroupName]="j" class="mb-4" *ngIf="!x.value.isDefault">
+                                <kendo-floatinglabel text="SMS Template ({{x.value.language}})" class="textarea-style">
+                                  <mwl-text-input-autocomplete-container class="full-expand-style">
+
+                                    <textarea class="full-expand-style-text-area" mwlTextInputAutocomplete
+                                      triggerCharacter="%" [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel"
+                                      kendoTextArea formControlName="smsTemplate" tabindex="4" maxlength="500" rows="4"
+                                      [autoSize]="true"></textarea>
+                                  </mwl-text-input-autocomplete-container>
+                                  <lavi-validation-message-list [validation-form-group-name]="x"
+                                    validation-control-name="smsTemplate"
+                                    [validation-errorlist]="WorkflowMessage.SMSTemplateMessage">
+                                  </lavi-validation-message-list>
+                                </kendo-floatinglabel>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </kendo-panelbar-item>
+                      </kendo-panelbar>
+                    </div>
+                  </div>
+                </div>
+
+                <label class="cursor-pointer marginleft-10 text-blue" (click)="addNewRule('SMS')">
+                  <span class="font-size-small-1">Add New Rule</span>
+                </label>
+                <!-- Send registration Email -->
+                <div class="col-12">
+
+                  <label class="cursor-pointer checkbox-label"
+                    (change)="OnSelectionChangeEmailValidation(SendEmailRegistrationTemplateArray,BasicWorkflowRulesForm.controls.enableSendRegistrationEmail.value)">
+                    <input type="checkbox" kendoCheckBox tabindex="5"
+                      [formControl]="BasicWorkflowRulesForm.controls.enableSendRegistrationEmail" />
+                    <span>Send Confirmation Email</span>
+                  </label>
+                </div>
+
+                <div formArrayName="sendRegistrationEmailTemplate"
+                  *ngFor="let regEmail of SendEmailRegistrationTemplateArray.controls; let r=index">
+                  <div [formGroupName]="r" *ngIf="regEmail.value.isDefault">
+
+                    <div class="marginleft-10 mb-4 w-75">
+                      <kendo-textbox-container floatingLabel="Email Subject ({{regEmail.value.language}})"
+                        class="w-100">
+                        <mwl-text-input-autocomplete-container class="full-expand-style">
+                          <input type="text" class="full-expand-style" mwlTextInputAutocomplete triggerCharacter="%"
+                            [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel" kendoTextBox maxlength="500"
+                            formControlName="emailSubject" autocomplete="new-password" tabindex="6" />
+                        </mwl-text-input-autocomplete-container>
+                      </kendo-textbox-container>
+                      <lavi-validation-message-list [validation-form-group-name]="regEmail"
+                        validation-control-name="emailSubject"
+                        [validation-errorlist]="WorkflowMessage.EmailSubjectMessage">
+                      </lavi-validation-message-list>
+                    </div>
+                    <div class="marginleft-10 w-75">
+                      <mwl-text-input-autocomplete-container>
+                        <angular-editor [skip-keys]="skipKeys"
+                          placeholder="Email Template ({{regEmail.value.language}})" [config]="EditorConfig"
+                          formControlName="emailTemplate" maxlength="3000" tabindex="6"
+                          (blur)="UpdateEmailTemplateFormArray(r,$event.currentTarget.innerHTML,SendEmailRegistrationTemplateArray)">
+                        </angular-editor>
+                      </mwl-text-input-autocomplete-container>
+                      <lavi-show-dynamic-field [ConditionsName]="ConditionsName" ></lavi-show-dynamic-field>
+                    </div>
+                    <div class="marginleft-10">
+
+                      <lavi-validation-message-list [validation-form-group-name]="regEmail"
+                        validation-control-name="emailTemplate"
+                        [validation-errorlist]="WorkflowMessage.EmailTemplateMessage">
+                      </lavi-validation-message-list>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w-100" *ngIf="IsAdditionalLanguageAvailable">
+                  <kendo-panelbar>
+                    <kendo-panelbar-item title="">
+                      <ng-template kendoPanelBarItemTitle>
+                        <div class="div-additional-language">
+                          <div class="error-message"
+                            *ngIf="SendEmailRegistrationTemplateArray.hasError('invalidTranslation')">
+                            Please check the additional languages.
+                          </div>
+                          <label class="cursor-pointer ">
+                            <span class="additional-language">Additional Languages</span>
+                          </label>
+                        </div>
+                      </ng-template>
+
+                      <ng-template kendoPanelBarContent>
+                        <div formArrayName="sendRegistrationEmailTemplate" class="w-100"
+                          *ngFor="let regEmail of SendEmailRegistrationTemplateArray.controls; let r=index">
+                          <label class="col-10 cursor-pointer text-blue pr-0"
+                            (click)="translate(regEmail.value.emailTemplate, SendEmailRegistrationTemplateArray,'emailTemplate',regEmail.value.emailSubject)"
+                            *ngIf="regEmail.value.isDefault">
+                            <span class="font-size-small-1 float-right">Translate</span>
+                          </label>
+
+                          <div [formGroupName]="r" class="mb-4" *ngIf="!regEmail.value.isDefault">
+
+                            <div class="marginleft-10 mb-4 w-75">
+                              <kendo-textbox-container floatingLabel="Email Subject ({{regEmail.value.language}})"
+                                class="w-100">
+                                <mwl-text-input-autocomplete-container class="full-expand-style">
+                                  <input type="text" class="full-expand-style" mwlTextInputAutocomplete
+                                    triggerCharacter="%" [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel"
+                                    kendoTextBox maxlength="500" formControlName="emailSubject"
+                                    autocomplete="new-password" tabindex="6" />
+                                </mwl-text-input-autocomplete-container>
+                              </kendo-textbox-container>
+                              <lavi-validation-message-list [validation-form-group-name]="regEmail"
+                                validation-control-name="emailSubject"
+                                [validation-errorlist]="WorkflowMessage.EmailSubjectMessage">
+                              </lavi-validation-message-list>
+                            </div>
+
+                            <div class="marginleft-10 w-75">
+                              <mwl-text-input-autocomplete-container>
+                                <angular-editor [skip-keys]="skipKeys"
+                                  placeholder="Email Template ({{regEmail.value.language}})" [config]="EditorConfig"
+                                  formControlName="emailTemplate" maxlength="3000" tabindex="6"
+                                  (blur)="UpdateEmailTemplateFormArray(r,$event.currentTarget.innerHTML,SendEmailRegistrationTemplateArray)">
+                                </angular-editor>
+                              </mwl-text-input-autocomplete-container>
+                              <lavi-show-dynamic-field [ConditionsName]="ConditionsName" ></lavi-show-dynamic-field>
+                            </div>
+                            <div class="marginleft-10">
+                              <lavi-validation-message-list [validation-form-group-name]="regEmail"
+                                validation-control-name="emailTemplate"
+                                [validation-errorlist]="WorkflowMessage.EmailTemplateMessage">
+                              </lavi-validation-message-list>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </kendo-panelbar-item>
+                  </kendo-panelbar>
+                </div>
+              </div>
+
+              <!-- Send  when customer is at certain position in line -->
+              <div formArrayName="emailAtPositionTemplate"
+                *ngFor="let itemrow of EmailAtPositionFormArray.controls; let i=index">
+                <div [formGroupName]="i">
+
+                  <!-- Send Email when customer is at certain position in line -->
+                  <div class="col-12">
+                    <label class="cursor-pointer checkbox-label"
+                      (change)="OnSelectionChangeEmailValidation(itemrow.controls?.sendEmailWhenCustomerIsAtLineTemplate,itemrow?.controls?.enableSendEmailWhenCustomerIsAtLine.value)">
+                      <input type="checkbox" kendoCheckBox tabindex="7"
+                        formControlName="enableSendEmailWhenCustomerIsAtLine" />
+                      <span>Send Email when visitor is at certain position in line</span>
+                    </label>
+                    <br>
+                    <div class="col-lg-12 col-12">
+                      <div class="row">
+                        <div class="col-lg-8 col-6">
+                          <label class="cursor-pointer">
+                            <span class="d-inline"> At position
+                              <kendo-textbox-container class="w-20 ml-2">
+                                <input kendoTextBox maxlength="3" class="numericTextbox pl-0" tabindex="8"
+                                  formControlName="sendEmailWhenCustomerIsAtLine" lavi-app-numbers-only
+                                  lavi-trim-value />
+                              </kendo-textbox-container>send the following Email
+                            </span>
+                          </label>
+                        </div>
+                        <div class="col-lg-3 col-5">
+                          <label class="cursor-pointer float-right text-blue" (click)="deleteRule('Email',i)">
+                            <span>Delete</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div formArrayName="sendEmailWhenCustomerIsAtLineTemplate"
+                    *ngFor="let x of itemrow.controls?.sendEmailWhenCustomerIsAtLineTemplate?.controls; let j=index">
+                    <div [formGroupName]="j" *ngIf="x.value.isDefault">
+                      <div class="marginleft-10 mb-4 w-75">
+                        <kendo-textbox-container floatingLabel="Email Subject ({{x.value.language}})" class="w-100">
+                          <mwl-text-input-autocomplete-container class="full-expand-style">
+                            <input type="text" class="full-expand-style" mwlTextInputAutocomplete triggerCharacter="%"
+                              [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel" kendoTextBox maxlength="500"
+                              formControlName="emailSubject" autocomplete="new-password" tabindex="9" />
+                          </mwl-text-input-autocomplete-container>
+                        </kendo-textbox-container>
+                        <lavi-validation-message-list [validation-form-group-name]="x"
+                          validation-control-name="emailSubject"
+                          [validation-errorlist]="WorkflowMessage.EmailSubjectMessage">
+                        </lavi-validation-message-list>
+                      </div>
+
+                      <div class="marginleft-10 w-75">
+                        <mwl-text-input-autocomplete-container>
+                          <angular-editor [skip-keys]="skipKeys"
+                            placeholder="Email Template ({{x.value.language}})" [config]="EditorConfig"
+                            formControlName="emailTemplate" maxlength="3000" tabindex="9"
+                            (blur)="UpdateEmailTemplateFormArray(j,$event.currentTarget.innerHTML,itemrow.controls?.sendEmailWhenCustomerIsAtLineTemplate)">
+                          </angular-editor>
+                        </mwl-text-input-autocomplete-container>
+                        <lavi-show-dynamic-field [ConditionsName]="ConditionsName" ></lavi-show-dynamic-field>
+                      </div>
+                      <div class="marginleft-10">
+                        <lavi-validation-message-list [validation-form-group-name]="x"
+                          validation-control-name="emailTemplate"
+                          [validation-errorlist]="WorkflowMessage.EmailTemplateMessage">
+                        </lavi-validation-message-list>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="w-100" *ngIf="IsAdditionalLanguageAvailable">
+                    <kendo-panelbar>
+                      <kendo-panelbar-item title="">
+                        <ng-template kendoPanelBarItemTitle>
+                          <div class="div-additional-language">
+                            <div class="error-message"
+                              *ngIf="itemrow.controls?.sendEmailWhenCustomerIsAtLineTemplate.hasError('invalidTranslation')">
+                              Please check the additional languages.
+                            </div>
+                            <label class="cursor-pointer ">
+                              <span class="additional-language">Additional Languages</span>
+                            </label>
+                          </div>
+                        </ng-template>
+
+                        <ng-template kendoPanelBarContent>
+                          <div formArrayName="sendEmailWhenCustomerIsAtLineTemplate" class="w-100"
+                            *ngFor="let x of itemrow.controls?.sendEmailWhenCustomerIsAtLineTemplate?.controls; let j=index">
+                            <label class="col-10 cursor-pointer text-blue pr-0"
+                              (click)="translate(x.value.emailTemplate, itemrow.controls?.sendEmailWhenCustomerIsAtLineTemplate,'emailTemplate',x.value.emailSubject)"
+                              *ngIf="x.value.isDefault">
+                              <span class="font-size-small-1 float-right">Translate</span>
+                            </label>
+                            <div [formGroupName]="j" class="marginleft-10 mb-4 w-75" *ngIf="!x.value.isDefault">
+                              <kendo-textbox-container floatingLabel="Email Subject ({{x.value.language}})"
+                                class="w-100">
+                                <mwl-text-input-autocomplete-container class="full-expand-style">
+                                  <input type="text" class="full-expand-style" mwlTextInputAutocomplete
+                                    triggerCharacter="%" [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel"
+                                    kendoTextBox maxlength="500" formControlName="emailSubject"
+                                    autocomplete="new-password" tabindex="9" />
+                                </mwl-text-input-autocomplete-container>
+                              </kendo-textbox-container>
+                              <lavi-validation-message-list [validation-form-group-name]="x"
+                                validation-control-name="emailSubject"
+                                [validation-errorlist]="WorkflowMessage.EmailSubjectMessage">
+                              </lavi-validation-message-list>
+                            </div>
+                            <div [formGroupName]="j" class="mb-4" *ngIf="!x.value.isDefault">
+                              <div class="marginleft-10 w-75">
+                                <mwl-text-input-autocomplete-container >
+                                  <angular-editor [skip-keys]="skipKeys"
+                                    placeholder="Email Template ({{x.value.language}})" [config]="EditorConfig"
+                                    formControlName="emailTemplate" maxlength="3000" tabindex="9"
+                                    (blur)="UpdateEmailTemplateFormArray(j,$event.currentTarget.innerHTML,itemrow.controls?.sendEmailWhenCustomerIsAtLineTemplate)">
+                                  </angular-editor>
+                                </mwl-text-input-autocomplete-container>
+                                <lavi-show-dynamic-field [ConditionsName]="ConditionsName" ></lavi-show-dynamic-field>
+                              </div>
+                              <div class="marginleft-10">
+                                <lavi-validation-message-list [validation-form-group-name]="x"
+                                  validation-control-name="emailTemplate"
+                                  [validation-errorlist]="WorkflowMessage.EmailTemplateMessage">
+                                </lavi-validation-message-list>
+                              </div>
+                            </div>
+                          </div>
+                        </ng-template>
+                      </kendo-panelbar-item>
+                    </kendo-panelbar>
+                  </div>
+                </div>
+              </div>
+
+              <label class="cursor-pointer marginleft-10 text-blue" (click)="addNewRule('Email')">
+                <span class="font-size-small-1">Add New Rule</span>
+              </label>
+
+              <!-- Send at your turn -->
+              <div>
+                <!-- Send SMS at your turn -->
+                <div class="col-12">
+
+                  <label class="cursor-pointer checkbox-label"
+                    (change)="OnSelectionChangeSMSValidation(SendSMSAtYourTurnTemplateArray,BasicWorkflowRulesForm.controls.enableSendSmsAtYourTurn.value)">
+                    <input type="checkbox" tabindex="10"
+                      [formControl]="BasicWorkflowRulesForm.controls.enableSendSmsAtYourTurn" kendoCheckBox />
+                    <span>Send SMS at your turn</span>
+                  </label>
+                </div>
+
+                <div formArrayName="sendSmsAtYourTurnTemplate"
+                  *ngFor="let turnsms of SendSMSAtYourTurnTemplateArray.controls; let t=index">
+                  <div [formGroupName]="t" *ngIf="turnsms.value.isDefault">
+                    <kendo-floatinglabel text="SMS Template ({{turnsms.value.language}})" class="textarea-style">
+                      <mwl-text-input-autocomplete-container class="full-expand-style">
+
+                        <textarea class="full-expand-style-text-area" mwlTextInputAutocomplete triggerCharacter="%"
+                          [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel" kendoTextArea
+                          formControlName="smsTemplate" maxlength="500" rows="4" [autoSize]="true" tabindex="11">
+                                          </textarea>
+                      </mwl-text-input-autocomplete-container>
+                    </kendo-floatinglabel>
+                    <div class="marginleft-10">
+                      <lavi-validation-message-list [validation-form-group-name]="turnsms"
+                        validation-control-name="smsTemplate"
+                        [validation-errorlist]="WorkflowMessage.SMSTemplateMessage">
+                      </lavi-validation-message-list>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="w-100" *ngIf="IsAdditionalLanguageAvailable">
+                  <kendo-panelbar>
+                    <kendo-panelbar-item title="">
+                      <ng-template kendoPanelBarItemTitle>
+                        <div class="div-additional-language">
+                          <div class="error-message"
+                            *ngIf="SendSMSAtYourTurnTemplateArray.hasError('invalidTranslation')">
+                            Please check the additional languages.
+                          </div>
+                          <label class="cursor-pointer ">
+                            <span class="additional-language">Additional Languages</span>
+                          </label>
+                        </div>
+                      </ng-template>
+
+                      <ng-template kendoPanelBarContent>
+                        <div formArrayName="sendSmsAtYourTurnTemplate" class="w-100"
+                          *ngFor="let turnsms of SendSMSAtYourTurnTemplateArray.controls; let t=index">
+                          <label class="col-10 cursor-pointer text-blue pr-0"
+                            (click)=" translate(turnsms.value.smsTemplate, SendSMSAtYourTurnTemplateArray, 'smsTemplate')"
+                            *ngIf="turnsms.value.isDefault">
+                            <span class="font-size-small-1 float-right">Translate</span>
+                          </label>
+
+                          <div [formGroupName]="t" class="mb-4" *ngIf="!turnsms.value.isDefault">
+                            <kendo-floatinglabel text="SMS Template ({{turnsms.value.language}})"
+                              class="textarea-style">
+                              <mwl-text-input-autocomplete-container class="full-expand-style">
+
+                                <textarea class="full-expand-style-text-area" mwlTextInputAutocomplete
+                                  triggerCharacter="%" [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel"
+                                  kendoTextArea formControlName="smsTemplate" maxlength="500" rows="4" [autoSize]="true"
+                                  tabindex="11">
+                                                  </textarea>
+                              </mwl-text-input-autocomplete-container>
+                            </kendo-floatinglabel>
+                            <div class="marginleft-10">
+                              <lavi-validation-message-list [validation-form-group-name]="turnsms"
+                                validation-control-name="smsTemplate"
+                                [validation-errorlist]="WorkflowMessage.SMSTemplateMessage">
+                              </lavi-validation-message-list>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </kendo-panelbar-item>
+                  </kendo-panelbar>
+                </div>
+
+                <!-- Send Email at your turn -->
+                <div class="col-12">
+
+                  <label class="cursor-pointer checkbox-label"
+                    (change)="OnSelectionChangeEmailValidation(SendEmailAtYourTurnTemplateArray,BasicWorkflowRulesForm.controls.enableSendEmailAtYourTurn.value)">
+                    <input type="checkbox" tabindex="12"
+                      [formControl]="BasicWorkflowRulesForm.controls.enableSendEmailAtYourTurn" kendoCheckBox />
+                    <span>Send Email at your turn</span>
+                  </label>
+                </div>
+
+                <div formArrayName="sendEmailAtYourTurnTemplate"
+                  *ngFor="let turnemail of SendEmailAtYourTurnTemplateArray.controls; let t=index">
+                  <div [formGroupName]="t" *ngIf="turnemail.value.isDefault">
+
+                    <div class="marginleft-10 mb-4 w-75">
+                      <kendo-textbox-container floatingLabel="Email Subject ({{turnemail.value.language}})"
+                        class="w-100">
+                        <mwl-text-input-autocomplete-container class="full-expand-style">
+                          <input type="text" class="full-expand-style" mwlTextInputAutocomplete triggerCharacter="%"
+                            [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel" kendoTextBox maxlength="500"
+                            formControlName="emailSubject" autocomplete="new-password" tabindex="13" />
+                        </mwl-text-input-autocomplete-container>
+                      </kendo-textbox-container>
+                      <lavi-validation-message-list [validation-form-group-name]="turnemail"
+                        validation-control-name="emailSubject"
+                        [validation-errorlist]="WorkflowMessage.EmailSubjectMessage">
+                      </lavi-validation-message-list>
+                    </div>
+
+                    <div class="marginleft-10 w-75">
+                      <mwl-text-input-autocomplete-container>
+                        <angular-editor [skip-keys]="skipKeys"
+                          placeholder="Email Template ({{turnemail.value.language}})" [config]="EditorConfig"
+                          formControlName="emailTemplate" maxlength="3000" tabindex="9"
+                          (blur)="UpdateEmailTemplateFormArray(t,$event.currentTarget.innerHTML,SendEmailAtYourTurnTemplateArray)">
+                        </angular-editor>
+                      </mwl-text-input-autocomplete-container>
+                      <lavi-show-dynamic-field [ConditionsName]="ConditionsName" ></lavi-show-dynamic-field>
+                    </div>
+                    <div class="marginleft-10">
+                      <lavi-validation-message-list [validation-form-group-name]="turnemail"
+                        validation-control-name="emailTemplate"
+                        [validation-errorlist]="WorkflowMessage.EmailTemplateMessage">
+                      </lavi-validation-message-list>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="w-100" *ngIf="IsAdditionalLanguageAvailable">
+                  <kendo-panelbar>
+                    <kendo-panelbar-item title="">
+                      <ng-template kendoPanelBarItemTitle>
+                        <div class="div-additional-language">
+                          <div class="error-message"
+                            *ngIf="SendEmailAtYourTurnTemplateArray.hasError('invalidTranslation')">
+                            Please check the additional languages.
+                          </div>
+                          <label class="cursor-pointer ">
+                            <span class="additional-language">Additional Languages</span>
+                          </label>
+                        </div>
+                      </ng-template>
+
+                      <ng-template kendoPanelBarContent>
+                        <div formArrayName="sendEmailAtYourTurnTemplate" class="w-100"
+                          *ngFor="let turnemail of SendEmailAtYourTurnTemplateArray.controls; let t=index">
+                          <label class="col-10 cursor-pointer text-blue pr-0"
+                            (click)="translate(turnemail.value.emailTemplate, SendEmailAtYourTurnTemplateArray, 'emailTemplate',turnemail.value.emailSubject)"
+                            *ngIf="turnemail.value.isDefault">
+                            <span class="font-size-small-1 float-right">Translate</span>
+                          </label>
+
+                          <div [formGroupName]="t" class="mb-4" *ngIf="!turnemail.value.isDefault">
+                            <div class="marginleft-10 mb-4 w-75">
+                              <kendo-textbox-container floatingLabel="Email Subject ({{turnemail.value.language}})"
+                                class="w-100">
+                                <mwl-text-input-autocomplete-container class="full-expand-style">
+                                  <input type="text" class="full-expand-style" mwlTextInputAutocomplete
+                                    triggerCharacter="%" [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel"
+                                    kendoTextBox maxlength="500" formControlName="emailSubject"
+                                    autocomplete="new-password" tabindex="13" />
+                                </mwl-text-input-autocomplete-container>
+                              </kendo-textbox-container>
+                              <lavi-validation-message-list [validation-form-group-name]="turnemail"
+                                validation-control-name="emailSubject"
+                                [validation-errorlist]="WorkflowMessage.EmailSubjectMessage">
+                              </lavi-validation-message-list>
+                            </div>
+                            <div class="marginleft-10 w-75">
+                              <mwl-text-input-autocomplete-container>
+                                <angular-editor [skip-keys]="skipKeys"
+                                  placeholder="Email Template ({{turnemail.value.language}})" [config]="EditorConfig"
+                                  formControlName="emailTemplate" maxlength="3000" tabindex="13"
+                                  (blur)="UpdateEmailTemplateFormArray(t,$event.currentTarget.innerHTML,SendEmailAtYourTurnTemplateArray)">
+                                </angular-editor>
+                              </mwl-text-input-autocomplete-container>
+                              <lavi-show-dynamic-field [ConditionsName]="ConditionsName" ></lavi-show-dynamic-field>
+                            </div>
+                            <div class="marginleft-10">
+                              <lavi-validation-message-list [validation-form-group-name]="turnemail"
+                                validation-control-name="emailTemplate"
+                                [validation-errorlist]="WorkflowMessage.EmailTemplateMessage">
+                              </lavi-validation-message-list>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </kendo-panelbar-item>
+                  </kendo-panelbar>
+                </div>
+              </div>
+
+              <!-- Send when cancelled -->
+              <div class="mb-4">
+
+                <!-- Send SMS when cancelled -->
+                <div class="col-12">
+
+                  <label class="cursor-pointer checkbox-label"
+                    (change)="OnSelectionChangeSMSValidation(SendSMSWhenCancelledTemplateArray,BasicWorkflowRulesForm.controls.enableSendSmsWhenCancelled.value)">
+                    <input type="checkbox" tabindex="14"
+                      [formControl]="BasicWorkflowRulesForm.controls.enableSendSmsWhenCancelled" kendoCheckBox />
+                    <span>Send SMS when cancelled</span>
+                  </label>
+                </div>
+
+                <div formArrayName="sendSmsWhenCancelledTemplate"
+                  *ngFor="let cancSms of SendSMSWhenCancelledTemplateArray.controls; let c=index">
+                  <div [formGroupName]="c" *ngIf="cancSms.value.isDefault">
+                    <kendo-floatinglabel text="SMS Template ({{cancSms.value.language}})" class="textarea-style">
+                      <mwl-text-input-autocomplete-container class="full-expand-style">
+
+                        <textarea class="full-expand-style-text-area" mwlTextInputAutocomplete triggerCharacter="%"
+                          [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel" kendoTextArea
+                          formControlName="smsTemplate" maxlength="500" rows="4" [autoSize]="true" tabindex="15">
+                                          </textarea>
+                      </mwl-text-input-autocomplete-container>
+                    </kendo-floatinglabel>
+                    <div class="marginleft-10">
+                      <lavi-validation-message-list [validation-form-group-name]="cancSms"
+                        validation-control-name="smsTemplate"
+                        [validation-errorlist]="WorkflowMessage.SMSTemplateMessage">
+                      </lavi-validation-message-list>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="w-100" *ngIf="IsAdditionalLanguageAvailable">
+                  <kendo-panelbar>
+                    <kendo-panelbar-item title="">
+                      <ng-template kendoPanelBarItemTitle>
+                        <div class="div-additional-language">
+                          <div class="error-message"
+                            *ngIf="SendSMSWhenCancelledTemplateArray.hasError('invalidTranslation')">
+                            Please check the additional languages.
+                          </div>
+                          <label class="cursor-pointer ">
+                            <span class="additional-language">Additional Languages</span>
+                          </label>
+                        </div>
+                      </ng-template>
+
+                      <ng-template kendoPanelBarContent>
+                        <div formArrayName="sendSmsWhenCancelledTemplate" class="w-100"
+                          *ngFor="let cancSms of SendSMSWhenCancelledTemplateArray.controls; let c=index">
+                          <label class="col-10 cursor-pointer text-blue pr-0"
+                            (click)=" translate(cancSms.value.smsTemplate, SendSMSWhenCancelledTemplateArray,'smsTemplate')"
+                            *ngIf="cancSms.value.isDefault">
+                            <span class="font-size-small-1 float-right">Translate</span>
+                          </label>
+
+                          <div [formGroupName]="c" class="mb-4" *ngIf="!cancSms.value.isDefault">
+                            <kendo-floatinglabel text="SMS Template ({{cancSms.value.language}})"
+                              class="textarea-style">
+                              <mwl-text-input-autocomplete-container class="full-expand-style">
+
+                                <textarea class="full-expand-style-text-area" mwlTextInputAutocomplete
+                                  triggerCharacter="%" [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel"
+                                  kendoTextArea formControlName="smsTemplate" maxlength="500" rows="4" [autoSize]="true"
+                                  tabindex="15">
+                                                  </textarea>
+                              </mwl-text-input-autocomplete-container>
+                            </kendo-floatinglabel>
+                            <div class="marginleft-10">
+                              <lavi-validation-message-list [validation-form-group-name]="cancSms"
+                                validation-control-name="smsTemplate"
+                                [validation-errorlist]="WorkflowMessage.SMSTemplateMessage">
+                              </lavi-validation-message-list>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </kendo-panelbar-item>
+                  </kendo-panelbar>
+                </div>
+
+                <!-- Send Email when cancelled -->
+
+                <div class="col-12">
+                  <label class="cursor-pointer checkbox-label"
+                    (change)="OnSelectionChangeEmailValidation(SendEmailWhenCancelledTemplateArray,BasicWorkflowRulesForm.controls.enableSendEmailWhenCancelled.value)">
+                    <input type="checkbox" tabindex="16"
+                      [formControl]="BasicWorkflowRulesForm.controls.enableSendEmailWhenCancelled" kendoCheckBox />
+                    <span>Send Email when cancelled</span>
+                  </label>
+                </div>
+
+                <div formArrayName="sendEmailWhenCancelledTemplate"
+                  *ngFor="let cancEmail of SendEmailWhenCancelledTemplateArray.controls; let c=index">
+                  <div [formGroupName]="c" *ngIf="cancEmail.value.isDefault">
+
+                    <div class="marginleft-10 mb-4 w-75">
+                      <kendo-textbox-container floatingLabel="Email Subject ({{cancEmail.value.language}})"
+                        class="w-100">
+                        <mwl-text-input-autocomplete-container class="full-expand-style">
+                          <input type="text" class="full-expand-style" mwlTextInputAutocomplete triggerCharacter="%"
+                            [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel" kendoTextBox maxlength="500"
+                            formControlName="emailSubject" autocomplete="new-password" tabindex="17" />
+                        </mwl-text-input-autocomplete-container>
+                      </kendo-textbox-container>
+                      <lavi-validation-message-list [validation-form-group-name]="cancEmail"
+                        validation-control-name="emailSubject"
+                        [validation-errorlist]="WorkflowMessage.EmailSubjectMessage">
+                      </lavi-validation-message-list>
+                    </div>
+
+                    <div class="marginleft-10 w-75">
+                      <mwl-text-input-autocomplete-container>
+                        <angular-editor [skip-keys]="skipKeys" 
+                          placeholder="Email Template ({{cancEmail.value.language}})" [config]="EditorConfig"
+                          formControlName="emailTemplate" maxlength="3000" tabindex="9"
+                          (blur)="UpdateEmailTemplateFormArray(c,$event.currentTarget.innerHTML,SendEmailWhenCancelledTemplateArray)">
+                        </angular-editor>
+                      </mwl-text-input-autocomplete-container>
+                      <lavi-show-dynamic-field [ConditionsName]="ConditionsName" ></lavi-show-dynamic-field>
+                    </div>
+                    <div class="marginleft-10">
+                      <lavi-validation-message-list [validation-form-group-name]="cancEmail"
+                        validation-control-name="emailTemplate"
+                        [validation-errorlist]="WorkflowMessage.EmailTemplateMessage">
+                      </lavi-validation-message-list>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="w-100" *ngIf="IsAdditionalLanguageAvailable">
+                  <kendo-panelbar>
+                    <kendo-panelbar-item title="">
+                      <ng-template kendoPanelBarItemTitle>
+                        <div class="div-additional-language">
+                          <div class="error-message"
+                            *ngIf="SendEmailWhenCancelledTemplateArray.hasError('invalidTranslation')">
+                            Please check the additional languages.
+                          </div>
+                          <label class="cursor-pointer ">
+                            <span class="additional-language">Additional Languages</span>
+                          </label>
+                        </div>
+                      </ng-template>
+
+                      <ng-template kendoPanelBarContent>
+                        <div formArrayName="sendEmailWhenCancelledTemplate" class="w-100"
+                          *ngFor="let cancEmail of SendEmailWhenCancelledTemplateArray.controls; let c=index">
+                          <label class="col-10 cursor-pointer text-blue pr-0"
+                            (click)=" translate(cancEmail.value.emailTemplate, SendEmailWhenCancelledTemplateArray,'emailTemplate',cancEmail.value.emailSubject)"
+                            *ngIf="cancEmail.value.isDefault">
+                            <span class="font-size-small-1 float-right">Translate</span>
+                          </label>
+
+                          <div [formGroupName]="c" class="mb-4" *ngIf="!cancEmail.value.isDefault">
+                            <div class="marginleft-10 mb-4 w-75">
+                              <kendo-textbox-container floatingLabel="Email Subject ({{cancEmail.value.language}})"
+                                class="w-100">
+                                <mwl-text-input-autocomplete-container class="full-expand-style">
+                                  <input type="text" class="full-expand-style" mwlTextInputAutocomplete
+                                    triggerCharacter="%" [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel"
+                                    kendoTextBox maxlength="500" formControlName="emailSubject"
+                                    autocomplete="new-password" tabindex="17" />
+                                </mwl-text-input-autocomplete-container>
+                              </kendo-textbox-container>
+                              <lavi-validation-message-list [validation-form-group-name]="cancEmail"
+                                validation-control-name="emailSubject"
+                                [validation-errorlist]="WorkflowMessage.EmailSubjectMessage">
+                              </lavi-validation-message-list>
+                            </div>
+                            <div class="marginleft-10 w-75">
+                              <mwl-text-input-autocomplete-container>
+                                <angular-editor [skip-keys]="skipKeys"
+                                  placeholder="Email Template ({{cancEmail.value.language}})" [config]="EditorConfig"
+                                  formControlName="emailTemplate" maxlength="3000" tabindex="17"
+                                  (blur)="UpdateEmailTemplateFormArray(c,$event.currentTarget.innerHTML,SendEmailWhenCancelledTemplateArray)">
+                                </angular-editor>
+                              </mwl-text-input-autocomplete-container>
+                              <lavi-show-dynamic-field [ConditionsName]="ConditionsName" ></lavi-show-dynamic-field>
+                            </div>
+                            <div class="marginleft-10">
+                              <lavi-validation-message-list [validation-form-group-name]="cancEmail"
+                                validation-control-name="emailTemplate"
+                                [validation-errorlist]="WorkflowMessage.EmailTemplateMessage">
+                              </lavi-validation-message-list>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </kendo-panelbar-item>
+                  </kendo-panelbar>
+                </div>
+              </div>
+
+              <!-- Send Transfer -->
+              <div>
+                <!-- Send Transfer SMS -->
+                <div class="col-12">
+
+                  <label class="cursor-pointer checkbox-label"
+                    (change)="OnSelectionChangeSMSValidation(SendSmsUponTransferTemplateArray,BasicWorkflowRulesForm.controls.enableSendSmsUponTransfer.value)">
+                    <input type="checkbox" kendoCheckBox tabindex="18"
+                      [formControl]="BasicWorkflowRulesForm.controls.enableSendSmsUponTransfer" />
+                    <span>Send SMS upon transfer</span>
+                  </label>
+                </div>
+
+                <div formArrayName="sendSmsUponTransferTemplate"
+                  *ngFor="let transsms of SendSmsUponTransferTemplateArray.controls; let r=index">
+                  <div [formGroupName]="r" *ngIf="transsms.value.isDefault">
+                    <kendo-floatinglabel text="SMS Template ({{transsms.value.language}})" class="textarea-style">
+                      <mwl-text-input-autocomplete-container class="full-expand-style">
+
+                        <textarea class="full-expand-style-text-area" mwlTextInputAutocomplete triggerCharacter="%"
+                          [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel" kendoTextArea
+                          formControlName="smsTemplate" maxlength="500" rows="4" [autoSize]="true" tabindex="19">
+                                         </textarea>
+                      </mwl-text-input-autocomplete-container>
+                    </kendo-floatinglabel>
+                    <div class="marginleft-10">
+
+                      <lavi-validation-message-list [validation-form-group-name]="transsms"
+                        validation-control-name="smsTemplate"
+                        [validation-errorlist]="WorkflowMessage.SMSTemplateMessage">
+                      </lavi-validation-message-list>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w-100" *ngIf="IsAdditionalLanguageAvailable">
+                  <kendo-panelbar>
+                    <kendo-panelbar-item title="">
+                      <ng-template kendoPanelBarItemTitle>
+                        <div class="div-additional-language">
+                          <div class="error-message"
+                            *ngIf="SendSmsUponTransferTemplateArray.hasError('invalidTranslation')">
+                            Please check the additional languages.
+                          </div>
+                          <label class="cursor-pointer ">
+                            <span class="additional-language">Additional Languages</span>
+                          </label>
+                        </div>
+                      </ng-template>
+
+
+                      <ng-template kendoPanelBarContent>
+                        <div formArrayName="sendSmsUponTransferTemplate" class="w-100"
+                          *ngFor="let transsms of SendSmsUponTransferTemplateArray.controls; let r=index">
+                          <label class="col-10 cursor-pointer text-blue pr-0"
+                            (click)=" translate(transsms.value.smsTemplate, SendSmsUponTransferTemplateArray,'smsTemplate')"
+                            *ngIf="transsms.value.isDefault">
+                            <span class="font-size-small-1 float-right">Translate</span>
+                          </label>
+
+                          <div [formGroupName]="r" class="mb-4" *ngIf="!transsms.value.isDefault">
+                            <kendo-floatinglabel text="SMS Template ({{transsms.value.language}})"
+                              class="textarea-style">
+                              <mwl-text-input-autocomplete-container class="full-expand-style">
+
+                                <textarea class="full-expand-style-text-area" mwlTextInputAutocomplete
+                                  triggerCharacter="%" [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel"
+                                  kendoTextArea formControlName="smsTemplate" maxlength="500" rows="4" [autoSize]="true"
+                                  tabindex="19">
+                                                 </textarea>
+                              </mwl-text-input-autocomplete-container>
+                            </kendo-floatinglabel>
+                            <div class="marginleft-10">
+                              <lavi-validation-message-list [validation-form-group-name]="transsms"
+                                validation-control-name="smsTemplate"
+                                [validation-errorlist]="WorkflowMessage.SMSTemplateMessage">
+                              </lavi-validation-message-list>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </kendo-panelbar-item>
+                  </kendo-panelbar>
+                </div>
+
+                <!-- Send Transfer Email -->
+                <div class="col-12">
+
+                  <label class="cursor-pointer checkbox-label"
+                    (change)="OnSelectionChangeEmailValidation(SendEmailUponTransferTemplateArray,BasicWorkflowRulesForm.controls.enableSendEmailUponTransfer.value)">
+                    <input type="checkbox" kendoCheckBox tabindex="20"
+                      [formControl]="BasicWorkflowRulesForm.controls.enableSendEmailUponTransfer" />
+                    <span>Send Email upon transfer</span>
+                  </label>
+                </div>
+
+                <div formArrayName="sendEmailUponTransferTemplate"
+                  *ngFor="let transemail of SendEmailUponTransferTemplateArray.controls; let r=index">
+                  <div [formGroupName]="r" *ngIf="transemail.value.isDefault">
+
+                    <div class="marginleft-10 mb-4 w-75">
+                      <kendo-textbox-container floatingLabel="Email Subject ({{transemail.value.language}})"
+                        class="w-100">
+                        <mwl-text-input-autocomplete-container class="full-expand-style">
+                          <input type="text" class="full-expand-style" mwlTextInputAutocomplete triggerCharacter="%"
+                            [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel" kendoTextBox maxlength="500"
+                            formControlName="emailSubject" autocomplete="new-password" tabindex="21" />
+                        </mwl-text-input-autocomplete-container>
+                      </kendo-textbox-container>
+                      <lavi-validation-message-list [validation-form-group-name]="transemail"
+                        validation-control-name="emailSubject"
+                        [validation-errorlist]="WorkflowMessage.EmailSubjectMessage">
+                      </lavi-validation-message-list>
+                    </div>
+
+                    <div class="marginleft-10 w-75">
+                      <mwl-text-input-autocomplete-container>
+                        <angular-editor [skip-keys]="skipKeys"
+                          placeholder="Email Template ({{transemail.value.language}})" [config]="EditorConfig"
+                          formControlName="emailTemplate" maxlength="3000" tabindex="9"
+                          (blur)="UpdateEmailTemplateFormArray(r,$event.currentTarget.innerHTML,SendEmailUponTransferTemplateArray)">
+                        </angular-editor>
+                      </mwl-text-input-autocomplete-container>
+                      <lavi-show-dynamic-field [ConditionsName]="ConditionsName" ></lavi-show-dynamic-field>
+                    </div>
+
+                    <div class="marginleft-10">
+                      <lavi-validation-message-list [validation-form-group-name]="transemail"
+                        validation-control-name="emailTemplate"
+                        [validation-errorlist]="WorkflowMessage.EmailTemplateMessage">
+                      </lavi-validation-message-list>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w-100" *ngIf="IsAdditionalLanguageAvailable">
+                  <kendo-panelbar>
+                    <kendo-panelbar-item title="">
+                      <ng-template kendoPanelBarItemTitle>
+                        <div class="div-additional-language">
+                          <div class="error-message"
+                            *ngIf="SendEmailUponTransferTemplateArray.hasError('invalidTranslation')">
+                            Please check the additional languages.
+                          </div>
+                          <label class="cursor-pointer ">
+                            <span class="additional-language">Additional Languages</span>
+                          </label>
+                        </div>
+                      </ng-template>
+
+                      <ng-template kendoPanelBarContent>
+                        <div formArrayName="sendEmailUponTransferTemplate" class="w-100"
+                          *ngFor="let transemail of SendEmailUponTransferTemplateArray.controls; let r=index">
+                          <label class="col-10 cursor-pointer text-blue pr-0"
+                            (click)=" translate(transemail.value.emailTemplate, SendEmailUponTransferTemplateArray,'emailTemplate',transemail.value.emailSubject)"
+                            *ngIf="transemail.value.isDefault">
+                            <span class="font-size-small-1 float-right">Translate</span>
+                          </label>
+
+                          <div [formGroupName]="r" class="mb-4" *ngIf="!transemail.value.isDefault">
+
+                            <div class="marginleft-10 mb-4 w-75">
+                              <kendo-textbox-container floatingLabel="Email Subject ({{transemail.value.language}})"
+                                class="w-100">
+                                <mwl-text-input-autocomplete-container class="full-expand-style">
+                                  <input type="text" class="full-expand-style" mwlTextInputAutocomplete
+                                    triggerCharacter="%" [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel"
+                                    kendoTextBox maxlength="500" formControlName="emailSubject"
+                                    autocomplete="new-password" tabindex="21" />
+                                </mwl-text-input-autocomplete-container>
+                              </kendo-textbox-container>
+                              <lavi-validation-message-list [validation-form-group-name]="transemail"
+                                validation-control-name="emailSubject"
+                                [validation-errorlist]="WorkflowMessage.EmailSubjectMessage">
+                              </lavi-validation-message-list>
+                            </div>
+
+                            <div class="marginleft-10 w-75">
+                              <mwl-text-input-autocomplete-container>
+                                <angular-editor [skip-keys]="skipKeys"
+                                  placeholder="Email Template ({{transemail.value.language}})" [config]="EditorConfig"
+                                  formControlName="emailTemplate" maxlength="3000" tabindex="21"
+                                  (blur)="UpdateEmailTemplateFormArray(r,$event.currentTarget.innerHTML,SendEmailUponTransferTemplateArray)">
+                                </angular-editor>
+                              </mwl-text-input-autocomplete-container>
+                              <lavi-show-dynamic-field [ConditionsName]="ConditionsName" ></lavi-show-dynamic-field>
+                            </div>
+                            <div class="marginleft-10">
+                              <lavi-validation-message-list [validation-form-group-name]="transemail"
+                                validation-control-name="emailTemplate"
+                                [validation-errorlist]="WorkflowMessage.EmailTemplateMessage">
+                              </lavi-validation-message-list>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </kendo-panelbar-item>
+                  </kendo-panelbar>
+                </div>
+              </div>
+
+              <!-- Send requeued -->
+              <div>
+                <!-- Send requeued SMS -->
+                <div class="col-12">
+
+                  <label class="cursor-pointer checkbox-label"
+                    (change)="OnSelectionChangeSMSValidation(SendSmsWhenRequeuedTemplateArray,BasicWorkflowRulesForm.controls.enableSendSmsWhenRequeued.value)">
+                    <input type="checkbox" kendoCheckBox tabindex="22"
+                      [formControl]="BasicWorkflowRulesForm.controls.enableSendSmsWhenRequeued" />
+                    <span>Send SMS when requeued</span>
+                  </label>
+                </div>
+
+                <div formArrayName="sendSmsWhenRequeuedTemplate"
+                  *ngFor="let requesms of SendSmsWhenRequeuedTemplateArray.controls; let r=index">
+                  <div [formGroupName]="r" *ngIf="requesms.value.isDefault">
+                    <kendo-floatinglabel text="SMS Template ({{requesms.value.language}})" class="textarea-style">
+                      <mwl-text-input-autocomplete-container class="full-expand-style">
+
+                        <textarea class="full-expand-style-text-area" mwlTextInputAutocomplete triggerCharacter="%"
+                          [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel" kendoTextArea
+                          formControlName="smsTemplate" maxlength="500" rows="4" [autoSize]="true" tabindex="23">
+                                       </textarea>
+                      </mwl-text-input-autocomplete-container>
+                    </kendo-floatinglabel>
+                    <div class="marginleft-10">
+
+                      <lavi-validation-message-list [validation-form-group-name]="requesms"
+                        validation-control-name="smsTemplate"
+                        [validation-errorlist]="WorkflowMessage.SMSTemplateMessage">
+                      </lavi-validation-message-list>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w-100" *ngIf="IsAdditionalLanguageAvailable">
+                  <kendo-panelbar>
+                    <kendo-panelbar-item title="">
+                      <ng-template kendoPanelBarItemTitle>
+                        <div class="div-additional-language">
+                          <div class="error-message"
+                            *ngIf="SendSmsWhenRequeuedTemplateArray.hasError('invalidTranslation')">
+                            Please check the additional languages.
+                          </div>
+                          <label class="cursor-pointer ">
+                            <span class="additional-language">Additional Languages</span>
+                          </label>
+                        </div>
+                      </ng-template>
+
+                      <ng-template kendoPanelBarContent>
+                        <div formArrayName="sendSmsWhenRequeuedTemplate" class="w-100"
+                          *ngFor="let requesms of SendSmsWhenRequeuedTemplateArray.controls; let r=index">
+                          <label class="col-10 cursor-pointer text-blue pr-0"
+                            (click)=" translate(requesms.value.smsTemplate, SendSmsWhenRequeuedTemplateArray,'smsTemplate')"
+                            *ngIf="requesms.value.isDefault">
+                            <span class="font-size-small-1 float-right">Translate</span>
+                          </label>
+
+                          <div [formGroupName]="r" class="mb-4" *ngIf="!requesms.value.isDefault">
+                            <kendo-floatinglabel text="SMS Template ({{requesms.value.language}})"
+                              class="textarea-style">
+                              <mwl-text-input-autocomplete-container class="full-expand-style">
+
+                                <textarea class="full-expand-style " mwlTextInputAutocomplete triggerCharacter="%"
+                                  [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel" kendoTextArea
+                                  formControlName="smsTemplate" maxlength="500" rows="4" [autoSize]="true"
+                                  tabindex="23">
+                                               </textarea>
+                              </mwl-text-input-autocomplete-container>
+                            </kendo-floatinglabel>
+                            <div class="marginleft-10">
+
+                              <lavi-validation-message-list [validation-form-group-name]="requesms"
+                                validation-control-name="smsTemplate"
+                                [validation-errorlist]="WorkflowMessage.SMSTemplateMessage">
+                              </lavi-validation-message-list>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </kendo-panelbar-item>
+                  </kendo-panelbar>
+                </div>
+
+                <!-- Send requeued Email -->
+                <div class="col-12">
+
+                  <label class="cursor-pointer checkbox-label"
+                    (change)="OnSelectionChangeEmailValidation(SendEmailWhenRequeuedTemplateArray,BasicWorkflowRulesForm.controls.enableSendEmailWhenRequeued.value)">
+                    <input type="checkbox" kendoCheckBox tabindex="24"
+                      [formControl]="BasicWorkflowRulesForm.controls.enableSendEmailWhenRequeued" />
+                    <span>Send Email when requeued</span>
+                  </label>
+                </div>
+
+                <div formArrayName="sendEmailWhenRequeuedTemplate"
+                  *ngFor="let requeEmail of SendEmailWhenRequeuedTemplateArray.controls; let r=index">
+                  <div [formGroupName]="r" *ngIf="requeEmail.value.isDefault">
+
+                    <div class="marginleft-10 mb-4 w-75">
+                      <kendo-textbox-container floatingLabel="Email Subject ({{requeEmail.value.language}})"
+                        class="w-100">
+                        <mwl-text-input-autocomplete-container class="full-expand-style">
+                          <input type="text" class="full-expand-style" mwlTextInputAutocomplete triggerCharacter="%"
+                            [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel" kendoTextBox maxlength="500"
+                            formControlName="emailSubject" autocomplete="new-password" tabindex="25" />
+                        </mwl-text-input-autocomplete-container>
+                      </kendo-textbox-container>
+                      <lavi-validation-message-list [validation-form-group-name]="requeEmail"
+                        validation-control-name="emailSubject"
+                        [validation-errorlist]="WorkflowMessage.EmailSubjectMessage">
+                      </lavi-validation-message-list>
+                    </div>
+
+                    <div class="marginleft-10 w-75">
+                      <mwl-text-input-autocomplete-container>
+                        <angular-editor [skip-keys]="skipKeys"
+                          placeholder="Email Template ({{requeEmail.value.language}})" [config]="EditorConfig"
+                          formControlName="emailTemplate" maxlength="3000" tabindex="9"
+                          (blur)="UpdateEmailTemplateFormArray(r,$event.currentTarget.innerHTML,SendEmailWhenRequeuedTemplateArray)">
+                        </angular-editor>
+                      </mwl-text-input-autocomplete-container>
+                      <lavi-show-dynamic-field [ConditionsName]="ConditionsName" ></lavi-show-dynamic-field>
+                    </div>
+                    <div class="marginleft-10">
+
+                      <lavi-validation-message-list [validation-form-group-name]="requeEmail"
+                        validation-control-name="emailTemplate"
+                        [validation-errorlist]="WorkflowMessage.EmailTemplateMessage">
+                      </lavi-validation-message-list>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="w-100" *ngIf="IsAdditionalLanguageAvailable">
+                  <kendo-panelbar>
+                    <kendo-panelbar-item title="">
+                      <ng-template kendoPanelBarItemTitle>
+                        <div class="div-additional-language">
+                          <div class="error-message"
+                            *ngIf="SendEmailWhenRequeuedTemplateArray.hasError('invalidTranslation')">
+                            Please check the additional languages.
+                          </div>
+                          <label class="cursor-pointer ">
+                            <span class="additional-language">Additional Languages</span>
+                          </label>
+                        </div>
+                      </ng-template>
+
+                      <ng-template kendoPanelBarContent>
+                        <div formArrayName="sendEmailWhenRequeuedTemplate" class="w-100"
+                          *ngFor="let requeEmail of SendEmailWhenRequeuedTemplateArray.controls; let r=index">
+                          <label class="col-10 cursor-pointer text-blue pr-0"
+                            (click)=" translate(requeEmail.value.emailTemplate, SendEmailWhenRequeuedTemplateArray,'emailTemplate',requeEmail.value.emailSubject)"
+                            *ngIf="requeEmail.value.isDefault">
+                            <span class="font-size-small-1 float-right">Translate</span>
+                          </label>
+
+                          <div [formGroupName]="r" class="mb-4" *ngIf="!requeEmail.value.isDefault">
+
+                            <div class="marginleft-10 mb-4 w-75">
+                              <kendo-textbox-container floatingLabel="Email Subject ({{requeEmail.value.language}})"
+                                class="w-100">
+                                <mwl-text-input-autocomplete-container class="full-expand-style">
+                                  <input type="text" class="full-expand-style" mwlTextInputAutocomplete
+                                    triggerCharacter="%" [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel"
+                                    kendoTextBox maxlength="500" formControlName="emailSubject"
+                                    autocomplete="new-password" tabindex="25" />
+                                </mwl-text-input-autocomplete-container>
+                              </kendo-textbox-container>
+                              <lavi-validation-message-list [validation-form-group-name]="requeEmail"
+                                validation-control-name="emailSubject"
+                                [validation-errorlist]="WorkflowMessage.EmailSubjectMessage">
+                              </lavi-validation-message-list>
+                            </div>
+                            <div class="marginleft-10 w-75">
+                              <mwl-text-input-autocomplete-container>
+                                <angular-editor [skip-keys]="skipKeys"
+                                  placeholder="Email Template ({{requeEmail.value.language}})" [config]="EditorConfig"
+                                  formControlName="emailTemplate" maxlength="3000" tabindex="25"
+                                  (blur)="UpdateEmailTemplateFormArray(r,$event.currentTarget.innerHTML,SendEmailWhenRequeuedTemplateArray)">
+                                </angular-editor>
+                              </mwl-text-input-autocomplete-container>
+                              <lavi-show-dynamic-field [ConditionsName]="ConditionsName" ></lavi-show-dynamic-field>
+                            </div>
+                            <div class="marginleft-10">
+
+                              <lavi-validation-message-list [validation-form-group-name]="requeEmail"
+                                validation-control-name="emailTemplate"
+                                [validation-errorlist]="WorkflowMessage.EmailTemplateMessage">
+                              </lavi-validation-message-list>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </kendo-panelbar-item>
+                  </kendo-panelbar>
+                </div>
+              </div>
+
+              <!-- Send Survey -->
+              <div>
+                <!-- Send Survey SMS -->
+                <div class="col-12">
+
+                  <label class="cursor-pointer checkbox-label"
+                    (change)="OnSelectionChangeSMSValidation(SendSmsForSurveyTemplateArray,BasicWorkflowRulesForm.controls.enableSendSmsForSurvey.value)">
+                    <input type="checkbox" kendoCheckBox tabindex="26"
+                      [formControl]="BasicWorkflowRulesForm.controls.enableSendSmsForSurvey" />
+                    <span>Send SMS for survey</span>
+                  </label>
+                </div>
+
+                <div formArrayName="sendSmsForSurveyTemplate"
+                  *ngFor="let surveysms of SendSmsForSurveyTemplateArray.controls; let r=index">
+                  <div [formGroupName]="r" *ngIf="surveysms.value.isDefault">
+                    <kendo-floatinglabel text="SMS Template ({{surveysms.value.language}})" class="textarea-style">
+                      <mwl-text-input-autocomplete-container class="full-expand-style">
+
+                        <textarea class="full-expand-style-text-area" mwlTextInputAutocomplete triggerCharacter="%"
+                          [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel" kendoTextArea
+                          formControlName="smsTemplate" maxlength="500" rows="4" [autoSize]="true" tabindex="27">
+                                     </textarea>
+                      </mwl-text-input-autocomplete-container>
+                    </kendo-floatinglabel>
+                    <div class="marginleft-10">
+
+                      <lavi-validation-message-list [validation-form-group-name]="surveysms"
+                        validation-control-name="smsTemplate"
+                        [validation-errorlist]="WorkflowMessage.SMSTemplateMessage">
+                      </lavi-validation-message-list>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w-100" *ngIf="IsAdditionalLanguageAvailable">
+                  <kendo-panelbar>
+                    <kendo-panelbar-item title="">
+                      <ng-template kendoPanelBarItemTitle>
+                        <div class="div-additional-language">
+                          <div class="error-message"
+                            *ngIf="SendSmsForSurveyTemplateArray.hasError('invalidTranslation')">
+                            Please check the additional languages.
+                          </div>
+                          <label class="cursor-pointer ">
+                            <span class="additional-language">Additional Languages</span>
+                          </label>
+                        </div>
+                      </ng-template>
+
+
+                      <ng-template kendoPanelBarContent>
+                        <div formArrayName="sendSmsForSurveyTemplate" class="w-100"
+                          *ngFor="let surveysms of SendSmsForSurveyTemplateArray.controls; let r=index">
+                          <label class="col-10 cursor-pointer text-blue pr-0"
+                            (click)="translate(surveysms.value.smsTemplate, SendSmsForSurveyTemplateArray,'smsTemplate')"
+                            *ngIf="surveysms.value.isDefault">
+                            <span class="font-size-small-1 float-right">Translate</span>
+                          </label>
+
+                          <div [formGroupName]="r" class="mb-4" *ngIf="!surveysms.value.isDefault">
+                            <kendo-floatinglabel text="SMS Template ({{surveysms.value.language}})"
+                              class="textarea-style">
+                              <mwl-text-input-autocomplete-container class="full-expand-style">
+
+                                <textarea class="full-expand-style-text-area" mwlTextInputAutocomplete
+                                  triggerCharacter="%" [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel"
+                                  kendoTextArea formControlName="smsTemplate" maxlength="500" rows="4" [autoSize]="true"
+                                  tabindex="27">
+                                             </textarea>
+                              </mwl-text-input-autocomplete-container>
+                            </kendo-floatinglabel>
+                            <div class="marginleft-10">
+
+                              <lavi-validation-message-list [validation-form-group-name]="surveysms"
+                                validation-control-name="smsTemplate"
+                                [validation-errorlist]="WorkflowMessage.SMSTemplateMessage">
+                              </lavi-validation-message-list>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </kendo-panelbar-item>
+                  </kendo-panelbar>
+                </div>
+
+                <!-- Send Survey Email -->
+                <div class="col-12">
+
+                  <label class="cursor-pointer checkbox-label"
+                    (change)="OnSelectionChangeEmailValidation(SendEmailForSurveyTemplateArray,BasicWorkflowRulesForm.controls.enableSendEmailForSurvey.value)">
+                    <input type="checkbox" kendoCheckBox tabindex="28"
+                      [formControl]="BasicWorkflowRulesForm.controls.enableSendEmailForSurvey" />
+                    <span>Send Email for survey</span>
+                  </label>
+                </div>
+
+                <div formArrayName="sendEmailForSurveyTemplate"
+                  *ngFor="let surveyemail of SendEmailForSurveyTemplateArray.controls; let r=index">
+                  <div [formGroupName]="r" *ngIf="surveyemail.value.isDefault">
+
+                    <div class="marginleft-10 mb-4 w-75">
+                      <kendo-textbox-container floatingLabel="Email Subject ({{surveyemail.value.language}})"
+                        class="w-100">
+                        <mwl-text-input-autocomplete-container class="full-expand-style">
+                          <input type="text" class="full-expand-style" mwlTextInputAutocomplete triggerCharacter="%"
+                            [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel" kendoTextBox maxlength="500"
+                            formControlName="emailSubject" autocomplete="new-password" tabindex="29" />
+                        </mwl-text-input-autocomplete-container>
+                      </kendo-textbox-container>
+                      <lavi-validation-message-list [validation-form-group-name]="surveyemail"
+                        validation-control-name="emailSubject"
+                        [validation-errorlist]="WorkflowMessage.EmailSubjectMessage">
+                      </lavi-validation-message-list>
+                    </div>
+
+                    <div class="marginleft-10 w-75">
+                      <mwl-text-input-autocomplete-container>
+                        <angular-editor [skip-keys]="skipKeys"
+                          placeholder="Email Template ({{surveyemail.value.language}})" [config]="EditorConfig"
+                          formControlName="emailTemplate" maxlength="3000" tabindex="9"
+                          (blur)="UpdateEmailTemplateFormArray(r,$event.currentTarget.innerHTML,SendEmailForSurveyTemplateArray)">
+                        </angular-editor>
+                      </mwl-text-input-autocomplete-container>
+                      <lavi-show-dynamic-field [ConditionsName]="ConditionsName" ></lavi-show-dynamic-field>
+                    </div>
+                    <div class="marginleft-10">
+
+                      <lavi-validation-message-list [validation-form-group-name]="surveyemail"
+                        validation-control-name="emailTemplate"
+                        [validation-errorlist]="WorkflowMessage.EmailTemplateMessage">
+                      </lavi-validation-message-list>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="w-100" *ngIf="IsAdditionalLanguageAvailable">
+                  <kendo-panelbar>
+                    <kendo-panelbar-item title="">
+                      <ng-template kendoPanelBarItemTitle>
+                        <div class="div-additional-language">
+                          <div class="error-message"
+                            *ngIf="SendEmailForSurveyTemplateArray.hasError('invalidTranslation')">
+                            Please check the additional languages.
+                          </div>
+                          <label class="cursor-pointer ">
+                            <span class="additional-language">Additional Languages</span>
+                          </label>
+                        </div>
+                      </ng-template>
+
+                      <ng-template kendoPanelBarContent>
+                        <div formArrayName="sendEmailForSurveyTemplate" class="w-100"
+                          *ngFor="let surveyemail of SendEmailForSurveyTemplateArray.controls; let r=index">
+                          <label class="col-10 cursor-pointer text-blue pr-0"
+                            (click)=" translate(surveyemail.value.emailTemplate, SendEmailForSurveyTemplateArray,'emailTemplate',surveyemail.value.emailSubject)"
+                            *ngIf="surveyemail.value.isDefault">
+                            <span class="font-size-small-1 float-right">Translate</span>
+                          </label>
+
+                          <div [formGroupName]="r" class="mb-4" *ngIf="!surveyemail.value.isDefault">
+
+                            <div class="marginleft-10 mb-4 w-75">
+                              <kendo-textbox-container floatingLabel="Email Subject ({{surveyemail.value.language}})"
+                                class="w-100">
+                                <mwl-text-input-autocomplete-container class="full-expand-style">
+                                  <input type="text" class="full-expand-style" mwlTextInputAutocomplete
+                                    triggerCharacter="%" [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel"
+                                    kendoTextBox maxlength="500" formControlName="emailSubject"
+                                    autocomplete="new-password" tabindex="29" />
+                                </mwl-text-input-autocomplete-container>
+                              </kendo-textbox-container>
+                              <lavi-validation-message-list [validation-form-group-name]="surveyemail"
+                                validation-control-name="emailSubject"
+                                [validation-errorlist]="WorkflowMessage.EmailSubjectMessage">
+                              </lavi-validation-message-list>
+                            </div>
+
+                            <div class="marginleft-10 w-75">
+                              <mwl-text-input-autocomplete-container>
+                                <angular-editor [skip-keys]="skipKeys"
+                                  placeholder="Email Template ({{surveyemail.value.language}})" [config]="EditorConfig"
+                                  formControlName="emailTemplate" maxlength="3000" tabindex="29"
+                                  (blur)="UpdateEmailTemplateFormArray(r,$event.currentTarget.innerHTML,SendEmailForSurveyTemplateArray)">
+                                </angular-editor>
+                              </mwl-text-input-autocomplete-container>
+                              <lavi-show-dynamic-field [ConditionsName]="ConditionsName" ></lavi-show-dynamic-field>
+                            </div>
+                            <div class="marginleft-10">
+
+                              <lavi-validation-message-list [validation-form-group-name]="surveyemail"
+                                validation-control-name="emailTemplate"
+                                [validation-errorlist]="WorkflowMessage.EmailTemplateMessage">
+                              </lavi-validation-message-list>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </kendo-panelbar-item>
+                  </kendo-panelbar>
+                </div>
+
+                <div class="col-12">
+
+                  <label>
+                    <span>Text To Join</span>
+                  </label>
+                </div>
+                <div formArrayName="sendJoinQueueSmsTemplate"
+                  *ngFor="let regsms of SendSMSToJoinQueueTemplateArray.controls; let r=index">
+                  <div [formGroupName]="r" *ngIf="regsms.value.isDefault">
+                    <kendo-floatinglabel text="Text Template" class="textarea-style">
+                      <mwl-text-input-autocomplete-container class="full-expand-style">
+
+                        <textarea class="full-expand-style-text-area" mwlTextInputAutocomplete triggerCharacter="%"
+                          [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel" kendoTextArea tabindex="2"
+                          formControlName="smsTemplate" maxlength="500" rows="4" [autoSize]="true">
+                                          </textarea>
+                      </mwl-text-input-autocomplete-container>
+                    </kendo-floatinglabel>
+
+                    <div class="marginleft-10">
+
+                      <lavi-validation-message-list [validation-form-group-name]="regsms"
+                        validation-control-name="smsTemplate"
+                        [validation-errorlist]="WorkflowMessage.SMSTemplateMessage">
+                      </lavi-validation-message-list>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="w-100" *ngIf="IsAdditionalLanguageAvailable">
+                  <kendo-panelbar>
+                    <kendo-panelbar-item title="">
+                      <ng-template kendoPanelBarItemTitle>
+                        <div class="div-additional-language">
+
+                          <label class="cursor-pointer ">
+                            <span class="additional-language">Additional Languages</span>
+                          </label>
+                        </div>
+
+                      </ng-template>
+
+
+                      <ng-template kendoPanelBarContent>
+                        <div formArrayName="sendJoinQueueSmsTemplate" class="w-100"
+                          *ngFor="let regsms of SendSMSToJoinQueueTemplateArray.controls; let r=index">
+                          <label class="col-10 cursor-pointer text-blue pr-0"
+                            (click)="translate(regsms.value.smsTemplate, SendSMSToJoinQueueTemplateArray,'smsTemplate')"
+                            *ngIf="regsms.value.isDefault">
+                            <span class="font-size-small-1 float-right">Translate</span>
+                          </label>
+
+                          <div [formGroupName]="r" class="mb-4" *ngIf="!regsms.value.isDefault">
+                            <kendo-floatinglabel text="TEXT Template ({{regsms.value.language}})"
+                              class="textarea-style">
+                              <mwl-text-input-autocomplete-container class="full-expand-style">
+
+                                <textarea class="full-expand-style-text-area" mwlTextInputAutocomplete
+                                  triggerCharacter="%" [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel"
+                                  kendoTextArea tabindex="2" formControlName="smsTemplate" maxlength="500" rows="4"
+                                  [autoSize]="true">
+                                                  </textarea>
+                              </mwl-text-input-autocomplete-container>
+
+                            </kendo-floatinglabel>
+                            <div class="marginleft-10">
+
+                              <lavi-validation-message-list [validation-form-group-name]="regsms"
+                                validation-control-name="smsTemplate"
+                                [validation-errorlist]="WorkflowMessage.SMSTemplateMessage">
+                              </lavi-validation-message-list>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </kendo-panelbar-item>
+                  </kendo-panelbar>
+                </div>
+
+
+
+                <div class="col-12">
+
+                  <label class="cursor-pointer checkbox-label"
+                    (change)="OnSelectionChangeSMSValidation(SendSMSAutoReplyTemplateArray,BasicWorkflowRulesForm.controls.enableAutoReplySMS.value)">
+                    <input type="checkbox" tabindex="1" kendoCheckBox lavi-auto-focus
+                      [formControl]="BasicWorkflowRulesForm.controls.enableAutoReplySMS" />
+                    <span>Send Auto Reply To Every Incoming SMS</span>
+                  </label>
+                </div>
+                <div formArrayName="sendAutoReplySmsTemplate"
+                  *ngFor="let regsms of SendSMSAutoReplyTemplateArray.controls; let r=index">
+                  <div [formGroupName]="r" *ngIf="regsms.value.isDefault">
+                    <kendo-floatinglabel text="Text Template" class="textarea-style">
+                      <mwl-text-input-autocomplete-container class="full-expand-style">
+
+                        <textarea class="full-expand-style-text-area" mwlTextInputAutocomplete triggerCharacter="%"
+                          [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel" kendoTextArea tabindex="2"
+                          formControlName="smsTemplate" maxlength="500" rows="4" [autoSize]="true">
+                                          </textarea>
+                      </mwl-text-input-autocomplete-container>
+                    </kendo-floatinglabel>
+
+                    <div class="marginleft-10">
+
+                      <lavi-validation-message-list [validation-form-group-name]="regsms"
+                        validation-control-name="smsTemplate"
+                        [validation-errorlist]="WorkflowMessage.SMSTemplateMessage">
+                      </lavi-validation-message-list>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="w-100" *ngIf="IsAdditionalLanguageAvailable">
+                  <kendo-panelbar>
+                    <kendo-panelbar-item title="">
+                      <ng-template kendoPanelBarItemTitle>
+                        <div class="div-additional-language">
+
+                          <label class="cursor-pointer ">
+                            <span class="additional-language">Additional Languages</span>
+                          </label>
+                        </div>
+
+                      </ng-template>
+
+
+                      <ng-template kendoPanelBarContent>
+                        <div formArrayName="sendAutoReplySmsTemplate" class="w-100"
+                          *ngFor="let regsms of SendSMSAutoReplyTemplateArray.controls; let r=index">
+                          <label class="col-10 cursor-pointer text-blue pr-0"
+                            (click)="translate(regsms.value.smsTemplate, SendSMSAutoReplyTemplateArray,'smsTemplate')"
+                            *ngIf="regsms.value.isDefault">
+                            <span class="font-size-small-1 float-right">Translate</span>
+                          </label>
+
+                          <div [formGroupName]="r" class="mb-4" *ngIf="!regsms.value.isDefault">
+                            <kendo-floatinglabel text="TEXT Template ({{regsms.value.language}})"
+                              class="textarea-style">
+                              <mwl-text-input-autocomplete-container class="full-expand-style">
+
+                                <textarea class="full-expand-style-text-area" mwlTextInputAutocomplete
+                                  triggerCharacter="%" [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel"
+                                  kendoTextArea tabindex="2" formControlName="smsTemplate" maxlength="500" rows="4"
+                                  [autoSize]="true">
+                                                  </textarea>
+                              </mwl-text-input-autocomplete-container>
+
+                            </kendo-floatinglabel>
+                            <div class="marginleft-10">
+
+                              <lavi-validation-message-list [validation-form-group-name]="regsms"
+                                validation-control-name="smsTemplate"
+                                [validation-errorlist]="WorkflowMessage.SMSTemplateMessage">
+                              </lavi-validation-message-list>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </kendo-panelbar-item>
+                  </kendo-panelbar>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</lavi-form-content-panel>

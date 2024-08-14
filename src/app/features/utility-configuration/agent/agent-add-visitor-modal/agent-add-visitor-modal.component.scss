@@ -1,0 +1,101 @@
+@import "src/stylings/primitives/primitives.scss";
+@import "src/stylings/shared/agent-layout.scss";
+.header{
+  color:$agent-header-column-font-color;
+}
+::ng-deep .preview-control {
+  input[type="radio"] + label {
+    margin-top: 4px;
+  }
+
+  .iti__country-list{
+    width:200px;
+  }
+
+}
+.center{
+  justify-content: center;
+  vertical-align: middle;
+}
+.container{
+  ::ng-deep .k-textbox, ::ng-deep .k-dropdown .k-dropdown-wrap .k-input,
+  ::ng-deep .k-numerictextbox .k-numeric-wrap .k-input, ::ng-deep .k-datepicker .k-dateinput-wrap .k-input,
+  ::ng-deep .k-list .k-item, ::ng-deep .k-list-optionlabel  {
+      font-size: $font-size-small-2;
+      padding-left: 10px;
+    }
+}
+
+p {
+  display: inline-block;
+  margin-bottom: 0;
+}
+
+
+::ng-deep{
+  .transfer-service-modal  .custom-modal-header{
+    background-color: $button-light-purple-background-color;
+  }
+  .transfer-service-modal  .header-bottom-filling{
+    background-color: $button-light-purple-background-color;
+  }
+  .custom-modal-header-close-btn{
+    span{
+      color:$color-text-white !important;
+    }
+  }
+}
+
+  ::ng-deep{
+  .edit-visitor-modal  .custom-modal-header{
+   background-color: $button-yellow-background-color;
+  }
+  .edit-visitor-modal  .header-bottom-filling{
+    background-color: $button-yellow-background-color;
+  }
+  .custom-modal-header-close-btn{
+    span{
+      color:$color-text-white !important;
+    }
+  }
+}
+
+  ::ng-deep{
+  .add-visitor-modal  .custom-modal-header{
+    background-color: gray;
+  }
+  .add-visitor-modal  .header-bottom-filling{
+    background-color: gray;
+  }
+  .custom-modal-header-close-btn{
+    span{
+      color:$color-text-white !important;
+    }
+  }
+
+}
+
+ul {
+  list-style: none;
+  li::before {
+    border-radius: 50%;
+    background-color: $sidebar-yellow-border;
+    content: " ";
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+  }
+  li {
+    color:$color-text-black !important;
+    font-size: $font-size-small-5; // 12px
+    font-weight: $font-weight-600;
+  }
+}
+
+.estimate-wait-time .watch-icon{
+font-size:120px;
+color:gray;
+}
+.global-question-container .row > div {
+  align-self: flex-end;
+}

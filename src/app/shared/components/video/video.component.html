@@ -1,0 +1,38 @@
+<ng-container>
+  <button
+    *ngIf="ShowRemoveOption"
+    type="button"
+    (click)="RemoveControl()"
+    class="close"
+    aria-label="Close"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <video
+    *ngIf="GetUrl(Src) && UrlType?.other"
+    [style.width.px]="Width"
+    [style.height.px]="Height"
+    autoplay
+    [muted]="true"
+    loop="true" controls="false"
+    class="video"
+    lavi-video-loader
+  >
+    <source src="{{ GetUrl(Src) }}" type="video/mp4" />
+  </video>
+  <iframe
+    *ngIf="GetUrl(Src) && UrlType?.youtube"
+    [style.margin.px]="10"
+    [style.width.px]="Width - 20 > 0 ? Width - 20 : 0"
+    [style.height.px]="Height - 20 > 0 ? Height - 20 : 0"
+    [src]="GetUrl(Src)"
+    allow="autoplay"
+    loop="true" controls="false"
+  ></iframe>
+  <img
+    [style.width.px]="Width"
+    [style.height.px]="Height"
+    *ngIf="!GetUrl(Src) && !UrlType?.other && !UrlType?.youtube"
+    src="/assets/video-icon.svg"
+  />
+</ng-container>

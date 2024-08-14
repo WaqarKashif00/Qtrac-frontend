@@ -1,0 +1,10 @@
+<div *ngIf="HeaderData.isVisible"
+[style.padding-left.px]="HeaderData.horizontalPadding || 0"
+[style.padding-right.px]="HeaderData.horizontalPadding || 0"
+[style.padding-top.px]="HeaderData.verticalPadding || 0"
+[style.padding-bottom.px]="HeaderData.verticalPadding || 0"
+[style.height.%]="HeaderData.height || 0"
+[style.text-align]="HeaderData.logoPosition"
+class="page-header mobile-preview-header w-100"  >
+  <img class="h-100 " [src]="HeaderData.backGroundImage" />
+</div>

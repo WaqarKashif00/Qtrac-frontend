@@ -1,0 +1,7 @@
+@import "src/stylings/primitives/primitives.scss";
+.right-content {
+  padding: 0;
+  background: $snapshot-slider-bg-grey;
+  height: calc(100vh - 115px);
+  overflow-y: auto;
+}

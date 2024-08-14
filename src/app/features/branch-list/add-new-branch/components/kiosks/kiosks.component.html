@@ -1,0 +1,1025 @@
+
+  <div
+    *ngIf="{
+      workflowName: WorkflowName$ | async,
+      kioskLayout: KioskLayoutTemplate$ | async,
+      mobileLayout: MobileLayoutTemplate$ | async,
+      locationPrinters: KioskPrinters$ | async
+    } as value"
+  >
+    <lavi-form-panel PanelHeader="Kiosks">
+      <lavi-form-content-panel>
+        <div class="col-lg-12 inner-panel-padding panel-border">
+          <div class="mb-5">
+            <div class="row">
+              <div class="col-lg-12 text-right">
+                <div class="pr-3">
+                  <span
+                    *ngIf="KioskList?.length > 0"
+                    (click)="OpenKioskMessageModal(true)"
+                    class="text-blue cursor-pointer"
+                    >Message All</span
+                  >
+                  <span
+                    (click)="OpenAddKiosk()"
+                    class="text-blue pl-4 cursor-pointer"
+                    *laviHasRoleAccess="
+                      roleActions.BranchKioskConfigurations;
+                      actionName: actionType.AddEdit
+                    "
+                    >Add Kiosk</span
+                  >
+                </div>
+              </div>
+              <lavi-modal
+                [OpenDialog]="OpenKioskDialog"
+                [Title]="ModalTitle"
+                Width="50%"
+              >
+                <div>
+                  <lavi-form [FormGroup]="TemplateForm">
+                    <div class="col-lg-12">
+                      <div class="row">
+                        <div class="col-lg-5">
+                          <kendo-textbox-container
+                            class="w-100"
+                            floatingLabel="Title"
+                          >
+                            <input
+                              kendoTextBox
+                              tabindex="100"
+                              maxlength="50"
+                              [formControl]="TemplateForm.controls.title"
+                              lavi-auto-focus
+                              [AutoFocusRequired]="OpenKioskDialog"
+                              lavi-trim-value
+                            />
+                          </kendo-textbox-container>
+                          <div class="h-10 py-2">
+                            <lavi-validation-message-list
+                              [validation-form-group-name]="TemplateForm"
+                              validation-control-name="title"
+                              [validation-errorlist]="
+                                ValidationMessages.TitleMessages
+                              "
+                            >
+                            </lavi-validation-message-list>
+                          </div>
+                        </div>
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-6">
+                          <kendo-textbox-container
+                            class="w-100"
+                            floatingLabel="Layout Template"
+                          >
+                            <kendo-dropdownlist
+                              placeholder="Layout template"
+                              class="no-border mt-1"
+                              [textField]="'templateName'"
+                              tabindex="102"
+                              [formControl]="TemplateForm.controls.name"
+                              [data]="
+                                value?.kioskLayout | laviSortBy: 'templateName'
+                              "
+                              (valueChange)="
+                                SetWorkflowAndMobileInterfaces($event)
+                              "
+                              [valueField]="'templateId'"
+                              [defaultItem]="DefaultData.KioskTemplateValue"
+                            >
+                            </kendo-dropdownlist>
+                          </kendo-textbox-container>
+                          <div class="h-10">
+                            <span
+                              *ngIf="value?.workflowName"
+                              class="span-template pl-1"
+                            >
+                              This layout is using
+                              {{ value?.workflowName }}.</span
+                            >
+                            <lavi-validation-message-list
+                              [validation-form-group-name]="TemplateForm"
+                              validation-control-name="name"
+                              [validation-errorlist]="
+                                ValidationMessages.TemplateNameMessages
+                              "
+                            >
+                            </lavi-validation-message-list>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12 mt-4">
+                      <div class="row py-2">
+                        <div class="col-lg-5 mt-1">
+                          <div
+                            lavi-text-field-loader
+                            [show-text-field-loading]="
+                              deviceIdFormControl?.pending
+                            "
+                          >
+                            <div
+                              class="
+                                col-lg-12 col-md-8
+                                float-left
+                                pr-0
+                                pl-0
+                                lavi-text-field-loader-container
+                              "
+                            >
+                              <div class="form-group">
+                                <kendo-textbox-container
+                                  class="w-100"
+                                  floatingLabel="Device Id"
+                                  [class.k-state-invalid]="
+                                    deviceIdFormControl?.invalid &&
+                                    deviceIdFormControl.dirty
+                                  "
+                                >
+                                  <input
+                                    kendoTextBox
+                                    tabindex="101"
+                                    maxlength="5"
+                                    [formControl]="
+                                      TemplateForm.controls.deviceId
+                                    "
+                                    lavi-trim-value
+                                    lavi-app-numbers-only
+                                  />
+                                </kendo-textbox-container>
+                                <span
+                                  *ngIf="
+                                    TemplateForm.get('deviceId').valid &&
+                                    TemplateForm.get('deviceId').value
+                                  "
+                                >
+                                  <span
+                                    class="
+                                      k-icon k-i-checkmark
+                                      device-id-icon
+                                      form-control-feedback
+                                    "
+                                  ></span>
+                                  <span class="text-secondary small"
+                                    >Device found.</span
+                                  >
+                                </span>
+                                <span
+                                  *ngIf="
+                                    TemplateForm.get('deviceId').errors
+                                      ?.isExists &&
+                                    TemplateForm.get('deviceId').dirty
+                                  "
+                                >
+                                  <span
+                                    class="
+                                      k-icon k-i-close-circle k-i-x-circle
+                                      text-danger
+                                      device-id-icon
+                                      form-control-feedback
+                                    "
+                                  ></span>
+                                  <span class="error-text-color"
+                                    >Device not found.Please check the
+                                    code.</span
+                                  >
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-6">
+                          <kendo-textbox-container
+                            class="w-100"
+                            floatingLabel="Mobile Layout template"
+                          >
+                            <kendo-dropdownlist
+                              placeholder="Mobile Layout template"
+                              class="no-border mt-1"
+                              [textField]="'templateName'"
+                              [formControl]="
+                                TemplateForm.controls.mobileInterface
+                              "
+                              [data]="
+                                value?.mobileLayout | laviSortBy: 'templateName'
+                              "
+                              [valueField]="'templateId'"
+                              [defaultItem]="DefaultData.MobileTemplateValue"
+                            >
+                            </kendo-dropdownlist>
+                          </kendo-textbox-container>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-5">
+                      <kendo-textbox-container
+                        class="w-100"
+                        floatingLabel="Assigned Printer"
+                      >
+                      
+                        <kendo-dropdownlist
+                          placeholder="Assigned Printer"
+                          *ngIf="Mode === CRUDMode.Edit"
+                          class="no-border mt-1"
+                          [textField]="'printerName'"
+                          tabindex="102"
+                          [formControl]="TemplateForm.controls.assignedPrinter"
+                          [data]="
+                           value?.locationPrinters | laviSortBy: 'printerName'
+                          "
+                          [valueField]="'printerId'"
+                          [defaultItem]="DefaultData.LocationPrinterValue"
+                        >
+                        </kendo-dropdownlist>
+                        <kendo-dropdownlist
+                        placeholder="Assigned Printer"
+                        *ngIf="Mode === CRUDMode.Add"
+                        class="no-border mt-1"
+                        [textField]="'printerName'"
+                        tabindex="102"
+                        [formControl]="TemplateForm.controls.assignedPrinter"
+                        [data]="[]"
+                        [valueField]="'printerId'"
+                        [defaultItem]="DefaultData.LocationPrinterValue"
+                      >
+                      </kendo-dropdownlist>
+                      </kendo-textbox-container>
+                    </div>
+                    <div>
+                      <kendo-dialog-actions class="pb-0 mt-3">
+                        <div class="row float-right mr-1 pb-2">
+                          <input
+                            type="button"
+                            kendoButton
+                            class="secondary-button"
+                            (click)="ModalClose()"
+                            value="Cancel"
+                          />
+                          <input
+                            type="button"
+                            kendoButton
+                            class="primary-button"
+                            *ngIf="Mode === CRUDMode.Add"
+                            (click)="SaveKiosk()"
+                            value="Save"
+                          />
+                          <input
+                            type="button"
+                            kendoButton
+                            class="primary-button"
+                            *ngIf="Mode === CRUDMode.Edit"
+                            (click)="SaveKiosk()"
+                            value="Update"
+                          />
+                        </div>
+                      </kendo-dialog-actions>
+                    </div>
+                  </lavi-form>
+                </div>
+              </lavi-modal>
+            </div>
+
+            <div>
+              <div *ngIf="KioskList" class="scroll-bar">
+                <div class="col-lg-12 mt-4 pr-4">
+                  <div class="row">
+                    <div
+                      *ngIf="KioskList.length > 0"
+                      class="col-lg-12 text-blue small cursor-pointer pb-3"
+                    >
+                      <span (click)="RefreshGrid('kiosk')" class="float-right">
+                        <img
+                          tabindex="35"
+                          class="img-width"
+                          src="../../../../assets/img/restart.png"
+                        />
+                        Refresh</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div
+                  *ngFor="
+                    let kiosk of KioskList | laviSortBy: 'name.templateName'
+                  "
+                >
+                  <div class="col-lg-12 col-sm-12 col-12">
+                    <div class="row">
+                      <div class="col-lg-2 col-sm-2 col-2 row wrap">
+                        <div tabindex="21" class="font-weight-500">
+                          {{ kiosk?.title }}
+                        </div>
+                      </div>
+                      <div class="col-lg-3 col-sm-3 col-3 text-center cursor-pointer wrap">
+                        <span
+                          tabindex="22"
+                          (click)="OpenKioskLinkDialog(kiosk?.title, kiosk?.id)"
+                          class="text-blue"
+                          *ngIf="kiosk?.status === DeviceStatus.NotRegistered"
+                          >Assign a device</span
+                        >
+                        <span
+                          tabindex="22"
+                          (click)="
+                            OpenKioskUnLinkDialog(
+                              kiosk?.title,
+                              kiosk?.status,
+                              kiosk?.id,
+                              kiosk?.browserId
+                            )
+                          "
+                          class="text-blue"
+                          *ngIf="kiosk?.status !== DeviceStatus.NotRegistered"
+                          >{{ kiosk?.browserId }}</span
+                        >
+                      </div>
+                      <div class="col-lg-3 col-sm-3 col-3 text-center wrap">
+                        <span
+                          [ngClass]="{ 'text-gray': kiosk?.name === null }"
+                          >{{
+                            kiosk?.name !== null
+                              ? kiosk?.name?.templateName
+                              : "template not assigned"
+                          }}</span
+                        >
+                      </div>
+                      <div class="col-lg-3 col-sm-3 col-3 wrap">
+                        <div class="row icon-container">
+                          <div class="col-lg-2 cursor-pointer">
+                            <img
+                              tabindex="24"
+                              class="img-width"
+                              title="Preview"
+                              src="../../../../assets/img/view.png"
+                            />
+                          </div>
+                          <div class="col-lg-2 mr-2 cursor-pointer">
+                            <img
+                              tabindex="25"
+                              class="img-width"
+                              title="Message"
+                              src="../../../../assets/img/comment.png"
+                              *ngIf="kiosk?.status === DeviceStatus.Live"
+                              (click)="
+                                OpenKioskMessageModal(
+                                  false,
+                                  kiosk?.id,
+                                  kiosk?.browserId
+                                )
+                              "
+                            />
+                          </div>
+                          <ng-container
+                            *ngIf="kiosk?.status === DeviceStatus.Live"
+                          >
+                            <div
+                              tabindex="27"
+                              class="
+                                col-lg-7
+                                font-size-small-2
+                                text-center
+                                rounded-online
+                                pt-1
+                              "
+                            >
+                              <img
+                                class="img-width float-left"
+                                src="../../../../assets/img/power_on.png"
+                              />
+                              <span class="online-text-color pl-1">Live</span>
+                            </div>
+                          </ng-container>
+                          <ng-container
+                            *ngIf="kiosk?.status === DeviceStatus.Standby"
+                          >
+                            <div
+                              tabindex="27"
+                              class="
+                                col-lg-7
+                                font-size-small-2
+                                bg-gray
+                                text-center
+                                rounded-online
+                                pt-1
+                              "
+                            >
+                              <img
+                                class="img-width float-left"
+                                src="../../../../assets/img/power_off.png"
+                              />
+                              <span class="text-secondary pl-1">Stand by</span>
+                            </div>
+                          </ng-container>
+                          <ng-container
+                            *ngIf="kiosk?.status === DeviceStatus.Offline"
+                          >
+                            <div
+                              tabindex="27"
+                              class="
+                                col-lg-7
+                                font-size-small-2
+                                text-center
+                                bg-gray
+                                rounded-online
+                                pt-1
+                              "
+                            >
+                              <img
+                                class="img-width float-left"
+                                src="../../../../assets/img/power_off.png"
+                              />
+                              <span class="text-secondary pl-1">Offline</span>
+                            </div>
+                          </ng-container>
+                          <ng-container
+                            *ngIf="kiosk?.status === DeviceStatus.NotRegistered"
+                          >
+                            <div
+                              tabindex="27"
+                              class="
+                                col-lg-7
+                                font-size-small-2
+                                text-center
+                                bg-gray
+                                rounded-online
+                                pt-1
+                                float-right
+                              "
+                            >
+                              <img
+                                class="img-width float-left"
+                                src="../../../../assets/img/power_off.png"
+                              />
+                              <span class="text-secondary pl-1"
+                                >Not Registered</span
+                              >
+                            </div>
+                          </ng-container>
+                        </div>
+                      </div>
+                      <div class="col-lg-1 col-sm-1 col-1 row pr-0">
+                        <div class="col-lg-6 col-sm-6 col-6"
+                          *laviHasRoleAccess="
+                            roleActions.BranchKioskConfigurations;
+                            actionName: actionType.Delete
+                          "
+                        >
+                          <img
+                            (click)="DeleteKiosk(kiosk.id, kiosk?.status)"
+                            tabindex="28"
+                            class="img-width cursor-pointer float-right"
+                            src="../../../../assets/img/delete-icon.svg"
+                          />
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-6"
+                          *laviHasRoleAccess="
+                            roleActions.BranchKioskConfigurations;
+                            actionName: actionType.AddEdit
+                          "
+                        >
+                          <img
+                            tabindex="29"
+                            (click)="OpenKioskUpdateModal(kiosk)"
+                            class="img-width cursor-pointer float-right"
+                            src="../../../../assets/img/edit-icon.svg"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <hr />
+                </div>
+              </div>
+              <div *ngIf="!KioskList || (KioskList && KioskList.length === 0)">
+                <p class="text-center">No kiosk added</p>
+              </div>
+            </div>
+
+            <lavi-modal
+              [OpenDialog]="OpenKioskDeviceUnLinkDialog"
+              (Save)="ModalClose()"
+              Title="{{ UnLinkTitle }}"
+              Width="50%"
+            >
+              <div>
+                <input id="kioskId" [ngModel]="TemplateId" type="text" hidden />
+                <div class="col-lg-5 col-sm-6 col-6 mt-n5 pt-3 float-right">
+                  <ng-container *ngIf="StatusId === DeviceStatus.Live">
+                    <div
+                      tabindex="27"
+                      class="
+                        cursor-pointer
+                        col-lg-6
+                        font-size-small-2
+                        text-center
+                        float-right
+                        rounded-online
+                        pl-1
+                        pt-1
+                      "
+                    >
+                      <img
+                        class="img-width float-left"
+                        src="../../../../assets/img/power_on.png"
+                      />
+                      <span class="online-text-color pl-1">Live</span>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="StatusId === DeviceStatus.Standby">
+                    <div
+                      tabindex="27"
+                      class="
+                        col-lg-6
+                        font-size-small-2
+                        bg-gray
+                        float-right
+                        text-center
+                        rounded-online
+                        pl-1
+                        pt-1
+                      "
+                    >
+                      <img
+                        class="img-width float-left"
+                        src="../../../../assets/img/power_off.png"
+                      />
+                      <span class="text-secondary pl-1">Stand by</span>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="StatusId === DeviceStatus.Offline">
+                    <div
+                      tabindex="27"
+                      class="
+                        col-lg-6
+                        text-center
+                        float-right
+                        font-size-small-2
+                        bg-gray
+                        rounded-online
+                        pl-1
+                        pt-1
+                      "
+                    >
+                      <img
+                        class="img-width float-left"
+                        src="../../../../assets/img/power_off.png"
+                      />
+                      <span class="text-secondary pl-1">Offline</span>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="StatusId === DeviceStatus.NotRegistered">
+                    <div
+                      tabindex="27"
+                      class="
+                        col-lg-6
+                        font-size-small-2
+                        text-center
+                        float-right
+                        bg-gray
+                        rounded-online
+                        pl-1
+                        pt-1
+                      "
+                    >
+                      <img
+                        class="img-width float-left"
+                        src="../../../../assets/img/power_off.png"
+                      />
+                      <span class="text-secondary pl-1">Not Registered</span>
+                    </div>
+                  </ng-container>
+                </div>
+                <div class="overflow-auto"></div>
+                <div class="col-lg-12">
+                  <div class="row">
+                    <div class="span-template">
+                      The device is currently {{ Status }}.
+                    </div>
+                  </div>
+                  <div class="row mt-1">
+                    <span class="span-template" *ngIf="false"
+                      >Last activity on the device was recorded 4 hours
+                      ago.</span
+                    >
+                  </div>
+                  <div class="row mt-5">
+                    <div class="text-muted">Available Options</div>
+                  </div>
+                  <div class="row"></div>
+                  <div class="col-lg-12 mt-4">
+                    <div class="row col-lg-12">
+                      <div class="col-lg-3">
+                        <span
+                          *ngIf="StatusId !== DeviceStatus.Live"
+                          class="span-template font-weight-500"
+                          >Refresh Device</span
+                        >
+                        <span
+                          *ngIf="StatusId === DeviceStatus.Live"
+                          (click)="RefreshDevice()"
+                          class="
+                            text-blue
+                            font-weight-500
+                            span-template-live
+                            cursor-pointer
+                          "
+                          >Refresh Device</span
+                        >
+                      </div>
+                      <div class="col-lg-3">
+                        <span
+                          *ngIf="
+                            StatusId !== DeviceStatus.Standby &&
+                            StatusId !== DeviceStatus.NotRegistered
+                          "
+                          (click)="OpenKioskLiveModal(TemplateId)"
+                          class="
+                            text-blue
+                            span-template-live
+                            font-weight-500
+                            cursor-pointer
+                          "
+                          >Shutdown Device</span
+                        >
+                        <span
+                          *ngIf="StatusId === DeviceStatus.Standby"
+                          (click)="ResumeDevice('kiosk', TemplateId)"
+                          class="
+                            text-blue
+                            span-template-live
+                            font-weight-500
+                            cursor-pointer
+                          "
+                          >Resume Device</span
+                        >
+                      </div>
+
+                      <div class="col-lg-3">
+                        <span
+                          *ngIf="StatusId !== DeviceStatus.Live"
+                          class="span-template font-weight-500"
+                          >Send a message</span
+                        >
+                        <span
+                          *ngIf="StatusId === DeviceStatus.Live"
+                          (click)="OpenKioskMessageModal(false)"
+                          class="
+                            text-blue
+                            font-weight-500
+                            span-template-live
+                            cursor-pointer
+                          "
+                          >Send a Message</span
+                        >
+                      </div>
+                      <div class="col-lg-3">
+                        <span
+                          *ngIf="StatusId !== DeviceStatus.NotRegistered"
+                          (click)="DeRegisterDevice('kiosk', TemplateId)"
+                          class="
+                            text-danger
+                            font-weight-500
+                            span-template
+                            cursor-pointer
+                          "
+                          >Deregister Device</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="pt-5">
+                <kendo-dialog-actions class="pb-0">
+                  <div class="float-right pb-2">
+                    <input
+                      type="button"
+                      kendoButton
+                      class="secondary-button"
+                      (click)="ModalClose()"
+                      value="Close"
+                    />
+                  </div>
+                </kendo-dialog-actions>
+              </div>
+            </lavi-modal>
+
+            <lavi-modal
+              [OpenDialog]="OpenKioskMsgDialog"
+              [Title]="
+                IsMessageAll
+                  ? 'Send Message to All Devices'
+                  : 'Send Message to Device'
+              "
+              Width="50%"
+            >
+              <div>
+                <lavi-form [FormGroup]="MessageForm">
+                  <div>
+                    <div class="ml-4 mr-4 mb-2">
+                      <kendo-textbox-container
+                        class="message pt-1 w-100"
+                        floatingLabel="Message to send"
+                      >
+                        <textarea
+                          kendoTextArea
+                          maxlength="500"
+                          [autoSize]="true"
+                          [formControl]="MessageForm.controls.message"
+                          placeholder="Enter your message here..."
+                          lavi-auto-focus
+                          [AutoFocusRequired]="OpenKioskMsgDialog"
+                        ></textarea>
+                      </kendo-textbox-container>
+                      <div class="h-10 py-2">
+                        <lavi-validation-message-list
+                          [validation-form-group-name]="MessageForm"
+                          validation-control-name="message"
+                          [validation-errorlist]="
+                            ValidationMessages.DeviceMessages
+                          "
+                        >
+                        </lavi-validation-message-list>
+                      </div>
+                    </div>
+                    <span class="ml-4 mr-4 pt-2 span-template">
+                      {{ 500 - MessageForm?.controls?.message?.value?.length }}
+                      characters left
+                    </span>
+                  </div>
+                  <div>
+                    <kendo-dialog-actions class="pb-0">
+                      <div class="float-right pb-2">
+                        <input
+                          type="button"
+                          kendoButton
+                          class="secondary-button"
+                          (click)="ModalClose()"
+                          value="Cancel"
+                        />
+                        <input
+                          type="button"
+                          kendoButton
+                          class="primary-button"
+                          (click)="SendMessage()"
+                          value="Send"
+                        />
+                      </div>
+                    </kendo-dialog-actions>
+                  </div>
+                </lavi-form>
+              </div>
+            </lavi-modal>
+
+            <lavi-modal
+              [OpenDialog]="OpenKioskLiveDialog"
+              (Cancel)="ModalClose()"
+              [Title]="'Device Shutdown'"
+              Width="50%"
+            >
+              <div>
+                <lavi-form [FormGroup]="LiveForm">
+                  <input
+                    id="kioskId"
+                    [ngModel]="TemplateId"
+                    type="text"
+                    hidden
+                  />
+                  <div class="row pb-2">
+                    <div class="col-lg-4 col-sm-4 mx-4 mt-2">
+                      <kendo-label class="text-secondary"
+                        >Shutdown the device for</kendo-label
+                      >
+                    </div>
+                    <div class="col-lg-2 col-sm-3">
+                      <kendo-dropdownlist
+                        tabindex="23"
+                        [formControl]="LiveForm.controls.shutDownTime"
+                        [data]="NumberList"
+                      >
+                      </kendo-dropdownlist>
+                    </div>
+                    <div class="col-lg-3 col-sm-3">
+                      <kendo-dropdownlist
+                        [textField]="'text'"
+                        [data]="TimeIntervals | laviSortBy: 'text'"
+                        tabindex="23"
+                        [formControl]="LiveForm.controls.shutDownTimeInterval"
+                        [valueField]="'value'"
+                      >
+                      </kendo-dropdownlist>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="ml-4 mr-4 mb-2 message">
+                      <kendo-textbox-container
+                        floatingLabel="Shutdown message"
+                        class="w-100"
+                      >
+                        <textarea
+                          kendoTextArea
+                          maxlength="500"
+                          [autoSize]="true"
+                          lavi-auto-focus
+                          [AutoFocusRequired]="OpenKioskLiveDialog"
+                          [formControl]="LiveForm.controls.message"
+                          placeholder="Enter your message here..."
+                        ></textarea>
+                      </kendo-textbox-container>
+                      <div class="h-10 py-2">
+                        <lavi-validation-message-list
+                          [validation-form-group-name]="LiveForm"
+                          validation-control-name="message"
+                          [validation-errorlist]="
+                            ValidationMessages.DeviceMessages
+                          "
+                        >
+                        </lavi-validation-message-list>
+                      </div>
+                    </div>
+                    <span class="ml-4 mr-4 pt-2 span-template">
+                      {{ 500 - LiveForm?.controls?.message?.value?.length }}
+                      characters left
+                    </span>
+                  </div>
+                  <div class="pt-5">
+                    <kendo-dialog-actions class="pb-0">
+                      <div class="float-right pb-2">
+                        <input
+                          type="button"
+                          kendoButton
+                          class="secondary-button"
+                          (click)="ModalClose()"
+                          value="Cancel"
+                        />
+                        <input
+                          type="button"
+                          kendoButton
+                          class="primary-button"
+                          (click)="ShutDownDevice('kiosk', TemplateId)"
+                          value="Send"
+                        />
+                      </div>
+                    </kendo-dialog-actions>
+                  </div>
+                </lavi-form>
+              </div>
+            </lavi-modal>
+
+            <lavi-modal
+              [OpenDialog]="OpenKioskDeviceLinkDialog"
+              Title="{{ 'Link Device to ' + LinkTitle }}"
+              Width="50%"
+            >
+              <div>
+                <lavi-form [FormGroup]="LinkDeviceForm">
+                  <div class="col-lg-12 mt-3">
+                    <div class="row">
+                      <div class="col-lg-1"></div>
+                      <div class="col-lg-11 ml-3">
+                        <p class="text-gray small">
+                          In order to link the device,please open the browser on
+                          your device and go to
+                          <a [href]="DeviceRegistrationURL" target="_blank">{{
+                            DeviceRegistrationURL
+                          }}</a> <span
+                          class="input-group-addon span-copy-cost-calculator-icon cursor-pointer"
+                          (click)="CopyURLAndShowCopiedDialog()"
+                          ><img
+                            class="copy-icon"
+                            src="../../../../../assets/img/copytoclippboard.png"
+                            height="16px"
+                        /></span>.
+                          You will be given a 5 digit code. Enter the code in
+                          the box below and click on Link Device button.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 mt-5">
+                    <div class="row">
+                      <div class="col-lg-3"></div>
+                      <div class="col-lg-5 h-25">
+                        <div
+                          lavi-text-field-loader
+                          [show-text-field-loading]="
+                            LinkDeviceIdFormControl?.pending
+                          "
+                        >
+                          <div
+                            class="
+                              col-lg-12 col-md-8
+                              float-left
+                              pr-0
+                              pl-0
+                              lavi-text-field-loader-container
+                            "
+                          >
+                            <div class="form-group">
+                              <kendo-textbox-container
+                                class="w-100"
+                                floatingLabel="Device Id"
+                                [class.k-state-invalid]="
+                                  LinkDeviceIdFormControl.invalid &&
+                                  LinkDeviceIdFormControl.dirty
+                                "
+                              >
+                                <input
+                                  lavi-auto-focus
+                                  [AutoFocusRequired]="
+                                    OpenKioskDeviceLinkDialog
+                                  "
+                                  kendoTextBox
+                                  tabindex="1"
+                                  maxlength="5"
+                                  [formControl]="
+                                    LinkDeviceForm.controls.deviceId
+                                  "
+                                  lavi-trim-value
+                                  lavi-app-numbers-only
+                                />
+                              </kendo-textbox-container>
+                              <div class="h-10">
+                                <span
+                                  *ngIf="LinkDeviceForm.get('deviceId').valid"
+                                >
+                                  <span
+                                    class="
+                                      k-icon k-i-checkmark
+                                      device-id-icon
+                                      form-control-feedback
+                                    "
+                                  ></span>
+                                  <span class="text-secondary small"
+                                    >Device found.</span
+                                  >
+                                </span>
+                                <span
+                                  *ngIf="
+                                    LinkDeviceForm.get('deviceId').errors
+                                      ?.isExists
+                                  "
+                                >
+                                  <span
+                                    class="
+                                      k-icon k-i-close-circle k-i-x-circle
+                                      text-danger
+                                      device-id-icon
+                                      form-control-feedback
+                                    "
+                                  ></span>
+                                  <span class="error-text-color"
+                                    >Device not found.Please check the
+                                    code.</span
+                                  >
+                                </span>
+                                <lavi-validation-message-list
+                                  [validation-form-group-name]="LinkDeviceForm"
+                                  validation-control-name="deviceId"
+                                  [validation-errorlist]="
+                                    ValidationMessages.DeviceIdMessages
+                                  "
+                                >
+                                </lavi-validation-message-list>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <input
+                          type="text"
+                          [formControl]="LinkDeviceForm.controls.id"
+                          hidden
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pt-5">
+                    <kendo-dialog-actions class="pb-0">
+                      <div class="float-right pb-2">
+                        <input
+                          type="button"
+                          kendoButton
+                          class="secondary-button"
+                          (click)="ModalClose()"
+                          value="Cancel"
+                        />
+                        <input
+                          type="button"
+                          kendoButton
+                          class="primary-button"
+                          (click)="LinkDevice('kiosk')"
+                          value="Link Device"
+                        />
+                      </div>
+                    </kendo-dialog-actions>
+                  </div>
+                </lavi-form>
+              </div>
+            </lavi-modal>
+          </div>
+        </div>
+      </lavi-form-content-panel>
+    </lavi-form-panel>
+  </div>

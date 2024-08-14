@@ -1,0 +1,145 @@
+<lavi-modal
+  [OpenDialog]="OpenUserRoleDialog"
+  (Save)="AddUserRole()"
+  [Title]="formTitle"
+  Width="65%"
+  height="500"
+>
+  <div class="user-role-modal">
+    <lavi-form [FormGroup]="addUserRoleForm" (OnSubmit)="AddUserRole()">
+      <div class="col-12">
+        <div class="user-role-modal-body">
+          <div class="col-12">
+          <div class="row">
+            <div class="col-6 pl-0">
+              <div lavi-text-field-loader [show-text-field-loading]="roleNameFormControl?.pending">
+                <div class="col-lg-12 col-md-12 float-left pr-0 pl-0 lavi-text-field-loader-container">
+                  <div class="form-group">
+                    <kendo-textbox-container class="w-100" floatingLabel="Role Name" [class.k-state-invalid]="roleNameFormControl?.invalid&&roleNameFormControl?.dirty">
+                      <input lavi-auto-focus kendoTextBox tabindex="1" maxlength="50"
+                        [formControl]="addUserRoleForm.controls.roleName" lavi-trim-value />
+                    </kendo-textbox-container>
+                    <lavi-validation-message-list [validation-form-group-name]="addUserRoleForm"
+                      validation-control-name="roleName" [validation-errorlist]="UserRoleMessages.RoleNameMessages">
+                    </lavi-validation-message-list>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+              <kendo-textbox-container class="w-100" floatingLabel="Home Interface">
+                <kendo-dropdownlist class="no-border" textField="templateName" tabindex="2"
+                  [defaultItem]="UserRoleDefaultValues.HomeInterface" valueField="templateId"
+                  [data]="HomeInterfaceDropdownList | laviSortBy:'templateName'"
+                  [formControl]="addUserRoleForm.controls.homeInterfaces">
+                </kendo-dropdownlist>
+              </kendo-textbox-container>
+            </div>
+            </div>
+          </div>
+        <div class="row mt-5">
+          <div
+            class="col-6 left-column1"
+            *ngFor="let roleActionType of userRole.roleAction| laviSortBy:'actionTypeName';let roleActionTypeIndex = index;"
+          >
+            <div class="row">
+              <div class="col-7 pl-1">
+                <p class="heading-text">{{ roleActionType.actionTypeName }}</p>
+              </div>
+              <div class="col-5 text-right">
+                <span>
+                  <a
+                    class="link-text"
+                    (click)="SelectAllActions(roleActionType.actionTypeName)"
+                    >Select All</a
+                  >&nbsp;/
+                  <a
+                    class="link-text"
+                    (click)="SelectNoneActions(roleActionType.actionTypeName)"
+                    >None</a
+                  >
+                </span>
+              </div>
+            </div>
+            <div class="row list-heading">
+              <div class="action-name-column">
+                <p>Actions</p>
+              </div>
+              <div class="action-column ">View</div>
+              <div class="action-column ">Add/ Edit</div>
+              <div class="action-column ">Delete</div>
+              <div class="action-column ">Run</div>
+            </div>
+            <div
+              class="row list-details"
+              *ngFor="let action of roleActionType.action;let actionIndex = index;"
+            >
+              <div class="action-name-column">
+                <p>{{ action.actionName }}</p>
+              </div>
+              <div class="action-column">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="action.view"
+                  (click)="ViewClicked(roleActionTypeIndex,actionIndex)"
+                  kendoCheckBox
+                  *ngIf="action.view === true || action.view === false"
+                />
+              </div>
+              <div class="action-column ">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="action.addEdit"
+                  (click)="AddEditClicked(roleActionTypeIndex,actionIndex)"
+                  kendoCheckBox
+                  *ngIf="action.addEdit === true || action.addEdit === false"
+                />
+              </div>
+              <div class="action-column ">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="action.delete"
+                  (click)="DeleteClicked(roleActionTypeIndex,actionIndex)"
+                  kendoCheckBox
+                  *ngIf="action.delete === true || action.delete === false"
+                />
+              </div>
+              <div class="action-column ">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="action.run"
+                  kendoCheckBox
+                  *ngIf="action.run === true || action.run === false"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <lavi-agent-view
+            [agentTemplates]="userRole.agentTemplates"
+            [AgentQueueDropdownList]="AgentQueueDropdownList"
+            [EditedTemplateId]="EditedTemplateId$ | async"
+            (OnTemplateChange)="ChangeTemplate($event)"
+            [AgentTemplateDropdownList]="AgentTemplateDropdownList"
+            (OnAddTemplate)="AddTemplate($event)"
+            (OnDeleteTemplate)="DeleteTemplate($event)"
+            (OnUpdateTemplate)="UpdateTemplate($event)"
+          >
+          </lavi-agent-view>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-12 mt-4 clearfix">
+      <div class="float-right">
+        <input type="button" kendoButton class="secondary-button mr-2" (click)="ModalClose()" value="Cancel" />
+        <input type="submit" kendoButton class="primary-button" [value]="submitButtonTitle" />
+      </div>
+    </div>
+
+      </div>
+    </lavi-form>
+  </div>
+</lavi-modal>

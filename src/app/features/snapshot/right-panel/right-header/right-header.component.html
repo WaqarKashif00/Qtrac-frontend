@@ -1,0 +1,19 @@
+<div class="row row-bordered">
+  <div class="col-7">
+    <h6 class="pl-4">Context</h6>
+  </div>
+  <div class="col-5">
+    <div class="btn-group float-right mt-2 mr-3" role="group" *ngIf="IsEditing">
+      <button type="button" class="btn btn-link text-link" (click)="CancelContext()">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="ApplyContext()">Apply</button>
+    </div>
+    <div class="btn-group float-right mt-2 mr-3" role="group" *ngIf="!IsShowEditConditions && !IsEditing">
+      <button type="button" class="btn btn-primary" (click)="AddContext()">Add</button>
+    </div>
+
+    <div class="btn-group float-right mt-2 mr-3" role="group" *ngIf="IsShowEditConditions && !IsEditing">
+      <button type="button" class="btn btn-link text-link" (click)="ClearAllContext()">Clear</button>
+      <button type="button" class="btn btn-primary" (click)="AddContext()">Edit</button>
+    </div>
+  </div>
+</div>

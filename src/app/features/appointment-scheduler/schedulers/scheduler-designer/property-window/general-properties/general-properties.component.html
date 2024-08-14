@@ -1,0 +1,311 @@
+<ng-container *ngIf="DesignerPanel">
+  <form [formGroup]="DesignerPanel.form">
+    <lavi-form-panel PanelHeader="General Properties" [PanelExpand]="true">
+    <lavi-form-content-panel>
+
+      <div class="property-window-body">
+        <div>
+          <label>Name</label
+          ><input
+            type="text"
+            placeholder="name"
+            formControlName="name"
+            [value]="DesignerPanel.name"
+            lavi-trim-value
+            maxlength="50"
+          />
+          <span class="edit-icon"></span>
+        </div>
+        <div>
+          <label>Workflow</label
+          ><input
+            type="text"
+            placeholder="Workflow Name"
+            disabled
+            [value]="DesignerPanel.workflowName?DesignerPanel.workflowName:''"
+          />
+        </div>
+        <div>
+          <label>Scheduler Order</label>
+          <select (change)="OnSchedulerTypeChange($event)" formControlName="schedulerType">
+            <option *ngFor="let val of SchedulerType" [value]="val">
+              {{ val }}
+            </option>
+          </select>
+        </div>
+        <div class="position-relative float-clear">
+          <label>Header Logo</label>
+          <div class="float-right text-right upload-button-container">
+            <span class="browse-button">
+              <ng-container *ngIf="FileName"><span class="pull-right-32 mr-10">{{FileName}}</span></ng-container>
+              <ng-container *ngIf="!FileName"><span class="text-blue">Click to add</span></ng-container>
+            </span>
+            <input
+              type="file"
+              placeholder="background color"
+              (change)="GetFileURL($event)"
+            />
+            <span *ngIf="FileName" class="close background-img-close-icon"
+            (click)="Remove()">&times;</span>
+            <span *ngIf="!FileName" class="edit-icon bg-image"></span>
+          </div>
+        </div>
+        <div>
+          <label>Header Back Color </label>
+          <kendo-colorpicker
+            formControlName="headerBackgroundColor"
+            [value]="DesignerPanel.headerBackgroundColor"
+            (valueChange)="ChangeColorPicker()"
+          >
+          </kendo-colorpicker>
+        </div>
+        <div>
+          <label>Header Text Color </label>
+          <kendo-colorpicker
+            [value]="DesignerPanel.headerColor"
+            formControlName="headerColor"
+            (valueChange)="ChangeColorPicker()"
+          >
+          </kendo-colorpicker>
+        </div>
+        <div>
+          <label>Active Back Color </label>
+          <kendo-colorpicker
+            [value]="DesignerPanel.activeBackColor"
+            formControlName="activeBackColor"
+            (valueChange)="ChangeColorPicker()"
+          >
+          </kendo-colorpicker>
+        </div>
+        <div>
+          <label>Active Text Color </label>
+          <kendo-colorpicker
+            [value]="DesignerPanel.activeTextColor"
+            formControlName="activeTextColor"
+            (valueChange)="ChangeColorPicker()"
+          >
+          </kendo-colorpicker>
+        </div>
+        <div>
+          <label>InActive Back Color </label>
+          <kendo-colorpicker
+            [value]="DesignerPanel.inActiveBackColor"
+            formControlName="inActiveBackColor"
+            (valueChange)="ChangeColorPicker()"
+          >
+          </kendo-colorpicker>
+        </div>
+        <div>
+          <label>InActive Text Color </label>
+          <kendo-colorpicker
+            [value]="DesignerPanel.inActiveTextColor"
+            formControlName="inActiveTextColor"
+            (valueChange)="ChangeColorPicker()"
+          >
+          </kendo-colorpicker>
+        </div>
+        <div>
+          <label>Form Back Color </label>
+          <kendo-colorpicker
+            [value]="DesignerPanel.formBackColor"
+            formControlName="formBackColor"
+            (valueChange)="ChangeColorPicker()"
+          >
+          </kendo-colorpicker>
+        </div>
+        <div>
+          <label>Form Text Color </label>
+          <kendo-colorpicker
+            [value]="DesignerPanel.formTextColor"
+            formControlName="formTextColor"
+            (valueChange)="ChangeColorPicker()"
+          >
+          </kendo-colorpicker>
+        </div>
+        <div>
+          <label>Primary Button Back Color </label>
+          <kendo-colorpicker
+            [value]="DesignerPanel.primaryButtonBackColor"
+            formControlName="primaryButtonBackColor"
+            (valueChange)="ChangeColorPicker()"
+          >
+          </kendo-colorpicker>
+        </div>
+        <div>
+          <label>Primary Button Text</label>
+            <div class="float-right">
+              <span
+                (click)="OpenTranslateDialog('Primary Button Text', 'primary')"
+                class="text-blue cursor-pointer">
+                Edit text</span>
+            </div>
+        </div>
+        <div>
+          <label>Primary Button Text Color </label>
+          <kendo-colorpicker
+            [value]="DesignerPanel.primaryButtonTextColor"
+            formControlName="primaryButtonTextColor"
+            (valueChange)="ChangeColorPicker()"
+          >
+          </kendo-colorpicker>
+        </div>
+        <div>
+          <label>Secondary Button Back Color </label>
+          <kendo-colorpicker
+            [value]="DesignerPanel.secondaryButtonBackColor"
+            formControlName="secondaryButtonBackColor"
+            (valueChange)="ChangeColorPicker()"
+          >
+          </kendo-colorpicker>
+        </div>
+        <div>
+          <label>Secondary Button Text</label>
+            <div class="float-right">
+              <span
+                (click)="OpenTranslateDialog('Secondary Button Text', 'secondary')"
+                class="text-blue cursor-pointer">
+                Edit text</span>
+            </div>
+        </div>
+        <div>
+          <label>Secondary Button Text Color </label>
+          <kendo-colorpicker
+            [value]="DesignerPanel.secondaryButtonTextColor"
+            formControlName="secondaryButtonTextColor"
+            (valueChange)="ChangeColorPicker()"
+          >
+          </kendo-colorpicker>
+        </div>
+        <div>
+          <label>Show Lavi Icon in Footer:</label>
+          <select formControlName="showLaviIconInFooter">
+            <option *ngFor="let val of ShowIconInFooter" [value]="val">
+              {{ val }}
+            </option>
+          </select>
+        </div>
+        <!-- <div>
+          <label>Enable Multiverification:</label>
+          <select formControlName="enableMultiVerification">
+            <option *ngFor="let val of EnableMultiVerification" [value]="val">
+              {{ val }}
+            </option>
+          </select>
+        </div> -->
+        <div>
+          <label>Show Service Icons Only</label>
+          <span class="float-right mr-3 mt-1">
+            <input
+            type="checkbox"
+            kendoCheckBox
+            formControlName="showServiceIconsOnly"
+          />
+          </span>
+        </div>
+        <div>
+          <label>Service Tab Text</label>
+            <div class="float-right">
+              <span
+                (click)="OpenTranslateDialog('Service Tab Text', 'service')"
+                class="text-blue cursor-pointer">
+                Edit text</span>
+            </div>
+        </div>
+        <div>
+          <label>Information Tab Text</label>
+            <div class="float-right">
+              <span
+                (click)="OpenTranslateDialog('Information Tab Text', 'information')"
+                class="text-blue cursor-pointer">
+                Edit text</span>
+            </div>
+        </div>
+        <div>
+          <label>Location Tab Text</label>
+            <div class="float-right">
+              <span
+                (click)="OpenTranslateDialog('Location Tab Text', 'location')"
+                class="text-blue cursor-pointer">
+                Edit text</span>
+            </div>
+        </div>
+        <div>
+          <label>Appointment Tab Text</label>
+            <div class="float-right">
+              <span
+                (click)="OpenTranslateDialog('Appointment Tab Text', 'appointment')"
+                class="text-blue cursor-pointer">
+                Edit text</span>
+            </div>
+        </div>
+        <div>
+          <label>Review Tab Text</label>
+            <div class="float-right">
+              <span
+                (click)="OpenTranslateDialog('Review Tab Text', 'review')"
+                class="text-blue cursor-pointer">
+                Edit text</span>
+            </div>
+        </div>
+        <div>
+          <label>Service Heading Text</label>
+            <div class="float-right">
+              <span
+                (click)="OpenTranslateDialog('Service Heading Text', 'serviceHeading')"
+                class="text-blue cursor-pointer">
+                Edit text</span>
+            </div>
+        </div>
+        <div>
+          <label>Information Heading Text</label>
+            <div class="float-right">
+              <span
+                (click)="OpenTranslateDialog('Information Heading Text', 'informationHeading')"
+                class="text-blue cursor-pointer">
+                Edit text</span>
+            </div>
+        </div>
+        <div>
+          <label>Location Heading Text</label>
+            <div class="float-right">
+              <span
+                (click)="OpenTranslateDialog('Location Heading Text', 'locationHeading')"
+                class="text-blue cursor-pointer">
+                Edit text</span>
+            </div>
+        </div>
+        <div>
+          <label>Appointment Heading Text</label>
+            <div class="float-right">
+              <span
+                (click)="OpenTranslateDialog('Appointment Heading Text', 'appointmentHeading')"
+                class="text-blue cursor-pointer">
+                Edit text</span>
+            </div>
+        </div>
+        <div>
+          <label>Review Heading Text</label>
+            <div class="float-right">
+              <span
+                (click)="OpenTranslateDialog('Review Heading Text', 'reviewHeading')"
+                class="text-blue cursor-pointer">
+                Edit text</span>
+            </div>
+        </div>
+      </div>
+    </lavi-form-content-panel>
+</lavi-form-panel>
+  </form>
+</ng-container>
+
+<lavi-language-translate-modal
+Title="{{modelHeaderText}}"
+[OpenDialog]="OpenDialog$ | async"
+[TextFormArray]="TextFormArray$ | async"
+(CloseTranslateTextDialog)="CloseTranslateDialog('primary')"
+(Save)="UpdateTranslatedTexts($event)"
+(TranslateText)="Translate($event)"
+comingFrom="designer">
+</lavi-language-translate-modal>
+
+

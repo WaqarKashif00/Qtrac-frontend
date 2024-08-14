@@ -1,0 +1,8 @@
+<lavi-vertical-item
+  [SelectedLanguage]="SelectedLanguage$ | async"
+  [Panel]="Panel"
+  [CurrentPage]="CurrentPage$ |async"
+  (ResizeStop)="OnResizeStop($event)"
+  (MoveEnd)="OnMoveEnd($event)"
+  (ItemClick)="OnClick()"
+></lavi-vertical-item>

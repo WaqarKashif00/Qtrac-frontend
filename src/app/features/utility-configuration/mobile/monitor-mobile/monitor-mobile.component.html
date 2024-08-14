@@ -1,0 +1,63 @@
+<ng-container
+  *ngIf="{
+    MobilePreviewData: MobilePreviewData$ | async,
+    CurrentPage: CurrentPage$ | async,
+    SelectedLanguageId: SelectedLanguageId$ | async
+  } as values "
+>
+  <div *ngIf="values.MobilePreviewData && values?.CurrentPage"
+  class="mobile-preview-dimension"
+  [style.background-color]="values.MobilePreviewData.designerScreen.backgroundColor"
+  [style.background-image]="'url(' + values.MobilePreviewData.designerScreen.backGroundImage + ')'">
+    <lavi-preview-execution-header
+      [HeaderData]="values.MobilePreviewData.headerData"
+      *ngIf="!values.CurrentPage.IsWelcomePage && !values.CurrentPage.IsLanguagePage"
+    ></lavi-preview-execution-header>
+    <div
+      [style.color]="values.MobilePreviewData.designerScreen.color"
+      [style.font-size]="values.MobilePreviewData.designerScreen.fontSize ? values.MobilePreviewData.designerScreen.fontSize + 'px' : ''"
+      [style.font-style]="values.MobilePreviewData.designerScreen.fontStyle"
+      [ngClass]="{
+        'h-100': (!values.MobilePreviewData.headerData.isVisible && !values.MobilePreviewData.footerData.isVisible) ||
+        (values.CurrentPage.IsLanguagePage && !values.MobilePreviewData.headerData.isVisible),
+        'h-91': (!values.CurrentPage.IsLanguagePage && !values.MobilePreviewData.headerData.isVisible && values.MobilePreviewData.footerData.isVisible),
+        'h-90': (!values.MobilePreviewData.footerData.isVisible && values.MobilePreviewData.headerData.isVisible)
+         || (values.CurrentPage.IsLanguagePage && values.MobilePreviewData.headerData.isVisible)
+      }"
+      [style.font-family]="values.MobilePreviewData.designerScreen.font"
+      class="w-100 position preview preview-middle-designer"
+    >
+      <lavi-preview-execution-ticket-page
+        [Data]="values.MobilePreviewData.ticketPage"
+        [SelectedLanguage]="values.SelectedLanguageId"
+        (OnButtonClicked)="TicketPageButtonClicked($event)"
+        *ngIf="values.CurrentPage.IsTicketPage"
+      ></lavi-preview-execution-ticket-page>
+
+      <lavi-preview-execution-marketing-page
+        [Data]="values.MobilePreviewData.marketingPage"
+        [SelectedLanguage]="values.SelectedLanguageId"
+        *ngIf="values.CurrentPage.IsMarketingPage"
+      ></lavi-preview-execution-marketing-page>
+
+      <lavi-preview-execution-thank-you-page
+        [Data]="values.MobilePreviewData.thankYouPage"
+        [SelectedLanguage]="values.SelectedLanguageId"
+        *ngIf="values.CurrentPage.IsThankYouPage"
+      ></lavi-preview-execution-thank-you-page>
+
+      <lavi-preview-execution-survey-page
+      [Data]="values.MobilePreviewData.surveyPage"
+      [SelectedLanguage]="values.SelectedLanguageId"
+      (OnSurveyExitButtonClicked)="ExitSurveyPage(values.MobilePreviewData.surveyPage.items)"
+      *ngIf="values.CurrentPage.IsSurveyPage"
+    ></lavi-preview-execution-survey-page>
+
+    </div>
+    <lavi-preview-execution-footer
+      [footerData]="values.MobilePreviewData.footerData"
+      [SelectedLanguage]="values.SelectedLanguageId"
+      *ngIf="!values.CurrentPage.IsLanguagePage || values.MobilePreviewData.footerData.isVisible"
+    ></lavi-preview-execution-footer>
+  </div>
+</ng-container>

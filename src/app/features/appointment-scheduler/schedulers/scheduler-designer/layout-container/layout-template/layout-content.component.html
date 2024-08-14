@@ -1,0 +1,116 @@
+<div
+  [style.color]="DesignerPanel.formTextColor"
+  [style.background-color]="DesignerPanel.formBackColor"
+  class="layout-content pb-4 position-relative"
+>
+  <lavi-announcement
+  [Announcement]="Announcement">
+  [SelectedLanguage]="SelectedLanguage$ | async"
+  </lavi-announcement>
+  <lavi-stepper
+    [StepsDetails]="StepsDetails"
+    [CurrentStep]="CurrentStep"
+    [StepperPreviewDetails]="StepperDescription"
+    [StepperColor]="DesignerPanel"
+    (OnStepSelected)="StepperStepChange($event)">
+  </lavi-stepper>
+  <div class="content-area">
+    <lavi-find-branch
+      *ngIf="
+        SelectedPageName == PageName.NearestBranchSelectionPage ||
+        SelectedPageName == PageName.PreviouslyVisitedBranchSelectionPage
+      "
+      [headerText]="DesignerPanel.locationHeadingText"
+      [SelectedLanguage]="SelectedLanguage$ | async"
+      [AppointmentTexts]="AppointmentTexts$ | async"
+    ></lavi-find-branch>
+    <lavi-branch-map
+      [ActiveTextColor]="DesignerPanel.activeTextColor"
+      [InActiveTextColor]="DesignerPanel.inActiveTextColor"
+      [InActiveBackColor]="DesignerPanel.inActiveBackColor"
+      [ActiveBackColor]="DesignerPanel.activeBackColor"
+      [PrimaryBackColor]="DesignerPanel.primaryButtonBackColor"
+      [PrimaryTextColor]="DesignerPanel.primaryButtonTextColor"
+      *ngIf="SelectedPageName == PageName.NearestBranchSelectionPage"
+      (OnChangingMile)="ChangeMiles($event)"
+      (OnSelectingBranch)="ChangeBranches($event)"
+      [NearestBranchList]="NearestBranchList"
+      [Miles]="Miles"
+      [headerText]="DesignerPanel.locationHeadingText"
+      [SelectedLanguage]="SelectedLanguage$ | async"
+      [AppointmentTexts]="AppointmentTexts$ | async"
+    ></lavi-branch-map>
+    <lavi-visited-branches
+      *ngIf="SelectedPageName == PageName.PreviouslyVisitedBranchSelectionPage"
+      [InActiveTextColor]="DesignerPanel.inActiveTextColor"
+      [ActiveBackGroundColor]="DesignerPanel.activeBackColor"
+      [FormTextColor]="DesignerPanel.formTextColor"
+    ></lavi-visited-branches>
+    <lavi-services
+      *ngIf="SelectedPageName == PageName.AvailableServiceSelectionPage"
+      [ActiveBackGroundColor]="DesignerPanel.activeBackColor"
+      [FormTextColor]="DesignerPanel.formTextColor"
+      [Services]="SchedulerServices"
+      (OnServiceSelect)="SelectService($event)"
+      [ShowServiceIconsOnly]="DesignerPanel.showServiceIconsOnly"
+      [headerText]="DesignerPanel.serviceHeadingText"
+      [SelectedLanguage]="SelectedLanguage$ | async"
+    ></lavi-services>
+    <lavi-schedule-appointment
+      [InActiveBackColor]="DesignerPanel.inActiveBackColor"
+      [InActiveTextColor]="DesignerPanel.inActiveTextColor"
+      [ActiveBackColor]="DesignerPanel.activeBackColor"
+      [ActiveTextColor]="DesignerPanel.activeTextColor"
+      [AvailableTimeSlots]="FirstAvailableTimeSlots"
+      [appointmentDetails]="AppointmentDetails"
+      [SelectedDatesAvailableSlots]="SelectedDatesAvailableTimeSlots"
+      (OnChangingFirstAvailableTimeSlot)="OnTimeSlotChange($event)"
+      (OnChangingTimeSlot)="OnSelectedDateTimeSlotChange($event)"
+      *ngIf="SelectedPageName == PageName.AppointmentSchedulePage"
+      [headerText]="DesignerPanel.appointmentHeadingText"
+      [SelectedLanguage]="SelectedLanguage$ | async"
+      [AppointmentTexts]="AppointmentTexts$ | async"
+    ></lavi-schedule-appointment>
+    <lavi-appointment-form
+      *ngIf="SelectedPageName == PageName.InformationGatheringPage"
+      [GlobalQuestions]="GlobalQuestions"
+      [headerText]="DesignerPanel.informationHeadingText"
+      [SelectedLanguage]="SelectedLanguage$ | async"
+      [AppointmentTexts]="AppointmentTexts$ | async"
+    ></lavi-appointment-form>
+    <lavi-review-appointment-information
+      *ngIf="SelectedPageName == PageName.AppointmentNotificationPreferencePage"
+      [headerText]="DesignerPanel.reviewHeadingText"
+      [SelectedLanguage]="SelectedLanguage$ | async"
+    ></lavi-review-appointment-information>
+    <lavi-appointment-notification-preferences
+      *ngIf="SelectedPageName == PageName.AppointmentNotificationPreferencePage"
+      [InActiveBackColor]="DesignerPanel.inActiveBackColor"
+      [InActiveTextColor]="DesignerPanel.inActiveTextColor"
+      [ActiveBackColor]="DesignerPanel.activeBackColor"
+      [ActiveTextColor]="DesignerPanel.activeTextColor"
+      [ShowEmail]="TicketPropertyPanel.notifyViaEmail"
+      [ShowSMS]="TicketPropertyPanel.notifyViaSMS"
+      [TermsAndConditionsUrl]="TicketPropertyPanel.termsAndConditionsUrl"
+      [AppointmentNotificationPreferences]="AppointmentNotificationPreferences"
+      [EnableTermsConditions]="TicketPropertyPanel.enableTermsConditions"
+      [headerText]="DesignerPanel.reviewHeadingText"
+      [SelectedLanguage]="SelectedLanguage$ | async"
+      [AppointmentTexts]="AppointmentTexts$ | async"
+    ></lavi-appointment-notification-preferences>
+  </div>
+  <app-schedular-button-panel
+    [SelectedPageName]="SelectedPageName"
+    [PrimaryButtonBackColor]="DesignerPanel.primaryButtonBackColor"
+    [PrimaryButtonColor]="DesignerPanel.primaryButtonTextColor"
+    [PrimaryButtonText]="DesignerPanel.primaryButtonText"
+    [SecondaryButtonBackColor]="DesignerPanel.secondaryButtonBackColor"
+    [SecondaryButtonColor]="DesignerPanel.secondaryButtonTextColor"
+    [SecondaryButtonText]="DesignerPanel.secondaryButtonText"
+    [ShowCancelButton]="ShowCancelButton"
+    [ShowContinueButton]="ShowContinueButton"
+    [ShowSubmitButton]="ShowSubmitButton"
+    [SelectedLanguage]="SelectedLanguage$ | async"
+    [AppointmentTexts]="AppointmentTexts$ | async"
+  ></app-schedular-button-panel>
+</div>

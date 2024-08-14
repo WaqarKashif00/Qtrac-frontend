@@ -1,0 +1,98 @@
+<ng-container *ngIf="{Panel:Control$ | async,
+  currentLanguage:SelectedLanguage$ | async,
+  buttons: Buttons$ | async,
+  defaultLanguage: DefaultLanguage$ | async } as values">
+  <div
+    rzContainment="#DivLayoutDesignContainer"
+    (rzStop)="OnResizeStop($event)"
+    (endOffset)="OnMoveEnd($event)"
+    (click)="OnClick()"
+    [position]="{
+      x: values.Panel.styles.left,
+      y: values.Panel.styles.top
+    }"
+    [style.width.px]="values.Panel.styles.width"
+    [style.height.px]="values.Panel.styles.height"
+    [style.background-color]="values.Panel.styles.backgroundColor"
+    [style.padding-left.px]="values.Panel.horizontalPadding || 0"
+    [style.padding-right.px]="values.Panel.horizontalPadding || 0"
+    [style.padding-top.px]="values.Panel.verticalPadding || 0"
+    [style.padding-bottom.px]="values.Panel.verticalPadding || 0"
+    [style.font-size]="values.Panel.styles.fontSize ? values.Panel.styles.fontSize + 'px' : ''"
+    [style.font-style]="values.Panel.styles.fontStyle"
+    [style.font-weight]="values.Panel.styles.fontWeight"
+    [style.font-family]="values.Panel.styles.font"
+    [inBounds]="true"
+    [bounds]="DivLayoutDesignContainer"
+    [preventDefaultEvent]="true"
+    [gridSize]="IsOnlyGrid? GridSize:null"
+    [rzGrid]="IsOnlyGrid? GridSize:null"
+    class="e-panel insideDiv"
+    ngDraggable
+    ngResizable
+  >
+    <UL class="UL">
+      <ng-container *ngFor="let item of values.Panel.items">
+        <LI
+          class="LI"
+          [style.color]="item.styles.color"
+          [style.background-color]="values.Panel.itemBackgroundColor"
+          [style.font-size]="
+          item.styles.fontSize ? item.styles.fontSize + 'px' : ''
+          "
+          [style.font-style]="item.styles.fontStyle"
+          [style.font-family]="item.styles.font"
+          [style.font-weight]="item.styles.fontWeight"
+          >
+          <div class="row">
+            <span [ngClass]="{'col-12': !(item.value), 'col-lg-6 col-6': item.value }"
+            [style.color]="item.type === ThankYouItemType.AgentCalledNote ? values.Panel.dynamicTextColor : values.Panel.styles.color">{{
+              item.text[values.currentLanguage] || item.text[values.defaultLanguage]
+            }}</span>
+            <span class="col-lg-6 col-6" *ngIf="item.value" [style.color]="values.Panel.dynamicTextColor">{{
+              item.value
+            }}</span>
+          </div>
+        </LI>
+      </ng-container>
+    </UL>
+  </div>
+  <ng-container *ngFor="let button of values.buttons">
+  <div
+  rzContainment="#DivLayoutDesignContainer"
+  [inBounds]="true"
+  [bounds]="DivLayoutDesignContainer"
+  [preventDefaultEvent]="true"
+  [gridSize]="IsOnlyGrid? GridSize:null"
+  [rzGrid]="IsOnlyGrid? GridSize:null"
+  (endOffset)="OnButtonMoveEnd($event, button.name)"
+  (rzStop)="OnButtonResizeStop($event, button.name)"
+  ngDraggable
+  ngResizable
+  [style.width.px]="button.styles.width"
+  [style.height.px]="button.styles.height"
+  [position]="{ x: button.styles.left, y: button.styles.top }"
+>
+  <input
+    type="button"
+    [ngClass]="{'bg-img': button.showIcon, 'shadow': button.shadow}"
+    [style.background-image]="(button.showIcon && GetUrl(button.src, values.currentLanguage))
+     ? 'url(' + GetUrl(button.src, values.currentLanguage) + ')' : ''"
+    *ngIf="button.showButton"
+    [style.color]="button.styles.color"
+    [style.background-color]="button.styles.backgroundColor"
+    [style.font-size]="button.styles.fontSize ? button.styles.fontSize + 'px' : ''"
+    [style.font-style]="button.styles.fontStyle"
+    [style.font-family]="button.styles.font"
+    [style.font-weight]="button.styles.fontWeight"
+    [style.width.px]="button.styles.width"
+    [style.height.px]="button.styles.height"
+    [style.border]="button.border + 'px solid ' + button.borderColor"
+    [style.border-radius.px]="button.styles.boxRoundCorners || 0"
+    [position]="{ x: button.styles.left, y: button.styles.top }"
+    [value]="(button.showIcon && GetUrl(button.src, values.currentLanguage)) ? '' :
+    (button.text[values.currentLanguage] || button.text[values.defaultLanguage]) | laviEmptyString"
+  />
+  </div>
+  </ng-container>
+</ng-container>

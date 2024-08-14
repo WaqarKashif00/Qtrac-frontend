@@ -1,0 +1,22 @@
+@import "src/stylings/primitives/primitives.scss";
+
+.tab-content {
+  ul li ul {
+    border-left: solid 1px $_color-light-grey-1600;
+    margin-left: 10px;
+  }
+}
+.accordion {
+  width: 18px;
+  height: 18px;
+  border: solid 1px $nav-border-color;
+  border-radius: 4px;
+  margin-right: 9px;
+  color: $nav-border-color;
+  text-align: center;
+  line-height: 15px;
+}
+.k-i-minus  {
+  color: $color-text-white;
+  background: $nav-selected-text-color;
+}

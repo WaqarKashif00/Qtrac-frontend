@@ -1,0 +1,8 @@
+<div *ngIf="Announcement?.showAnnouncement"
+[style.background-color]="Announcement.backColor"
+class="notification-banner">
+  <p
+  [style.color]="Announcement.color">
+  {{(Announcement.text[SelectedLanguage?.selectedLanguage] || Announcement.text[SelectedLanguage?.defaultLanguage])}}</p>
+  <span class="k-icon k-i-close pt-1" (click)="Close()"></span>
+</div>

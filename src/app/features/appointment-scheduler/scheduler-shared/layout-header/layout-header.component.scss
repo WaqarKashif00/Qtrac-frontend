@@ -1,0 +1,46 @@
+@import "src/stylings/primitives/primitives.scss";
+.layout-header {
+  background: $scheduler-header-color;
+  .appointment-nav {
+    ul {
+      list-style: none;
+      li {
+        display: inline-block;
+        font-size: $font-size-small-5;
+        font-weight: $font-weight-500;
+        padding: 0 15px;
+      }
+      li:last-child {
+        border-left: solid 1px $scheduler-default-font-color;
+      }
+    }
+  }
+  .logo-icon {
+    height: 63px;
+    width: 216px;
+  }
+  .logo-icon-img{
+    float: left;
+  }
+}
+
+.languageSwitcher{
+  width: 150px;
+}
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+  .appointment-nav {
+    padding: 0;
+  }
+  .layout-header .appointment-nav ul li {
+    padding: 0 5px;
+  }
+}
+/* Portrait and Landscape */
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    .layout-header .appointment-nav ul li {
+      padding: 0 4px;
+    }
+}

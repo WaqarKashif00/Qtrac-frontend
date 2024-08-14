@@ -1,0 +1,413 @@
+<div [formGroup]="ClassicConfigForm">
+  <div class="p-4 pb-5 panel-border">
+    <div class="col-lg-12">
+      <div class="row mt-2">
+        <div class="col-lg-6">
+          <div class="col-lg-12 form-group">
+            <label class="k-label cursor-pointer font-weight-bold">
+              <input
+                type="checkbox"
+                tabindex="10"
+                [formControl]="ClassicConfigForm.controls.allowTakeOverCustomer"
+                kendoCheckBox
+              />
+              Allow agent to take over visitor
+            </label>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label class="k-label cursor-pointer font-weight-bold">
+              <input
+                type="checkbox"
+                tabindex="4"
+                [formControl]="ClassicConfigForm.controls.allowTransferBetweenServices"
+                kendoCheckBox
+              />
+              Allow transfer between services
+            </label>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label class="k-label cursor-pointer font-weight-bold">
+              <input
+                type="checkbox"
+                tabindex="4"
+                [formControl]="ClassicConfigForm.controls.allowTransferBetweenBranches"
+                kendoCheckBox
+              />
+              Allow transfer between locations
+            </label>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label class="k-label cursor-pointer font-weight-bold">
+              <input
+                type="checkbox"
+                tabindex="5"
+                [formControl]="
+                  ClassicConfigForm.controls.allowTicketRepositioning
+                "
+                kendoCheckBox
+              />
+              Allow ticket repositioning
+            </label>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label class="k-label cursor-pointer font-weight-bold">
+              <input
+                type="checkbox"
+                tabindex="6"
+                [formControl]="ClassicConfigForm.controls.allowTicketDeletion"
+                kendoCheckBox
+              />
+              Allow ticket deletion
+            </label>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label class="k-label cursor-pointer font-weight-bold">
+              <input
+                type="checkbox"
+                tabindex="7"
+                [formControl]="
+                  ClassicConfigForm.controls.allowEditingCustomerInformation
+                "
+                kendoCheckBox
+              />
+              Allow editing visitor information
+            </label>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label class="k-label cursor-pointer font-weight-bold">
+              <input
+                type="checkbox"
+                tabindex="8"
+                [formControl]="
+                  ClassicConfigForm.controls.allowCommentingOnTicket
+                "
+                kendoCheckBox
+              />
+              Allow commenting on ticket
+            </label>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label class="k-label cursor-pointer font-weight-bold">
+              <input
+                type="checkbox"
+                tabindex="10"
+                [formControl]="ClassicConfigForm.controls.allowServeMultiple"
+                kendoCheckBox
+              />
+              Allow serve multiple
+            </label>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label class="k-label cursor-pointer font-weight-bold">
+              <input
+                type="checkbox"
+                tabindex="11"
+                (change)="ResetAllowGroupCheckbox()"
+                [formControl]="ClassicConfigForm.controls.allowGrouping"
+                kendoCheckBox
+              />
+              Allow visitor tagging
+            </label>
+          </div>
+          <div class="col-lg-11 form-group ml-4" *ngIf="ClassicConfigForm.controls.allowGrouping.value">
+            <label class="k-label cursor-pointer font-weight-bold">
+              <input
+                type="checkbox"
+                [formControl]="
+                  ClassicConfigForm.controls.allowToCreateGroup
+                "
+                kendoCheckBox
+              />
+              Allow to create visitor tag
+            </label>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label class="k-label cursor-pointer font-weight-bold">
+              <input
+                type="checkbox"
+                tabindex="13"
+                [formControl]="ClassicConfigForm.controls.allowCancelingService"
+                kendoCheckBox
+              />
+              Allow canceling service
+            </label>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label class="k-label cursor-pointer font-weight-bold">
+              <input
+                type="checkbox"
+                tabindex="14"
+                (change)="ResetAllowSmsCheckbox()"
+                [formControl]="ClassicConfigForm.controls.allowSMSMessaging"
+                kendoCheckBox
+              />
+              Allow SMS messaging
+            </label>
+          </div>
+          <div class="col-lg-11 form-group ml-4" *ngIf="ClassicConfigForm.controls.allowSMSMessaging.value">
+            <label class="k-label cursor-pointer font-weight-bold">
+              <input
+                type="checkbox"
+                [formControl]="
+                  ClassicConfigForm.controls.allowBiDirectionalSMSMessaging
+                "
+                kendoCheckBox
+              />
+              Allow bi-directional SMS messaging
+            </label>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label class="k-label cursor-pointer font-weight-bold">
+              <input
+                type="checkbox"
+                tabindex="15"
+                [formControl]="
+                  ClassicConfigForm.controls.hideTicketNumber
+                "
+                kendoCheckBox
+              />
+              Hide ticket number
+            </label>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label class="k-label cursor-pointer font-weight-bold">
+              <input
+                type="checkbox"
+                tabindex="15"
+                [formControl]="
+                  ClassicConfigForm.controls.displayNoOfTicketsServed
+                "
+                kendoCheckBox
+              />
+              Display the no. of tickets served
+            </label>
+          </div>
+
+
+          <div class="col-lg-12 form-group">
+            <label class="k-label cursor-pointer font-weight-bold">
+              <input
+                type="checkbox"
+                tabindex="15"
+                [formControl]="
+                  ClassicConfigForm.controls.useDirectServedEnabled
+                "
+                kendoCheckBox
+              />
+              Use served status instead of serving.
+            </label>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label class="k-label cursor-pointer font-weight-bold">
+              <input
+                type="checkbox"
+                tabindex="15"
+                [formControl]="
+                  ClassicConfigForm.controls.displayAgentLogin
+                "
+                kendoCheckBox
+              />
+              Login Agent.
+            </label>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label class="k-label cursor-pointer font-weight-bold">
+              <input
+                type="checkbox"
+                tabindex="15"
+                [formControl]="
+                  ClassicConfigForm.controls.displayDeskLogin
+                "
+                kendoCheckBox
+              />
+              Login Desk.
+            </label>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label class="k-label cursor-pointer font-weight-bold">
+              <input
+                type="checkbox"
+                tabindex="16"
+                [formControl]="ClassicConfigForm.controls.allowTicketFiltering"
+                kendoCheckBox
+              />
+              Allow ticket Filtering
+            </label>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label class="k-label cursor-pointer font-weight-bold">
+              <input
+                type="checkbox"
+                tabindex="16"
+                [formControl]="ClassicConfigForm.controls.allowSelectedVisitorCalling"
+                kendoCheckBox
+              />
+              Allow selected visitor calling
+            </label>
+          </div>
+          <div class="col-lg-12 form-group">
+            <label class="k-label cursor-pointer font-weight-bold">
+              <input
+                type="checkbox"
+                tabindex="16"
+                [formControl]="ClassicConfigForm.controls.enableEndOfDayButtonInQueue"
+                kendoCheckBox
+              />
+              Enable End Of Day Button 
+            </label>
+          </div>
+
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group">
+            <kendo-textbox-container
+              class="w-100"
+              floatingLabel="Time Format"
+            >
+              <kendo-dropdownlist
+                [defaultItem]="DefaultValues.TimeFormatDefaultValue"
+                tabindex="16"
+                [formControl]="ClassicConfigForm.controls.classicTimeFormat"
+                [data]="TimeFormat | laviSortBy:'text'"
+                [textField]="'text'"
+                [valueField]="'value'"
+              >
+              </kendo-dropdownlist>
+            </kendo-textbox-container>
+            <div class="h-10">
+              <lavi-validation-message-list
+                [validation-form-group-name]="ClassicConfigForm"
+                validation-control-name="classicTimeFormat"
+                [validation-errorlist]="
+                  ValidationMessages.TimeFormatMessages
+                "
+              >
+              </lavi-validation-message-list>
+            </div>
+          </div>
+          <div class="form-group">
+            <kendo-textbox-container
+              class="w-100"
+              floatingLabel="Time display in queue"
+            >
+              <kendo-dropdownlist
+                tabindex="17"
+                [defaultItem]="DefaultValues.TimeInQueueDefaultValue"
+                [data]="TimeInQueue | laviSortBy:'text'"
+                [formControl]="ClassicConfigForm.controls.timeInQueue"
+                [textField]="'text'"
+                [valueField]="'value'"
+              >
+              </kendo-dropdownlist>
+            </kendo-textbox-container>
+            <div class="h-10">
+              <lavi-validation-message-list
+                [validation-form-group-name]="ClassicConfigForm"
+                validation-control-name="timeInQueue"
+                [validation-errorlist]="
+                  ValidationMessages.TimeInQueueMessages
+                "
+              >
+              </lavi-validation-message-list>
+            </div>
+          </div>
+          <div class="mt-5 pl-3">
+            <div class="form-group">
+              <label class="k-label cursor-pointer font-weight-bold">
+                <input
+                  type="checkbox"
+                  tabindex="18"
+                  [formControl]="ClassicConfigForm.controls.displayKiosk"
+                  kendoCheckBox
+                />
+                Display Kiosk
+              </label>
+            </div>
+            <div class="form-group">
+              <label class="k-label cursor-pointer font-weight-bold">
+                <input
+                  type="checkbox"
+                  tabindex="19"
+                  [formControl]="ClassicConfigForm.controls.displayAppointments"
+                  kendoCheckBox
+                />
+                Display Appointments
+              </label>
+            </div>
+            <div class="form-group">
+              <label class="k-label cursor-pointer font-weight-bold">
+                <input
+                  type="checkbox"
+                  tabindex="20"
+                  [formControl]="
+                    ClassicConfigForm.controls.displayTodaysTickets
+                  "
+                  kendoCheckBox
+                />
+                Display Today's Tickets
+              </label>
+            </div>
+            <div class="form-group">
+              <label class="k-label cursor-pointer font-weight-bold">
+                <input
+                  type="checkbox"
+                  tabindex="21"
+                  (change)="OnChangeCustomerUrlCheckbox()"
+                  [formControl]="
+                    ClassicConfigForm.controls.displayCustomerURLTab"
+                  kendoCheckBox
+                />
+                Display Customer URL tab
+              </label>
+            </div>
+            <div class="col-lg-12" *ngIf="ClassicConfigForm.controls.displayCustomerURLTab.value">
+              <div class="col-lg-1"></div>
+              <div class="form-group col-lg-11">
+                <kendo-textbox-container class="w-100" floatingLabel="Tab Name">
+                  <input
+                    tabindex=""
+                    [formControl]="ClassicConfigForm.controls.tabName"
+                    kendoTextBox
+                    maxlength="50"
+                    lavi-trim-value
+                  />
+                </kendo-textbox-container>
+                <div class="h-10">
+                  <lavi-validation-message-list
+                    [validation-form-group-name]="ClassicConfigForm"
+                    validation-control-name="tabName"
+                    [validation-errorlist]="
+                      ValidationMessages.TabNameMessages
+                    "
+                  >
+                  </lavi-validation-message-list>
+                </div>
+              </div>
+              <div class="form-group col-lg-11">
+                <kendo-textbox-container class="w-100" floatingLabel="URL">
+                  <input
+                    tabindex=""
+                    [formControl]="ClassicConfigForm.controls.url"
+                    kendoTextBox
+                    maxlength="200"
+                    lavi-trim-value
+                  />
+                </kendo-textbox-container>
+                <div class="h-10">
+                  <lavi-validation-message-list
+                    [validation-form-group-name]="ClassicConfigForm"
+                    validation-control-name="url"
+                    [validation-errorlist]="
+                      ValidationMessages.UrlMessages
+                    "
+                  >
+                  </lavi-validation-message-list>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

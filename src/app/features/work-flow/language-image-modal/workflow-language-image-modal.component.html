@@ -1,0 +1,38 @@
+<ng-container>
+  <lavi-modal
+    [OpenDialog]="OpenDialog"
+    [Width]="ModalWidth"
+    [Height]="ModalHeight"
+    [Title]="Title"
+  >
+  <div  class="image">
+    <div class="col-lg-12">
+      <div class="row text-center">
+    <ng-container *ngFor="let item of ImageFormArray.controls; let i = index" >
+      <span class="pt-3 pb-2 col-lg-4 col-sm-4 col-4" [formGroup]="item">
+        <lavi-file-upload class="no-outline"
+            [Index]="i"
+            formControlName ="{{item.value.languageId}}"
+            (FileUrl)="SetFileUrl($event,i)"
+            ImageTitle="{{'Upload Photo (' + item.value.languageName +')'}}"
+            FileUploadId="{{item.value.languageId }}"
+            [IfRoundedImage]="true"
+            [ImageHeight]="80"
+            [ImageWidth]="80"
+            ImageSrc="{{item.value[item.value.languageId]}}">
+      </lavi-file-upload>
+    </span>
+    </ng-container>
+  </div>
+    </div>
+  </div>
+
+  <kendo-dialog-actions class="pb-0 pr-0">
+    <div class="float-right">
+      <input type="button" kendoButton class="secondary-button" (click)="CloseTranslateDialog()" value="Cancel" />
+      <input type="button" kendoButton class="primary-button" (click)="Apply(ImageFormArray.controls)" value="Apply" />
+    </div>
+  </kendo-dialog-actions>
+
+  </lavi-modal>
+</ng-container>

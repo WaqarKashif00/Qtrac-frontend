@@ -1,0 +1,14 @@
+@import "src/stylings/primitives/primitives.scss";
+
+.menu-style, .menu-list-style, .data-style {
+    color: $workflow-menu-text-color;
+    font-weight: $font-weight-800;
+  }
+  
+  .menu-list-style{
+    font-weight: $font-weight-600;
+  }
+  
+  .data-style{
+    font-weight: $font-weight-500;
+  }

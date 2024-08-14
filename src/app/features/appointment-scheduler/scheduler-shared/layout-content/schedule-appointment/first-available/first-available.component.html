@@ -1,0 +1,20 @@
+<div class="first-available">
+  <div class="available-date">
+    <p *ngIf="FirstAvailableSlots.length == 0">{{NonWorkingDaysText}}</p>
+    <ng-container *ngFor="let day of FirstAvailableSlots">
+      <p class="mb-0 mt-4">{{day.selectedDateText}}</p>
+      <ng-container *ngFor="let item of day.availableSpots">
+      <lavi-list-item
+        [Value]="item.value"
+        [Text]="item.text"
+        [IsSelected]="item.isSelected"
+        [InActiveBackColor]="InActiveBackColor"
+        [InActiveTextColor]="InActiveTextColor"
+        [ActiveBackColor]="ActiveBackColor"
+        [ActiveTextColor]="ActiveTextColor"
+        (OnSelectingMile)="OnSelectingTimeSlot($event)"
+      ></lavi-list-item>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>

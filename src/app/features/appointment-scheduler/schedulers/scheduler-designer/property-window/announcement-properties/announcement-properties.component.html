@@ -1,0 +1,47 @@
+<ng-container *ngIf="Announcement">
+  <form [formGroup]="Announcement.form">
+    <lavi-form-panel PanelHeader="Announcement Properties" [PanelExpand]="true">
+    <lavi-form-content-panel>
+      <div class="property-window-body">
+        <div>
+          <label>Text</label>
+            <div class="float-right">
+              <span
+                (click)="OpenTranslateDialog('Announcement Text', 'announcement')"
+                class="text-blue cursor-pointer">
+                Edit text</span>
+            </div>
+        </div>
+        <div *ngIf="Announcement.showAnnouncement">
+          <label>Back Color </label>
+          <kendo-colorpicker
+            formControlName="backColor"
+            [value]="Announcement.backColor"
+            (valueChange)="ChangeColorPicker()"
+          >
+          </kendo-colorpicker>
+        </div>
+        <div *ngIf="Announcement.showAnnouncement">
+          <label>Text Color </label>
+          <kendo-colorpicker
+            [value]="Announcement.color"
+            formControlName="color"
+            (valueChange)="ChangeColorPicker()"
+          >
+          </kendo-colorpicker>
+        </div>
+      </div>
+    </lavi-form-content-panel>
+</lavi-form-panel>
+  </form>
+</ng-container>
+
+<lavi-language-translate-modal
+Title="{{modelHeaderText}}"
+[OpenDialog]="OpenDialog$ | async"
+[TextFormArray]="TextFormArray$ | async"
+(CloseTranslateTextDialog)="CloseTranslateDialog('announcement')"
+(SaveAnnouncementText)="UpdateAnnouncementTranslatedTexts($event)"
+(TranslateText)="Translate($event)"
+comingFrom="announcement">
+</lavi-language-translate-modal>

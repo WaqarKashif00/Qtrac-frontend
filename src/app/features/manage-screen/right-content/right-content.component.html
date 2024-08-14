@@ -1,0 +1,23 @@
+
+<ng-container *ngFor="let items of ManageSideBarItems">
+<div *ngIf="items.isParentSelected" class="right-content">
+  <div class="row">
+    <div class="col">
+      <h2>{{items.text}}</h2>
+    </div>
+  </div>
+  <div class="row card-container">
+    <ng-container *ngFor="let subItems of ManageSideBarItems">
+      <div *ngIf="subItems.parentId==items.id" (click)="OnChildItemClick(subItems.path)" class="card">
+        <div class="header">
+          <div class="badge"></div>
+        </div>
+        <div class="card-icon" [id]="subItems.id"></div>
+        <div class="card-label">
+          {{subItems.text}}
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+</ng-container>

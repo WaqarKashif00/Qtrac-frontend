@@ -1,0 +1,50 @@
+<div>
+  <div class="pre-service-question-list">
+      <kendo-grid [data]="gridData" [height]="540" id="main-grid">
+        <kendo-grid-column field="questionSetName" title="Question sets" width="150">
+        </kendo-grid-column>
+        <kendo-grid-column title="Question" width="200">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <span *ngIf="dataItem?.questions">{{dataItem?.questions?.length}} questions</span>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column title="Advanced Routing" width="200">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <span *ngIf="dataItem?.conditionRoutings">{{GetRoutingCountAndNames(dataItem?.id).length}} Conditional routing</span>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column field="id" title="" width="60" class="fload-right">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <img class="img-width cursor-pointer" (click)="Delete(dataItem?.id)" src="../../../../assets/img/delete-icon.svg">
+            <img class="img-width cursor-pointer ml-2" (click)="Edit(dataItem)" src="../../../../assets/img/edit-icon.svg">
+          </ng-template>
+        </kendo-grid-column>
+
+        <ng-template kendoGridDetailTemplate let-dataItem>
+          <span class="row">
+            <span class="col-3"></span>
+            <span class="col-4 pl-3-5">
+              <ul class="service-ques condition-type wf-grid-data mb-0">
+                <li *ngFor="let question of dataItem?.questions | laviSortBy : 'shortName' "
+                  class="wf-grid-data small pd-mg-0 ">{{question.shortName}}</li>
+              </ul>
+            </span>
+            <span class="col-3 pl-3-5">
+              <ng-container >
+                <ul class="service-ques condition-type wf-grid-data mb-0">
+                  <li class="wf-grid-data small pd-mg-0" *ngFor="let conditionRouting of GetRoutingCountAndNames(dataItem?.id)">{{conditionRouting.name}}</li>
+                </ul>
+              </ng-container>
+            </span>
+          </span>
+
+        </ng-template>
+        <ng-template kendoGridNoRecordsTemplate>
+          No Service Question Added.
+        </ng-template>
+      </kendo-grid>
+  </div>
+</div>
+
+
+

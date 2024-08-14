@@ -1,0 +1,37 @@
+<div
+  class="newControl newImage position-absolute controls-width text-center w-100"
+  *ngFor="let control of Controls"
+  [position]="{ x: control.styles.left, y: control.styles.top }"
+  [style.height.px]="control.styles.height"
+  [style.z-index]="control.styles.zindex"
+  [style.padding-left.px]="control.horizontalPadding || 0"
+  [style.padding-right.px]="control.horizontalPadding || 0"
+  [style.padding-top.px]="control.verticalPadding || 0"
+  [style.padding-bottom.px]="control.verticalPadding || 0"
+  rzContainment="#DivLayoutDesignContainer"
+  [inBounds]="true"
+  (endOffset)="onControlMoveEnd($event, control)"
+  (rzStop)="onControlResizeStop($event, control)"
+  (click)="onControlClick(control)"
+  lockAxis='x'
+  rzHandles="s,n"
+  ngDraggable
+  ngResizable
+  [ngClass]="{ controlFocus: control.selected }"
+> 
+<button
+type="button"
+(click)="onControlRemove(control)"
+class="close"
+aria-label="Close"
+>
+<span aria-hidden="true">&times;</span>
+</button>
+<img src="/assets/slideshow-icon.svg" *ngIf="(!(GetUrl(control.src))) ||((GetUrl(control.src)) && (GetUrl(control.src)).length === 0)"/>
+  <lavi-image-video-slider
+    *ngIf="GetUrl(control.src) && GetUrl(control.src).length > 0"
+    [Height]="control.styles.height"
+    [Width]="control.styles.width"
+    [Items]="GetUrl(control.src).length > 0 ? GetUrl(control.src): []"
+  ></lavi-image-video-slider>
+</div>

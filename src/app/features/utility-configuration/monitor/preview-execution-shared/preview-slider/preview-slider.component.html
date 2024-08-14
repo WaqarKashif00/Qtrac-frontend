@@ -1,0 +1,18 @@
+<div
+  class="newControl newImage position-absolute"
+  *ngFor="let control of Sliders"
+  [style.transform]="
+    'translate(' + control.left + 'px, ' + control.top + 'px) scale(1)'
+  "
+  [style.width.px]="control.width"
+  [style.height.px]="control.height"
+  [style.z-index]="control.zindex"
+>
+<ng-container *ngIf="GetUrls(control.src, SelectedLanguage)" >
+  <lavi-image-video-slider
+    [Height]="control.height | number: '1.0-0'"
+    [Width]="control.width | number: '1.0-0'" 
+    [Items]="GetUrls(control.src, SelectedLanguage)"
+  ></lavi-image-video-slider>
+</ng-container>
+</div>

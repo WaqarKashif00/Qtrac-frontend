@@ -1,0 +1,146 @@
+<div class="preview-control">
+  <ng-container *ngIf="Item.itemType == QuestionTypes.Text.value">
+    <input
+      kendoTextBox
+      class="preview-control-items p-0"
+      autocomplete="false"
+      [maxlength]="Item.itemTypeSetting ? Item.itemTypeSetting: 50"
+      [disabled]="IsDisabled || isModified"
+      [(ngModel)]="Item.answer"
+      (change)="Changed()"
+    />
+  </ng-container>
+
+  <ng-container *ngIf="Item.itemType == QuestionTypes.LongText.value">
+    <textarea
+      kendoTextArea
+      class="preview-control-items pl-1 pr-1"
+      autocomplete="false"
+      [disabled]="IsDisabled"
+      [(ngModel)]="Item.answer"
+      (change)="Changed()"
+      rows="4"
+      maxlength="500"
+    ></textarea>
+  </ng-container>
+
+  <ng-container *ngIf="Item.itemType == QuestionTypes.URL.value">
+    <input
+      kendoTextBox
+      class="preview-control-items p-0"
+      autocomplete="false"
+      [maxlength]="Item.itemTypeSetting ? Item.itemTypeSetting: 50"
+      [disabled]="IsDisabled || isModified"
+      [(ngModel)]="Item.answer"
+      (change)="Changed()"
+    />
+  </ng-container>
+
+  <ng-container *ngIf="Item.itemType == QuestionTypes.DropDown.value">
+    <kendo-dropdownlist
+      class="preview-control-items p-0"
+      [disabled]="IsDisabled"
+      [data]="Item.itemTypeSetting"
+      [(ngModel)]="Item.answer"
+      (valueChange)="Changed()"
+    >
+    </kendo-dropdownlist>
+  </ng-container>
+  <ng-container *ngIf="Item.itemType == QuestionTypes.Options.value">
+    <div class="container-fluid">
+      <div class="row p-1">
+        <ul style="list-style-type:none; padding: 0px; margin-left: 15px;">
+          <ng-container *ngFor="let option of Item.itemTypeSetting">
+            <div class="col pl-0 text-left">
+              <input
+                [id]="Item.itemId"
+                class="mt-1"
+                type="radio"
+                [name]="Item.itemId"
+                [value]="option"
+                [checked]="option === Item.answer"
+                [disabled]="IsDisabled"
+                kendoRadioButton
+                (click)="DataChanged(option)"
+              />
+              <label [for]="option" class="ml-1" style="display: initial;">{{ option }}</label>
+            </div>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="Item.itemType == QuestionTypes.MultiSelect.value">
+    <kendo-multiselect
+      class="preview-control-items p-0"
+      [data]="Item.itemTypeSetting"
+      [disabled]="IsDisabled"
+      [(ngModel)]="Item.answer"
+      (valueChange)="Changed()"
+    ></kendo-multiselect>
+  </ng-container>
+  <ng-container *ngIf="Item.itemType == QuestionTypes.Number.value">
+    <kendo-numerictextbox
+      class="preview-control-items p-0"
+      [min]="Item.itemTypeSetting.min"
+      [max]="Item.itemTypeSetting.max"
+      [autoCorrect]="true"
+      [disabled]="IsDisabled"
+      [(ngModel)]="Item.answer"
+      (valueChange)="Changed()"
+    >
+    </kendo-numerictextbox>
+  </ng-container>
+  <ng-container *ngIf="Item.itemType == QuestionTypes.Email.value">
+    <input
+      class="preview-control-items"
+      kendoTextBox
+      [maxLength]="Item.itemTypeSetting ? Item.itemTypeSetting : 50"
+      [value]="Item.itemTypeSetting"
+      [(ngModel)]="Item.answer"
+      [disabled]="IsDisabled"
+      (change)="Changed()"
+      [pattern]="ValidationPatterns.EmailRegX"
+      #previewEmail="ngModel"
+    />
+  </ng-container>
+  <ng-container *ngIf="Item.itemType == QuestionTypes.PhoneNumber.value">
+    <lavi-phone-number
+      class="preview-control-items p-0"
+      [PhoneNumber]="Item.answer"
+      [IsDisabled]="IsDisabled"
+      [DefaultCountry]="branchCountryCode"
+      (OnValidPhoneNumber)="PhoneNumberChanged($event)"
+      (OnInvalidPhoneNumber)="InvalidPhoneNumberChanged($event)"
+    ></lavi-phone-number>
+  </ng-container>
+  <ng-container *ngIf="Item.itemType == QuestionTypes.SMSPhoneNumber.value">
+    <lavi-phone-number
+      class="preview-control-items p-0"
+      [PhoneNumber]="Item.answer"
+      [IsDisabled]="IsDisabled"
+      [DefaultCountry]="branchCountryCode"
+      (OnValidPhoneNumber)="PhoneNumberChanged($event)"
+      (OnInvalidPhoneNumber)="InvalidPhoneNumberChanged($event)"
+    ></lavi-phone-number>
+  </ng-container>
+  <ng-container *ngIf="Item.itemType == QuestionTypes.Date.value">
+    <kendo-datepicker
+      class="preview-control-items p-0"
+      [disabled]="IsDisabled"
+      [value]="GetDateTime(Item.answer)"
+      (valueChange)="DataChanged($event)"
+    ></kendo-datepicker>
+  </ng-container>
+  <ng-container *ngIf="Item.itemType == QuestionTypes.Time.value">
+    <kendo-timepicker
+      class="preview-control-items p-0"
+      [value]="GetDateTime(Item.answer)"
+      [disabled]="IsDisabled"
+      (valueChange)="DataChanged($event)"
+    ></kendo-timepicker>
+  </ng-container>
+  <div class="error-message" *ngIf="!IsValid && IsErrorsToShow">
+    {{ ValidationMessage }}
+  </div>
+</div>

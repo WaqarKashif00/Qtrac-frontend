@@ -1,0 +1,53 @@
+@import "src/stylings/primitives/primitives.scss";
+.user-role-footer{
+  position: absolute;
+  bottom: 0;
+  right: 15px;
+}
+
+.user-role-modal-body{
+  overflow-y: scroll;
+  height: 400px;
+}
+
+::ng-deep .k-dialog-wrapper .k-dialog {
+  overflow: auto;
+}
+
+.width-fit{
+  width: fit-content;
+}
+
+
+.left-column1{
+  padding-right: 30px;
+}
+.width-fit{
+  width: fit-content;
+}
+
+  .heading-text {
+    font-size: $font-size-big-3;
+    font-weight: $font-weight-800;
+  }
+
+  .list-heading,
+  .list-details {
+    color: rgba($color-text-black, 0.6);
+    font-size: $font-size-small-1;
+    .action-column {
+      padding: 0;
+      width: 13%;
+      text-align: center;
+    }
+    .action-column input[type=checkbox]{
+      margin: 0;
+    }
+    .action-name-column {
+      padding: 0 5px;
+      width: 48%;
+    }
+  }
+  .list-details p {
+    font-weight: $font-weight-600;
+  }

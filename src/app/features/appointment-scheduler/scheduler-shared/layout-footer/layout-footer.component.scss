@@ -1,0 +1,24 @@
+@import "src/stylings/primitives/primitives.scss";
+.layout-footer {
+
+  p.powered-by-text {
+    width: 59px;
+    text-align: right;
+    line-height: 14px;
+    font-size: $font-size-small-4;
+    font-weight: bold;
+    margin: 18px 0 16px;
+    display: inline-block;
+    float: left;
+  }
+  .footer-icon {
+    width: 101px;
+    display: inline-block;
+    height: 42px;
+    margin: 10px 0 0 10px;
+  }
+  .footer-text{
+    text-align: center;
+    margin-top: 20px;
+  }
+}

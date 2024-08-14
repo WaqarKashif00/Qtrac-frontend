@@ -1,0 +1,13 @@
+<ng-container *ngIf="HeaderControl$ | async as headerControl">
+  <div *ngIf="headerControl.isVisible"
+  [style.padding-left.px]="headerControl.horizontalPadding || 0"
+  [style.padding-right.px]="headerControl.horizontalPadding || 0"
+  [style.padding-top.px]="headerControl.verticalPadding || 0"
+  [style.padding-bottom.px]="headerControl.verticalPadding || 0"
+  [style.height.%]="headerControl.height || 0"
+  [style.text-align]="headerControl.logoPosition"
+  (click)="OnClick()"
+  class="page-header">
+  <img class="h-100 " [src]="headerControl.backgroundImage" />
+  </div>
+</ng-container>

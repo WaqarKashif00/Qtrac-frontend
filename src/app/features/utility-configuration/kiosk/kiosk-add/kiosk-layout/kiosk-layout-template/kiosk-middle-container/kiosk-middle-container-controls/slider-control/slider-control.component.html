@@ -1,0 +1,34 @@
+<div
+  class="newControl newImage"
+  *ngFor="let control of Controls"
+  [position]="{ x: control.styles.left, y: control.styles.top }"
+  [style.width.px]="control.styles.width"
+  [style.height.px]="control.styles.height"
+  [style.z-index]="control.styles.zindex"
+  rzContainment="#DivLayoutDesignContainer"
+  [bounds]="DivLayoutDesignContainer"
+  [inBounds]="true"
+  [preventDefaultEvent]="true"
+  [gridSize]="IsOnlyGrid? GridSize:null"
+  [rzGrid]="IsOnlyGrid? GridSize:null"
+  (endOffset)="onControlMoveEnd($event, control)"
+  (rzStop)="onControlResizeStop($event, control)"
+  (click)="onControlClick(control)"
+  ngDraggable
+  ngResizable
+> 
+<button
+type="button"
+(click)="onControlRemove(control)"
+class="close"
+aria-label="Close"
+>
+<span aria-hidden="true">&times;</span>
+</button>  <img src="/assets/slideshow-icon.svg" *ngIf="(!(GetUrl(control.src))) ||((GetUrl(control.src)) && (GetUrl(control.src)).length === 0)"/>
+  <lavi-image-video-slider
+    *ngIf="GetUrl(control.src) && GetUrl(control.src).length > 0"
+    [Height]="control.styles.height"
+    [Width]="control.styles.width"
+    [Items]="GetUrl(control.src).length > 0 ? GetUrl(control.src): []"
+  ></lavi-image-video-slider>
+</div>

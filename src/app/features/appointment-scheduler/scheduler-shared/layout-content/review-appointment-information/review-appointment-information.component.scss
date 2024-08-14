@@ -1,0 +1,23 @@
+@import "src/stylings/primitives/primitives.scss";
+.review-information {
+  ul {
+    padding: 0;
+    margin: 0;
+  }
+  ul li {
+    color: $color-text-light-grey;
+    font-size: $font-size-small-5;
+    list-style: none;
+    margin-bottom: 10px;
+  }
+  li:before {
+    border-radius: 10px;
+    content: '';
+    display: inline-block;
+    height: 32px;
+    margin-right: 10px;
+    position: relative;
+    top: 9px;
+    width: 32px;
+  }
+}

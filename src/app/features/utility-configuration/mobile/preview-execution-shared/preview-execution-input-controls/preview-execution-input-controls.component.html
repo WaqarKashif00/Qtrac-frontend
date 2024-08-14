@@ -1,0 +1,224 @@
+<div class="preview-control">
+
+<ng-container *ngIf="Item.itemType == QuestionType.Text.value">
+  <kendo-textbox-container class="w-100 preview-control-items" [style.font-style]="Panel.fontStyle"
+    [style.color]="Panel.primaryColor" [style.font-family]="Panel.font" [style.font-weight]="Panel.fontWeight" >
+
+    <div style="display: flex;" [ngStyle]="{'justify-content': (Item && Item.itemText && Item.itemText.length > 19) ? 'space-between;' : 'start;'}">
+      <p style="text-align: left; margin: 0px;" [innerHTML] ="(Item.itemText ? replaceURLs(Item.itemText): '')"></p>
+      <label [innerHTML]="(Item.required ? '*' : '')"></label>
+    </div>
+ 
+    
+    <input kendoTextBox   [style.font-size]="Panel.fontSize ? Panel.fontSize + 'px' : ''" [style.font-style]="Panel.fontStyle"
+      [style.color]="Panel.primaryColor" [style.font-family]="Panel.font" [style.font-weight]="Panel.fontWeight"
+      [(ngModel)]="Item.answer" [autocomplete]="autoComplete" [maxlength]="Item.itemTypeSetting ? Item.itemTypeSetting : 50"  (input)="keyPressLength($event)" laviTrimValue />
+
+  </kendo-textbox-container>
+
+  <div class="error-message ml-3" *ngIf="IsNextButtonClick && Item.required && !Item.answer">
+    * {{AppointmentTextsSubject.getValue()?.appointmentRequiredSpecificFieldErrorMessage}}
+  </div>
+</ng-container>
+
+<ng-container *ngIf="Item.itemType == QuestionType.LongText.value" >
+  <kendo-textbox-container class="w-100 preview-control-items" [style.font-style]="Panel.fontStyle"
+    [style.color]="Panel.primaryColor" [style.font-family]="Panel.font" [style.font-weight]="Panel.fontWeight">
+    <div style="display: flex;" [ngStyle]="{'justify-content': (Item && Item.itemText && Item.itemText.length > 19) ? 'space-between;' : 'start;'}">
+      <p style="text-align: left; margin: 0px; margin-top: 20px;" [innerHTML] ="(Item.itemText ? replaceURLs(Item.itemText): '')" ></p>
+      <label style=" margin-top: 25px;" [innerHTML]="(Item.required ? '*' : '')"></label>
+    </div>
+    
+    <textarea kendoTextArea class="mt-2" style=" padding-top: 25px;" [style.font-size]="Panel.fontSize ? Panel.fontSize + 'px' : ''"  [style.font-style]="Panel.fontStyle"
+      [style.color]="Panel.primaryColor" [style.font-family]="Panel.font" [style.font-weight]="Panel.fontWeight"
+      [(ngModel)]="Item.answer" maxlength="500" laviTrimValue rows="4"></textarea>
+  </kendo-textbox-container>
+ 
+  <div class="error-message ml-3" style=" margin-top: 27px;" *ngIf="IsNextButtonClick && Item.required && !Item.answer">
+    * {{AppointmentTextsSubject.getValue()?.appointmentRequiredSpecificFieldErrorMessage}}
+  </div>
+</ng-container>
+
+<ng-container *ngIf="Item.itemType == QuestionType.DropDown.value">
+  
+  <kendo-textbox-container class="w-100"
+    [style.color]="Panel.primaryColor" [style.font-family]="Panel.font" [style.font-weight]="Panel.fontWeight">
+
+    <label style="text-align: left; margin: 0px;"
+    [innerHTML] ="(Item.itemText ? replaceURLs(Item.itemText): '') + ( Item.required ? ' *': '')" > </label>
+    
+    <kendo-dropdownlist [style.color]="Panel.primaryColor" [style.font-size]="Panel.fontSize ? Panel.fontSize + 'px' : ''"
+      [style.font-style]="Panel.fontStyle" [style.font-family]="Panel.font" [style.font-weight]="Panel.fontWeight"
+      [data]="Item.itemTypeSetting" [(ngModel)]="Item.answer">
+    </kendo-dropdownlist>
+
+  </kendo-textbox-container>
+  
+  <div class="error-message ml-3" *ngIf="IsNextButtonClick && Item.required && !Item.answer">
+    * {{AppointmentTextsSubject.getValue()?.appointmentRequiredSpecificFieldErrorMessage}}
+  </div>
+</ng-container>
+
+<ng-container *ngIf="Item.itemType == QuestionType.Options.value">
+  <div [style.color]="Panel.primaryColor" [style.font-size]="Panel.fontSize ? Panel.fontSize + 'px' : ''"
+    [style.font-style]="Panel.fontStyle" [style.font-family]="Panel.font" [style.font-weight]="Panel.fontWeight"
+    style="text-align: left; margin: 0px;" 
+    class="preview-radio-btn-control pull-left">
+    <div style="display: flex;" [ngStyle]="{'justify-content': (Item && Item.itemText && Item.itemText.length > 19) ? 'space-between;' : 'start;'}">
+      <p style="text-align: left; margin: 0px;" [innerHTML] ="(Item.itemText ? replaceURLs(Item.itemText): '')"></p>
+      <label [innerHTML]="(Item.required ? '*' : '')"></label>
+    </div>
+  </div>
+
+  <ul style="text-align: left; list-style-type:none;">
+    <ng-container *ngFor="let option of Item.itemTypeSetting;let i=index">
+      <li style="margin-bottom: 15px;">
+        <input type="radio" [style.color]="Panel.primaryColor" [style.border-color]="Panel.primaryColor"
+          [name]="Item.itemId" [id]="Item.itemId+i" [(ngModel)]="Item.answer" [value]="option"
+          style="margin-bottom: 0px;"
+          kendoRadioButton />
+
+          <label [style.color]="Panel.primaryColor"
+          [style.font-size]="Panel.fontSize ? Panel.fontSize + 'px' : ''" [style.font-style]="Panel.fontStyle"
+          [style.font-family]="Panel.font" [style.font-weight]="Panel.fontWeight" [for]="Item.itemId+i"
+          style=" display: initial; padding-top: 0px;" 
+          class="preview-radio-btn-control">{{ option }} </label>
+      </li>
+    </ng-container>
+  </ul>
+  
+  <div class="error-message  ml-3" *ngIf="IsNextButtonClick && Item.required && !Item.answer">
+    * {{AppointmentTextsSubject.getValue()?.appointmentRequiredSpecificFieldErrorMessage}}
+  </div>
+  
+</ng-container>
+
+<ng-container *ngIf="Item.itemType == QuestionType.MultiSelect.value">
+  
+  <kendo-textbox-container class="w-100" [style.font-style]="Panel.fontStyle"
+    [style.color]="Panel.primaryColor" [style.font-family]="Panel.font" [style.font-weight]="Panel.fontWeight">
+    
+    <label style="text-align: left; margin: 0px;"
+     [innerHTML] ="(Item.itemText ? replaceURLs(Item.itemText): '') + ( Item.required ? ' *': '')" > </label>
+
+     
+
+    <kendo-multiselect class="preview-control-items" [data]="Item.itemTypeSetting" [(ngModel)]="Item.answer"
+      [style.color]="Panel.primaryColor" [style.font-size]="Panel.fontSize ? Panel.fontSize + 'px' : ''" [style.font-style]="Panel.fontStyle"
+      [style.font-family]="Panel.font" [style.font-weight]="Panel.fontWeight">
+    </kendo-multiselect>
+  </kendo-textbox-container>
+  
+  <div class="error-message ml-3" *ngIf="IsNextButtonClick && Item.required && !Item.answer">
+    * {{AppointmentTextsSubject.getValue()?.appointmentRequiredSpecificFieldErrorMessage}}
+  </div>
+</ng-container>
+
+<ng-container *ngIf="Item.itemType == QuestionType.Number.value">
+  
+  <kendo-textbox-container class="w-100" [style.font-style]="Panel.fontStyle"
+    [style.color]="Panel.primaryColor" [style.font-family]="Panel.font" [style.font-weight]="Panel.fontWeight">
+    
+    <label style="text-align: left; margin: 0px;"
+     [innerHTML] ="(Item.itemText ? replaceURLs(Item.itemText): '') + ( Item.required ? ' *': '')" > </label>
+
+    <kendo-numerictextbox class="preview-control-items" [min]="Item.itemTypeSetting.min"
+      [max]="Item.itemTypeSetting.max" [style.color]="Panel.primaryColor"
+      [style.font-size]="Panel.fontSize ? Panel.fontSize + 'px' : ''" [style.font-style]="Panel.fontStyle"
+      [style.font-family]="Panel.font" [style.font-weight]="Panel.fontWeight" [autoCorrect]="true"
+      [(ngModel)]="Item.answer">
+    </kendo-numerictextbox>
+  </kendo-textbox-container>
+  
+  <div class="error-message ml-3" *ngIf="IsNextButtonClick && Item.required && !Item.answer">
+    * {{AppointmentTextsSubject.getValue()?.appointmentRequiredSpecificFieldErrorMessage}}
+  </div>
+</ng-container>
+
+<ng-container *ngIf="Item.itemType == QuestionType.Email.value">
+  <kendo-textbox-container class="w-100 preview-control-items" 
+  [style.color]="Panel.primaryColor" [style.font-family]="Panel.font" [style.font-weight]="Panel.fontWeight">
+    
+    <label style="text-align: left; margin: 0px;"
+     [innerHTML] ="(Item.itemText ? replaceURLs(Item.itemText): '') + ( Item.required ? ' *': '')" > </label>
+    <input class="" kendoTextBox [style.color]="Panel.primaryColor" [style.font-size]="Panel.fontSize ? Panel.fontSize + 'px' : ''"
+      [style.font-style]="Panel.fontStyle" [style.font-family]="Panel.font" [style.font-weight]="Panel.fontWeight"
+      [maxLength]="Item.itemTypeSetting ? Item.itemTypeSetting : 150" [value]="Item.itemTypeSetting"
+      [(ngModel)]="Item.answer" [pattern]="ValidationPatterns.EmailRegX" #previewEmail="ngModel" />
+
+  </kendo-textbox-container>
+  <div class="error-message ml-3" *ngIf="IsNextButtonClick && Item.required && !Item.answer">
+    * {{AppointmentTextsSubject.getValue()?.appointmentRequiredSpecificFieldErrorMessage}}
+  </div>
+  <div class="error-message pl-3" *ngIf="IsNextButtonClick && previewEmail?.errors?.pattern">
+    {{AppointmentTextsSubject.getValue()?.appointmentWrongEmail}}
+  </div>
+ 
+</ng-container>
+
+<ng-container *ngIf="Item.itemType == QuestionType.PhoneNumber.value || Item.itemType == QuestionType.SMSPhoneNumber.value">
+
+  <div class="text-left" [style.color]="Panel.primaryColor" [style.font-family]="Panel.font"
+    [style.font-size]="Panel.fontSize ? (Panel.fontSize * 0.79)  + 'px' : ''" [style.font-style]="Panel.fontStyle"
+    [style.font-weight]="Panel.fontWeight">
+    
+    <label style="text-align: left; margin: 0px;"
+    [innerHTML] ="(Item.itemText ? replaceURLs(Item.itemText): '')" > </label>
+
+    <span *ngIf="Item.required"> *</span>
+  </div>
+
+  <lavi-phone-number class="preview-control-items" [style.color]="Panel.primaryColor"
+    [style.font-size]="Panel.fontSize ? Panel.fontSize + 'px' : ''" [style.font-style]="Panel.fontStyle"
+    [style.font-family]="Panel.font" [style.font-weight]="Panel.fontWeight" [PhoneNumber]="Item.answer"
+    [DefaultCountry]="DefaultCountry"
+    (OnValidPhoneNumber)="PhoneNumberChanged($event)" (OnInvalidPhoneNumber)="InvalidPhoneNumberChanged($event)">
+  </lavi-phone-number>
+  <div class="h-10 text-left" *ngIf="IsNextButtonClick && Item.required && !Item.answer">
+    <div class="error-message d-block ml-3">* {{AppointmentTextsSubject.getValue()?.appointmentRequiredSpecificFieldErrorMessage}}</div>
+  </div>
+
+  <div class="h-10 text-left" *ngIf="IsNextButtonClick && !Item.isValid">
+    <div class="error-message d-block ml-3">{{AppointmentTextsSubject.getValue()?.appointmentWrongPhone}}</div>
+  </div>
+
+</ng-container>
+
+<ng-container *ngIf="Item.itemType == QuestionType.Date.value">
+  
+  <kendo-textbox-container class="w-100" [style.color]="Panel.primaryColor"
+    [style.font-family]="Panel.font" [style.font-weight]="Panel.fontWeight">
+   
+    <label style="text-align: left; margin: 0px;"
+     [innerHTML] ="(Item.itemText ? replaceURLs(Item.itemText): '') + ( Item.required ? ' *': '')" > </label>
+
+    <kendo-datepicker [popupSettings]="{popupClass: 'kendo-picker'}" class="preview-control-items"
+      [(ngModel)]="Item.answer" [style.color]="Panel.primaryColor" [style.font-size]="Panel.fontSize ? Panel.fontSize + 'px' : ''"
+      [style.font-style]="Panel.fontStyle" [style.font-family]="Panel.font" [style.font-weight]="Panel.fontWeight">
+    </kendo-datepicker>
+  </kendo-textbox-container>
+  
+  <div class="error-message ml-3" *ngIf="IsNextButtonClick && Item.required && !Item.answer">
+    * {{AppointmentTextsSubject.getValue()?.appointmentRequiredSpecificFieldErrorMessage}}
+  </div>
+</ng-container>
+
+<ng-container *ngIf="Item.itemType == QuestionType.Time.value">
+  
+  <kendo-textbox-container class="w-100"  [style.color]="Panel.primaryColor"
+    [style.font-family]="Panel.font" [style.font-weight]="Panel.fontWeight">
+    
+    <label style="text-align: left; margin: 0px;"
+    [innerHTML] ="(Item.itemText ? replaceURLs(Item.itemText): '') + ( Item.required ? ' *': '')" > </label>
+
+    <kendo-timepicker class="preview-control-items" [(ngModel)]="Item.answer" [style.color]="Panel.primaryColor"
+      [style.font-size]="Panel.fontSize ? Panel.fontSize + 'px' : ''" [style.font-style]="Panel.fontStyle"
+      [style.font-family]="Panel.font" [style.font-weight]="Panel.fontWeight"></kendo-timepicker>
+  </kendo-textbox-container>
+  
+  <div class="error-message ml-3" *ngIf="IsNextButtonClick && Item.required && !Item.answer">
+    * {{AppointmentTextsSubject.getValue()?.appointmentRequiredSpecificFieldErrorMessage}}
+  </div>
+</ng-container>
+
+</div>

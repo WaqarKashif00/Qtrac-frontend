@@ -1,0 +1,59 @@
+<ng-container
+  *ngIf="{
+    language: SelectedLanguage$ | async,
+    buttons: ButtonPanel$ | async,
+    Panel: Panel$ | async,
+    ControlSelection:ControlSelection$ | async
+  } as values"
+>
+<ng-container *ngIf="values.ControlSelection">
+  <lavi-item-property-panel
+    [Panel]="values.Panel"
+    [SelectedLanguage]="values.language"
+    [(IsControlSelected)]="values.ControlSelection.IsPanelSelected"
+    [CurrentPage]="CurrentPage$ | async"
+    (OnDataChange)="UpdatePanelData($event)"
+    HeaderText="Ticket Control"
+    IsTicketControl="true"
+  ></lavi-item-property-panel>
+  <lavi-form-panel
+    PanelHeader="Ticket Control Item Properties"
+    [(PanelExpand)]="values.ControlSelection.IsPanelSelected"
+  >
+    <lavi-form-content-panel>
+      <div class="property-window">
+        <div class="property-window-body">
+          <div *ngIf="values.Panel.items">
+            <label>Items</label>
+            <select (change)="OnTicketItemsDropDownChange($event.target.value)">
+              <ng-container *ngFor="let item of values.Panel.items">
+                <option
+                  *ngIf="item.visible"
+                  [value]="item.type"
+                >
+                  {{ item.type }}
+                </option>
+              </ng-container>
+            </select>
+          </div>
+          <ng-container *ngFor="let item of values.Panel.items">
+            <lavi-ticket-item-property
+            *ngIf="item.selected"
+              [TicketItem]="item"
+              (OnItemChange)="OnItemChange($event)"
+            ></lavi-ticket-item-property>
+          </ng-container>
+        </div>
+      </div>
+    </lavi-form-content-panel>
+  </lavi-form-panel>
+
+  <lavi-mobile-buttons-form
+    [Buttons]="values.buttons"
+    [(IsButtonSelected)]="values.ControlSelection.IsButtonSelected"
+    (OnItemsChange)="OnItemsDropDownChange($event)"
+    (OnDataChange)="UpdateButtonPanelData($event)"
+  >
+  </lavi-mobile-buttons-form>
+</ng-container>
+</ng-container>

@@ -1,0 +1,73 @@
+<div *ngIf="newData?.panel" [style.transform]="
+    'translate(' + newData.panel.left + 'px, ' + newData.panel.top + 'px) scale(1)'
+  " [style.height.px]="newData.panel.height" [style.padding-left.px]="newData.panel.horizontalPadding || 0"
+  [style.padding-right.px]="newData.panel.horizontalPadding || 0" [style.padding-top.px]="newData.panel.verticalPadding || 0"
+  [style.padding-bottom.px]="newData.panel.verticalPadding || 0" [style.font-style]="newData.panel.fontStyle"
+  [style.font-family]="newData.panel.font" [style.font-weight]="newData.panel.fontWeight"
+  [style.font-size]="newData.panel.fontSize ? newData.panel.fontSize + 'px' : ''"
+  class="mobile-layout e-panel insideDiv w-100 transperant position-absolute">
+  <UL class="UL">
+    <ng-container *ngFor="let item of newData?.items">
+      <LI class="LI m-auto text-center"
+        [ngClass]="{ 'd-flex': item.type === ItemType.TicketNumber}"
+        [style.background-color]="item.backgroundColor"
+        [style.height.px]="item.height"
+        [style.width.px]="item.width"
+        [style.font-style]="item.fontStyle"
+        [style.font-family]="item.font" [style.font-weight]="item.fontWeight"
+        [style.font-size]="item.fontSize ? item.fontSize + 'px' : ''"
+        [style.border-radius.px]="item.boxRoundCorners || 0"
+        [style.padding-left.px]="item.horizontalPadding || 0"
+        [style.padding-right.px]="item.horizontalPadding || 0"
+        [style.padding-top.px]="item.verticalPadding || 0"
+        [style.padding-bottom.px]="item.verticalPadding || 0" *ngIf="item.visible && item.showItem">
+        <ng-container class='row' *ngIf="!IsSingleLabelOnly(item)">
+            <div [style.color]="item.color"
+            [ngClass]="{ 'pr-2': item.type === ItemType.TicketNumber }">{{
+              item.text[SelectedLanguage] || item.text[DefaultLanguage] || ''
+              }}</div>
+            <div class="wrap" [style.color]="item.color"
+            [style.font-style]="item.valuesFontStyle"
+          [style.font-family]="item.valuesFont"
+          [style.font-weight]="item.valuesFontWeight"
+          [style.font-size]="item.valuesFontSize ? item.valuesFontSize + 'px' : ''">{{
+              item.value
+              }}</div>
+        </ng-container>
+        <div class="text-centered" *ngIf="IsSingleLabelOnly(item)">
+          <div [style.color]="item.color"
+            >{{item.text[SelectedLanguage] || item.text[DefaultLanguage] || ''}}</div>
+            <div class="wrap" [style.color]="item.color"
+            [style.font-style]="item.valuesFontStyle"
+          [style.font-family]="item.valuesFont"
+          [style.font-weight]="item.valuesFontWeight"
+          [style.font-size]="GetDecreasedFontSize(item.fontSize)"
+          >{{
+              item.value
+              }}</div>
+        </div>
+      </LI>
+    </ng-container>
+  </UL>
+</div>
+
+<ng-container *ngFor="let button of Data?.buttonPanel">
+  <lavi-preview-execution-button [Button]="button" [SelectedLanguage]="SelectedLanguage"
+    [DefaultLanguage]="DefaultLanguage" (OnButtonClick)="ButtonClicked(button)"></lavi-preview-execution-button>
+</ng-container>
+
+<lavi-preview-execution-label [Labels]="Data?.labels" [SelectedLanguage]="SelectedLanguage"
+  [DefaultLanguage]="DefaultLanguage">
+</lavi-preview-execution-label>
+<lavi-preview-execution-image
+[Images]="Data?.images"
+[SelectedLanguage]="SelectedLanguage">
+</lavi-preview-execution-image>
+<lavi-preview-execution-video
+[Videos]="Data?.videos"
+[SelectedLanguage]="SelectedLanguage">
+</lavi-preview-execution-video>
+<lavi-preview-execution-slider
+[Slider]="Data?.sliders"
+[SelectedLanguage]="SelectedLanguage">
+</lavi-preview-execution-slider>

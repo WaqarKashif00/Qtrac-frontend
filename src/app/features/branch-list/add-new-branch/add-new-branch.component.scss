@@ -1,0 +1,81 @@
+@import "src/stylings/primitives/primitives.scss";
+
+.w-3{
+  width: 3%;
+}
+
+.icon-container{
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  justify-items: flex-start;
+}
+
+.span-template, .span-template-live{
+  font-size: $font-size-small-2;
+  color: $color-global-text-label;
+}
+
+.span-template-live{
+  color: $color-link-text-blue;
+}
+
+.device-id-icon{
+    position: absolute;
+    top: 25px;
+    right: 20px;
+    z-index: 2;
+    display: block;
+    width: 25px;
+    height: 34px;
+    text-align: center;
+}
+
+.justify-content{
+  justify-content: center;
+}
+
+.h-20{
+  height: 20% !important;
+}
+
+.table-header{
+  font-weight: 300;
+  font-size: $font-size-small-2;
+}
+
+.bshadow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(5px 5px 5px #222222);
+  opacity: .5;
+  margin-top: 125px;
+}
+
+.note-message{
+  color: $color-text-orange;
+  font-size: $font-size-small-1;
+  width: max-content;
+}
+.rounded-online {
+  height: 28px;
+  border: none;
+  border-radius: 25px;
+  font-weight: $font-weight-500;
+  background-color: $chip-online-background-color;
+}
+
+.online-text-color {
+  color: $chip-online-text-color;
+  font-weight: $font-weight-600;
+}
+
+::ng-deep .k-multiselect .k-multiselect-wrap,
+.k-dropdowntree .k-multiselect-wrap {
+  width: 100% !important;
+}
+
+.light-gray{
+ color: $slider-text-color;
+}

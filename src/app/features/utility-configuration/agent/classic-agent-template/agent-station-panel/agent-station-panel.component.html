@@ -1,0 +1,207 @@
+<div
+  [class]="(IsExpanded$ | async) ? 'station-panel expanded' : 'station-panel'"
+>
+  <div class="container-fluid">
+    <div class="header-container" [ngStyle]="{'margin-left': (IsExpanded$ | async) ? '0px' : '-21px'}">
+      <div
+        class="action-icon cursor-pointer vertical-center"
+        (click)="ToggleExpand()"
+      >
+        <span
+          [class]="
+            (IsExpanded$ | async)
+              ? 'arrow-icon k-icon k-i-arrow-60-right '
+              : 'arrow-icon k-icon k-i-arrow-60-left'
+          "
+        >
+        </span>
+      </div>
+      <div class="header vertical-center pt-2">
+        <span>{{DisplayNameField}}</span>
+      </div>
+    </div>
+    <div class="body">
+      <div class="row m-0" *ngIf="IsAnySelected$ | async">
+        <div class="container-fluid">
+          <button
+            (click)="CallSelected()"
+            [class]="
+              ((IsExpanded$ | async)
+                ? 'btn station-call-multiple-button col-2 ml-1  mt-1 '
+                : 'btn station-call-multiple-button col-12  mt-1') + ' text-uppercase'
+            "
+            *ngIf="CanCallMultiple$ | async"
+          >
+            Repeat Call
+          </button>
+
+          <button
+            (click)="ServeSelected()"
+            [class]="
+              ((IsExpanded$ | async)
+                ? 'btn station-start-multiple-button col-2 ml-1 mt-1'
+                : 'btn station-start-multiple-button col-12  mt-1') + ' text-uppercase'
+            "
+            *ngIf="(CanServeMultiple$ | async) && (AllowSelectedVisitorCalling$ | async) && (ServeButtonLabel$ | async) === ServeButtonText.Start"
+          >
+            {{ ServeButtonText.Start }}
+          </button>
+
+          <button
+            (click)="ServeSelected()"
+            [class]="
+              ((IsExpanded$ | async)
+                ? 'btn station-start-multiple-button col-2 ml-1 mt-1'
+                : 'btn station-start-multiple-button col-12  mt-1') + ' text-uppercase'
+            "
+            *ngIf="(CanServeMultiple$ | async) && (ServeButtonLabel$ | async) === ServeButtonText.Served"
+          >
+            {{ ServeButtonText.Served }}
+          </button>
+
+
+          <button
+            (click)="EndServingOfSelected()"
+            [class]="
+              ((IsExpanded$ | async)
+                ? 'btn station-end-multiple-button col-2 ml-1 mt-1'
+                : 'btn station-end-multiple-button col-12  mt-1') + ' text-uppercase'
+            "
+            *ngIf="CanEndMultiple$ | async"
+          >
+            End Serving
+          </button>
+        </div>
+      </div>
+      <div class="container-fluid pl-0 pr-2" style="margin-bottom: 5%;">
+        <div *ngFor="let Customer of Customers$ | async | laviSortBy: 'id'">
+          <lavi-agent-station-panel-item
+            *ngIf="
+              !(
+                Customer.isNowServing == true && Customer.servingById != AgentId
+              ) &&
+              (!(
+                Customer.isNowServing == false && Customer.calledById != AgentId
+              ) )
+            "
+            [IsCanServe]="IsCanServe$ | async"
+            [ServeButtonLabel]="ServeButtonLabel$| async"
+            [AllowedNotes]="AllowNotes$ | async"
+            [AllowTicketDeletion]="AllowTicketDeletion$ | async"
+            [AllowedSMS]="AllowSMS$ | async"
+            [AllowGrouping]="AllowGrouping$ | async"
+            [AllowTransferingService]="AllowTransferingService$ | async"
+            [AllowToCreateGroup]="AllowToCreateGroup$ | async"
+            [AllowSelectedVisitorCalling]="AllowSelectedVisitorCalling$ | async"
+            [MaxCallLimit]="MaxCallLimit$ | async"
+            [HideTicketNumber]="HideTicketNumber$ | async"
+            [Groups]="Groups$ | async"
+            [messageText]="messageText"
+            [teamNotesText]="teamNotesText"
+            [currentLanguage]="currentLanguage"
+            [noShowText]="noShowText"
+            [visitorTagText]="visitorTagText"
+            [queueText]="queueText"
+            [viewText]="viewText"
+            [callingText]="callingText"
+            [servingText]="servingText"
+            (OnAddToGroup)="AddToGroup(Customer)"
+            (OnTransferServiceDailog)="ShowTransferServiceDialog(Customer)"
+            (OnChecked)="Checked($event, Customer)"
+            (OnExpanded)="Expanded($event, Customer)"
+            (OnCall)="Call($event)"
+            (OnShowSMSChat)="ShowSMSChat(Customer)"
+            (OnShowNotes)="ShowNotes(Customer)"
+            (OnEndServing)="EndServing($event)"
+            (OnDelete)="Delete($event)"
+            (OnCancel)="Cancel(Customer)"
+            (OnServe)="Serve($event)"
+            [IsServingByOther]="false"
+            [SelectedCustomers]="SelectedCustomers$ | async"
+            [ExpandedCustomers]="ExpandedCustomers$ | async"
+            [Customer]="Customer"
+            [IsFullView]="IsExpanded$ | async"
+            [AllowCancellingService]="AllowCancellingService$ | async"
+          >
+          </lavi-agent-station-panel-item>
+        </div>
+        <div *ngIf="IsShowOthersServing$ | async ">
+          <ng-container *ngFor="let otherAgent of otherServingCustomers">
+
+            <hr>
+            <div class="header vertical-center pt-2">
+
+            <span>{{otherAgent.name}}</span>
+          </div>
+          <lavi-agent-station-panel-item
+            *ngFor="
+              let Customer of otherAgent.customerList | laviSortBy: 'id'
+            "
+            [IsServingByOther]="
+              (Customer.isNowServing == true || Customer.isCalled==true) && (Customer.servingById != AgentId || Customer.calledById!= AgentId)
+            "
+            [AllowTakeOverCustomer]="AllowTakeOverCustomer$ | async"
+            [IsCanServe]="IsCanServe$ | async"
+            [ServeButtonLabel]="ServeButtonLabel$| async"
+            [AllowedNotes]="AllowNotes$ | async"
+            [AllowTicketDeletion]="AllowTicketDeletion$ | async"
+            [AllowedSMS]="AllowSMS$ | async"
+            [AllowGrouping]="AllowGrouping$ | async"
+            [AllowTransferingService]="AllowTransferingService$ | async"
+            [AllowToCreateGroup]="AllowToCreateGroup$ | async"
+            [AllowSelectedVisitorCalling]="AllowSelectedVisitorCalling$ | async"
+            [MaxCallLimit]="MaxCallLimit$ | async"
+            [HideTicketNumber]="HideTicketNumber$ | async"
+            [Groups]="Groups$ | async"
+            [messageText]="messageText"
+            [teamNotesText]="teamNotesText"
+            [currentLanguage]="currentLanguage"
+            [noShowText]="noShowText"
+            [visitorTagText]="visitorTagText"
+            [queueText]="queueText"
+            [viewText]="viewText"
+            [callingText]="callingText"
+            [servingText]="servingText"
+            (OnAddToGroup)="AddToGroup(Customer)"
+            (OnTransferServiceDailog)="ShowTransferServiceDialog(Customer)"
+            (OnChecked)="Checked($event, Customer)"
+            (OnExpanded)="Expanded($event, Customer)"
+            (OnCall)="Call($event)"
+            (OnShowSMSChat)="ShowSMSChat(Customer)"
+            (OnShowNotes)="ShowNotes(Customer)"
+            (OnEndServing)="EndServing($event)"
+            (OnDelete)="Delete($event)"
+            (OnCancel)="Cancel(Customer)"
+            (OnServe)="Serve($event)"
+            [SelectedCustomers]="SelectedCustomers$ | async"
+            [ExpandedCustomers]="ExpandedCustomers$ | async"
+            [Customer]="Customer"
+            [IsFullView]="IsExpanded$ | async"
+          >
+          </lavi-agent-station-panel-item>
+        </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer border-top p-2 pointer" *ngIf="AllowTakeOverCustomer$ | async " (click)="ToggleShowOtherServe()">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="p-1" >
+          <div
+            [class]="
+              (IsShowOthersServing$ | async)
+                ? 'eye-icon-password-hide show-icon-div'
+                : 'eye-icon-password-show show-icon-div'
+            "
+            
+          ></div>
+        </div>
+        <div class="col p-2 show-icon-text hide-text-selection w-100">
+          {{ (IsShowOthersServing$ | async) ? "Hide" : "Show" }} others called
+          or being served
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

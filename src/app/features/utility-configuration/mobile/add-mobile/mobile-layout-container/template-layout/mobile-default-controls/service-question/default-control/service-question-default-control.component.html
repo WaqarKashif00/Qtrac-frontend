@@ -1,0 +1,9 @@
+<lavi-vertical-item
+  [SelectedLanguage]="SelectedLanguage$ | async"
+  [CurrentPage]="CurrentPage$ |async"
+  [Panel]="Panel$ | async"
+  [WorkFlowData]="WorkFlowData"
+  (ItemClick)="Click()"
+  (MoveEnd)="OnMoveEnd($event)"
+></lavi-vertical-item>
+

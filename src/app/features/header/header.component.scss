@@ -1,0 +1,246 @@
+@import "src/stylings/primitives/primitives.scss";
+.user-menu {
+  background: $color-background-white;
+  box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+  border: solid 1px $top-nav-border-color;
+  border-radius: 10px;
+  margin-top: 10px;
+  padding: 0;
+  right: 5px;
+  top: 42px;
+  width: 170px;
+  z-index: 999999;
+
+  .user-details, .user-menu-profile {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+  .email-text,  .user-role-text, .user-menu-profile li {
+    font-size: $font-size-smallest;
+    font-weight: $font-weight-700;
+  }
+  .email-text {
+    color: $top-nav-user-email;
+    font-weight: normal;
+  }
+  .user-role-text {
+    background: $top-nav-user-role-bg;
+    border-radius: 10px;
+    display: inline-block;
+    padding: 3px 15px;
+  }
+  .user-menu-profile {
+    margin-top: 20px;
+    text-align: left;
+    li {
+      border-top: solid 1px $top-nav-border-color;
+      padding: 0 10px 10px;
+      span {
+        color: $top-nav-icon-color;
+        margin-right: 5px;
+      }
+    }
+  }
+
+}
+.user-menu::before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-bottom: 12px solid $color-background-white;
+  top: -26px;
+  right: 10px;
+  position: relative;
+}
+.profile-icon, .logout-icon, .change-password-icon, .setting-icon, .location-icon{
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  background-size: contain;
+  top: 5px;
+  position: relative;
+}
+.navigation {
+  display: inline-block;
+  list-style: none;
+  padding: 0;
+  margin: 6px 0 12px 0;
+  li {
+    border-radius: 4px;
+    background: rgba($top-nav-bg-color, 0);
+    color: $top-nav-text-color;
+    display: inline-block;
+    font-size: $global-font-size;
+    line-height: 24px;
+    margin-right: 12px;
+    padding: 6px 12px 6px 8px;
+    position: relative;
+    span {
+      position: relative;
+      top: 6px;
+    }
+  }
+  li:hover {
+    border-radius: 4px;
+    background: rgba($top-nav-bg-color, 10%);
+    color: $nav-selected-text-color;
+    cursor: pointer;
+  }
+  .nav-icon span {
+    display: inline-block;
+    height: 24px;
+    margin-right: 4px;
+    width: 24px;
+  }
+  .nav-icon.active::after {
+    border-bottom: $nav-selected-text-color solid 4px;
+    content: "";
+    display: block;
+    height: 4px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: -12px;
+    color: $nav-selected-text-color;
+  }
+  .nav-icon.active {
+    color: $nav-selected-text-color;
+  }
+}
+.notification-icon {
+  display: inline-block;
+  height: 24px;
+  width: 22px;
+  margin-right: 27px;
+  position: relative;
+  top: 8px;
+}
+.header-title-container {
+  margin-top: 14px;
+  ul {
+    border-right: solid 1px $nav-border-color;
+    display: inline-block;
+    list-style: none;
+    li {
+      cursor: pointer;
+      display: inline-block;
+      margin-right: 24px;
+    }
+  }
+  .exit-icon {
+    display: inline-block;
+    height: 20px;
+    margin-right: 12px;
+    position: relative;
+    top: 4px;
+    width: 16px;
+  }
+  h3 {
+    font-size: $font-size-big-4;
+    line-height: 32px;
+    margin-left: 24px;
+  }
+}
+
+  ::ng-deep #launcher {
+    display: block;
+    top: -4px !important;
+  }
+ 
+@media only screen and (min-device-width: 768px) and
+(max-device-width: 1024px) and (orientation: portrait) {
+  .company-logo {
+    margin: 0 20px;
+  }
+  .navigation li {
+    padding: 6px 4px;
+    margin-right: 3px;
+  }
+  .notification-icon {
+    margin-right: 5px;
+  }
+}
+
+/* The modal */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 80%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 100%; /* Could be more or less, depending on screen size */
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+}
+
+/* Modal Body */
+.modal-body {
+  padding: 10px;
+}
+
+/* Table */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #ddd;
+  font-weight: bold;
+}
+
+/* History block */
+.history {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  width: 100%; /* Could be more or less, depending on screen size */
+
+}
+
+.history h3 {
+  margin-top: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+.cross-position{
+  cursor: pointer;
+}
+
+.history ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.history li {
+  margin-bottom: 5px;
+}

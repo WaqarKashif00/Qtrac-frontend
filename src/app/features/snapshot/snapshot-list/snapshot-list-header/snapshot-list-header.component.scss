@@ -1,0 +1,9 @@
+@import "src/stylings/primitives/primitives.scss";
+
+.row-bordered:after {
+  content: "";
+  display: block;
+  border-bottom: thin solid $_color-light-grey-1600;
+  margin: 0;
+  width: 100%;
+}

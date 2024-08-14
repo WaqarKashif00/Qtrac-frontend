@@ -1,0 +1,41 @@
+@import "src/stylings/primitives/primitives.scss";
+@import "src/stylings/shared/agent-layout.scss";
+
+::ng-deep{
+  .move-to-position-modal .custom-modal-header{
+    background-color: $button-purple-background-color;
+  }
+  .move-to-position-modal .header-bottom-filling{
+    background-color: $button-purple-background-color;
+  }
+
+  
+} 
+
+
+ul li {
+  list-style: none;
+  color: $color-text-white;
+}
+li::before {
+  border-radius: 50%;
+  background-color: $sidebar-yellow-border;
+  content: " ";
+  display: inline-block;
+  height: 12px;
+  width: 12px;
+}
+
+
+::ng-deep{
+  .move-to-position-modal{
+    .custom-modal-header-close-btn{ 
+      span{
+        color:$color-text-white !important;
+      }
+    }
+  }
+}
+
+
+

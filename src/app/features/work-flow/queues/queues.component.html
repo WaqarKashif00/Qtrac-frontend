@@ -1,0 +1,31 @@
+    <div class="col-lg-12 inner-panel-padding right-column-width">
+      <div class="mb-5">
+        <div class="row">
+          <div class="col-lg-9">
+            <div class="font-weight-500">Queues</div>
+          </div>
+          <div class="col-lg-3">
+            <span
+              (click)="OpenAddQueue()"
+              class="text-blue pl-4 cursor-pointer font-weight-bold"
+              >Add Queue</span>
+          </div>
+          <lavi-queues-add
+           [OpenQueueDialog]="OpenQueueDialog$ | async"
+           (Close)="closeModal()"
+           [Mode]="Mode"
+           [HideNumberingFormat]="SingleNumberingFormatEnabled$ | async"
+           (SaveForm)="Save($event)"></lavi-queues-add>
+        </div>
+        <div>
+
+           <lavi-queues-list
+            [Queues]="queuesList$ | async"
+            [HideNumberingFormat]="SingleNumberingFormatEnabled$ | async"
+            (Edit)="Edit($event)"
+            (Delete)="Delete($event)">
+          </lavi-queues-list>
+        </div>
+      </div>
+    </div>
+

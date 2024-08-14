@@ -1,0 +1,12 @@
+<div class="row row-bordered">
+  <div class="col-7">
+    <h6 class="pl-4">{{IsLoadingPage ? 'Load':'Save'}}</h6>
+  </div>
+  <div class="col-5">
+    <div class="btn-group float-right mt-2 mr-3" role="group">
+      <button type="button" class="btn btn-link text-link"  (click)="OnCancel()">Cancel</button>
+      <button type="button" class="btn btn-primary" *ngIf="!IsLoadingPage" (click)="SaveSnapshot()">{{ isExisting ? 'Overwrite' : 'Save'}}</button>
+      <button type="button" class="btn btn-primary" *ngIf="IsLoadingPage && isExisting" (click)="LoadSnapShot()">Load</button>
+    </div>
+  </div>
+</div>

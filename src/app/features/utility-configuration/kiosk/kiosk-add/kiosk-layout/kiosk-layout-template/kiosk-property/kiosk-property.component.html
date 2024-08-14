@@ -1,0 +1,67 @@
+<lavi-kiosk-layout-control-property
+  [DesignerPanel]="DesignerPanel$ | async"
+></lavi-kiosk-layout-control-property>
+
+<lavi-kiosk-layout-page-property
+  [PageProperties]="PageProperties$ | async"
+></lavi-kiosk-layout-page-property>
+
+<ng-content select="default-control-property"></ng-content>
+<div
+  *ngIf="{
+    controls: Controls$ | async,
+    isOtherControlPropertyWindowOpen: IsOtherControlPropertyWindowOpen$ | async
+  } as values"
+  class="service-controls-properties"
+>
+  <div *ngIf="values.controls.length > 0" class="property-window">
+    <lavi-form-panel
+      PanelHeader="Other Control Property"
+      [(PanelExpand)]="values.isOtherControlPropertyWindowOpen"
+    >
+      <lavi-form-content-panel>
+        <div class="property-window-body">
+          <div>
+            <label>Items</label>
+            <select
+              class="OtherItemDropdown"
+              (change)="OnControlDropdownChange($event)"
+            >
+              <option
+                *ngFor="let labelDiv of values.controls"
+                [value]="labelDiv.Control.name"
+                [selected]="labelDiv.ShowPropertyWindow"
+              >
+                {{ labelDiv.Control.name }}
+              </option>
+            </select>
+          </div>
+          <ng-container *ngFor="let item of values.controls">
+            <ng-container *ngIf="item.ShowPropertyWindow">
+              <ng-container *ngIf="item.IsLabelControl">
+                <lavi-kiosk-label-form
+                  [Control]="item.Control"
+                ></lavi-kiosk-label-form>
+              </ng-container>
+              <ng-container *ngIf="item.IsImageControl">
+                <lavi-kiosk-image-form
+                  [Item]="item.Control"
+                ></lavi-kiosk-image-form>
+              </ng-container>
+              <ng-container *ngIf="item.IsVideoControl">
+                <lavi-kiosk-video-form
+                  [Item]="item.Control"
+                ></lavi-kiosk-video-form>
+              </ng-container>
+              <ng-container *ngIf="item.IsSliderControl">
+                <lavi-kiosk-slider-form
+                  [Item]="item.Control"
+                ></lavi-kiosk-slider-form>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </div>
+      </lavi-form-content-panel>
+    </lavi-form-panel>
+  </div>
+</div>

@@ -1,0 +1,121 @@
+<div class="row divLayoutTopSection">
+  <div class="divLayoutTopSectionContent">
+    <span>COMPONENTS</span>
+  </div>
+  <div class="divLayoutMiddleSectionContent">
+    <div class="row">
+      <div class="col-md-3 divServiceDropdown">
+        <div class="text-capitalize">
+        <kendo-dropdownlist
+          [data]="PageList$ | async"
+          [textField]="'text'"
+          [valueField]="'value'"
+          (valueChange)="OnDropDownChange($event)"
+          [(ngModel)]="SelectedPage"
+          ></kendo-dropdownlist>
+        </div>
+      </div>
+      <div class="col-md-3"></div>
+      <div
+        class="col-md-6 divLanguageDropdown" >
+        <div class="text-capitalize w-auto float-right">
+          <kendo-dropdownlist
+          [data]="LanguageList$ | async"
+          [textField]="'language'"
+          [valueField]="'languageCode'"
+          (valueChange)="OnLayoutLanguageChange($event)"
+          [(ngModel)]="SelectedLanguage"
+          ></kendo-dropdownlist>
+        </div>
+        <div class="float-right preview-text">
+          <span class="cursor-pointer text-blue mr-3 text-right" (click)="OpenPreview()">Preview</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="right-section-header">
+    <span>DESIGN PROPERTIES</span>
+  </div>
+</div>
+<lavi-modal [OpenDialog]="opened"
+  Title="Enter the width and height of the preview screen"
+  [MinWidth]="250"
+  [Width]="600"
+>
+  <form [formGroup]="MyForm" (ngSubmit)="OnAction()">
+    <div>
+      <kendo-textbox-container class="w-100" floatingLabel="Preview Width">
+        <input
+          kendoTextBox
+          maxlength="5"
+          tabindex="6"
+          [AutoFocusRequired]="true"
+          formControlName="width"
+          lavi-app-numbers-only
+          lavi-trim-value
+        />
+      </kendo-textbox-container>
+    </div>
+    <div>
+      <kendo-textbox-container class="w-100" floatingLabel="Preview Height">
+        <input
+          kendoTextBox
+          maxlength="5"
+          tabindex="6"
+          formControlName="height"
+          lavi-app-numbers-only
+          lavi-trim-value
+        />
+      </kendo-textbox-container>
+    </div>
+
+    <div>
+      <kendo-dialog-actions class="pr-0">
+       <div class="col-lg-12 col-sm-12 col-12 pt-5">
+          <div class="row">
+            <div class="col-lg-4 col-4"></div>
+            <div class="col-lg-8 col-8">
+              <div class="float-right row">
+                <input
+                  kendoButton
+                  type="button"
+                  (click)="Close()"
+                  class="secondary-button"
+                  value="Cancel"
+                />
+                <input
+                  type="submit"
+                  kendoButton
+                  class="primary-button"
+                  value="Ok"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </kendo-dialog-actions>
+    </div>
+  </form>
+</lavi-modal>
+<lavi-transparent-footer>
+  <div class="col-lg-12 col-sm-12 col-12 pt-2 pr-5">
+    <div class="row btncontainer transperant">
+      <div class="col-12 text-right">
+        <input
+          kendoButton
+          (click)="OnSaveAsDraftClick()"
+          type="button"
+          class="btn secondary-button mr-2"
+          value="Save as Draft"
+        />
+        <input
+          kendoButton
+          (click)="OnSaveClick()"
+          type="submit"
+          class="btn primary-button mr-3"
+          value="Publish"
+        />
+      </div>
+    </div>
+  </div>
+</lavi-transparent-footer>

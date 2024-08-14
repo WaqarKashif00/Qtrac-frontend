@@ -1,0 +1,27 @@
+<div class="modal-bg"></div>
+<div class="custom-modal-container">
+  <div class='custom-modal' [ngStyle]='{borderColor:ModalColor,
+    fontFamily:ModalFontFamily,
+    width:Width,
+    height:Height,
+    fontSize:ModalFontSize}'>
+    <div class="custom-modal-header" [ngStyle]='{backgroundColor:ModalColor}'>
+      <div class="custom-modal-header-content">
+        <ng-content select="[header]"></ng-content>
+      </div>
+      <div class="custom-modal-header-close-btn position-relative pointer" *ngIf="IsCloseRequired" (click)="Close()">
+        <span aria-hidden="true">&times;</span>
+      </div>
+    </div>
+    <div class="header-bottom-filling" [ngStyle]='{backgroundColor:ModalColor}'>
+
+    </div>
+    <div [class]="IsFooterRequired?'custom-modal-body':'custom-modal-body no-footer' " [ngStyle]='ModalBodyStyle'>
+      <ng-content select='[body]'></ng-content>
+
+    </div>
+    <div class="custom-modal-footer p-2" [ngStyle]='ModalFooterStyle' *ngIf="IsFooterRequired">
+      <ng-content select="[footer]"></ng-content>
+    </div>
+  </div>
+</div>

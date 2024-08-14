@@ -1,0 +1,10 @@
+@import "src/stylings/primitives/primitives.scss";
+@import "src/stylings/shared/tags.scss";
+
+.tag-display-icon-block {
+  margin-left: $_XFACTOR*3px;
+}
+
+.tag-display-tag-block {
+  margin-left: $_XFACTOR*3px;
+}

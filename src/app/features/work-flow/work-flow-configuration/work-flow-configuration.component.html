@@ -1,0 +1,66 @@
+<lavi-auth-container HeaderTitle="Workflow" ExitURL="/manage/work-flow">
+    <div class="row workflow">
+        <div class="col-lg-12">
+            <div class="row h-auto">
+                <div class="left-column">
+                    <div class="left-column-section">
+                        <h3>GENERAL SETTINGS</h3>
+                        <ul>
+                            <li class="text-blue cursor-pointer" routerLinkActive="active" [routerLink]="['/manage/work-flow/config/workflow-description']">Workflow Description</li>
+                            <li class="text-blue cursor-pointer" routerLinkActive="active" [routerLink]="['/manage/work-flow/config/settings']">Basic Workflow Rules</li>
+                            <li class="text-blue cursor-pointer" routerLinkActive="active" [routerLink]="['/manage/work-flow/config/basic-workflow-rules']">Basic Communications</li>
+                        </ul>
+                    </div>
+                    <div class="left-column-section">
+                        <h3>SERVICE OFFERINGS</h3>
+                        <ul>
+                            <li class="text-blue cursor-pointer" routerLinkActive="active" [routerLink]="['/manage/work-flow/config/pre-service-questions']">General Questions <span class="count"></span></li>
+                            <li class="text-blue cursor-pointer" routerLinkActive="active" [routerLink]="['/manage/work-flow/config/services']">Services <span class="count"></span></li>
+                            <li class="text-blue cursor-pointer" routerLinkActive="active" [routerLink]="['/manage/work-flow/config/service-questions']">Service Questions <span class="count"></span></li>
+                            <li class="text-blue cursor-pointer" routerLinkActive="active" [routerLink]="['/manage/work-flow/config/survey-questions']">Survey Questions <span class="count"></span></li>
+                        </ul>
+                    </div>
+                    <div class="left-column-section">
+                        <h3>QUEUES</h3>
+                        <ul>
+                            <li class="text-blue cursor-pointer" routerLinkActive="active" [routerLink]="['/manage/work-flow/config/queues']">Queues <span class="count"></span></li>
+                        </ul>
+                    </div>
+                    <div class="left-column-section">
+                        <h3>TEMPLATES</h3>
+                        <ul>
+                            <li class="text-blue cursor-pointer" routerLinkActive="active" [routerLink]="['/manage/work-flow/config/appointment-templates']">Appointment Templates <span class="count"></span></li>
+                        </ul>
+                    </div>
+                    <div class="left-column-section">
+                        <h3>VISITOR TAGS</h3>
+                        <ul>
+                            <li class="text-blue cursor-pointer" routerLinkActive="active" [routerLink]="['/manage/work-flow/config/groups']">Visitor Tags <span class="count"></span></li>
+                        </ul>
+                    </div>
+                    <div class="left-column-section">
+                        <h3>ADVANCED</h3>
+                        <ul>
+                            <li class="text-blue cursor-pointer" routerLinkActive="active" [routerLink]="['/manage/work-flow/config/estimated-wait-times']">Estimated Wait Times <span class="count"></span></li>
+                            <li class="text-blue cursor-pointer" routerLinkActive="active" [routerLink]="['/manage/work-flow/config/advance-rules']">Advanced Rules<span class="count"></span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="right-column full-height">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+            <lavi-transparent-footer>
+                <div class="col-lg-12 col-sm-12 col-12 pt-2 pr-5">
+                    <div class="row btncontainer">
+                        <div class="col-12 text-right">
+                            <button type="button" kendoButton class="btn secondary-button mr-2" (click)="SaveAndDraft()">Save as Draft</button>
+                            <button type="submit" kendoButton class="btn primary-button mr-3" (click)="SaveAndPublish()">Publish</button>
+                        </div>
+                    </div>
+                </div>
+            </lavi-transparent-footer>
+
+        </div>
+    </div>
+</lavi-auth-container>

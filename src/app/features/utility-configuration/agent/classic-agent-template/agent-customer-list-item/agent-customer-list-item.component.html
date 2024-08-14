@@ -1,0 +1,97 @@
+<div [class]="IsSmallQueue?'row customer-row border small-text w-100 data-list-items-container':'row customer-row w-100 data-list-items-container'"[ngStyle]="{
+  'border':( Customer?.ruleActionNotificationDetails?.color ? '3px solid '+Customer?.ruleActionNotificationDetails?.color:'1px solid #dee2e6') ,
+  'box-shadow':( Customer?.ruleActionNotificationDetails?.color ? 'rgb(221 215 215) 2px 2px 2px 2px' :'')}">
+  <div class="queue-column border-right" (click)="Checked()">
+    <div [class]="IsSelected
+      ?'select-box selected'
+      :'select-box'"></div>
+  </div>
+  <div class="round-circle" *ngIf="Customer?.priority"><div class="number">{{Customer?.priority}}</div></div>
+  <div class="queue-column with-small-text display-field" *ngIf="!HideTicketNumber">{{Customer.ticketNumber}}</div>
+  <div class="queue-column with-small-text display-field uppercase" *ngFor="let question of DisplayFieldsHeaders">
+    {{GetAnswer(question.questionId)|laviAnswerFormat}}
+  </div>
+  <div class="queue-column with-small-text">{{QueueName}}</div>
+  <div class="queue-column with-small-text">{{Customer.serviceName}}</div>
+  <div class="queue-column with-small-text pb-2" *ngIf="AllowedGrouping">
+    <ul class="groups-ul">
+      <li *ngFor="let Group of CustomerGroups" class="customer-group mr-1">
+        <div class="circle mt-2" [title]="Group.groupName" [ngStyle]="{
+          backgroundColor: Group?.color
+        }"></div>
+      </li>
+      <li>
+        <div title="Assign Group" *ngIf="(Groups.length !== CustomerGroups.length || AllowToCreateGroup)" class="add-group-plus-icon circle mt-2 pointer" (click)="AddToGroup()"></div>
+      </li>
+    </ul>
+  </div>
+  <div class="queue-column with-small-text" *ngIf="IsAppointmentTemplateExist">
+    {{Customer?.branchTimeForAppointment || "-"}}
+  </div>
+
+  <div class="queue-column with-small-text wait-column">
+    <lavi-lapse-time *ngIf="!Customer.isNowServing &&IsDisplayWaitTime" [CustomStyle]="{
+
+    }" [TimeString]="Customer.utcTimeString">
+    </lavi-lapse-time>
+    <span *ngIf="!Customer.isNowServing && !IsDisplayWaitTime">
+      {{Customer.utcTimeString|date: ActualTimeFormat}}</span>
+    <span *ngIf="Customer.isNowServing">-</span>
+  </div>
+  <div class="queue-column with-small-text pt-1 pb-1" *ngIf="AllowedSMS">
+    <lavi-agent-message-banner>
+      <div header>
+        <div class="sms-chat-grid-icon"></div>
+      </div>
+      <div body>
+        <lavi-trimmed-span [Text]='Customer.lastSMSMessage'></lavi-trimmed-span>
+      </div>
+      <div footer>
+        <span class="text-blue cursor-pointer uppercase" (click)="OpenSMSChatDialog()">RESPOND</span>
+      </div>
+    </lavi-agent-message-banner>
+  </div>
+  <div class="queue-column with-small-text pt-1 pb-1" *ngIf="AllowedNotes">
+    <lavi-agent-message-banner>
+      <div header>
+        <div class="agent-notes-grid-icon"></div>
+      </div>
+      <div body>
+        <lavi-trimmed-span [Text]='Customer.lastNote'></lavi-trimmed-span>
+      </div>
+      <div footer>
+        <span class="text-blue cursor-pointer uppercase" (click)="OpenNotesDialog()"
+         [translate]="currentLanguage == 'es'? false: true"
+        >{{viewText}}</span>
+      </div>
+    </lavi-agent-message-banner>
+  </div>
+  <div class="queue-column with-small-text cursor-pointer" (click)='ToggleExpand()'>
+    <span [class]="IsExpanded
+        ?'arrow-icon k-icon k-i-arrow-60-up'
+        :'arrow-icon k-icon k-i-arrow-60-down'"></span>
+  </div>
+</div>
+<lavi-smooth-height [Trigger]='IsExpanded'>
+  <div
+    [class]="IsSmallQueue?'small-text row w-100 customer-row-more-information-container':'row w-100 customer-row-more-information-container'">
+    <div></div>
+    <div class="customer-row-more-information p-4 border border-top-0" *ngIf="IsExpanded">
+      <div class="more-information-button call-button" (click)="Call()" *ngIf="!Customer.isNowServing && AllowSelectedVisitorCalling">
+         {{Customer.isCalled?'REPEAT CALL':'CALL'}}</div>
+      <div class="more-information-button start-button" (click)="Serve()" *ngIf="!Customer.isNowServing && IsCanServe && AllowSelectedVisitorCalling && ServeButtonLabel === ServeButtonText.Start">
+        {{ServeButtonText.Start}}</div>
+        <div class="more-information-button start-button" (click)="Serve()" *ngIf="!Customer.isNowServing && IsCanServe && ServeButtonLabel === ServeButtonText.Served ">
+          {{ServeButtonText.Served}}</div>
+      <div class="more-information-button move-button" *ngIf="AllowTicketRepositioning" (click)="MoveToPosition()">Move</div>
+      <div class="more-information-button transfer-button" *ngIf="AllowTransferBetweenServices" (click)="OpenTransferServiceDailog()">Transfer</div>
+      <div class="more-information-button message-button" *ngIf="AllowedSMS" (click)="OpenSMSChatDialog()" [translate]="currentLanguage == 'es' ? false: true">{{messageText}}</div>
+      <div class="more-information-button notes-button" *ngIf="AllowedNotes" (click)="OpenNotesDialog()" [translate]="currentLanguage == 'es' ? false: true">{{teamNotesText}}</div>
+      <div class="more-information-button info-button" (click)="ShowInformation()">Details</div>
+      <div class="more-information-button remove-button" *ngIf="!Customer.isNowServing && AllowTicketDeletion" (click)="Remove()">Remove</div>
+      <div class="more-information-button end-service-button" *ngIf="Customer.isNowServing"
+        (click)="FeatureIsComingSoonNotification()">End</div>
+    </div>
+  </div>
+
+</lavi-smooth-height>

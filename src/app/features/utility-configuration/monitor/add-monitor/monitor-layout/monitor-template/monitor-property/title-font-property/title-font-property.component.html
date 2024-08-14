@@ -1,0 +1,37 @@
+<ng-container>
+  <div [formGroup]="FormGroup">
+  <div>
+    <label>Title Font</label>
+    <select formControlName='titleFont'>
+      <option *ngFor="let font of FontFamily" [value]="font">
+        {{ font }}
+      </option>
+    </select>
+  </div>
+  <div>
+    <label>Title Font size</label>
+    <input type="text" lavi-app-numbers-only maxlength="5" formControlName="titleFontSize" placeholder="Title Font size" />
+    <span>px</span>
+  </div>
+  <div>
+    <label>Title Font style</label>
+    <select formControlName='titleFontStyle'>
+      <option *ngFor="let font of FontStyle" [value]="font">
+        {{ font }}
+      </option>
+    </select>
+  </div>
+  <div>
+    <label>Title Font Weight</label>
+    <select class="text-capitalize" formControlName="titleFontWeight">
+      <option class="text-capitalize" *ngFor="let font of FontWeight" [value]="font">
+        {{ font }}
+      </option>
+    </select>
+  </div>
+  <div>
+    <label>Title Text Color</label>
+    <kendo-colorpicker formControlName='titleTextColor'></kendo-colorpicker>
+  </div>
+</div>
+</ng-container>

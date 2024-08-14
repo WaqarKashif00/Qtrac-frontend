@@ -1,0 +1,37 @@
+<div class="container-fluid login-background">
+  <div class="field">
+    <div class="row ">
+      <div class="col-md-6 mx-auto">
+        <div id="qtracvr-logo"></div>
+      </div>
+    </div>
+
+    <form [formGroup]="LoginForm" autocomplete="off">
+      <div>
+        <div class="row">
+          <div class="col-12 login-container">
+                <div class="basicControl">
+                  <kendo-textbox-container floatingLabel="Email Address">
+                    <input kendoTextBox formControlName="email" maxlength="150" lavi-auto-focus autocomplete="true"
+                      name="email" />
+                  </kendo-textbox-container>
+                </div>
+                <lavi-validation-message-list [validation-form-group-name]="LoginForm" validation-control-name="email"
+                  [validation-errorlist]="LoginMessages.UserNameMessages">
+                </lavi-validation-message-list>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-5">
+        <div class="col-12">
+          <div class="float-right">
+              <button kendoButton class="e-info" (click)="NavigateToADAuthorizeUrl()">
+                NEXT
+              </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

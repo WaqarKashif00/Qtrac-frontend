@@ -1,0 +1,75 @@
+<div class="row d-flex justify-content-center flex-nowrap">
+  <lavi-filter-with-tags
+    searchTextTitle="Search Mobile Interfaces"
+    [(filter)]="searchModel"
+  >
+  </lavi-filter-with-tags>
+</div>
+
+<div class="row mt-5 mr-2 ml-2 standardlist-grid" *ngIf="Mobiles$ | async | laviFilterListWithTags: searchModel:'':'designerScreen.templateName' as List">
+  <kendo-grid
+    [kendoGridBinding]="List"
+    [pageSize]="100"
+    [sortable]="true"
+    [reorderable]="true"
+    [resizable]="true"
+    [selectable]="{ enabled: true, mode: 'multiple' }"
+    [(expandedDetailKeys)]="expansionManager.expandedIds"
+    [kendoGridExpandDetailsBy]="expansionManager.expandDetailsBy"
+    [rowClass]="listStyleManager.rowStyleCallBack"
+  >
+    <kendo-grid-column
+      title="Name"
+      [headerClass]="listStyleManager.headerClass"
+      [style]="listStyleManager.columnStyle"
+  >
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <span>{{ dataItem.designerScreen.templateName }}</span>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column
+      title="Workflow"
+      [headerClass]="listStyleManager.headerClass"
+      [style]="listStyleManager.columnStyle"
+  >
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <span>{{ dataItem.designerScreen.workFlowName }}</span>
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column
+      field="id"
+      title=""
+      width="200"
+      [headerClass]="listStyleManager.headerClass"
+      [style]="listStyleManager.columnStyle"
+    >
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <label>
+          <kendo-menu
+            class="cursor-pointer text-blue"
+            [items]="items"
+            (select)="OnSelect($event, dataItem)"
+          >
+            <ng-template
+              kendoMenuItemLinkTemplate
+              let-item="item"
+              let-index="index"
+            >
+              <span
+                [kendoMenuItemLink]="index"
+                *ngIf="ShowMenuItem(item)"
+                [ngClass]="{
+                  'menu-style': item.text === '...',
+                  'menu-list-style': item.text != '...'
+                }"
+              >
+                {{ item.text }}
+                <span *ngIf="item.items && item.items.length"></span>
+              </span>
+            </ng-template>
+          </kendo-menu>
+        </label>
+      </ng-template>
+    </kendo-grid-column>
+  </kendo-grid>
+</div>

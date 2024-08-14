@@ -1,0 +1,79 @@
+
+<ng-container
+  *ngIf="{
+    Panel: Control$ | async,
+    SelectedLanguage: SelectedLanguage$ | async,
+    Buttons: Buttons$ | async,
+    ControlSelection:ControlSelection$ | async
+  } as values"
+>
+<ng-container *ngIf="values.ControlSelection">
+  <div class="property-window service-properties">
+    <lavi-thank-you-panel
+      [Panel]="values.Panel"
+      [(IsPanelExpand)]="values.ControlSelection.IsPanelSelected"
+    ></lavi-thank-you-panel>
+  </div>
+
+  <ng-container
+  >
+    <div
+      class="service-item-properties"
+      [hidden]="values.Panel.items.length == 0"
+    >
+      <div class="property-window">
+        <lavi-form-panel PanelHeader="Thank You Item Property" [(PanelExpand)]="values.ControlSelection.IsPanelSelected">
+          <lavi-form-content-panel>
+            <div class="property-window-body">
+              <div>
+                <label>Items</label>
+                <select (change)="OnItemsDropDownChange($event.target.value)">
+                  <ng-container *ngFor="let item of values.Panel.items">
+                    <option
+                      [value]="item.type"
+                      [selected]="item.selected"
+                    >
+                      {{ item.type }}
+                    </option>
+                  </ng-container>
+                </select>
+              </div>
+
+              <ng-container *ngFor="let item of values.Panel.items">
+                <ng-container *ngIf="item.selected">
+                  <lavi-thank-you-item-property
+                    [ThankYouItem]="item"
+                  ></lavi-thank-you-item-property>
+                </ng-container>
+              </ng-container>
+            </div>
+          </lavi-form-content-panel>
+        </lavi-form-panel>
+      </div>
+    </div>
+  </ng-container>
+
+  <div
+    class="property-window service-properties"
+  >
+
+  <ng-container>
+    <lavi-button-property-control
+    *ngIf="Buttons.length > 0"
+    PanelHeader="Thank You Button Properties"
+    [Buttons]="Buttons"
+    [(IsPageButtonSelected)]="values.ControlSelection.IsButtonSelected"
+    [TextFormArray]="TextFormArray$ | async"
+    [ButtonImageFormArray]="ButtonImageFormArray$ | async"
+    (OpenDialog)="OpenTranslateDialog($event)"
+    (UpdateButtons)="UpdateButtons($event)"
+    (ButtonDropdownChange)="ButtonDropdownChange($event)"
+    (TranslateText)="Translate($event)"
+    (UpdateTranslatedText)="UpdateTranslatedTexts($event)"
+    (OpenButtonImageModal)="OpenButtonImageModal($event)"
+    (ApplyImageChanges)="ApplyImageChanges($event)"
+  ></lavi-button-property-control>
+    </ng-container>
+  </div>
+</ng-container>
+</ng-container>

@@ -1,0 +1,140 @@
+<div class="container-fluid">
+  <lavi-agent-header
+    [IsOpenClassicView]="
+      (OpenClassicView$ | async) && (IsAgentAvailable$ | async)
+    "
+    class="row header"
+    [Available]="IsAgentAvailable$ | async"
+    [AgentAllHeaderTabs]="AgentAllHeaderTabs$ | async"
+    [OpenQueueInNewTab]="OpenQueueInNewTab$ | async"
+    [ActiveTab]="ActiveTab$ | async"
+    (OnTabChange)="TabChange($event)"
+    [CustomURL]="CustomerURL$ | async"
+    [currentLanguage]="currentLanguage$ | async"
+    [awayText]="awayText$ | async"
+    (OnAvailableChange)="AgentAvailableChanged($event)"
+    (OnSearchDataChanged)="SearchDataChanged($event)"
+  ></lavi-agent-header>
+
+  <div class="row container-margin-top">
+    <lavi-agent-sidebar
+      class="sidebar border-right"
+      [IsAgentAvailable]="IsAgentAvailable$ | async"
+      [IsSmallQueue]="IsSmallQueue$ | async"
+      [EnableEndOfDayButton]="EnableEndOfDayButton$ | async"
+      [CanAddVisitor]="CanAddVisitor$ | async"
+      [OpenQueueInNewTab]="OpenQueueInNewTab$ | async"
+      [IsAllowGrouping]="IsAllowGrouping$ | async"
+      [IsAllowCreateGroup]="IsAllowCreateGroup$ | async"
+      [IsAllowTicketFiltering]="IsAllowTicketFiltering$ | async"
+      [currentLanguage]="currentLanguage$ | async"
+      [visitorTagText]="visitorTagText$ | async"
+      [clearText]="clearText$ | async"
+      [Groups]="groups$ | async"
+      (OnClickEndOfDay)="onClickEndOfDay()"
+      (OnToggleAddVisitor)="OpenAddVisitorDialog()"
+      (OnToggleGroups)="ToggleGroups()"
+      (OnToggleSmallQueue)="ToggleSmallQueue()"
+      (OnFiltersToggle)="ToggleFilters()"
+      (OnChangeBranchDeskTemplate)="ChangeBranchDeskTemplate()"
+    >
+    </lavi-agent-sidebar>
+
+    <lavi-agent-filters
+      class="agent-filters border-right"
+      [IsAllowGrouping]="IsAllowGrouping$ | async"
+      *ngIf="
+        (OpenClassicView$ | async) &&
+        IsFiltersShow &&
+        (IsAgentAvailable$ | async)
+      "
+      [Queues]="queues$ | async"
+      [Groups]="groups$ | async"
+      [currentLanguage]="currentLanguage$ | async"
+      [byQueueText]="byQueueText$ | async"
+      [byVisitorTagText]="byVisitorTagText$ | async"
+    >
+    </lavi-agent-filters>
+    <lavi-agent-groups-sidebar
+      class="agent-filters border-right"
+      [Groups]="groups$ | async"
+      (OnCreateGroup)="CreateGroup($event)"
+      (OnRemoveGroups)="RemoveGroups($event)"
+      [IsAllowGrouping]="IsAllowGrouping$ | async"
+      [IsAllowCreateGroup]="IsAllowCreateGroup$ | async"
+      [currentLanguage]="currentLanguage$ | async"
+      [visitorTagText]="visitorTagText$ | async"
+      [removeVisitorTagText]="removeVisitorTagText$ | async"
+      [createVisitorTagText]="createVisitorTagText$ | async"
+      [visitorTagNameText]="visitorTagNameText$ | async"
+      [selectVisitorTagColorText]="selectVisitorTagColorText$ | async"
+      [visitorTagColorText]="visitorTagColorText$ | async"
+      [addVisitorTagText]="addVisitorTagText$ | async"
+      *ngIf="
+        (OpenClassicView$ | async) &&
+        IsGroupsSidebarShow &&
+        (IsAgentAvailable$ | async) &&
+        (IsAllowGrouping$ | async)
+      "
+    >
+    </lavi-agent-groups-sidebar>
+
+    <div
+      [class]="
+        IsFiltersShow || IsGroupsSidebarShow
+          ? 'main-container filters-active'
+          : 'main-container'
+      "
+    >
+      <lavi-agent-template-selection-modal
+        [OpenAgentTemplateDialog]="OpenSelectStationDataDialog$ | async"
+        [Branches]="Branches$ | async"
+        [Templates]="Templates$ | async"
+        [Desks]="Desks$ | async"
+        [Tags]="Tags$ | async"
+        [currentLanguage]="currentLanguage$ | async"
+        [searchByTagText]="searchByTagText$ | async"
+        [searchLocationText]="searchLocationText$ | async"
+        [searchTemplateText]="searchTemplateText$ | async"
+        [deskText]="deskText$ | async"
+        [selectDeskText]="selectDeskText$ | async"
+        [submitText]="submitText$ | async"
+        (OnBranchChange)="BranchChanged($event)"
+        (OnSubmit)="Submit($event)"
+        (OnCancel)="CancelTemplateSelection()"
+        [changeFrom]="changeFrom$ | async"
+      >
+      </lavi-agent-template-selection-modal>
+
+      <lavi-classic-agent-template
+        *ngIf="(OpenClassicView$ | async) && (IsAgentAvailable$ | async)"
+        [IsSmallQueue]="IsSmallQueue$ | async"
+        [ActiveTab]="ActiveTab$ | async"
+        class="classic-template"
+        [IsFiltersShow]="IsFiltersShow"
+        [IsGroupsSidebarShow]="IsGroupsSidebarShow"
+        [AllowEditingCustomerInformation$]="AllowEditingCustomerInformation$"
+        [currentLanguage]="currentLanguage$ | async"
+        [visitorTagText]="visitorTagText$ | async"
+        [queueText]="queueText$ | async"
+        [viewText]="viewText$ | async"
+        [teamNotesText]="teamNotesText$ | async"
+        [messageText]="messageText$ | async"
+        [noShowText]="noShowText$ | async"
+        [callingText]="callingText$ | async"
+        [servingText]="servingText$ | async"
+      >
+      </lavi-classic-agent-template>
+    </div>
+  </div>
+  <div class="row"></div>
+
+  <lavi-agent-add-visitor-modal
+    [CanAddGroups]="IsAllowGrouping$ | async"
+    *ngIf="OpenAddVisitorDialog$ | async"
+    (OnClose)="CloseAddVisitorDialog()"
+  >
+  </lavi-agent-add-visitor-modal>
+  <lavi-connection-monitor-modal [OpenConnectionMonitorDialog]="OpenConnectionMonitorDialog$ | async" ></lavi-connection-monitor-modal>
+  <lavi-agent-calendar-appointment-details></lavi-agent-calendar-appointment-details>
+</div>

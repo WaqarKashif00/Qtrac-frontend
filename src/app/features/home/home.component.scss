@@ -1,0 +1,12 @@
+@import "src/stylings/primitives/primitives.scss";
+#defaulttoast .e-meeting::before {
+  content: "\e705";
+  font-size: $font-size-big-1;
+}
+.bootstrap4 #defaulttoast .e-meeting::before {
+  content: "\e763";
+  font-size: $font-size-big-3;
+}
+#toastBtnHide{
+  margin-left: 5px;
+}

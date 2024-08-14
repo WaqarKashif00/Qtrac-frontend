@@ -1,0 +1,319 @@
+#qtracvr-logo {
+    background-image: url("/../../assets/img/QtracVR-Logo-only-R-yellow.png");
+}
+
+.profile-icon {
+    background-image: url("/../../assets/img/Profile.svg");
+}
+
+.location-icon {
+    background-image: url("/../../assets/img/location-icon.png");
+}
+
+.logout-icon {
+    background-image: url("/../../assets/img/LogOut.svg");
+}
+
+.change-password-icon {
+    background-image: url("/../../assets/img/change-password.svg");
+}
+
+.eye-icon-password-show {
+    background-image: url("/../../assets/img/icons8-eye-30.png");
+}
+
+.eye-icon-password-hide {
+    background-image: url("/../../assets/img/icons8-eye-close-30.png");
+}
+
+.setting-icon,
+.groups-icon,
+.filter-icon,
+.agent-logout-icon,
+.visitor-icon,
+.clear-queue-icon ,
+.sms-chat-grid-icon,
+.agent-notes-grid-icon {
+    background-size: 100%;
+}
+
+.visitor-icon {
+    background-image: url("/../../assets/img/agent-add-visitor.png");
+}
+
+.clear-queue-icon {
+    background-image: url("/../../assets/img/clear-queue.png");
+}
+.sms-chat-grid-icon {
+    background-image: url("/../../assets/img/sms-chat-grid-icon.png");
+}
+
+.agent-notes-grid-icon {
+    background-image: url("/../../assets/img/agent-notes-grid-icon.png");
+}
+
+.setting-icon {
+    background-image: url("/../../assets/img/slider-icons/settings.png");
+}
+
+.groups-icon {
+    background-image: url("/../../assets/img/agent-groups.png");
+}
+
+.filter-icon {
+    background-image: url("/../../assets/img/agent-filters.png");
+}
+
+.agent-logout-icon {
+    background-image: url("/../../assets/img/agent-logout.png");
+}
+
+.appointment-scheduler {
+    .layout-content {
+        .thumbnail1,
+        .thumbnail2,
+        .services .thumbnail3 {
+            background: url("/../../assets/img/locations.png") no-repeat;
+        }
+        .thumbnail2 {
+            background: url("/../../assets/img/locations.png") no-repeat;
+        }
+        .services .thumbnail1 {
+            background: url("/../../assets/img/service1.PNG") no-repeat;
+        }
+        .services .thumbnail2 {
+            background: url("/../../assets/img/service2.PNG") no-repeat;
+        }
+        .services .thumbnail3 {
+            background: url("/../../assets/img/service-img3.png") no-repeat;
+        }
+    }
+}
+
+.review-information {
+    li:before {
+        background: url("/../../assets/img/bullet-icon.png") no-repeat;
+        background-size: contain;
+    }
+}
+
+.layout-footer {
+    .footer-icon {
+        background: url("/../../assets/img/QtracVR-Logo-only-TM-grey.png") no-repeat;
+        background-size: contain;
+    }
+}
+
+.e-panel-container {
+    span.drag-icon {
+        background: url("/../../assets/drag-indicator.png") no-repeat;
+        background-size: contain;
+    }
+}
+
+.edit-icon {
+    background: url("/../../assets/img/edit-icon.svg") no-repeat;
+    background-size: contain;
+}
+
+.edit-icon-black {
+    background: url("/../../assets/img/edit-black.png") no-repeat;
+    background-size: contain;
+}
+
+.property-window-body select {
+    background: url("/../../assets/down-arrow.png") no-repeat right center;
+}
+
+.preloader {
+    background: url("/../../assets/img/loading.svg");
+}
+
+.archive-icon,
+.share-icon,
+.export-icon {
+    cursor: pointer;
+    display: inline-block;
+}
+
+.archive-icon {
+    background: url("/../../assets/img/snapshot-delete.svg") no-repeat;
+    height: 17px;
+    width: 19px;
+}
+
+.share-icon {
+    background: url("/../../assets/img/snapshot-share.svg") no-repeat;
+    height: 17px;
+    width: 15px;
+}
+
+.export-icon {
+    background: url("/../../assets/img/snapshot-export.svg") no-repeat;
+    height: 17px;
+    width: 17px;
+}
+
+.home-icon span {
+    background: url("/../../assets/img/home-icon.svg") no-repeat;
+}
+
+.home-icon:hover span,
+.home-icon.active span {
+    background: url("/../../assets/img/home-icon-hover.svg") no-repeat;
+}
+
+.queue-icon span {
+    background: url("/../../assets/img/queue-icon.svg") no-repeat;
+}
+
+.queue-icon:hover span,
+.queue-icon.active span {
+    background: url("/../../assets/img/queue-icon-hover.svg") no-repeat;
+}
+
+.snapshot-icon span {
+    background: url("/../../assets/img/snapshot-icon.svg") no-repeat;
+}
+
+.snapshot-icon:hover span,
+.snapshot-icon.active span {
+    background: url("/../../assets/img/snapshot-icon-hover.svg") no-repeat;
+}
+
+.insights-icon span {
+    background: url("/../../assets/img/lock-icon.svg") no-repeat;
+}
+
+.insights-icon:hover span,
+.insights-icon.active span {
+    background: url("/../../assets/img/lock-icon-hover.svg") no-repeat;
+}
+
+.manage-icon span {
+    background: url("/../../assets/img/manage-icon.svg") no-repeat;
+}
+
+.manage-icon:hover span,
+.manage-icon.active span {
+    background: url("/../../assets/img/manage-icon-hover.svg") no-repeat;
+}
+
+.notification-icon {
+    background: url("/../../assets/img/notification-icon.svg") no-repeat;
+}
+
+.notification-icon:hover {
+    background: url("/../../assets/img/notification-icon-hover.svg") no-repeat;
+}
+
+.exit-icon {
+    background: url("/../../assets/img/exit-icon.svg") no-repeat;
+}
+
+.nav-setting-icon span {
+    background: url("/../../assets/img/settings-icon.svg") no-repeat;
+}
+
+.nav-setting-icon:hover span,
+.nav-setting-icon.selected span {
+    background: url("/../../assets/img/settings-icon-hover.svg") no-repeat;
+}
+
+.nav-design-icon span {
+    background: url("/../../assets/img/devices-icon.svg") no-repeat;
+}
+
+.nav-design-icon:hover span,
+.nav-design-icon.selected span {
+    background: url("/../../assets/img/devices-icon-hover.svg") no-repeat;
+}
+
+.nav-admin-icon span {
+    background: url("/../../assets/img/admin-icon.svg") no-repeat;
+}
+
+.nav-admin-icon:hover span,
+.nav-admin-icon.selected span {
+    background: url("/../../assets/img/admin-icon-hover.svg") no-repeat;
+}
+
+.nav-permissions-icon span {
+    background: url("/../../assets/img/permissions-icon.svg") no-repeat;
+}
+
+.nav-permissions-icon:hover span,
+.nav-permissions-icon.selected span {
+    background: url("/../../assets/img/permissions-icon-hover.svg") no-repeat;
+}
+
+.card-icon#companyNav {
+    background: url("/../../assets/img/company.svg") no-repeat center;
+}
+
+.card-icon#appointmentsNav {
+    background: url("/../../assets/img/appointments.svg") no-repeat center;
+}
+
+.card-icon#hoursOfOperationsNav {
+    background: url("/../../assets/img/hours.svg") no-repeat center;
+}
+
+.card-icon#locationsNav {
+    background: url("/../../assets/img/locations.svg") no-repeat center;
+}
+
+.card-icon#workFlowsNav {
+    background: url("/../../assets/img/workflow.svg") no-repeat center;
+}
+
+.card-icon#kioskTemplatesNav {
+    background: url("/../../assets/img/kiosk.svg") no-repeat center;
+}
+
+.card-icon#monitorTemplatesNav {
+    background: url("/../../assets/img/monitor.svg") no-repeat center;
+}
+
+.card-icon#agentTemplatesNav {
+    background: url("/../../assets/img/queue-views.svg") no-repeat center;
+}
+
+.card-icon#mobileInterfacesNav {
+    background: url("/../../assets/img/mobile.svg") no-repeat center;
+}
+
+.card-icon#allCompaniesNav {
+    background: url("/../../assets/img/all-companies.svg") no-repeat center;
+}
+
+.card-icon#allUsersNav,
+.card-icon#usersNav {
+    background: url("/../../assets/img/all-users.svg") no-repeat center;
+}
+
+.card-icon#userRolesNav,
+.card-icon#allUsersNav {
+    background: url("/../../assets/img/roles.svg") no-repeat center;
+}
+
+.card-icon#homeInterfacesNav {
+    background: url("/../../assets/img/home-page/dashboard-illustration.svg") no-repeat center;
+}
+
+.refresh-icon {
+    background-image: url("/../../assets/img/restart.png");
+    background-size: contain;
+}
+
+.remove-condition {
+    background: url("/../../assets/img/remove.png") no-repeat center #FECDCA;
+}
+
+.remove-condition-internal {
+    background: url("/../../assets/img/remove-condition.png") no-repeat center;
+}
+
+.lang-warning {
+    background: url("/../../assets/img/warning-icon.png") no-repeat center;
+}

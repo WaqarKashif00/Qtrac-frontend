@@ -1,0 +1,33 @@
+<div
+  class="newControl newImage position-absolute w-100"
+  *ngFor="let control of Videos"
+  [style.transform]="
+    'translate(' + control.left + 'px, ' + control.top + 'px) scale(1)'
+  "
+  [style.height.px]="control.height"
+  [style.z-index]="control.zindex"
+  [style.padding-left.px]="control.horizontalPadding || 0"
+  [style.padding-right.px]="control.horizontalPadding || 0"
+  [style.padding-top.px]="control.verticalPadding || 0"
+  [style.padding-bottom.px]="control.verticalPadding || 0"
+>
+<video
+*ngIf="GetUrl(control.src) && UrlType?.other"
+class="w-100"
+[style.height.px]="control.height"
+[style.border-radius.px]="control.boxCorner || 0"
+autoplay
+loop="true" controls="false"
+>
+  <source [src]="GetUrl(control.src)" type="video/mp4" />
+</video>
+
+<iframe *ngIf="GetUrl(control.src) && UrlType?.youtube"
+class="w-100"
+[style.height.px]="control.height"
+[style.border-radius.px]="control.boxCorner || 0"
+[src]="GetUrl(control.src)"
+allow='autoplay'
+loop="true" controls="false"
+></iframe>
+</div>

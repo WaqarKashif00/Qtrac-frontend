@@ -1,0 +1,22 @@
+@import "src/stylings/primitives/primitives.scss";
+@import "src/stylings/shared/agent-layout.scss";
+::ng-deep{
+    .k-event{
+        background-color: $color-background-grey;
+    }
+    .k-event.k-state-selected{
+        background-color: $color-background-grey;
+    }
+    ul.k-scheduler-views li,.k-scheduler-toolbar,.k-scheduler-layout {
+      z-index: 0;
+    }
+  }
+
+.agent-calendar{
+  height: calc(100vh - 196px);
+  overflow-y: auto;
+}
+.refresh-icon{
+  height:40px;
+  width: 40px;
+}

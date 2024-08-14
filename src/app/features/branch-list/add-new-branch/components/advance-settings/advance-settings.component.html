@@ -1,0 +1,110 @@
+<ng-container
+*laviHasRoleAccess="
+  roleActions.BranchAdvancedSetting;
+  actionName: actionType.View
+"
+>
+<div [formGroup]="AdvanceSettingsForm"></div>
+<lavi-form-panel PanelHeader="Advanced Settings">
+  <lavi-form-content-panel>
+    <div class="col-lg-12 inner-panel-padding panel-border">
+      <div>
+        <div class="row">
+          <div class="col-lg-6 col-sm-6 col-6 pl-4">
+            <label class="k-label cursor-pointer checkbox-label mt-4">
+              <input
+                type="checkbox"
+                kendoCheckBox
+                [formControl]="AdvanceSettingsForm.controls.hideBranchFromScheduler"
+              />
+              Hide the Location from the Scheduler Store Locator
+            </label>
+          </div>
+          <div class="col-lg-6 col-sm-6 col-6 pl-4">
+            <label class="k-label cursor-pointer checkbox-label mt-4">
+              <input
+                type="checkbox"
+                kendoCheckBox
+                [formControl]="AdvanceSettingsForm.controls.enableTextToJoin" 
+              />
+              Enable Text To Join
+            </label>
+          </div>
+        </div>
+        <div class="row mt-4 mb-3">
+          <div class="col-lg-6 col-sm-6 col-6 pl-4">
+            <kendo-textbox-container
+              class="w-100"
+              floatingLabel="Temporary Hours Override"
+            >
+              <kendo-dropdownlist
+              [lavi-disable-if-not-has-role-access]='true'
+              [ActionName]='actionType.AddEdit'
+              [ViewName]='roleActions.BranchAdvancedSetting'
+                placeholder="Hours of operations"
+                tabindex="47"
+                [formControl]="
+                  AdvanceSettingsForm.controls.hoursOfOperationException
+                "
+                [textField]="'templateName'"
+                [valueField]="'id'"
+                [data]="HoursOfOperationException | laviSortBy: 'templateName'"
+                [defaultItem]="DefaultData.HoursOfOperationExceptionValue"
+              >
+              </kendo-dropdownlist>
+            </kendo-textbox-container>
+          </div>
+          <div class="col-lg-6 col-sm-6 col-6 pl-4" *ngIf="AdvanceSettingsForm.controls.enableTextToJoin.value">
+            <kendo-textbox-container
+              class="w-100"
+              floatingLabel="Text To Join Mobile Interface"
+            >
+              <kendo-dropdownlist
+              [lavi-disable-if-not-has-role-access]='true'
+              [ActionName]='actionType.AddEdit'
+              [ViewName]='roleActions.BranchAdvancedSetting'
+                placeholder="Select Mobile Interface"
+                tabindex="47"
+                [formControl]="
+                  AdvanceSettingsForm.controls.textToJoinMobileInterface
+                "
+                [textField]="'templateName'"
+                [valueField]="'templateId'"
+                [data]="MobileTemplates | laviSortBy: 'templateName'"
+                [defaultItem]="DefaultData.textToJoinMobileInterface"
+              >
+              </kendo-dropdownlist>
+            </kendo-textbox-container>
+            <lavi-validation-message-list
+            [validation-form-group-name]="AdvanceSettingsForm"
+            validation-control-name="textToJoinMobileInterface"
+            [validation-errorlist]="ValidationMessages.TextToJoin"
+          >
+          </lavi-validation-message-list>
+          </div>
+        </div>
+
+        <div class="row mt-4 mb-3" *ngIf="IsLaviUserType">
+          <div class="col-lg-6 col-sm-6 col-6 pl-4">
+            <kendo-textbox-container
+            class="w-100"
+            floatingLabel="Service SID"
+          >
+            <input
+              lavi-auto-focus
+              kendoTextBox
+              tabindex="1"
+              maxlength="50"
+              [formControl]="
+              AdvanceSettingsForm.controls.overridetwilioServiceId
+            "
+            />
+          </kendo-textbox-container>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </lavi-form-content-panel>
+</lavi-form-panel>
+</ng-container>

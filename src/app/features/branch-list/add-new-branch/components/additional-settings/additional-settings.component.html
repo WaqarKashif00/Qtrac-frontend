@@ -1,0 +1,65 @@
+<ng-container
+*laviHasRoleAccess="
+  roleActions.BranchAdditionalSetting;
+  actionName: actionType.View
+"
+>
+<div [formGroup]="AdditionalSettingsForm"></div>
+<lavi-form-panel PanelHeader="Hours Of Operation">
+  <lavi-form-content-panel>
+    <div class="col-lg-12 inner-panel-padding panel-border">
+      <div>
+        <div class="row mt-5 mb-5">
+          <div class="col-lg-6 col-sm-5 pl-4">
+            <kendo-textbox-container
+              class="w-100"
+              floatingLabel="Hours Of Operations"
+            >
+              <kendo-dropdownlist
+                placeholder="Hours of operations"
+                tabindex="46"
+                [lavi-disable-if-not-has-role-access]='true'
+                [ActionName]='actionType.AddEdit'
+                [ViewName]='roleActions.BranchAdditionalSetting'
+                [formControl]="AdditionalSettingsForm.controls.hoursOfOperation"
+                [textField]="'templateName'"
+                [valueField]="'id'"
+                [data]="HoursOfOperation | laviSortBy: 'templateName'"
+                [defaultItem]="DefaultData.HoursOfOperationValue"
+              >
+              </kendo-dropdownlist>
+            </kendo-textbox-container>
+          </div>
+          <div class="w-3"></div>
+          <div class="col-lg-3 col-sm-5">
+            <kendo-textbox-container
+              class="w-100"
+              floatingLabel="Location Timezone"
+            >
+              <kendo-dropdownlist
+                placeholder="Location timezone"
+                [textField]="'text'"
+                tabindex="47"
+                [formControl]="AdditionalSettingsForm.controls.branchTimezone"
+                [data]="BranchTimeZone | laviSortBy: 'text'"
+                [valueField]="'value'"
+                [defaultItem]="DefaultData.BranchTimezoneValue"
+                [lavi-disable-if-not-has-role-access]='true'
+                [ActionName]='actionType.AddEdit'
+                [ViewName]='roleActions.BranchAdditionalSetting'
+              >
+              </kendo-dropdownlist>
+            </kendo-textbox-container>
+            <lavi-validation-message-list
+              [validation-form-group-name]="AdditionalSettingsForm"
+              validation-control-name="branchTimezone"
+              [validation-errorlist]="timeZoneMessages"
+            >
+            </lavi-validation-message-list>
+          </div>
+        </div>
+      </div>
+    </div>
+  </lavi-form-content-panel>
+</lavi-form-panel>
+</ng-container>

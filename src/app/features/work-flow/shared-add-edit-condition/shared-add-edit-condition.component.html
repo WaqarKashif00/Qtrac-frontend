@@ -1,0 +1,150 @@
+<div class="row d-flex align-items-baseline" [formGroup]="FormGroup">
+    <div class="col-5">
+      <kendo-textbox-container class="w-100 align-bottom">
+        <kendo-dropdownlist
+        [defaultItem]="defaultData.TypeDefaultValue"
+          class="no-border" [textField]="'shortName'" [valueField]="'id'"
+          [formControl]="FormGroup.controls.condition"
+          [data]="conditionsNameList | laviSortBy:'type'">
+        </kendo-dropdownlist>
+      </kendo-textbox-container>
+      <lavi-validation-message-list [validation-form-group-name]="FormGroup"
+        validation-control-name="condition" [validation-errorlist]="WorkflowMessage.AnyDropdownMessages">
+      </lavi-validation-message-list>
+    </div>
+    <div class="col-3 pl-0" *ngIf="FormGroup.controls.condition?.value?.type == VariableType.event "></div>
+    <div class="col-3 pl-0" *ngIf="FormGroup.controls.condition?.value?.type != VariableType.event ">
+      <kendo-textbox-container class="w-100 align-bottom">
+        <kendo-dropdownlist [textField]="'text'" [valueField]="'value'"
+        [formControl]="FormGroup.controls.operator"
+        [defaultItem]="defaultData.OperatorDefaultValue"
+        [data]="operators$ | async" class="no-border">
+        </kendo-dropdownlist>
+      </kendo-textbox-container>
+      <lavi-validation-message-list [validation-form-group-name]="FormGroup"
+        validation-control-name="operator" [validation-errorlist]="WorkflowMessage.AnyDropdownMessages">
+      </lavi-validation-message-list>
+    </div>
+
+    <div class="col-3 pl-0" *ngIf="FormGroup.controls.condition?.value?.type == VariableType.event "></div>
+    <div class="col-3 pl-0" *ngIf="FormGroup.controls.condition?.value?.type != VariableType.event ">
+
+      <!-- TEXT  -->
+      <ng-container *ngIf="((FormGroup?.value?.condition?.data_type == questionType.Text.value) || ((FormGroup?.value?.condition?.data_type == questionType.LongText.value)) ) 
+            && FormGroup?.value?.operator?.text != operatorEnum.IsEmpty">
+
+            <ng-container *ngIf="CheckTextControlVisibility">
+              <kendo-textbox-container class="w-100 align-bottom">
+                <input type="text" kendoTextBox  formControlName="value" maxlength="50" laviTrimValue/>
+              </kendo-textbox-container>
+              <lavi-validation-message-list [validation-form-group-name]="FormGroup" validation-control-name="value"
+                [validation-errorlist]="WorkflowMessage.TextValueMessage">
+              </lavi-validation-message-list>
+            </ng-container>
+        
+      </ng-container>
+
+      <!-- EMAIL -->
+      <ng-container *ngIf="(FormGroup?.value?.condition?.data_type == questionType.Email.value)
+            && FormGroup?.value?.operator?.text != operatorEnum.IsEmpty">
+        <kendo-textbox-container class="w-100 align-bottom">
+          <input type="text" kendoTextBox  formControlName="value" maxlength="100" laviTrimValue/>
+        </kendo-textbox-container>
+        <lavi-validation-message-list [validation-form-group-name]="FormGroup" validation-control-name="value"
+          [validation-errorlist]="WorkflowMessage.EmailMessages">
+        </lavi-validation-message-list>
+      </ng-container>
+
+      <!--  PHONENUMBER / SMSPHONENUMBER  -->
+      <ng-container *ngIf="(FormGroup?.value?.condition?.data_type == questionType.PhoneNumber.value
+            || FormGroup?.value?.condition?.data_type == questionType.SMSPhoneNumber.value)
+            && FormGroup?.value?.operator?.text != operatorEnum.IsEmpty">
+        <kendo-textbox-container class="w-100 align-bottom">
+          <kendo-maskedtextbox placeholder="Phone Number" [mask]="Validation.PhoneNoMask" formControlName="value"
+            tabindex="9">
+          </kendo-maskedtextbox>
+        </kendo-textbox-container>
+        <lavi-validation-message-list [validation-form-group-name]="FormGroup" validation-control-name="value"
+          [validation-errorlist]="WorkflowMessage.PhoneMessages">
+        </lavi-validation-message-list>
+      </ng-container>
+
+      <!-- NUMBER -->
+      <ng-container *ngIf="FormGroup?.value?.condition?.data_type == questionType.Number.value">
+        <kendo-textbox-container class="w-100 align-bottom"  floatingLabel="{{showMinuteLabel}}">
+          <input kendoTextBox formControlName="value" maxlength="10" laviTrimValue/>
+          
+        </kendo-textbox-container>
+        <lavi-validation-message-list [validation-form-group-name]="FormGroup" validation-control-name="value"
+          [validation-errorlist]="WorkflowMessage.NumberMessages">
+        </lavi-validation-message-list>
+      </ng-container>
+
+
+      <!-- DATE -->
+      <ng-container *ngIf="FormGroup?.value?.condition?.data_type == questionType.Date.value">
+        <kendo-textbox-container class="w-100 align-bottom" >
+          <kendo-datepicker
+              class="w-100"
+              formControlName="value"
+            ></kendo-datepicker>
+        </kendo-textbox-container>
+        <lavi-validation-message-list [validation-form-group-name]="FormGroup" validation-control-name="value"
+          [validation-errorlist]="WorkflowMessage.DropdownValueMessages">
+        </lavi-validation-message-list>
+      </ng-container>
+
+
+      <!-- TIME -->
+      <ng-container *ngIf="FormGroup?.value?.condition?.data_type == questionType.Time.value">
+        <kendo-textbox-container class="w-100 align-bottom" >
+          <kendo-timepicker
+            class="w-100"
+            formControlName="value"
+            ></kendo-timepicker>
+        </kendo-textbox-container>
+        <lavi-validation-message-list [validation-form-group-name]="FormGroup" validation-control-name="value"
+          [validation-errorlist]="WorkflowMessage.DropdownValueMessages">
+        </lavi-validation-message-list>
+      </ng-container>
+
+
+      <!-- OPTIONS / DROPDOWN / MULTISELECT-->
+      <ng-container *ngIf="FormGroup?.value?.condition?.data_type == questionType.DropDown.value
+                  || FormGroup?.value?.condition?.data_type == questionType.MultiSelect.value
+                  || FormGroup?.value?.condition?.data_type == questionType.Options.value || !CheckTextControlVisibility">
+        <kendo-textbox-container class="w-100 align-bottom">
+
+          <ng-container *ngIf="FormGroup?.value?.operator?.text == operatorEnum.Equals
+                || FormGroup?.value?.operator?.text == operatorEnum.NotEquals || !CheckTextControlVisibility">
+
+            <kendo-dropdownlist [formControl]="FormGroup.controls.value" *ngIf="CheckTextControlVisibility" [data]="MultiValueData$ | async">
+            </kendo-dropdownlist>
+
+            <kendo-dropdownlist [formControl]="FormGroup.controls.value" *ngIf="!CheckTextControlVisibility" [data]="DropdownData() | async">
+            </kendo-dropdownlist>
+
+          </ng-container>
+          
+          <ng-container *ngIf="!(FormGroup?.value?.operator?.text == operatorEnum.Equals
+            || FormGroup?.value?.operator?.text == operatorEnum.NotEquals) && CheckTextControlVisibility">
+            <kendo-multiselect [formControl]="FormGroup.controls.value" [kendoDropDownFilter]="'startsWith'"
+              [filterable]="true" [data]="MultiValueData$ | async">
+            </kendo-multiselect>
+          </ng-container>
+
+        </kendo-textbox-container>
+        <lavi-validation-message-list [validation-form-group-name]="FormGroup" validation-control-name="value"
+          [validation-errorlist]="WorkflowMessage.DropdownValueMessages">
+        </lavi-validation-message-list>
+      </ng-container>
+      <!-- <pre>
+        {{Services | json}}
+      </pre> -->
+    </div>
+
+    <div class="col-1 text-left align-self-end mb-1 pl-0"
+    (click)="DeleteConditionFromArray()">
+      <img class="img-width-15 cursor-pointer" src="../../../../assets/img/delete-icon.svg">
+    </div>
+</div>

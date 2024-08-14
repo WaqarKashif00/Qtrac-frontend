@@ -1,0 +1,80 @@
+<div
+  class="modal-bg"
+  *ngIf="
+    (IsStationSectionExpanded$ | async) &&
+    (IsStationSectionVisible$ | async) &&
+    IsQueue
+  "
+></div>
+<div class="container-fluid">
+  <div class="row" *ngIf="IsQueue">
+    <div
+      [class]="
+        (IsStationSectionVisible$ | async) ? 'col-10 bg-white' : 'col-12 '
+      "
+    >
+      <lavi-agent-queue-grid
+        [IsSmallQueue]="IsSmallQueue"
+        class="agent-queue-grid col-12 p-0 overflow-scroll"
+        [IsFiltersShow]="IsFiltersShow"
+        [IsGroupsSidebarShow]="IsGroupsSidebarShow"
+        [visitorTagText]="visitorTagText"
+        [currentLanguage]="currentLanguage"
+        [queueText]="queueText"
+        [viewText]="viewText"
+        [teamNotesText]="teamNotesText"
+        [messageText]="messageText"
+      >
+      </lavi-agent-queue-grid>
+    </div>
+    <div class="col-2 p-0" *ngIf="IsStationSectionVisible$ | async">
+      <lavi-agent-station-panel
+         [teamNotesText]="teamNotesText"
+         [messageText]="messageText"
+         [currentLanguage]="currentLanguage"
+         [noShowText]="noShowText"
+         [visitorTagText]="visitorTagText"
+         [queueText]="queueText"
+         [viewText]="viewText"
+         [callingText]="callingText"
+         [servingText]="servingText"
+      > </lavi-agent-station-panel>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="IsCalender">
+    <div [class]="'col-12 '">
+      <lavi-agent-calendar></lavi-agent-calendar>
+    </div>
+  </div>
+</div>
+
+<lavi-agent-customer-information-dialog
+  (OnClose)="CloseCustomerInformationDialog($event)"
+  [Customer]="CustomerForDialog$ | async"
+  *ngIf="IsCustomerInformationDialogOpen$ | async"
+  [AllowEditingCustomerInformation]="AllowEditingCustomerInformation$ | async"
+>
+</lavi-agent-customer-information-dialog>
+<lavi-agent-add-visitor-modal
+  *ngIf="IsTransferServiceDialogOpen$ | async"
+  [Customer]="TransferServiceForDialog$ | async"
+  (OnClose)="CloseTransferServiceDialog()"
+  [IsTransferService]="IsTransferServiceDialogOpen$ | async"
+>
+</lavi-agent-add-visitor-modal>
+<lavi-agent-add-visitor-modal
+  *ngIf="IsEditMode"
+  [IsEditMode]="IsEditMode"
+  [Customer]="CustomerForDialog$ | async" 
+  (OnClose)="CloseTransferServiceDialog()"
+>
+</lavi-agent-add-visitor-modal>
+
+<lavi-agent-sms-chat-modal></lavi-agent-sms-chat-modal>
+
+<lavi-agent-notes-modal></lavi-agent-notes-modal>
+
+<lavi-agent-group-modal></lavi-agent-group-modal>
+
+<lavi-move-to-position-modal></lavi-move-to-position-modal>

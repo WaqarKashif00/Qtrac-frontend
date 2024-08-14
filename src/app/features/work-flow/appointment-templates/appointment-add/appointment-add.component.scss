@@ -1,0 +1,199 @@
+@import "src/stylings/primitives/primitives.scss";
+.ox-unset{
+    overflow-x: unset !important;
+}
+
+.width-28{
+    width: 28% !important;
+}
+
+
+.width-10{
+    width: 10% !important;
+}
+
+.additional-lnaguage-div{
+    width: 10%;
+    padding-top: 0%;
+}
+
+.rem-add-language-div{
+    width: 31%;
+    padding-left: 5%;
+}
+
+.width-357{
+    width: 357% !important;
+}
+
+.width-359{
+    width: 359% !important;
+}
+
+.padding-top-8{
+    padding-top:8% !important;
+}
+
+.padding-top-4{
+    padding-top:4% !important;
+}
+
+.margin-top-1 {
+  margin-top: 1% !important;
+}
+.margin-top-2 {
+  margin-top: 2% !important;
+}
+
+.height-100{
+    height: 100px !important;
+}
+
+
+.marginleft-92 {
+  margin-left: 92% !important;
+}
+
+.marginleft-8 {
+  margin-left: 8% !important;
+}
+
+.margin-left-12 {
+  margin-left: 12% !important;
+}
+
+.marginleft-6_5 {
+  margin-left: 6.5% !important;
+}
+
+.sub-title-appointment {
+  color: $workflow-row-border;
+  font-size: $global-font-size;
+}
+
+.appointment-sub-header {
+  font-size: $font-size-big-3;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  font-weight: $font-weight-600;
+}
+
+.padding-right-4{
+  padding-right: 4%;
+}
+
+.margin-left-minus-2 {
+  margin-left: -2%;
+}
+
+.width-48 {
+  width: 48% !important;
+}
+
+.font-size-110 {
+  font-size: $font-size-big-1;
+}
+.full-expand-style{
+  height: 100% !important;
+  width: 100% !important;
+}
+ .full-expand-style-text-area{
+  height: 100% !important;
+  width: 100% !important;
+  overflow-y: scroll!important;
+ }
+::ng-deep .add-service-modal .modal-body .k-panelbar .k-panelbar-expand, ::ng-deep .add-service-modal .modal-body .k-panelbar .k-panelbar-collapse {
+  top: 50%;
+  left: 85%;
+}
+::ng-deep .k-window {
+  font-size: $font-size-small-4;
+}
+.modal-body {
+  height: 383px;
+  overflow-y: auto;
+  margin: 10px 0;
+}
+
+.font-14{
+  font-size: $font-size-small-4;
+}
+
+.setting-data .col-12 {
+  padding: 15px 30px 13px 35px;
+  ::ng-deep .k-dropdown,
+  .k-textbox-container {
+    width: auto;
+    min-width: 80px;
+    height: 24px;
+  }
+  .numericTextbox {
+    font-size: $font-size-small-4;
+    width: 60px !important;
+    text-align: center;
+  }
+  ::ng-deep .k-numerictextbox .k-numeric-wrap .k-input {
+    text-align: center;
+  }
+  ::ng-deep .k-dropdown .k-dropdown-wrap {
+    height: auto;
+  }
+  ::ng-deep .k-dropdown .k-dropdown-wrap .k-input {
+    border-color: $color-border-form-element;
+    height: auto;
+  }
+  ::ng-deep .k-checkbox {
+    margin-right: 20px;
+    float: left;
+    margin-top: 3px;
+  }
+  ::ng-deep .k-dropdown .k-dropdown-wrap.k-state-focused,
+  .k-dropdowntree .k-dropdown-wrap.k-state-focused {
+    border-color: $color-border-form-element;
+  }
+  ::ng-deep kendo-dropdownlist.number-dropdown {
+    min-width: 48px;
+  }
+  > span {
+    line-height: 21px;
+    vertical-align: middle;
+    display: inline-block;
+    width: 99%;
+  }
+  ::ng-deep .k-textbox-container {
+    height: 24px;
+    padding-top: 0;
+    vertical-align: middle;
+    .k-textbox {
+      font-size: $font-size-small-4;
+      padding: 5px 0 0 10px;
+      width: 100%;
+    }
+  }
+  ::ng-deep span,
+  ::ng-deep .k-dropdown .k-dropdown-wrap .k-input {
+  font-size: $font-size-small-4;
+}
+}
+
+.padding-left-42{
+  padding-left: 42%;
+}
+.padding-left-65{
+  padding-left: 65%;
+}
+.padding-left-32{
+  padding-left: 32%;
+}
+
+.padding-left-13{
+  padding-left: 13%;
+}
+
+.padding-left-10{
+  padding-left: 10%;
+}
+
+.padding-left-6{
+  padding-left: 6%;
+}

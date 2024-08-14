@@ -1,0 +1,42 @@
+<ng-container
+  *ngIf="{
+    Items: Items$ | async,
+    Panel: Panel$ | async,
+    Buttons: Buttons$ | async,
+    SelectedLanguage: SelectedLanguage$ | async,
+    DefaultLanguage: DefaultLanguage$ | async
+  } as values"
+>
+  <lavi-service-question-vertical-question-mode
+    [SelectedLanguage]="values.SelectedLanguage"
+    [DefaultLanguage]="values.DefaultLanguage"
+    [Items]="values.Items"
+    [Panel]="values.Panel"
+    [GridSize]="GridSize"
+    [IsOnlyGrid]="IsOnlyGrid"
+    [DivLayoutDesignContainer]="DivLayoutDesignContainer"
+    [Buttons]="values.Buttons"
+    [Workflow]="Workflow"
+    (ResizeStop)="OnResizeStop($event)"
+    (MoveEnd)="OnMoveEnd($event)"
+    (OnPanelClick)="OnPanelClick()"
+    (ButtonResizeStop)="OnButtonResizeStop($event)"
+    (ButtonMoveEnd)="OnButtonMoveEnd($event)"
+  ></lavi-service-question-vertical-question-mode>
+  <lavi-service-question-single-question-mode
+    [SelectedLanguage]="values.SelectedLanguage"
+    [DefaultLanguage]="values.DefaultLanguage"
+    [Items]="values.Items"
+    [Panel]="values.Panel"
+    [GridSize]="GridSize"
+    [IsOnlyGrid]="IsOnlyGrid"
+    [DivLayoutDesignContainer]="DivLayoutDesignContainer"
+    [Buttons]="values.Buttons"
+    (OnPanelClick)="OnPanelClick()"
+    [Workflow]="Workflow"
+    (ResizeStop)="OnResizeStop($event)"
+    (MoveEnd)="OnMoveEnd($event)"
+    (ButtonResizeStop)="OnButtonResizeStop($event)"
+    (ButtonMoveEnd)="OnButtonMoveEnd($event)"
+  ></lavi-service-question-single-question-mode>
+</ng-container>

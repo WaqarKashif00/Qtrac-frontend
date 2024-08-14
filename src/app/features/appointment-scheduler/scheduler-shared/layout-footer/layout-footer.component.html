@@ -1,0 +1,16 @@
+<div [style.background-color]="FooterProperties?.backColor" class="row layout-footer">
+  <div class="footer-text col-9">
+    <p *ngIf="FooterProperties" [style.color]="FooterProperties?.color">
+      {{(FooterProperties.text[SelectedLanguage?.selectedLanguage] ||
+      FooterProperties.text[SelectedLanguage?.defaultLanguage])}}</p>
+  </div>
+  <div class="col-3">
+
+    <div class="float-right">
+      <div *ngIf="ShowLaviIconInFooter === 'Yes'">
+        <p class="powered-by-text">Powered by</p>
+        <span class="footer-icon"></span>
+      </div>
+    </div>
+  </div>
+</div>

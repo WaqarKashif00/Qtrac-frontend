@@ -1,0 +1,54 @@
+<lavi-form-panel PanelHeader="Notification Properties" [PanelExpand]="true">
+<lavi-form-content-panel>
+<div class="property-window-body">
+  <div [formGroup]="TicketPropertyControl.form" >
+    <div>
+      <label>Show Notify via SMS</label>
+      <select formControlName="notifyViaSMS">
+        <option *ngFor="let val of AllowNotifySms" [value]="val">
+          {{ val }}
+        </option>
+      </select>
+    </div>
+    <span class="properties-separation"></span>
+    <div>
+      <label>Show Notify via Email</label>
+      <select formControlName="notifyViaEmail">
+        <option *ngFor="let val of AllowNotifyEmail" [value]="val">
+          {{ val }}
+        </option>
+      </select>
+    </div>
+    <span class="properties-separation"></span>
+    <div>
+      <label>Enable Terms & Conditions</label>
+      <select formControlName="enableTermsConditions">
+        <option *ngFor="let val of EnableTermsConditions" [value]="val">
+          {{ val }}
+        </option>
+      </select>
+    </div>
+    <span class="properties-separation"></span>
+    <div class="property-align">
+      <label>Terms & Conditions URL</label>
+      <input
+        type="text"
+        placeholder="Terms & Conditions URL"
+        formControlName="termsAndConditionsUrl"
+        [value]="TicketPropertyControl.termsAndConditionsUrl"
+        lavi-trim-value
+        maxlength="150"
+      />
+      <span class="edit-icon"></span>
+    </div>
+      <div class="h-10 text-right mr-3">
+        <lavi-validation-message-list [validation-form-group-name]="TicketPropertyControl.form"
+        validation-control-name="termsAndConditionsUrl"
+        [validation-errorlist]="ValidationMessage.UrlMessages">
+      </lavi-validation-message-list></div>
+
+  </div>
+</div>
+</lavi-form-content-panel>
+</lavi-form-panel>
+

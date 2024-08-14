@@ -1,0 +1,26 @@
+@import "src/stylings/primitives/primitives.scss";
+.first-available {
+  color: $scheduler-default-font-color;
+  font-size: $font-size-big-1;
+  ul li {
+    background: $scheduler-background;
+    border: solid thin $color-border-form-element-active;
+    border-radius: 5px;
+    display: inline-block;
+    list-style: none;
+    padding: 9px 0;
+    margin: 10px 10px 10px 0;
+    width: 124px;
+    text-align: center;
+  }
+}
+/* Portrait and Landscape */
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    .first-available {
+      margin: 0 auto;
+      width: 87%;
+    }
+}

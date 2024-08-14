@@ -1,0 +1,62 @@
+<lavi-agent-dialog-box [ModalColor]="'#F7CC46'" [Height]="'500px'" [Width]="'500px'" (OnClose)="Close()"
+    class="agent-scheduler" [IsFooterRequired]="true" [IsOpen]="IsAppointmentDetailsModalOpen$ | async"
+    *ngIf="(IsAppointmentDetailsModalOpen$ | async) && Appointment">
+    <div header>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-left bold header">
+                    {{Appointment?.displayField || Appointment?.serviceName || '-'}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div body class="container">
+        <div class="row p-0 m-0 pt-2">
+            <div class="col-6 text-left p-0 m-0 bold">SERVICE</div>
+            <div class="col-6 text-right">
+                {{Appointment.serviceName}}
+            </div>
+        </div>
+        <div class="row p-0 m-0 pt-2">
+            <div class="col-6 text-left p-0 m-0 bold">APPOINTMENT TIME</div>
+            <div class="col-6 text-right">
+                {{AppointmentTimeString}}
+            </div>
+        </div>
+
+        <div class="text-left pt-2" *ngIf="Appointment.preServiceQuestions.length > 0">
+            <p class="bold">GENERAL QUESTIONNAIRE</p>
+        </div>
+        <div class="row pt-2" *ngFor="let question of Appointment.preServiceQuestions">
+            <div class="col-6 text-left">{{question.questionText}}</div>
+            <div *ngIf="question.questionType !== 'URL'" class="col-6 text-right">
+                {{question|laviAnswerFormat}}
+            </div>
+            <a *ngIf="question.questionType === 'URL'" [href]="question|laviAnswerFormat" target="blank" class="col-6 text-right">
+                {{question|laviAnswerFormat}}
+            </a>
+        </div>
+
+        <div class="text-left pt-2" *ngIf="Appointment.serviceQuestions.length > 0">
+            <p class="bold">SUPPLEMENTAL QUESTIONNAIRE</p>
+        </div>
+        <div class="row pt-2" *ngFor="let question of Appointment.serviceQuestions">
+            <div class="col-6 text-left">{{question.questionText}}</div>
+            <div class="col-6 text-right">
+                {{question|laviAnswerFormat}}
+            </div>
+        </div>
+    </div>
+    <div footer class="container">
+        <div class="row">
+
+            <div class="col-lg-12 pl-0 pr-0">
+                <div class="d-flex justify-content-between">
+                  <input type="button" *ngIf="CanDelete" kendoButton class="secondary-button bg-grey" (click)="Delete()" value="DELETE" />
+                  <input type="button" *ngIf="CanReschedule" kendoButton class="more-information-button btn transfer-button blue-btn" (click)="Reschedule()" value="Reschedule" />
+                  <input type="button" *ngIf="CanCheckIn" kendoButton class="more-information-button btn transfer-button green-btn" (click)="CheckIn()" value="Check In" />
+                </div>
+            </div>
+        </div>
+    </div>
+</lavi-agent-dialog-box>

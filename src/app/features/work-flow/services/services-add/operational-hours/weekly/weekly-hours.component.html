@@ -1,0 +1,60 @@
+<div class="row working-hours">
+  <div [formGroup]="WeeklyWorkingDaysForm" class="col-lg-11 col-sm-12">
+    <lavi-operational-hours
+      DayName="Sunday"
+      [HourForm]="WeeklyWorkingDaysForm.controls.sunday"
+      [TimeFrameFormArray]="SundayTimeFrameArray"
+      (AddHoursForm)="AddHoursForm('SUNDAY', $event)"
+      (RemoveHoursForm)="RemoveHoursForm('SUNDAY', $event)"
+      (ValidationToTimeControl)="ValidateToTime($event)"
+    ></lavi-operational-hours>
+    <lavi-operational-hours
+      DayName="Monday"
+      [HourForm]="WeeklyWorkingDaysForm.controls.monday"
+      [TimeFrameFormArray]="MondayTimeFrameArray"
+      (AddHoursForm)="AddHoursForm('MONDAY', $event)"
+      (RemoveHoursForm)="RemoveHoursForm('MONDAY', $event)"
+      (ValidationToTimeControl)="ValidateToTime($event)"
+    ></lavi-operational-hours>
+    <lavi-operational-hours
+      DayName="Tuesday"
+      [HourForm]="WeeklyWorkingDaysForm.controls.tuesday"
+      [TimeFrameFormArray]="TuesdayTimeFrameArray"
+      (AddHoursForm)="AddHoursForm('TUESDAY', $event)"
+      (RemoveHoursForm)="RemoveHoursForm('TUESDAY', $event)"
+      (ValidationToTimeControl)="ValidateToTime($event)"
+    ></lavi-operational-hours>
+    <lavi-operational-hours
+      DayName="Wednesday"
+      [HourForm]="WeeklyWorkingDaysForm.controls.wednesday"
+      [TimeFrameFormArray]="WednesdayTimeFrameArray"
+      (AddHoursForm)="AddHoursForm('WEDNESDAY', $event)"
+      (RemoveHoursForm)="RemoveHoursForm('WEDNESDAY', $event)"
+      (ValidationToTimeControl)="ValidateToTime($event)"
+    ></lavi-operational-hours>
+    <lavi-operational-hours
+      DayName="Thursday"
+      [HourForm]="WeeklyWorkingDaysForm.controls.thursday"
+      [TimeFrameFormArray]="ThursdayTimeFrameArray"
+      (AddHoursForm)="AddHoursForm('THURSDAY', $event)"
+      (RemoveHoursForm)="RemoveHoursForm('THURSDAY', $event)"
+      (ValidationToTimeControl)="ValidateToTime($event)"
+    ></lavi-operational-hours>
+    <lavi-operational-hours
+      DayName="Friday"
+      [HourForm]="WeeklyWorkingDaysForm.controls.friday"
+      [TimeFrameFormArray]="FridayTimeFrameArray"
+      (AddHoursForm)="AddHoursForm('FRIDAY', $event)"
+      (RemoveHoursForm)="RemoveHoursForm('FRIDAY', $event)"
+      (ValidationToTimeControl)="ValidateToTime($event)"
+    ></lavi-operational-hours>
+    <lavi-operational-hours
+      DayName="Saturday"
+      [HourForm]="WeeklyWorkingDaysForm.controls.saturday"
+      [TimeFrameFormArray]="SaturdayTimeFrameArray"
+      (AddHoursForm)="AddHoursForm('SATURDAY', $event)"
+      (RemoveHoursForm)="RemoveHoursForm('SATURDAY', $event)"
+      (ValidationToTimeControl)="ValidateToTime($event)"
+    ></lavi-operational-hours>
+  </div>
+</div>

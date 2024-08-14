@@ -1,0 +1,9 @@
+<div class="container-fluid bg-white w-100 p-0">
+  <div>
+    <snapshot-list-header [IsLoadingPage]="IsLoadingPage" (Cancel)=OnCancel() [SnapshotState]="SnapshotState">
+    </snapshot-list-header>
+  </div>
+  <div>
+    <lavi-snapshot-draft-list [IsLoadingPage]="IsLoadingPage" [SnapshotState]="SnapshotState" ></lavi-snapshot-draft-list>
+  </div>
+</div>

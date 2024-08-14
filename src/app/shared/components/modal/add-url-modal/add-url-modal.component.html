@@ -1,0 +1,35 @@
+<ng-container>
+  <lavi-modal [OpenDialog]="OpenDialog"
+  [Title]="ModalTitle"
+  [Width]="ModalWidth"
+  [Height]="ModalHeight" >
+  <div>
+    <div>
+      <div class="add-url-modal">
+        <label>URL</label>
+        <input class="text-left"
+          type="url"
+          placeholder="URL"
+          lavi-auto-focus
+          [(ngModel)]="UrlText"
+          [id]="LanguageId"
+          [pattern]="IsImgUrl ? ValidationPatterns.ImageRegX : ValidationPatterns.UrlRegX"
+          #urlVal='ngModel'
+        />
+        <div>
+          <span class="error-message d-block" *ngIf="urlVal?.errors?.pattern">Please enter valid URL.</span> 
+          <span class="error-message d-block" *ngIf="!UrlText && IsErrorsToShow">Please enter URL.</span> 
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <kendo-dialog-actions class="pb-0 pr-0">
+    <div class="float-right">
+      <input type="button" kendoButton (click)="CloseModal()" class="secondary-button" value="Cancel" />
+      <input type="button" kendoButton (click)="Add(urlVal?.errors?.pattern)" class="primary-button" value="Add" />
+    </div>
+  </kendo-dialog-actions>
+
+  </lavi-modal>
+</ng-container>

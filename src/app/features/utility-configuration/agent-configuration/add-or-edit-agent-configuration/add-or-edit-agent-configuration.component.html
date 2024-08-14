@@ -1,0 +1,63 @@
+<lavi-auth-container HeaderTitle="Queue Views" ExitURL='/manage/agent-Template'>
+  <lavi-form  [FormGroup]="AgentTemplateForm" (OnSubmit)="Save()" *ngIf="{isClassicMode: IsClassicMode$ | async, showPanel: ShowPanel$ | async, dropDowns: DropDownsData$ | async} as values">
+    <div class="panel-container agent-template pb-5">
+  <div>
+    <lavi-form-panel class="mb-4" PanelHeader="General Configuration" [PanelExpand]="true">
+      <lavi-form-content-panel>
+        <lavi-agent-general-configuration
+        [GeneralConfigForm]="AgentTemplateForm?.controls?.generalConfiguration"
+        [WorkflowList]="values?.dropDowns?.workflows"
+        [AgentViewList]="values?.dropDowns?.agentViewTypes"
+        [MobileTemplatesList]="values?.dropDowns?.mobileTemplates"
+        [SchedulerTemplatesList]="values?.dropDowns?.schedulerTemplates"
+        (OnChangeOfAgentViewType)="OnChangeOfAgentViewType($event)"
+        (OnChangeOfWorkflow)="OnChangeOfWorkflow($event)"
+        >
+        </lavi-agent-general-configuration>
+      </lavi-form-content-panel>
+      </lavi-form-panel>
+  </div>
+  <div *ngIf="(values?.isClassicMode && values?.isClassicMode !== null) && values?.showPanel">
+    <lavi-form-panel class="mb-4" PanelHeader="Queue Configuration - Classic" [PanelExpand]="true">
+      <lavi-form-content-panel>
+        <lavi-agent-classic-configuration
+        [ClassicConfigForm]="AgentTemplateForm.controls.classicConfiguration"
+        [TimeFormat]="values?.dropDowns?.timeFormats"
+        [TimeInQueue]="values?.dropDowns?.timeDisplayInQueues"
+        (OnChangeOfAllowSmsCheckbox)="ResetClassicBiDirectionalCheckbox()"
+        (OnChangeOfAllowGroupCheckbox)="ResetClassicCreateGroupCheckbox()"
+        (OnChangeOfCustomerTabUrlCheckbox)="OnChangeOfCustomerUrlTab()">
+        </lavi-agent-classic-configuration>
+      </lavi-form-content-panel>
+      </lavi-form-panel>
+  </div>
+  <div *ngIf="!(values?.isClassicMode) && values?.isClassicMode !== null">
+    <lavi-form-panel class="mb-4" PanelHeader="Queue Configuration - Lite" [PanelExpand]="true">
+      <lavi-form-content-panel>
+       <lavi-agent-lite-configuration
+       [LiteConfigForm]="AgentTemplateForm.controls.liteConfiguration"
+       [TimeFormat]="values?.dropDowns?.timeFormats">
+       </lavi-agent-lite-configuration>
+      </lavi-form-content-panel>
+      </lavi-form-panel>
+  </div>
+
+  <div>
+    <lavi-transparent-footer>
+      <div class="col-lg-12 col-sm-12 col-12 pt-2 pr-5">
+        <div class="row">
+          <div class="col-12 text-right">
+          <input
+                type="submit"
+                kendoButton
+                class="primary-button mr-4"
+                [value]="(IsEditedMode$ | async) ? 'Update' : 'Save'"
+              />
+          </div>
+        </div>
+      </div>
+    </lavi-transparent-footer>
+  </div>
+</div>
+</lavi-form>
+</lavi-auth-container>

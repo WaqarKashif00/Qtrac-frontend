@@ -1,0 +1,48 @@
+.SliderContainerDiv {
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+}
+.SliderContentDiv {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+}
+.SliderImage {
+  vertical-align: top;
+}
+.icon-container, .previous-icon, .next-icon {
+  position: absolute;
+}
+.icon-container {
+    top: 45%;
+  .previous-icon, .next-icon {
+    background: transparent;
+    box-sizing: border-box;
+    height: 2vw;
+    width: 2vw;
+    border-style: solid;
+    border-color: rgba(0,0,0,.6);
+    border-width: 0px 2px 2px 0px;
+    transition: border-width 150ms ease-in-out;
+  }
+  .previous-icon {
+    left: 0;
+    transform: rotate(135deg);
+  }
+  .next-icon {
+    right: 0;
+    transform: rotate(315deg);
+  }
+  .previous-icon:hover:not(:disabled), .next-icon:hover:not(:disabled) {
+    border-bottom-width: 4px;
+    border-right-width: 4px;
+  }
+  .previous-icon:focus, .next-icon:focus {
+    outline: none;
+  }
+  .previous-icon:disabled, .next-icon:disabled {
+    border-color: rgba(222,222,222);
+  }
+}

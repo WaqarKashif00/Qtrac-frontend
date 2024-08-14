@@ -1,0 +1,47 @@
+<div class="pt-3">
+  <div class="pre-service-question-list">
+        <kendo-grid
+        [data]="gridData"
+        [height]="540"
+        [rowClass]="rowCallback"
+        (dataStateChange)="dataStateChange($event)">
+      <kendo-grid-column width="40">
+        <ng-template kendoGridCellTemplate let-dataItem class="text-overflow-clip">
+          <img class="drag-icon cursor-pointer mr-2" src="../../../../assets/drag-indicator.png">
+        </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column field="shortName" title="ShortName" width="150">
+      </kendo-grid-column>
+      <kendo-grid-column title="Question" width="300">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <span *ngFor="let ques of dataItem?.question,let i = index" >
+              <span *ngIf="ques.isDefault">
+                {{ques.question}}
+              </span>
+            </span>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column title="Type" width="120">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <span>
+              {{GetDisplayType(dataItem.type)}}
+          </span>
+      </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column field="id" title="" width="70" class="fload-right">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <img class="img-width cursor-pointer" (click)="Delete(dataItem?.id)" src="../../../../assets/img/delete-icon.svg">
+            <img class="img-width cursor-pointer ml-2" (click)="Edit(dataItem)" src="../../../../assets/img/edit-icon.svg">
+        </ng-template>
+      </kendo-grid-column>
+
+      <ng-template kendoGridNoRecordsTemplate>
+        No General Question Added.
+     </ng-template>
+    </kendo-grid>
+  </div>
+
+</div>
+

@@ -1,0 +1,130 @@
+<div [formGroup]="Panel.form">
+  <lavi-form-panel PanelHeader="Service Properties" [(PanelExpand)]="IsPanelExpand">
+    <lavi-form-content-panel>
+      <div class="property-window-body">
+        <div>
+          <label>Show Service Icon</label>
+          <span class="float-right mr-3 mt-1">
+            <input
+            type="checkbox"
+            kendoCheckBox
+            formControlName="showServiceIcons"
+          />
+          </span>
+        </div>
+        <div>
+          <label>Top</label
+          ><input
+            type="text"
+            formControlName="top"
+            lavi-app-numbers-only
+            maxlength="3"
+            [value]="Panel.styles.top"
+            placeholder="Top"
+          />
+          <span>px</span>
+        </div>
+        <div>
+          <label>Left</label
+          ><input
+            type="text"
+            formControlName="left"
+            lavi-app-numbers-only
+            maxlength="3"
+            [value]="Panel.styles.left"
+            placeholder="Left"
+          />
+          <span>px</span>
+        </div>
+        <div>
+          <label>Width</label
+          ><input
+            type="text"
+            formControlName="width"
+            lavi-app-numbers-only
+            maxlength="3"
+            [value]="Panel.styles.width"
+            placeholder="Width"
+          />
+          <span>px</span>
+        </div>
+        <div>
+          <label>Height</label
+          ><input
+            type="text"
+            formControlName="height"
+            lavi-app-numbers-only
+            maxlength="3"
+            [value]="Panel.styles.height"
+            placeholder="Height"
+          />
+          <span>px</span>
+        </div>
+
+        <div>
+          <label>Background color</label>
+          <kendo-colorpicker
+            formControlName="backgroundColor"
+            [value]="Panel.styles.backgroundColor"
+            (valueChange)="ChangeColorPicker()"
+          >
+          </kendo-colorpicker>
+        </div>
+        <div>
+          <label>Text color</label>
+          <kendo-colorpicker
+            formControlName="color"
+            [value]="Panel.styles.color"
+            (valueChange)="ChangeColorPicker()"
+          >
+          </kendo-colorpicker>
+        </div>
+        <div>
+          <label>Text background color</label>
+          <kendo-colorpicker
+            formControlName="textBackgroundColor"
+            [value]="Panel.textBackgroundColor"
+            (valueChange)="ChangeColorPicker()"
+          >
+          </kendo-colorpicker>
+        </div>
+        <lavi-font [FormGroup]="Panel.form"></lavi-font>
+        <div>
+          <label>Vertical Padding</label
+          ><input
+            type="text"
+            formControlName="verticalPadding"
+            placeholder="Vertical padding"
+            lavi-app-numbers-only
+            maxlength="3"
+            [value]="Panel.verticalPadding"
+          />
+          <span>px</span>
+        </div>
+        <div>
+          <label>Horizontal Padding</label
+          ><input
+            type="text"
+            formControlName="horizontalPadding"
+            placeholder="Horizontal Padding"
+            [value]="Panel.horizontalPadding"
+            lavi-app-numbers-only
+            maxlength="3"
+          />
+          <span>px</span>
+        </div>
+        <label>Visible Services</label>
+        <div *ngFor="let service of ServiceBoxItems">
+          <form [formGroup]="service.form" autocomplete="off"> 
+            <div>
+              <span class="float-left ml-0 mt-2">
+                <input type="checkbox" kendoCheckBox formControlName="isVisible" />
+              </span>
+              <label>{{service.text[service.selectedLanguageId]}}</label>
+            </div>
+          </form>
+        </div>
+      </div>
+    </lavi-form-content-panel>
+  </lavi-form-panel>
+</div>

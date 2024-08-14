@@ -1,0 +1,253 @@
+<div class="stepper-desc">
+  <div *ngIf="!IsDeleteAppointment">
+    <p
+      *ngIf="!UniqueIdentifier && !IsModifiedAppointmentMode"
+      class="mt-4 mb-2 text-center"
+    >
+      {{AppointmentTexts.appointmentSuccessPageThankYouMessage}} {{ BranchName }}. {{AppointmentTexts.appointmentSuccessPageBookedMessage}}.
+    </p>
+    <p
+      *ngIf="UniqueIdentifier && !IsModifiedAppointmentMode"
+      class="mt-4 mb-2 text-center"
+    >
+    {{AppointmentTexts.appointmentSuccessPageThankYouMessage}} {{ BranchName }}. {{AppointmentTexts.appointmentSuccessPageConfirmedMessage}}
+    </p>
+    <p
+      *ngIf="UniqueIdentifier && IsModifiedAppointmentMode"
+      class="mt-4 mb-2 text-center"
+    >
+    {{AppointmentTexts.appointmentSuccessPageThankYouMessage}} {{ BranchName }}. {{AppointmentTexts.appointmentSuccessPageReSchedulerMessage}}
+    </p>
+  </div>
+  <div *ngIf="IsDeleteAppointment">
+    <p class="mt-4 mb-2 text-center">
+      {{AppointmentTexts.appointmentSuccessPageThankYouMessage}} {{ BranchName }}. {{AppointmentTexts.appointmentSuccessPageCancelledMessage}}
+      .
+    </p>
+  </div>
+  <p
+    *ngIf="ShowUniqueIdentifierOnConfirmationPage && UniqueIdentifier"
+    class="mt-4 mb-2 text-left"
+  >
+    <b> {{AppointmentTexts.appointmentConfirmationHeader}} </b>: {{ UniqueIdentifier }}
+  </p>
+  <ng-container *ngIf="StepperPreview">
+    <p class="pt-5 text-left">{{ StepperPreview.header }}</p>
+    <div
+      class="d-flex mb-1"
+      *ngFor="let desc of StepperPreview.descriptionList"
+    >
+      <span [style.background-color]="ActiveBackColor" class="i-check-circle">
+        <span
+          [style.color]="ActiveTextColor"
+          class="k-icon k-i-check preview-icon"
+        ></span>
+      </span>
+      <span
+        [style.color]="InActiveTextColor"
+        [class]="desc.description ? 'description' : 'description ml-3'"
+        >{{ desc.description || "-" }}</span
+      >
+    </div>
+  </ng-container>
+
+  <div
+    *ngIf="
+      (AppointmentNotificationPreferences.isPhonNumberChecked &&
+        AppointmentNotificationPreferences.phoneNumber &&
+        ShowSMS == AllowSms.YES) ||
+      (AppointmentNotificationPreferences.isEmailAddressChecked &&
+        AppointmentNotificationPreferences.emailAddress &&
+        ShowEmail == AllowEMail.YES)
+    "
+    class="appointment-form appointment-notification"
+  >
+    <p class="sub-heading pt-5">{{AppointmentTexts.appointmentSuccessPageNotificationHeader}}</p>
+    <div class="form-group" *ngIf="ShowSMS == AllowSms.YES">
+      <div class="pl-0">
+        <div
+          *ngIf="
+            AppointmentNotificationPreferences.isPhonNumberChecked &&
+            AppointmentNotificationPreferences.phoneNumber
+          "
+          class="pl-0 pt-2"
+        >
+          <span class="font-weight-bold">{{AppointmentTexts.appointmentPhoneNumberField}}</span> :
+          {{ AppointmentNotificationPreferences.phoneNumber }}
+        </div>
+      </div>
+    </div>
+    <div class="form-group" *ngIf="ShowEmail == AllowEMail.YES">
+      <div class="pl-0">
+        <div
+          *ngIf="
+            AppointmentNotificationPreferences.isEmailAddressChecked &&
+            AppointmentNotificationPreferences.emailAddress
+          "
+          class="pl-0"
+        >
+          <span class="font-weight-bold">{{AppointmentTexts.appointmentReviewPageEmailField}}:</span>
+          {{ AppointmentNotificationPreferences.emailAddress }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="button-container mt-3">
+    <div class="row m-0 position-relative">
+      <div class="col-sm-4 button-sm-position pt-1">
+        <div class="float-left pt-2">
+          <input
+            type="button"
+            kendoButton
+            [style.color]="SecondaryButtonColor"
+            [style.background-color]="SecondaryButtonBackColor"
+            (click)="OnCloseButtonClick()"
+            value={{AppointmentTexts.appointmentSuccessPageExitButton}}
+            class="lavi-secondary-button appointment-close-btn"
+          />
+        </div>
+      </div>
+
+
+      <div class="col-sm-8 button-sm-position pt-1">
+        <div
+        *ngIf="ShowUniqueIdentifierOnConfirmationPage && !IsDeleteAppointment
+        && allowModification"
+        class="pt-2 pr-2 appointment-buttons d-inline-block"
+      >
+        <input
+          type="button"
+          kendoButton
+          [style.color]="SecondaryButtonColor"
+          [style.background-color]="SecondaryButtonBackColor"
+          (click)="OnDeleteButtonClick()"
+          value={{AppointmentTexts.appointmentSuccessPageCancelButton}}
+          class="lavi-secondary-button font-weight-bold w-auto pr-2 pl-2"
+        />
+      </div>
+        <div
+          *ngIf="UniqueIdentifier
+           && ShowUniqueIdentifierOnConfirmationPage 
+           && !IsDeleteAppointment || ShowUniqueIdentifierOnConfirmationPage 
+           && appointmentExists && !IsDeleteAppointment" 
+          class="appointment-buttons d-inline-block pt-2 pr-2"
+        >
+          <input *ngIf="allowModification"
+            type="button"
+            kendoButton
+            [style.color]="SecondaryButtonColor"
+            [style.background-color]="SecondaryButtonBackColor"
+            (click)="OnModifyButtonClick()"
+            value={{AppointmentTexts.appointmentSuccessPageModifyButton}}
+            class="lavi-secondary-button font-weight-bold w-auto pr-2 pl-2"
+          />
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <lavi-modal
+    [OpenDialog]="(ValidOTP && IfOTPSent) || IsModelOpen"
+    Title={{AppointmentTexts.appointmentModifyModelHeader}}
+    Width="50%"
+  >
+    <div *ngIf="IfOTPSent">
+      <lavi-form [FormGroup]="OTPForm">
+        <div class="col-lg-12 mt-3">
+          <div class="row">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-5 h-25">
+              <div
+                class="
+                  col-lg-12 col-md-8
+                  float-left
+                  pr-0
+                  pl-0
+                  lavi-text-field-loader-container
+                "
+              >
+                <div class="form-group">
+                  <kendo-textbox-container
+                    class="w-100"
+                    floatingLabel={{AppointmentTexts.appointmentEnterCodeFieldPlaceHolder}}
+                  >
+                    <input
+                      lavi-auto-focus
+                      [AutoFocusRequired]="IsModelOpen"
+                      kendoTextBox
+                      tabindex="1"
+                      maxlength="5"
+                      [formControl]="OTPForm.controls.OTP"
+                      lavi-trim-value
+                      lavi-app-numbers-only
+                    />
+                  </kendo-textbox-container>
+                  <span
+                    class="float-left mt-1 error-message"
+                    *ngIf="!OTPForm.controls.OTP.valid && SaveClick"
+                  >
+                    {{ AppointmentTexts.appointmentOTPRequiredMessage }}
+                  </span>
+                  <span class="float-right">
+                    <a (click)="SendOTP()">{{AppointmentTexts.appointmentResendVerifyCode}}</a>
+                  </span>
+                  <div class="clearfix"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pt-3">
+          <kendo-dialog-actions class="pb-0">
+            <div class="float-right pb-2 verify-code-buttons">
+              <input
+                type="button"
+                kendoButton
+                class="secondary-button"
+                (click)="ModalClose()"
+                value={{AppointmentTexts.appointmentCancelButton}}
+              />
+              <input
+                type="button"
+                kendoButton
+                class="primary-button"
+                (click)="VerifyOTP()"
+                value={{AppointmentTexts.appointmentVerifyCodeButton}}
+              />
+            </div>
+          </kendo-dialog-actions>
+        </div>
+      </lavi-form>
+    </div>
+    <div *ngIf="!IfOTPSent">
+      <div class="col-lg-12 mt-3">
+        <div class="row">
+            <div
+              class="col-12 pt-3 h-25 lavi-text-field-loader-container"
+            >
+              <div>
+                <a (click)="SendOTP()">
+                  <p class="mb-0 font-15">
+                    {{AppointmentTexts.appointmentModifyModelSendCodeTitle}}
+                  </p></a
+                >
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="pt-3">
+        <kendo-dialog-actions class="pb-0">
+          <div class="float-right pb-2">
+            <input
+              type="button"
+              kendoButton
+              class="secondary-button"
+              (click)="ModalClose()"
+              value={{AppointmentTexts.appointmentCancelButton}}
+            />
+          </div>
+        </kendo-dialog-actions>
+      </div>
+    </div>
+  </lavi-modal>
+</div>

@@ -1,0 +1,100 @@
+@import "src/stylings/primitives/primitives.scss";
+#grid2  .k-grid-header{
+    display: none !important;
+}
+
+#grid2 .k-grid td{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.k-grid{
+    border-width: 0;
+  }
+
+  .k-grid td{
+    border-width: 0;
+  }
+
+  .k-grid-header{
+    border-bottom-width: 0;
+  }
+
+  .k-grid-header-wrap{
+    border-width: 0;
+  }
+
+  .k-grid-content{
+    overflow-y: visible;
+    white-space: nowrap;
+  }
+
+  .pd-mg-0{
+    padding: 0px !important;
+    margin: 0px !important;
+}
+
+.k-i-add:before, .k-i-plus:before, .k-plus:before {
+  // content: "\E012";
+  content: "\E015";
+
+}
+.k-i-kpi-trend-equal:before, .k-i-minus:before, .k-minus:before {
+  // content: "\E008";
+  content: "\E013";
+}
+
+.pl-3-5{
+  padding-left: 3.5% ;
+}
+
+::ng-deep .k-grid tbody tr {
+  height: 40px;
+}
+
+::ng-deep .k-grid tbody tr td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wf-grid-data {
+  font-size: $global-font-size;
+  color: $color-text-black !important;
+}
+
+::ng-deep .pre-service-question-list .k-header {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.service-ques {
+  padding-left: 0;
+}
+
+.service-ques li {
+  list-style: none;
+  padding-top: 10px;
+}
+
+.condition-type {
+  display: inline-block;
+  width: 45%;
+}
+
+.service-ques {
+  padding-left: 0;
+}
+
+.service-ques li {
+  list-style: none;
+  padding-top: 10px;
+}
+
+.k-grid .k-hierarchy-cell .k-icon {
+  display: inline;
+}
+
+.k-grid .k-hierarchy-col {
+  width: 20px;
+}

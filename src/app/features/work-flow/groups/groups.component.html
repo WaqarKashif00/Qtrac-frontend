@@ -1,0 +1,20 @@
+<lavi-form-content-panel>
+    <div class="col-lg-12 inner-panel-padding right-column-width">
+        <div class="mb-5">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="sub-header">Visitor Tags</div>
+                </div>
+                <div class="col-lg-3 ">
+                    <span (click)="Add()" class="text-blue pl-4 cursor-pointer font-weight-bold">Add Visitor Tag</span>
+                </div>
+                <lavi-groups-add [IsGroupDialogOpen]="OpenGroupModal$ | async" [Mode]="Mode" (SaveForm)="Save($event)"
+                    (Close)="CloseModal()"></lavi-groups-add>
+            </div>
+            <div>
+                <lavi-groups-list [GroupList]="GroupList$ | async" (OnEdit)="Edit($event)" (OnCopyGroup)="Copy($event)"
+                    (OnDelete)="Delete($event)"></lavi-groups-list>
+            </div>
+        </div>
+    </div>
+</lavi-form-content-panel>

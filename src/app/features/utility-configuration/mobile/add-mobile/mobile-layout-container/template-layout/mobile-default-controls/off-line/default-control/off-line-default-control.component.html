@@ -1,0 +1,10 @@
+<ng-container *ngIf="Button$ | async as button"
+  ><lavi-button-control
+    *ngIf="button"
+    [Button]="button"
+    [SelectedLanguage]="SelectedLanguage$ | async"
+    (OnButtonResize)="OnResizeStop($event)"
+    (OnButtonMove)="OnMoveEnd($event)"
+    (OnButtonClick)="OnClick()"
+  ></lavi-button-control>
+</ng-container>

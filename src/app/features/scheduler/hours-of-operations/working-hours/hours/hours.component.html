@@ -1,0 +1,95 @@
+<div [formGroup]="HourForm" class="row mt-1">
+  <div class="col-2 col-lg-2 p-0 col-sm-3">
+    <p>{{ DayName }}</p>
+  </div>
+  <div class="col-2 p-0 col-sm-4 col-lg-2 mt-4">
+    <div>
+      <kendo-switch
+        [formControl]="HourForm.controls.isOpen"
+      ></kendo-switch>
+      <span class="ml-1 font-weight-normal">{{
+        HourForm.controls["isOpen"].value ? "Open" : "Closed"
+      }}</span>
+    </div>
+  </div>
+  <ng-container formArrayName="availableTimeFrames">
+    <ng-container *ngFor="let form of TimeFrameFormArray.controls; let i=index">
+      <div class="col-4" *ngIf="i > 0"></div>
+      <div
+        [formGroupName]="i"
+        *ngIf="HourForm.controls['isOpen'].value"
+        class="col-8 p-0 col-sm-12 col-lg-7"
+      >
+        <div class="row">
+          <div class="col-4 col-sm-4">
+            <kendo-textbox-container floatingLabel="Opens at">
+              <kendo-dropdownlist
+                formControlName="fromTime"
+                [data]="i === 0 ? workingHours : workingHoursWith12HourFormat"
+              >
+              </kendo-dropdownlist>
+            </kendo-textbox-container>
+            <div class="h-10">
+              <lavi-validation-message-list
+              [validation-form-group-name]="form"
+              validation-control-name="fromTime"
+              [validation-errorlist]="HoursOfOperationMessage.TimeMessages"
+            >
+            </lavi-validation-message-list>
+            <div class="error-message"  *ngIf="form.hasError('invalidStartTime')">
+              Please enter valid time.
+            </div>
+            </div>
+          </div>
+          <ng-container
+            *ngIf="
+              !(
+                form.value['fromTime'] ===
+                TwentyFourHours
+              )
+            "
+          >
+            <span class="pt-3"> _ </span>
+            <div class="col-4 col-sm-4">
+              <kendo-textbox-container floatingLabel="Closes at">
+                <kendo-dropdownlist
+                  formControlName="toTime"
+                  [data]="workingHoursWith12HourFormat"
+                >
+                </kendo-dropdownlist>
+              </kendo-textbox-container>
+              <div class="h-10">
+                <lavi-validation-message-list
+                [validation-form-group-name]="form"
+                validation-control-name="toTime"
+                [validation-errorlist]="
+                  HoursOfOperationMessage.TimeMessages
+                "
+              >
+              </lavi-validation-message-list>
+              <div class="error-message" *ngIf="form.hasError('greaterTime')">
+                Closes at time must be greater than opens at time.
+              </div>
+              <div class="error-message" *ngIf="form.hasError('invalidEndTime')">
+                Please enter valid time.
+              </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <span *ngIf="i > 0"
+                class="col-3 k-icon k-i-close k-i-x text-muted pl-3 pt-4 cursor-pointer" (click)="RemoveTimeFrame(i)"
+              ></span>
+              <span *ngIf="i === 0"
+                class="text-primary small pl-3 pt-4 cursor-pointer"
+                (click)="AddHours()"
+                >Add hours</span
+              >
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>

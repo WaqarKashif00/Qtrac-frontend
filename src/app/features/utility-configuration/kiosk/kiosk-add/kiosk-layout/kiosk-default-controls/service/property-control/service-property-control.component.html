@@ -1,0 +1,64 @@
+<div *ngIf="{Panel: Panel$ | async, Buttons: Buttons$ | async,
+ SelectedLanguage: SelectedLanguage$ | async, DefaultLanguage: DefaultLanguage$ | async,ControlSelection:ControlSelection$ | async,ControlList:ControlList$ | async} as values">
+ <ng-container *ngIf="values.ControlSelection">
+  <div class="property-window">
+    <lavi-service-panel [Panel]="values.Panel" [(IsPanelExpand)]="values.ControlSelection.IsPanelSelected"></lavi-service-panel>
+  </div>
+  <div
+    *ngIf=""
+    class="service-item-properties"
+    [hidden]="values.ControlList.length == 0"
+  >
+    <div class="property-window" *ngIf="(!(values.Panel.showServiceIcons))">
+      <lavi-form-panel PanelHeader="Service Item Property" [(PanelExpand)]="values.ControlSelection.IsPanelSelected">
+        <lavi-form-content-panel>
+          <div class="property-window-body">
+            <div>
+              <label>Items </label>
+              <select (change)="OnItemsDropDownChange($event)">
+                <ng-container *ngFor="let item of values.ControlList">
+                  <option
+                    *ngIf="item.Control.kioskSelected"
+                    [value]="item.Id"
+                    [selected]="item.ShowPropertyWindow"
+                  >
+                    {{ item.Name[ values.SelectedLanguage] || item.Name[values.DefaultLanguage] }}
+                  </option>
+                </ng-container>
+              </select>
+            </div>
+
+            <ng-container *ngFor="let service of values.ControlList">
+              <ng-container *ngIf="service.ShowPropertyWindow">
+                <lavi-service-item
+                  [Control]="service.Control"
+                ></lavi-service-item>
+              </ng-container>
+            </ng-container>
+          </div>
+        </lavi-form-content-panel>
+      </lavi-form-panel>
+    </div>
+  </div>
+  <div
+  class="service-properties property-window"
+>
+ <ng-container  *ngIf="values.Buttons.length > 0">
+  <lavi-button-property-control
+  PanelHeader="Service Button Control Properties"
+  [Buttons]="values.Buttons"
+  [(IsPageButtonSelected)]="values.ControlSelection.IsButtonSelected"
+  [TextFormArray]="TextFormArray$ | async"
+  [ButtonImageFormArray]="ButtonImageFormArray$ | async"
+  (OpenDialog)="OpenTranslateDialog($event)"
+  (UpdateButtons)="UpdateButtons($event)"
+  (ButtonDropdownChange)="OnButtonDropdownChange($event)"
+  (TranslateText)="Translate($event)"
+  (UpdateTranslatedText)="UpdateTranslatedTextInForm($event)"
+  (OpenButtonImageModal)="OpenButtonImageModal($event)"
+  (ApplyImageChanges)="ApplyImageChanges($event)"
+></lavi-button-property-control>
+ </ng-container>
+</div>
+</ng-container>
+</div>

@@ -1,0 +1,16 @@
+@import "src/stylings/primitives/primitives.scss";
+.notification-banner {
+  background: $scheduler-notification-banner-color;
+  position: absolute;
+  width: 100%;
+  z-index: 999;
+  p {
+    margin-bottom: 0;
+    display: inline-block;
+    color: $scheduler-notification-color;
+    font-size: $_font-size-small-2;
+  }
+  span {
+    float: right;
+  }
+}

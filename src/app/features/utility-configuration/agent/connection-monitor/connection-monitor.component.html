@@ -1,0 +1,47 @@
+<lavi-modal
+  Title="Connection Monitor"
+  [OpenDialog]="OpenConnectionMonitorDialog"
+  [Width]="'60%'"
+>
+
+
+  <div class="modal-content">
+    <!-- Header of the modal -->
+    <div class="modal-header">
+      <h2>Active Hubs</h2>
+      <button (click)="closeModal()">&times;</button>
+    </div>
+    <!-- Body of the modal -->
+    <div class="modal-body">
+      <!-- Table displaying active hubs -->
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>ID</th>
+            <th>Status</th>
+            <th>Last Activity</th>
+            <th>Last Message</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let hub of activeHubs">
+            <td>{{ hub.name }}</td>
+            <td>{{ hub.id }}</td>
+            <td>{{ hub.status }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- Block showing the history -->
+      <div class="history">
+        <h3>History</h3>
+        <ul>
+          <li *ngFor="let event of history">{{ event }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+</lavi-modal>

@@ -1,0 +1,64 @@
+<div class="tab-content" [ngClass]="{'tab-content-footer': (IsEditing$| async)}">
+  <div class="pl-2 pr-2" *ngIf="kpis && kpis[0]">
+    <ul class="kpi-selector">
+      <li *ngFor="let kpi of kpis | laviSortBy:'name'">
+        <label class="k-label cursor-pointer">
+          <input type="checkbox" [(ngModel)]="kpi.isSelected" tabindex="1" kendocheckbox
+            (change)="CheckBoxChecked(kpi,$event.target.checked,kpi.id,true)"
+            class="k-checkbox ng-untouched ng-pristine ng-valid">{{kpi.name}}
+        </label>
+        <div>
+          <div class="slider">
+            <ul>
+              <li *ngFor="let aggregation of kpi?.granules" [ngClass]="{'selected': aggregation.isSelected}"
+                (click)="CheckBoxChecked(aggregation,true,kpi?.id,false, kpi?.granules)">{{aggregation.name}}
+              </li>
+            </ul>
+          </div>
+
+          <div class="row mt-1 ml-1 ">
+            <p class="baseline-heading mb-1">Chart Type : </p>
+            <div class="slider">
+              <ul>
+                <li *ngFor="let chart of kpi?.chart" [ngClass]="{'selected': chart.isSelected}"
+                  (click)="CheckBoxChecked(chart,true,kpi?.id,false, kpi?.chart)">{{chart.name}}
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="baseline-details mt-3 text-center" *ngIf="!kpi.showBaseline">
+            <p class="baseline-heading cursor-pointer" (click)="ShowBaseline(kpi)">+ Add Baseline</p>
+          </div>
+          <div *ngIf="kpi.showBaseline">
+            <div class="baseline-details mt-3" *ngFor="let baseline of kpi.baselines">
+              <p class="baseline-heading mb-1">Baseline Details</p>
+              <div class="pb-2">
+                <input type="number" [(ngModel)]="baseline.value" min="0" class="visitor"
+                  (change)="BaselineChecked(baseline, kpi?.id, null, true)" /> <span>visitor baseline</span>
+              </div>
+              <div class="slider">
+                <ul>
+                  <li *ngFor="let baseLineStyle of baseline.style" [ngClass]="{'selected': baseLineStyle.isSelected}"
+                    (click)="BaselineChecked(baseline, kpi?.id, baseLineStyle, baseline.style)"> {{baseLineStyle.name}}</li>
+                </ul>
+              </div>
+              <div class="baseline-colors">
+                <ul>
+                  <li *ngFor="let color of baseline.color" [ngStyle]="{'backgroundColor': color?.name}"
+                    (click)="BaselineChecked(baseline, kpi?.id, color, baseline.color)">
+                    <div [ngStyle]="{'bottom':'-20px', 'border-bottom': 'solid 1px', 'position':'relative'}" *ngIf="color?.isSelected">
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="!kpis || !kpis[0]" class="text-center"> No KPIS</div>
+</div>

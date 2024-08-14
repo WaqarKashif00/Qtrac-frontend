@@ -1,0 +1,1 @@
+export const SaveSuccessfulMessage = "Snapshot saved successfully"

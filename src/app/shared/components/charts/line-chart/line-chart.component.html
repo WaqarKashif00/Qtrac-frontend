@@ -1,0 +1,26 @@
+<div [ngStyle]="{'padding-left': ((Level)*1.2)+'%'}">
+
+    <kendo-chart *ngIf="(XAxisData?.data && XAxisData?.data[0] && YAxisData && YAxisData[0])" [transitions]="true"
+        [categoryAxis]="{
+        categories: XAxisData.data,
+        max: 10,
+        labels: { rotation: 'auto' }
+      }" renderAs="canvas" [pannable]="{ lock: 'y' }" [zoomable]="{ mousewheel: { lock: 'y' } }">
+        <kendo-chart-title [text]="Title" align="left" *ngIf="false"></kendo-chart-title>
+
+        <kendo-chart-tooltip visible="TooltipData?.isTooltipVisible">
+            <ng-template kendoChartSeriesTooltipTemplate let-value="value" let-name="series.name">
+                {{tooltipText(name,value)}}
+            </ng-template>
+        </kendo-chart-tooltip>
+
+        <kendo-chart-legend [position]="LegendData?.position" [orientation]="LegendData?.orientation"
+            [visible]="LegendData?.isVisible"></kendo-chart-legend>
+        <kendo-chart-series>
+            <kendo-chart-series-item *ngFor="let yData of YAxisData" [style]="Style" [type]="YChartType(yData)"
+                [name]="yData?.legendTitle" [data]="yData?.data" [visible]="yData?.visible" [color]="YChartColor(yData)"
+                [dashType]="YChartDash(yData)">
+            </kendo-chart-series-item>
+        </kendo-chart-series>
+    </kendo-chart>
+</div>

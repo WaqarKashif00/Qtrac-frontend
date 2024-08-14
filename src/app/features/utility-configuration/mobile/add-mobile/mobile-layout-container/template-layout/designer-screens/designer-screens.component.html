@@ -1,0 +1,20 @@
+<ng-container
+  *ngIf="{
+    currentPage: CurrentPage$ | async,
+    designerScreen: DesignerPanel$ | async
+  } as value"
+>
+  <lavi-header-designer-screen
+    [HeaderControl$]="HeaderControl$"
+    (OnHeaderClick)="OnHeaderClick()"
+  ></lavi-header-designer-screen>
+  <ng-content select="lavi-middle-screens"> </ng-content>
+  <lavi-footer-designer-screen
+    *ngIf="!value.currentPage.IsLanguagePage"
+    [FooterControl$]="FooterControl$"
+    [ShowFooterBackButtonImage]="(value.currentPage.IsWelcomePage || value.currentPage.IsGlobalQuestionPage ||
+    value.currentPage.IsServicePage || value.currentPage.IsServiceQuestionPage)"
+    [SelectedLanguage$]="SelectedLanguage$"
+    (OnFooterClick)="OnFooterClick()"
+  ></lavi-footer-designer-screen>
+</ng-container>

@@ -1,0 +1,112 @@
+<div *ngIf="IsFullView" class="container">
+    <div class="row pt-2 pb-2">
+        <div [class]="'col-2 pr-0'">
+            <div class='display-field text-center bold text-capitalize' *ngIf="IsServingByOther" [translate]="currentLanguage == 'es'? false: true">{{Customer.isNowServing ? servingText : callingText}}</div>
+            <div class='display-field text-center'>{{PrimaryDisplayFieldValue | uppercase }}</div>
+        </div>
+
+
+        <div class="col-2 pl-0 button-col" *ngIf="!HideTicketNumber">
+            <lavi-station-banner [BannerHeader]="'Ticket'" [BannerColor]="'#F7CC46'" [BannerFontFamily]="'arial'"
+                [BannerHeaderFontSize]="'0.7em'" [BannerBodyFontSize]="'1.1em'"
+                [currentLanguage]="currentLanguage"
+                [translate]="currentLanguage == 'es'? false: true"
+                >
+                {{Customer.ticketNumber}}
+            </lavi-station-banner>
+        </div>
+
+        <div [class]="'col-2 pl-0 button-col'" *ngIf="Customer.isNowServing  && (AllowTakeOverCustomer || !IsServingByOther)">
+            <lavi-station-banner [BannerHeader]="'Serving'|uppercase" [BannerColor]="'#4F8EE3'"
+                [BannerFontFamily]="'arial'" [BannerHeaderFontSize]="'0.9em'"
+                [translate]="true"
+                >
+                <lavi-lapse-time [ShowSeconds]="true" [TimeString]="Customer.servingStartTimeUTC">
+                </lavi-lapse-time>
+            </lavi-station-banner>
+        </div>
+
+
+
+
+        <div [class]="Customer.isNowServing? 'col-6 pr-0 pl-0 mt-3':'col-8 pr-0 pl-0 mt-3'">
+            <ul class="p-0 m-0">
+
+
+                <li class="button-col"
+                    *ngIf="!Customer.isNowServing  && (AllowTakeOverCustomer || !IsServingByOther) && ((MaxCallLimit > Customer.calledCount))">
+                    <button class="more-information-button btn call-button" (click)="Call()">Repeat Call</button>
+                </li>
+
+                <li class="button-col" *ngIf="!Customer.isNowServing  && (AllowTakeOverCustomer || !IsServingByOther) && IsCanServe && ServeButtonLabel === ServeButtonText.Start">
+                    <button class="more-information-button btn start-button" (click)="Serve()">{{ServeButtonText.Start}}</button>
+                </li>
+
+                <li class="button-col" *ngIf="!Customer.isNowServing  && (AllowTakeOverCustomer || !IsServingByOther) && IsCanServe && ServeButtonLabel === ServeButtonText.Served">
+                  <button class="more-information-button btn start-button" (click)="Serve()">{{ServeButtonText.Served}}</button>
+              </li>
+
+
+                <li class="button-col" *ngIf="(AllowTakeOverCustomer || !IsServingByOther) && AllowTransferingService">
+                    <button class="more-information-button btn transfer-button"
+                    (click)="OpenTransferServiceDailog()">
+                        Transfer</button>
+                </li>
+                <li class="button-col" *ngIf="AllowedSMS && (AllowTakeOverCustomer || !IsServingByOther)">
+                    <button class="more-information-button btn message-button"
+                        (click)="OpenSMSChatDialog()" [translate]="currentLanguage == 'es'? false: true">{{messageText}}</button>
+                </li>
+                <li class="button-col" *ngIf="AllowedNotes" (click)="OpenNotesDialog()">
+                    <button class="more-information-button btn notes-button" [translate]="currentLanguage == 'es'? false: true">{{teamNotesText}}</button>
+                </li>
+                <li class="button-col" *ngIf="!Customer.isNowServing && (AllowTakeOverCustomer || !IsServingByOther) && AllowCancellingService" (click)="Cancel()">
+                    <button class="more-information-button btn move-button">Cancel</button>
+                </li>
+                <li class="button-col" *ngIf="!Customer.isNowServing && (AllowTakeOverCustomer || !IsServingByOther) && AllowTicketDeletion" (click)="Delete()">
+                    <button class="more-information-button btn remove-button" [translate]="currentLanguage == 'es'? false: true">{{noShowText}}</button>
+                </li>
+                <li class="button-col" *ngIf="Customer.isNowServing && (AllowTakeOverCustomer || !IsServingByOther)">
+                    <button class="more-information-button btn remove-button" (click)="EndServing()">End</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div *ngIf="!IsFullView" class="container">
+    <div class="row pt-2 pb-2">
+        <div [class]="'col-12 pl-2 pr-2'">
+            <div class='display-field text-center'>{{PrimaryDisplayFieldValue | uppercase }}</div>
+        </div>
+
+
+        <div [class]="'col-12 pl-2 pr-2 pt-1'"
+            *ngIf="!Customer.isNowServing  && (AllowTakeOverCustomer || !IsServingByOther) && (MaxCallLimit > Customer.calledCount)">
+            <button class="more-information-button btn call-button " (click)="Call()">Repeat Call</button>
+        </div>
+        <div [class]="'col-12 pl-2 pr-2 pt-1'"
+            *ngIf="!Customer.isNowServing  && (AllowTakeOverCustomer || !IsServingByOther) && AllowCancellingService && (MaxCallLimit <= Customer.calledCount)">
+            <button class="more-information-button btn move-button" (click)="Cancel()">Cancel</button>
+        </div>
+
+        <div [class]="'col-12 pl-2 pr-2 pt-1'" *ngIf="!Customer.isNowServing  && (AllowTakeOverCustomer || !IsServingByOther) && IsCanServe  && ServeButtonLabel === ServeButtonText.Start">
+            <button class="more-information-button btn start-button" (click)="Serve()">{{ServeButtonText.Start}}</button>
+        </div>
+
+        <div [class]="'col-12 pl-2 pr-2 pt-1'" *ngIf="!Customer.isNowServing  && (AllowTakeOverCustomer || !IsServingByOther) && IsCanServe && ServeButtonLabel === ServeButtonText.Served">
+          <button class="more-information-button btn start-button" (click)="Serve()">{{ServeButtonText.Served}}</button>
+      </div>
+
+        <div [class]="'col-12 pl-2 pr-2 pt-1'" *ngIf="Customer.isNowServing  && (AllowTakeOverCustomer || !IsServingByOther)">
+            <lavi-station-banner [BannerHeader]="'Serving'|uppercase" [BannerColor]="'#4F8EE3'"
+                [BannerFontFamily]="'arial'" [BannerHeaderFontSize]="'0.9em'">
+                <lavi-lapse-time [ShowSeconds]="true" [TimeString]="Customer.servingStartTimeUTC">
+                </lavi-lapse-time>
+            </lavi-station-banner>
+        </div>
+    </div>
+</div>

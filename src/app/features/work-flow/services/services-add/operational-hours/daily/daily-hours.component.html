@@ -1,0 +1,28 @@
+<div class="row working-hours ">
+  <div [formGroup]="DailyWorkingDaysForm" class="col-lg-11 col-sm-12">
+    <lavi-operational-hours
+      DayName="Sunday"
+      [HourForm]="DailyWorkingDaysForm.controls.sunday"
+      [TimeFrameFormArray]="SundayTimeFrameArray"
+      (AddHoursForm)="AddHoursForm('SUNDAY',$event)"
+      (RemoveHoursForm)="RemoveHoursForm('SUNDAY',$event)"
+      (ValidationToTimeControl)="ValidateToTime($event)"
+    ></lavi-operational-hours>
+    <lavi-operational-hours
+      DayName="Monday To Friday"
+      [HourForm]="DailyWorkingDaysForm.controls.mondayToFriday"
+      [TimeFrameFormArray]="MondayToFridayTimeFrameArray"
+      (AddHoursForm)="AddHoursForm('MONDAYTOFRIDAY',$event)"
+      (RemoveHoursForm)="RemoveHoursForm('MONDAYTOFRIDAY',$event)"
+      (ValidationToTimeControl)="ValidateToTime($event)"
+    ></lavi-operational-hours>
+    <lavi-operational-hours
+      DayName="Saturday"
+      [HourForm]="DailyWorkingDaysForm.controls.saturday"
+      [TimeFrameFormArray]="SaturdayTimeFrameArray"
+      (AddHoursForm)="AddHoursForm('SATURDAY',$event)"
+      (RemoveHoursForm)="RemoveHoursForm('SATURDAY',$event)"
+      (ValidationToTimeControl)="ValidateToTime($event)"
+    ></lavi-operational-hours>
+  </div>
+</div>

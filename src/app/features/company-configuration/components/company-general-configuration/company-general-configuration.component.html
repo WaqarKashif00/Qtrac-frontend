@@ -1,0 +1,203 @@
+<div [formGroup]="CompanyGeneralConfigForm">
+  <div
+    class="col-lg-12 inner-panel-padding panel-border"
+  >
+    <h6 class="panel-sub-header">Company Information</h6>
+    <div class="row">
+      <div class="col-6">
+        <div
+          lavi-text-field-loader
+          [show-text-field-loading]="CompanyNameFormControl.pending"
+        >
+          <div
+            class="
+              col-lg-12 col-md-8
+              mt-3
+              float-left
+              pr-0
+              pl-0
+              lavi-text-field-loader-container
+            "
+          >
+            <div class="form-group">
+              <kendo-textbox-container
+                class="w-100"
+                floatingLabel="Company Name"
+                [class.k-state-invalid]="
+                  CompanyNameFormControl?.invalid &&
+                  CompanyNameFormControl?.dirty
+                "
+              >
+                <input
+                  lavi-auto-focus
+                  kendoTextBox
+                  tabindex="1"
+                  maxlength="50"
+                  formControlName="companyName"
+                  lavi-trim-value
+                />
+              </kendo-textbox-container>
+              <div class="h-10">
+                <lavi-validation-message-list
+                  [validation-form-group-name]="CompanyGeneralConfigForm"
+                  validation-control-name="companyName"
+                  [validation-errorlist]="
+                    CompanyConfigMessages.CompanynameMessages
+                  "
+                >
+                </lavi-validation-message-list>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pt-2 form-group">
+          <kendo-textbox-container class="w-100" floatingLabel="Street Address">
+            <input
+              kendoTextBox
+              maxlength="200"
+              tabindex="2"
+              [formControl]="CompanyGeneralConfigForm.controls.address"
+              lavi-trim-value
+              ngx-google-places-autocomplete
+              (blur)="blur($event)"
+              (onAddressChange)="handleAddressChange($event)"
+            />
+          </kendo-textbox-container>
+          <div class="h-10">
+            <div class="error-message" *ngIf="CompanyGeneralConfigForm.controls.laviAddress.hasError('required')">{{CompanyConfigMessages.AddressMessages[0].message}}</div>
+            <div class="error-message" *ngIf="CompanyGeneralConfigForm.controls.laviAddress.hasError('mismatched')">{{CompanyConfigMessages.AddressMessages[1].message}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="col-lg-12 h-100">
+          <lavi-file-upload
+            class="no-outline"
+            tabindex="3"
+            [ImageTitle]="'Upload Company Logo'"
+            [ImageHeight]="175"
+            [ImageWidth]="195"
+            [ImageSrc]="CompanyGeneralConfigForm.controls.companyImg.value"
+            formControlName="companyImg"
+          ></lavi-file-upload>
+        </div>
+        <div class="h-10 float-right pr-5">
+          <lavi-validation-message-list
+            [validation-form-group-name]="CompanyGeneralConfigForm"
+            validation-control-name="companyImg"
+            [validation-errorlist]="CompanyConfigMessages.ImageMessages"
+          >
+          </lavi-validation-message-list>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+
+        <div class="form-group">
+          <kendo-textbox-container class="w-100" floatingLabel="Tags">
+            <kendo-autocomplete
+              tabindex="8"
+              #tag
+              [maxlength]="maxLength"
+              [data]="TagSuggestionList | laviSortBy"
+              [filterable]="true"
+              (cellEnter)="AddTagOnEnter()"
+              formControlName="tags"
+              [kendoDropDownFilter]="{ operator: 'contains' }"
+              (valueChange)="AddTagOnEnter()"
+              [minlength]="10"
+            >
+            </kendo-autocomplete>
+          </kendo-textbox-container>
+          <div class="md-chips tag-container">
+            <kendo-chip
+              class="mt-1 mr-1"
+              *ngFor="let tag of TagList | laviSortBy"
+              [label]="tag"
+              [removable]="true"
+              (remove)="RemoveTag($event)"
+            >
+            </kendo-chip>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="col-lg-12">
+          <kendo-textbox-container class="w-100" floatingLabel="Phone Number">
+            <kendo-maskedtextbox
+              class="w-100"
+              placeholder="Phone Number"
+              formControlName="phoneNumber"
+              tabindex="9"
+            >
+            </kendo-maskedtextbox
+          ></kendo-textbox-container>
+          <div class="h-10">
+            <lavi-validation-message-list
+              [validation-form-group-name]="CompanyGeneralConfigForm"
+              validation-control-name="phoneNumber"
+              [validation-errorlist]="CompanyConfigMessages.PhoneNoMessages"
+            >
+            </lavi-validation-message-list>
+          </div>
+        </div>
+        <div class="col-lg-12 row mt-4 pr-0">
+          <div class="col-lg-7 form-group">
+            <kendo-textbox-container
+              class="w-100"
+              floatingLabel="Supported Languages"
+            >
+              <kendo-multiselect
+                [data]="SupportedLangList | laviSortBy: 'language'"
+                formControlName="supportedLanguage"
+                [kendoDropDownFilter]="'startsWith'"
+                [filterable]="true"
+                tabindex="10"
+                (valueChange)="AddLanguages($event)"
+                [textField]="'language'"
+                [valueField]="'languageCode'"
+              >
+              </kendo-multiselect>
+            </kendo-textbox-container>
+            <div class="h-10">
+              <lavi-validation-message-list
+                [validation-form-group-name]="CompanyGeneralConfigForm"
+                validation-control-name="supportedLanguage"
+                [validation-errorlist]="
+                  CompanyConfigMessages.SupportedLanguageMessages
+                "
+              >
+              </lavi-validation-message-list>
+            </div>
+          </div>
+          <div class="col-lg-5 form-group pr-0">
+            <kendo-floatinglabel class="w-100" text="Default Language">
+              <kendo-dropdownlist
+                [data]="DefaultLangList | laviSortBy: 'language'"
+                formControlName="defaultLanguage"
+                floatingLabel="Default Language"
+                placeholder="Select Default Language"
+                (valueChange)="OnChangeDefaultLanguage($event)"
+                [textField]="'language'"
+                tabindex="11"
+                [valueField]="'languageCode'"
+              >
+              </kendo-dropdownlist>
+            </kendo-floatinglabel>
+            <div class="h-10">
+              <lavi-validation-message-list
+                [validation-form-group-name]="CompanyGeneralConfigForm"
+                validation-control-name="defaultLanguage"
+                [validation-errorlist]="
+                  CompanyConfigMessages.DefaultLanguageMessages
+                "
+              >
+              </lavi-validation-message-list>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

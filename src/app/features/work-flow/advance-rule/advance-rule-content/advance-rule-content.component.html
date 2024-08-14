@@ -1,0 +1,299 @@
+<lavi-modal Title="" [OpenDialog]="OpenRuleDialog" [Width]="'70%'" [formGroup]="AdvanceRuleForm">
+    <div class="advance-rules-modal container">
+        <div class="modal-header w-100 d-block">
+            <div class="row">
+                <div class="col-5">
+                    <h3>{{Mode == ModeEnum.Edit ? 'Update Rule' : 'New Rule' }}</h3>
+                </div>
+                <div class="col-7">
+                    <div class="button-container float-right">
+                        <input type="button" kendoButton class="secondary-button" value="Cancel" (click)="CloseModal()" />
+                        <input type="button" kendoButton class="primary-button" (click)="SaveRule()" value="Save" />
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="Name">Name</label>
+                        <input type="text" class="form-control" id="rule-name" formControlName="name" placeholder="Rule Name">
+                        <lavi-validation-message-list [validation-form-group-name]="AdvanceRuleForm" validation-control-name="name" [validation-errorlist]="WorkflowMessage.NameMessage">
+                        </lavi-validation-message-list>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="slider mt-2">
+                        <ul>
+                            <li class="cursor-pointer" *ngFor="let ruleType of AdvanceWorkflowType" [ngClass]="{'selected': AdvanceRuleForm.value.type == ruleType.value}" (click)="ChangeRuleType(ruleType.value)">{{ruleType.name}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-container mt-2">
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-right">
+                        <span class="clear-all-text cursor-pointer" (click)="ClearAllConditions()">Clear all</span>
+                    </div>
+                    <div class="condition-box">
+                        <span class="font-weight-700">When</span>
+                        <select class="whenbox ml-2" formControlName="when" [compareWith]="compareFn">
+                            <option *ngFor="let whenVariable of WhenVariablesList" [ngValue]="whenVariable">{{whenVariable.shortName}}</option>
+                        </select>
+
+                        <lavi-validation-message-list [validation-form-group-name]="AdvanceRuleForm" validation-control-name="when" [validation-errorlist]="WorkflowMessage.AnyDropdownMessages">
+                        </lavi-validation-message-list>
+                    </div>
+
+                </div>
+            </div>
+            <div formArrayName="conditions" *ngFor="let l of ConditionFormArray.controls, let i=index">
+                <ng-container *ngTemplateOutlet="ConditionContent; context:showAddCondition(l,i)" [formGroupName]="i"></ng-container>
+
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-1"></div>
+                <div class="col-4 ml-4">
+                    <input type="button" kendoButton class="add-condition-button" value="New Condition" (click)="AddCondition()" />
+                </div>
+                <div class="error-message" *ngIf="this.AdvanceRuleForm.controls.conditions.hasError('required') && this.AdvanceRuleForm.controls.conditions.dirty">{{WorkflowMessage.ConditionArrayMessage[0].message}}</div>
+            </div>
+
+            <div class="then-container">
+                <div class="row">
+                    <div class="col-12 mt-4">
+                        <div class="text-right">
+                            <span class="clear-all-text cursor-pointer" (click)="ClearAllActions()">Clear all</span>
+                        </div>
+                        <div class="condition-box">
+                            <span class="font-weight-700">Then</span>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="position-relative" formArrayName="actions" *ngFor="let act of ActionFormArray.controls, let j = index">
+                    <ng-container *ngTemplateOutlet="ActionContents,context:ActionTemplateResponse(act)" [formGroupName]="j"></ng-container>
+                    <span class="remove-condition remove-condition-group" *ngIf="ActionFormArray.controls.length > 0" (click)="RemoveAction(j)"></span>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-1"></div>
+                    <div class="col-4 ml-4">
+                        <input type="button" *ngIf="AdvanceRuleForm.value.type == AdvanceWorkflowType[1].value || (AdvanceRuleForm.value.type == AdvanceWorkflowType[0].value && ActionFormArray.controls.length == 0)" kendoButton class="add-condition-button" value="+ Add Action"
+                            (click)="AddNewActions()" />
+                    </div>
+                    <div class="error-message" *ngIf="this.AdvanceRuleForm.controls.actions.hasError('required') && this.AdvanceRuleForm.controls.actions.dirty">{{WorkflowMessage.ActionArrayMessages[0].message}}</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</lavi-modal>
+
+<ng-template #ConditionContent let-showAddCondition="showAddCondition" let-conditions="conditions" let-parentIndex="parentIndex">
+    <div *ngFor="let s of conditions.controls; let mainIndex=index">
+        <div class="row mt-3" *ngIf="mainIndex==0">
+            <div class="col-1"></div>
+            <div class="col-4 ml-4">
+                <div class="slider when-conditional">
+                    <ul>
+                        <li class="cursor-pointer" *ngFor="let operationType of RuleOperationType" (click)="ChangeOperationType(operationType.value,s)" [ngClass]="{'selected': s.value.type == operationType.value}">{{operationType.name}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="position-relative multiple-conditions">
+        <div *ngFor="let s of conditions.controls; let mainIndex=index">
+            <div class="row mt-3 mb-n1" *ngIf="mainIndex==0">
+                <div class="col-1"></div>
+                <div class="col-10 ml-4">
+                    <condition-content [ShowAddCondition]="showAddCondition" (AddCondition)="AddSubCondition(conditions)" [ConditionForm]="s" [ConditionVariables]="ConditionVariables" [Index]="mainIndex" [ParentIndex]="parentIndex">
+                    </condition-content>
+                </div>
+            </div>
+            <div *ngIf="mainIndex && mainIndex>0">
+                <ng-container *ngTemplateOutlet="SubConditionContent; context:GenerateResponse(s,conditions,mainIndex,parentIndex)"></ng-container>
+            </div>
+        </div>
+
+        <span class="remove-condition remove-condition-group" *ngIf="conditions.controls && conditions.controls[0]" (click)="RemoveConditionGroup(parentIndex)"></span>
+    </div>
+</ng-template>
+
+<ng-template #SubConditionContent let-showAddCondition="showAddCondition" let-index="index" let-conditions="conditions" let-condition="condition" let-parentIndex="parentIndex">
+    <div class="row internal-condition">
+        <div class="col-1"></div>
+        <div class="col-4 ml-4">
+            <div class="slider when-conditional">
+                <ul>
+                    <li class="cursor-pointer" *ngFor="let operationType of RuleOperationType" (click)="ChangeOperationType(operationType.value,condition)" [ngClass]="{'selected': condition.value.type == operationType.value}">{{operationType.name}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-n2">
+        <div class="col-1"></div>
+        <div class="col-10 ml-4">
+            <condition-content [ShowAddCondition]="showAddCondition" (AddCondition)="AddSubCondition(conditions)" [ConditionForm]="condition" [ConditionVariables]="ConditionVariables" [Index]="index" [ParentIndex]="parentIndex">
+            </condition-content>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #ActionContents let-action="action">
+    <div class="row mt-3 mb-n1">
+        <div class="col-1"></div>
+        <div class="col-10 ml-4">
+            <div class="then-condition-block" [formGroup]="action" [ngClass]="{'row' : !(action.value.action?.type==ActionType.SMS || action.value.action?.type==ActionType.Email || action.value.action?.type==ActionType.Announcement)  }">
+                <div class="form-group d-inline-block ml-2">
+                    <label for="Name">Action</label>
+                    <select formControlName="action" [compareWith]="compareFnAction">
+                        <option *ngFor="let actionType of Actions" [ngValue]="actionType">{{actionType.text}}</option>
+                    </select>
+                    <lavi-validation-message-list   [validation-form-group-name]="action" validation-control-name="action" [validation-errorlist]="WorkflowMessage.DropdownValueMessages">
+                    </lavi-validation-message-list>
+                </div>
+                <ng-container *ngIf="action.value.action?.type==ActionType.Alert || action.value.action?.text == ActionRule.AlertAgentviaSMS || action.value.action?.text == ActionRule.AlertAgentviaEmail || action.value.action?.text == ActionRule.AlertAgentviaApplication">
+                    <div class="form-group d-inline-block ml-2 "> 
+                        <label for="Name">Role</label>
+                        <select formControlName="roleId" [compareWith]="roleCompareFunction">
+                            <option *ngFor="let userRole of AllRolesList" [ngValue]="userRole.roleId">{{userRole.roleName}}</option>
+                        </select>
+                    </div>
+                    <div class="d-inline-block ml-2"> 
+                        <lavi-validation-message-list
+                        [validation-form-group-name]="action"
+                        validation-control-name="roleId"
+                        [validation-errorlist]="WorkflowMessage.RoleMessage"
+                      >
+                      </lavi-validation-message-list>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="Name">Alert Message</label>
+                        <input type="text" class="form-control" id="rule-name" formControlName="alert">
+                        <lavi-validation-message-list [validation-form-group-name]="action" validation-control-name="alert" [validation-errorlist]="WorkflowMessage.AlertMessages">
+                        </lavi-validation-message-list>
+                    </div> -->
+                </ng-container>
+                <ng-container *ngIf="action.value.action?.type==ActionType.SMS || action.value.action?.type==ActionType.Email || ActionType.Announcement">
+                    <div formArrayName="templates" *ngFor="let temp of action.controls.templates?.controls, let ai = index">
+                        <div class="form-group ml-2" [formGroupName]="ai" *ngIf="(temp.selected || (NoTemplateSelected(action.controls.templates) && temp.value.isDefault)) && action.value.action.type==ActionType.Email">
+                            <label for="Name">Subject</label>
+                            <mwl-text-input-autocomplete-container>
+                                <input type="text" mwlTextInputAutocomplete triggerCharacter="%" [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel" class="form-control" id="rule-name" formControlName="subject">
+                            </mwl-text-input-autocomplete-container>
+                            <lavi-validation-message-list   [validation-form-group-name]="temp" validation-control-name="subject" [validation-errorlist]="WorkflowMessage.EmailSubjectMessage">
+                            </lavi-validation-message-list>
+                        </div>
+
+                        <div class="form-group mb-0 ml-2" [formGroupName]="ai" *ngIf="temp.selected || (NoTemplateSelected(action.controls.templates) && temp.value.isDefault)">
+                            <label for="Name">{{action.value.action.text == "Generate Monitor Announcement"? "": action.value.action.type}} Template</label>
+                            <div class="message-language">
+                                <ul>
+                                    <li class="cursor-pointer" *ngFor="let language of action.controls.templates?.controls" (click)="ShowSelectedLanguageTemplate(language,action.controls.templates)" [ngClass]="{'selected':language.selected}">{{language.value.language}}
+                                        <span class="lang-warning" *ngIf="language.invalid && language.dirty"></span> </li>
+                                </ul>
+                            </div>
+                            <mwl-text-input-autocomplete-container>
+                                <textarea mwlTextInputAutocomplete triggerCharacter="%" [findChoices]="findChoices" [getChoiceLabel]="getChoiceLabel" maxlength="500" rows="5" placeholder="Write message here..." formControlName="template"></textarea>
+                            </mwl-text-input-autocomplete-container>
+                            <lavi-validation-message-list [validation-form-group-name]="temp" validation-control-name="template" [validation-errorlist]="WorkflowMessage.TemplateMessage">
+                            </lavi-validation-message-list>
+
+                        </div>
+
+                    </div>
+                    <div class="text-right" *ngFor="let temp of action.controls.templates?.controls, let ai = index">
+                        <lavi-validation-message-list *ngIf="temp.value.isDefault" [validation-form-group-name]="action" validation-control-name="templates" [validation-errorlist]="WorkflowMessage.TemplateMessage">
+                        </lavi-validation-message-list>
+                        <span class="translate-text cursor-pointer" *ngIf="temp.value.isDefault" (click)="translate(temp.value.template,  action.controls.templates, 'template', temp.value.subject, 'subject')">Translate</span>
+
+                    </div>
+                </ng-container>
+
+
+                <ng-container *ngIf="action.value.action?.type==ActionType.Position">
+                    <div class="form-group d-inline-block ml-2">
+                        <label for="Name">Position</label>
+                        <input type="number" maxlength="4" class="form-control" id="rule-name" formControlName="position">
+                        <lavi-validation-message-list   [validation-form-group-name]="action" validation-control-name="position" [validation-errorlist]="WorkflowMessage.PositionMessage">
+                        </lavi-validation-message-list>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="action.value.action?.type==ActionType.Group">
+                    <div class="form-group d-inline-block ml-2">
+                        <label for="Name">Visitor Tag</label>
+                        <select formControlName="group" [compareWith]="compareFn" >
+                            <option *ngFor="let group of NotDeletedGroups" [ngValue]="group">{{group.groupName}}</option>
+                        </select>
+                        <lavi-validation-message-list [validation-form-group-name]="action" validation-control-name="group" [validation-errorlist]="WorkflowMessage.GroupDropDownMessage">
+                        </lavi-validation-message-list>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="action.value.action?.type==ActionType.Color">
+                    <div class="form-group d-inline-block ml-2">
+                        <label for="Name">Select Color</label>
+                        <kendo-colorpicker formControlName="color" >
+                        </kendo-colorpicker>
+                        <lavi-validation-message-list   [validation-form-group-name]="action" validation-control-name="color" [validation-errorlist]="WorkflowMessage.ColorMessages">
+                        </lavi-validation-message-list>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="action.value.action?.type==ActionType.Route">
+
+                    <div class="form-group d-inline-block ml-2">
+                        <label for="Name">Route To</label>
+                        <select formControlName="routing" [compareWith]="compareFn" >
+                            <optgroup *ngFor="let routeGroup of Routings" [label]="routeGroup.value">
+                                <option  [ngValue]="route" *ngFor="let route of routeGroup.items">{{route.type}}</option>
+                                <option *ngIf="routeGroup.value == 'Queue'" [ngValue]="NoQueueRouting">{{NoQueueRouting.type}} </option>
+                            </optgroup>
+                        </select>
+                        <lavi-validation-message-list   [validation-form-group-name]="action" validation-control-name="routing" [validation-errorlist]="WorkflowMessage.RoutingMessages">
+                        </lavi-validation-message-list>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="action.value.action?.type==ActionType.Priority">
+                    <div class="form-group d-inline-block ml-2">
+                        <label for="Name">Priority</label>
+                        <input type="number" maxlength="4" class="form-control" id="rule-name" formControlName="priority">
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="action.value.action?.type==ActionType.ReportingEventAName">
+                    <div class="form-group d-inline-block ml-2">
+                        <label for="Name">Reporting Event Name</label>
+                        <input type="text" maxlength="50" class="form-control" id="rule-name" formControlName="reportingEventaname">
+                        <lavi-validation-message-list  [validation-form-group-name]="action" 
+                        validation-control-name="reportingEventaname" 
+                        [validation-errorlist]="WorkflowMessage.ReportingEventaname">
+                        </lavi-validation-message-list>
+                </div>
+                </ng-container>
+                <ng-container *ngIf="action.value.action?.type==ActionType.RouteToQueue">
+                    <div class="form-group d-inline-block ml-2">
+                        <label for="Name">Route To Queue</label>
+                        <select formControlName="routetoqueue" [compareWith]="compareFn" class="w-100">
+                            <option *ngFor="let queue of NotDeletedQueue" [ngValue]="queue">{{queue.name}}</option>
+                        </select>
+                    <lavi-validation-message-list  [validation-form-group-name]="action" 
+                    validation-control-name="routetoqueue" 
+                    [validation-errorlist]="WorkflowMessage.RouteToQueue">
+                    </lavi-validation-message-list>
+                </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</ng-template>

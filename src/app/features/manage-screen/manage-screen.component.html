@@ -1,0 +1,17 @@
+<ng-container *ngIf="ManageSideBarItems$ | async as ManageSideBarItems">
+  <div class="row m-0">
+    <div class="left-nav-container">
+      <lavi-left-nav
+        [ManageSideBarItems]="ManageSideBarItems"
+        (OnParentItemClicked)="OnParentItemClick($event)"
+        (OnChildItemClicked)="OnChildItemClick($event)"
+      ></lavi-left-nav>
+    </div>
+    <div class="right-panel">
+      <lavi-right-content
+        [ManageSideBarItems]="ManageSideBarItems"
+        (OnChildItemClicked)="OnChildItemClick($event)"
+      ></lavi-right-content>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,36 @@
+<div
+  class="newControl newImage"
+  *ngFor="let control of Controls"
+  [position]="control.styles | controlPosition"
+  [style.width.px]="control.styles.width"
+  [style.height.px]="control.styles.height"
+  [style.z-index]="control.styles.zindex"
+  rzContainment="#DivLayoutDesignContainer"
+  [inBounds]="true"
+  [bounds]="DivLayoutDesignContainer"
+  [preventDefaultEvent]="true"
+  [gridSize]="IsOnlyGrid ? GridSize : null"
+  [rzGrid]="IsOnlyGrid ? GridSize : null"
+  (endOffset)="onControlMoveEnd($event, control)"
+  (rzStop)="onControlResizeStop($event, control)"
+  (click)="onControlClick(control)"
+  ngDraggable
+  ngResizable
+>
+  <button
+    type="button"
+    (click)="onControlRemove(control)"
+    class="close"
+    aria-label="Close"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <img
+    *ngIf="GetUrl(control.src, SelectedLanguage)"
+    [src]="GetUrl(control.src, SelectedLanguage)"
+  />
+  <img
+    *ngIf="!GetUrl(control.src, SelectedLanguage)"
+    src="/assets/img-icon.svg"
+  />
+</div>

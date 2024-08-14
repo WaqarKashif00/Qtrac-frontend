@@ -1,0 +1,11 @@
+<li
+  (click)="OnClick()"
+  [ngStyle]="
+    !IsSelected
+      ? { backgroundColor: InActiveBackColor, color: InActiveTextColor }
+      : { backgroundColor: ActiveBackColor, color: ActiveTextColor }
+  "
+>
+  {{ Text }}
+</li>
+

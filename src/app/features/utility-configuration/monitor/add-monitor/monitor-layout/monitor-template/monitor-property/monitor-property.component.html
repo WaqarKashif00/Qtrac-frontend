@@ -1,0 +1,63 @@
+<lavi-monitor-layout-control-property
+  [DesignerPanel]="DesignerPanel$ | async"
+  [Queue]="QueueData$ | async"
+></lavi-monitor-layout-control-property>
+<ng-content select="default-control-property"></ng-content>
+<div
+  *ngIf="{
+    controls: Controls$ | async,
+    controlSelection: ControlSelection$ | async
+  } as values"
+  class="service-controls-properties"
+>
+  <div *ngIf="values.controls.length > 0" class="property-window">
+    <lavi-form-panel
+      [(PanelExpand)]="values.controlSelection.IsOtherControlsSelected"
+      PanelHeader="Other Control Property"
+    >
+      <lavi-form-content-panel>
+        <div class="property-window-body">
+          <div>
+            <label>Items</label>
+            <select
+              class="OtherItemDropdown"
+              (change)="OnControlDropdownChange($event)"
+            >
+              <option
+                *ngFor="let labelDiv of values.controls"
+                [value]="labelDiv.control.name"
+                [selected]="labelDiv.showPropertyWindow"
+              >
+                {{ labelDiv.control.name }}
+              </option>
+            </select>
+          </div>
+          <div *ngFor="let item of values.controls">
+            <div *ngIf="item.showPropertyWindow">
+              <div *ngIf="item.isLabelControl">
+                <lavi-monitor-label-form
+                  [Control]="item.control"
+                ></lavi-monitor-label-form>
+              </div>
+              <div *ngIf="item.isImageControl">
+                <lavi-monitor-image-form
+                  [Item]="item.control"
+                ></lavi-monitor-image-form>
+              </div>
+              <div *ngIf="item.isSliderControl">
+                <lavi-monitor-slider-form
+                  [Item]="item.control"
+                ></lavi-monitor-slider-form>
+              </div>
+              <div *ngIf="item.isVideoControl">
+                <lavi-monitor-video-form
+                  [Item]="item.control"
+                ></lavi-monitor-video-form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </lavi-form-content-panel>
+    </lavi-form-panel>
+  </div>
+</div>

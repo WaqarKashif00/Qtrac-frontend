@@ -1,0 +1,355 @@
+<div  *laviHasRoleAccess="
+roleActions.BranchGeneralConfiguration;
+actionName: actionType.View
+" [formGroup]="GeneralConfigForm">
+  <lavi-form-panel PanelHeader="General Configuration" [PanelExpand]="true">
+    <lavi-form-content-panel>
+      <div class="col-lg-12 inner-panel-padding panel-border">
+        <div class="row">
+          <div class="col-lg-6 col-sm-6 col-6">
+            <h6 class="panel-sub-header">Location Information</h6>
+          </div>
+          <div class="col-lg-6 col-sm-6 col-6" *ngIf="!EditMode">
+            <label class="k-label cursor-pointer checkbox-label float-right">
+              <input
+                type="checkbox"
+                (change)="GetCompanyGeneralDetails()"
+                kendoCheckBox
+                formControlName="isCompanyGeneralSetting"
+                [lavi-disable-if-not-has-role-access]='true'
+                [ActionName]='actionType.AddEdit'
+                [ViewName]='roleActions.BranchGeneralConfiguration'
+              />
+              Use company settings
+            </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="mt-4 form-group">
+              <kendo-switch
+              [lavi-disable-if-not-has-role-access]='true'
+              [ActionName]='actionType.AddEdit'
+              [ViewName]='roleActions.BranchGeneralConfiguration'
+                [formControl]="GeneralConfigForm.controls.isActive"
+              ></kendo-switch>
+              <span class="ml-3 font-weight-bold">Location is Active</span>
+            </div>
+            <div>
+              <div
+                lavi-text-field-loader
+                [show-text-field-loading]="BranchNameFormControl.pending"
+              >
+                <div
+                  class="
+                    col-lg-12 col-md-12
+                    float-left
+                    pr-0
+                    pl-0
+                    lavi-text-field-loader-container
+                  "
+                >
+                  <div class="form-group">
+                    <kendo-textbox-container
+                      class="w-100"
+                      floatingLabel="Location Name"
+                      [class.k-state-invalid]="
+                        BranchNameFormControl.invalid &&
+                        BranchNameFormControl.dirty
+                      "
+                    >
+                      <input
+                        kendoTextBox
+                        tabindex="1"
+                        lavi-auto-focus
+                        maxlength="50"
+                       [lavi-disable-if-not-has-role-access]='true'
+                        [ActionName]='actionType.AddEdit'
+                        [ViewName]='roleActions.BranchGeneralConfiguration'
+                        [formControl]="GeneralConfigForm.controls.name"
+                        lavi-trim-value
+                      />
+                    </kendo-textbox-container>
+                    <div class="h-10">
+                      <lavi-validation-message-list
+                        [validation-form-group-name]="GeneralConfigForm"
+                        validation-control-name="name"
+                        [validation-errorlist]="ValidationMessages.NameMessages"
+                      >
+                      </lavi-validation-message-list>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <kendo-textbox-container class="w-100" floatingLabel="Street Address">
+                <input
+                  kendoTextBox
+                  maxlength="200"
+                  tabindex="2"
+                  [lavi-disable-if-not-has-role-access]='true'
+                  [ActionName]='actionType.AddEdit'
+                  [ViewName]='roleActions.BranchGeneralConfiguration'
+                  [formControl]="GeneralConfigForm.controls.address"
+                  lavi-trim-value
+                  (blur)="blur($event)"
+                  ngx-google-places-autocomplete
+                  (onAddressChange)="handleAddressChange($event)"
+                />
+              </kendo-textbox-container>
+              <div class="h-10">
+                <div class="error-message" *ngIf="GeneralConfigForm.controls.laviAddress.hasError('required')">{{ValidationMessages.AddressMessages[0].message}}</div>
+                <div class="error-message" *ngIf="GeneralConfigForm.controls.laviAddress.hasError('mismatched')">{{ValidationMessages.AddressMessages[1].message}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="row h-100">
+              <div class="col-lg-6 col-sm-6 col-8 mt-5">
+                <kendo-textbox-container
+                  class="w-50 mt-3"
+                  floatingLabel="Location Id"
+                >
+                  <input
+                    kendoTextBox
+                    maxlength="50"
+                    [lavi-disable-if-not-has-role-access]='true'
+                    [ActionName]='actionType.AddEdit'
+                    [ViewName]='roleActions.BranchGeneralConfiguration'
+                    tabindex="3"
+                    [formControl]="GeneralConfigForm.controls.id"
+                    lavi-trim-value
+                  />
+                </kendo-textbox-container>
+                <div *ngIf="GeneralConfigForm.get('id').errors?.isExists">
+                  <span class="text-danger pl-2 small"
+                    >Location id already exists.</span
+                  >
+                </div>
+                <div class="row">
+                  <div class="col-lg-12 col-sm-12 col-8 mt-4 w-100">
+                    <kendo-textbox-container
+                      class="w-100"
+                      floatingLabel="Friendly Location Name"
+                    >
+                      <input
+                        kendoTextBox
+                        maxlength="50"
+                        tabindex="3"
+                        [lavi-disable-if-not-has-role-access]='true'
+                        [ActionName]='actionType.AddEdit'
+                        [ViewName]='roleActions.BranchGeneralConfiguration'
+                        [formControl]="
+                          GeneralConfigForm.controls.friendlyBranchName
+                        "
+                        lavi-trim-value
+                      />
+                    </kendo-textbox-container>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-5 col-sm-5 col-8 mt-4 pr-2">
+                <lavi-file-upload
+                  class="no-outline"
+                  tabindex="4"
+                  ImageTitle="Upload Location Logo"
+                  [ImageHeight]="175"
+                  [ImageWidth]="195"
+                  [lavi-disable-if-not-has-role-access]='true'
+                  [ActionName]='actionType.AddEdit'
+                  [ViewName]='roleActions.BranchGeneralConfiguration'
+                  [ImageSrc]="GeneralConfigForm.controls.branchImg.value"
+                  [IsDisabled]='GeneralConfigForm.controls.branchImg.disabled'
+                  [formControl]="GeneralConfigForm.controls.branchImg"
+                >
+                </lavi-file-upload>
+                <div class="h-10 col-lg-5">
+                  <lavi-validation-message-list
+                    [validation-form-group-name]="GeneralConfigForm"
+                    validation-control-name="branchImg"
+                    [validation-errorlist]="ValidationMessages.ImageMessages"
+                  >
+                  </lavi-validation-message-list>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+
+            <div class="form-group mt-3">
+              <kendo-floatinglabel class="w-100" text="Phone Number">
+                <kendo-maskedtextbox
+                  class="w-100"
+                  [lavi-disable-if-not-has-role-access]='true'
+                  [ActionName]='actionType.AddEdit'
+                  [ViewName]='roleActions.BranchGeneralConfiguration'
+                  placeholder="Phone Number"
+                  [formControl]="GeneralConfigForm.controls.phoneNumber"
+                  tabindex="9"
+                >
+                </kendo-maskedtextbox>
+              </kendo-floatinglabel>
+              <div class="h-10">
+                <lavi-validation-message-list
+                  [validation-form-group-name]="GeneralConfigForm"
+                  validation-control-name="phoneNumber"
+                  [validation-errorlist]="ValidationMessages.PhoneNoMessages"
+                >
+                </lavi-validation-message-list>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <kendo-textbox-container class="w-100" floatingLabel="Tags" *laviHasRoleAccess="roleActions.Branches;actionName: actionType.View">
+                <kendo-autocomplete
+                  #combo
+                  [maxlength]="maxLength"
+                  tabindex="10"
+                  [data]="TagSuggestions | laviSortBy: 'tags'"
+                  [lavi-disable-if-not-has-role-access]='true'
+                  [ActionName]='actionType.AddEdit'
+                  [ViewName]='roleActions.BranchGeneralConfiguration'
+                  [filterable]="true"
+
+                  (cellEnter)="AddTagOnEnter()"
+                  formControlName="tags"
+                  [kendoDropDownFilter]="{ operator: 'contains' }"
+                  (valueChange)="AddTagOnEnter()"
+                >
+                </kendo-autocomplete>
+              </kendo-textbox-container>
+              <div class="md-chips tag-container">
+                <kendo-chip
+                  class="mt-1 mr-1"
+                  *ngFor="let tag of Tags | laviSortBy"
+                  [label]="tag"
+                  [removable]="!GeneralConfigForm.controls.tags.disabled"
+                  (remove)="RemoveTag($event)"
+                >
+                </kendo-chip>
+              </div>
+            </div>
+
+
+
+          </div>
+          <div class="col-lg-6">
+            <div class="col-lg-1 h-20 mt-n1 hidden-md-down"></div>
+            <div class="col-lg-12">
+              <div class="row mt-2">
+                <div class="col-lg-7 form-group">
+                  <kendo-floatinglabel class="w-100" text="Supported Languages" *laviHasRoleAccess="roleActions.Branches;actionName: actionType.View">
+                    <kendo-multiselect
+                      [formControl]="
+                        GeneralConfigForm.controls.supportedLanguages
+                      "
+                      [lavi-disable-if-not-has-role-access]='true'
+                      [ActionName]='actionType.AddEdit'
+                      [ViewName]='roleActions.BranchGeneralConfiguration'
+                      [data]="SupportedLanguages"
+                      [kendoDropDownFilter]="'startsWith'"
+                      [filterable]="true"
+                      tabindex="11"
+                      (valueChange)="AddDefaultLanguage($event)"
+                      [textField]="'language'"
+                      [valueField]="'languageCode'"
+                    >
+                    </kendo-multiselect>
+                  </kendo-floatinglabel>
+                  <div class="h-10">
+                    <lavi-validation-message-list
+                      [validation-form-group-name]="GeneralConfigForm"
+                      validation-control-name="supportedLanguages"
+                      [validation-errorlist]="
+                        ValidationMessages.SupportedLanguagesMessages
+                      "
+                    >
+                    </lavi-validation-message-list>
+                  </div>
+                </div>
+                <div class="col-lg-5 form-group">
+                  <kendo-floatinglabel class="w-100" text="Default Language">
+                    <kendo-dropdownlist
+                      [formControl]="GeneralConfigForm.controls.defaultLanguage"
+                      [data]="DefaultLanguage | laviSortBy: 'language'"
+                      floatingLabel="Default Language"
+                      placeholder="Select Default Language"
+                      [textField]="'language'"
+                      tabindex="12"
+                      [valueField]="'languageCode'"
+                      (valueChange)="SetLanguage($event)"
+                      [lavi-disable-if-not-has-role-access]='true'
+                      [ActionName]='actionType.AddEdit'
+                      [ViewName]='roleActions.BranchGeneralConfiguration'
+                    >
+                    </kendo-dropdownlist>
+                  </kendo-floatinglabel>
+                  <div class="h-10">
+                    <lavi-validation-message-list
+                      [validation-form-group-name]="GeneralConfigForm"
+                      validation-control-name="defaultLanguage"
+                      [validation-errorlist]="
+                        ValidationMessages.DefaultLanguageMessages
+                      "
+                    >
+                    </lavi-validation-message-list>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 row mt-2 pt-1">
+              <div class="col-lg-4">
+                <kendo-textbox-container
+                  class="w-100"
+                  floatingLabel="Location SMS Number"
+                >
+                  <kendo-dropdownlist
+                    [formControl]="GeneralConfigForm.controls.branchSmsNumber"
+                    [data]="SmsNumbers | laviFilterListWithTags: searchModel:'tags':'text' | laviSortBy: 'text'"
+                    floatingLabel="Location SMS Number"
+                    placeholder="Location SMS Number"
+                    [textField]="'text'"
+                    [filterable]="true" 
+                    [defaultItem]="DefaultData.BranchSmsNumberValue"
+                    [lavi-disable-if-not-has-role-access]='true'
+                    [ActionName]='actionType.AddEdit'
+                    [ViewName]='roleActions.BranchGeneralConfiguration'
+                    tabindex="13"
+                    [valueField]="'value'"
+                    (filterChange)="handleFilter($event)" 
+                    (open)="onOpen($event)"
+                  >
+                  </kendo-dropdownlist>
+                </kendo-textbox-container>
+              </div>
+              <div class="col-lg-8">
+                <kendo-textbox-container
+                    class="w-100"
+                    floatingLabel="Default Printer"
+                  >
+                    <kendo-dropdownlist
+                      [formControl]="GeneralConfigForm.controls.defaultPrinter"
+                      [data]="LocationPrinters | laviSortBy: 'printerName'"
+                      floatingLabel="Default Printer"
+                      placeholder="Default Printer"
+                      [textField]="'printerName'"
+                      [defaultItem]="DefaultData.LocationPrinterValue"
+                      [lavi-disable-if-not-has-role-access]='true'
+                      [ActionName]='actionType.AddEdit'
+                      [ViewName]='roleActions.BranchGeneralConfiguration'
+                      tabindex="13"
+                      [valueField]="'printerId'"
+                    >
+                    </kendo-dropdownlist>
+                  </kendo-textbox-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </lavi-form-content-panel>
+  </lavi-form-panel>
+</div>

@@ -1,0 +1,180 @@
+<div class="property-window">
+    <div class="property-window-body">
+      <form [formGroup]="DesignerPanel.form" autocomplete="off">
+        <div>
+          <label>Name</label
+          ><input
+            type="text"
+            placeholder="Name"
+            formControlName="name"
+            maxlength="50"
+            lavi-trim-value
+          />
+          <span class="edit-icon"></span>
+        </div>
+        <div>
+          <label>Workflow</label
+          ><input
+            type="text"
+            placeholder="Height"
+            [value]="DesignerPanel.workFlowName"
+            disabled
+          />
+        </div>
+        <div>
+          <label>Width</label
+          ><input
+            type="text"
+            formControlName="width"
+            placeholder="Width"
+            lavi-app-numbers-only
+            maxlength="4"
+            [value]="DesignerPanel.styles.width"
+          />
+          <span>px</span>
+        </div>
+        <div>
+          <label>Height</label
+          ><input
+            type="text"
+            formControlName="height"
+            placeholder="Height"
+            [value]="DesignerPanel.styles.height"
+            lavi-app-numbers-only
+            maxlength="4"
+          />
+          <span>px</span>
+        </div>
+
+
+        <div>
+          <label>Show Grid</label>
+          <span class="float-right mr-3 mt-1">
+            <input type="checkbox" kendoCheckBox formControlName="showGrid"/>
+          </span>
+        </div>
+        <div *ngIf="DesignerPanel.showGrid">
+          <div>
+            <label>Grid Cell Size</label>
+            <select formControlName="cellSize">
+              <option *ngFor="let size of Sizes" [value]="size">
+                {{ size }}
+              </option>
+            </select>
+          </div>
+
+        </div>
+
+
+        <div class="position-relative">
+          <label>Background Image</label>
+          <div class="float-right text-right upload-button-container">
+            <span class="browse-button">
+              <ng-container *ngIf="FileName"><span class="pull-right-32 mr-10">{{FileName}}</span></ng-container>
+              <ng-container *ngIf="!FileName"><span class="text-blue">Click to add</span></ng-container>
+            </span>
+            <input
+              type="file"
+              accept="image/*"
+              placeholder="background color"
+              (change)="GetFileURL($event)"
+            />
+            <span *ngIf="FileName" class="close background-img-close-icon"
+            (click)="Remove()">&times;</span>
+            <span *ngIf="!FileName" class="edit-icon bg-image"></span>
+          </div>
+        </div>
+        <div>
+          <label>Background Color</label>
+          <kendo-colorpicker
+            formControlName="backgroundColor"
+            [value]="DesignerPanel.styles.backgroundColor"
+          >
+          </kendo-colorpicker>
+        </div>
+        <div>
+          <label>Enable Sound Alert</label>
+          <span class="float-right mr-3 mt-1">
+            <input type="checkbox" kendoCheckBox formControlName="enableSoundAlert"/>
+          </span>
+        </div>
+        <div>
+          <label>Enable Text/Audio Announcement</label>
+          <span class="float-right mr-3 mt-1">
+            <input type="checkbox" kendoCheckBox (click)="OnLabelDrop($event)" formControlName="enableTextToSpeech"/>
+          </span>
+        </div>
+
+        <div *ngIf="DesignerPanel.enableTextToSpeech" >
+          <label>Text/Audio Timer</label
+          ><input
+            type="text"
+            formControlName="textToSpeachTimer"
+            lavi-app-numbers-only
+          />
+          <span>sec</span>
+
+        </div>
+        <div>
+          <label>Queue Type</label>
+          <select class="text-capitalize" (change)="onQueueTypeChange()" formControlName="queueType">
+            <option class="text-capitalize" *ngFor="let type of QueueTypes" [value]="type">
+              {{ type }}
+            </option>
+          </select>
+        </div>
+
+
+<div>
+      <ng-container *ngIf="DesignerPanel.queueType == 'Column Per Queue'">
+      <label class="w-100">Select Queues</label>
+
+        <kendo-textbox-container
+        class="w-100"
+      >
+        <kendo-multiselect
+          [data]="Queues"
+          formControlName="selectedQueues"
+          [kendoDropDownFilter]="'startsWith'"
+          [filterable]="true"
+          tabindex="4"
+          (valueChange)="onQueueSelected($event)"
+          [textField]="'queueName'"
+          [valueField]="'queueId'"
+        >
+        </kendo-multiselect>
+      </kendo-textbox-container>      
+      </ng-container>
+    </div>
+
+        <div>
+          <label class="w-100">Visible List Elements</label>
+          <div class="row pl-3 pr-3 pb-3">
+            <div class="visible-elements">
+              <label class="w-100 cursor-pointer">
+                <input
+                  type="checkbox"
+                  kendoCheckBox
+                  formControlName="showNextUpPanel"/>
+                Next Up</label>
+            </div>
+            <div class="visible-elements">
+              <label class="w-100 cursor-pointer">
+                <input
+                type="checkbox"
+                kendoCheckBox
+                formControlName="showNowCallingPanel"/>
+              Now Calling</label>
+          </div>
+          <div class="visible-elements">
+            <label class="w-100 cursor-pointer"><input
+              type="checkbox"
+              kendoCheckBox
+              formControlName="showNowHelpingPanel"/>
+            Now Helping</label>
+        </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>

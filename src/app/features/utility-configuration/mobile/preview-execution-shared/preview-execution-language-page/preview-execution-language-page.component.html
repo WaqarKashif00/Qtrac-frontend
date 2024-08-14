@@ -1,0 +1,48 @@
+  <div
+    *ngIf="Data?.items?.length > 0"
+    [style.transform]="
+      'translate(0px, ' + Data.panel.top + 'px) scale(1)'
+    "
+    [style.height.px]="Data.panel.height"
+    [style.padding-left.px]="Data.panel.horizontalPadding || 0"
+    [style.padding-right.px]="Data.panel.horizontalPadding || 0"
+    [style.padding-top.px]="Data.panel.verticalPadding || 0"
+    [style.padding-bottom.px]="Data.panel.verticalPadding || 0"
+    class="e-panel insideDiv w-100 transperant position-absolute"
+  >
+    <ul class="UL">
+      <ng-container *ngFor="let item of Data?.items">
+        <li
+          class="LI"
+          style="cursor: pointer"
+          (click)="ShowNextPage(item.itemId)"
+          [style.color]="Data.panel.primaryColor"
+          [style.background-color]="Data.panel.backgroundColor"
+          [style.font-size]="Data.panel.fontSize ? Data.panel.fontSize + 'px' : ''"
+          [style.font-style]="Data.panel.fontStyle"
+          [style.font-weight]="Data.panel.fontWeight"
+          [style.font-family]="Data.panel.font"
+          [style.border-radius.px]="Data.panel.boxCorner || 0"
+        >
+          {{ translatedLanguageName[item.itemId] }}
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+  <lavi-preview-execution-label
+    [Labels]="Data?.labels"
+    [SelectedLanguage]="SelectedLanguage"
+    [DefaultLanguage]="DefaultLanguage"
+  ></lavi-preview-execution-label>
+  <lavi-preview-execution-image
+  [Images]="Data?.images"
+  [SelectedLanguage]="DefaultLanguage">
+</lavi-preview-execution-image>
+  <lavi-preview-execution-video
+  [Videos]="Data?.videos"
+  [SelectedLanguage]="DefaultLanguage">
+</lavi-preview-execution-video>
+  <lavi-preview-execution-slider
+  [Sliders]="Data?.sliders"
+  [SelectedLanguage]="DefaultLanguage">
+</lavi-preview-execution-slider>

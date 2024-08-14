@@ -1,0 +1,82 @@
+
+<lavi-form-panel PanelHeader="Header Properties" [(PanelExpand)]="IsControlSelected">
+  <lavi-form-content-panel>
+    <div class="property-window">
+      <div class="property-window-body">
+        <form [formGroup]="HeaderControl.form" autocomplete="off">
+          <div class="position-relative">
+            <label>Header Image</label>
+            <div class="float-right text-right upload-button-container">
+              <span class="browse-button mobile-browse-button">
+                <ng-container *ngIf="FileName"><span class="pull-right-32 mr-10">{{FileName}}</span></ng-container>
+                <ng-container *ngIf="!FileName"><span class="text-blue">Click to add </span><span class="edit-icon"></span></ng-container>
+              </span>
+              <input
+                type="file"
+                placeholder="background color"
+                accept="image/*"
+                (change)="GetFileURL($event)"
+              />
+              <span *ngIf="FileName" class="close background-img-close-icon"
+              (click)="Remove()">&times;</span>
+            </div>
+          </div>
+          <div>
+            <label class="cursor-pointer"
+             for="VisibleHeader">Display Header</label>
+          <div class="float-right mr-3">
+            <input
+              id="VisibleHeader"
+              type="checkbox"
+              kendoCheckBox
+              formControlName="isVisible"
+            />
+            </div>
+          </div>
+          <div>
+            <label>Vertical Padding </label
+            ><input
+              type="text"
+              maxlength="3"
+              formControlName="verticalPadding"
+              placeholder="Vertical Padding"
+              lavi-app-numbers-only
+              [value]="HeaderControl.verticalPadding"
+            /> <span>px</span>
+          </div>
+          <div>
+            <label>Height</label
+            ><input
+              type="text"
+              maxlength="3"
+              formControlName="height"
+              placeholder="Height"
+              lavi-app-numbers-only
+              [value]="HeaderControl.height"
+            /> <span>%</span>
+          </div>
+          <div>
+            <label>Horizontal Padding </label
+            ><input
+              type="text"
+              formControlName="horizontalPadding"
+              placeholder="Horizontal Padding"
+              lavi-app-numbers-only
+              maxlength="3"
+              [value]="HeaderControl.horizontalPadding"
+            />
+            <span>px</span>
+          </div>
+          <div>
+            <label>Logo Position</label>
+            <select class="cursor-pointer text-capitalize" formControlName="logoPosition">
+              <option class="text-capitalize" *ngFor="let align of Alignments" [value]="align">
+                {{ align }}
+              </option>
+            </select>
+          </div>
+        </form>
+      </div>
+    </div>
+  </lavi-form-content-panel>
+</lavi-form-panel>

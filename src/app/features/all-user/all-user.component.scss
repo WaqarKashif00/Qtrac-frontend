@@ -1,0 +1,24 @@
+@import "src/stylings/primitives/primitives.scss";
+
+.user-screen {
+max-height: 400px;
+  overflow-y: auto;
+}
+ .profile-padding{
+   padding-top: 30px;
+ }
+
+ .profile-error-msg{
+   width: 125px;
+   font-size: $font-size-small-2;
+   position: absolute;
+   bottom: -3px;
+ }
+
+ ::ng-deep .k-label {
+  display: flex;
+  margin-bottom: 0;
+}
+::ng-deep .k-checkbox {
+  margin-top: 0;
+}

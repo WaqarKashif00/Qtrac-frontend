@@ -1,0 +1,5 @@
+<lavi-validation-message *ngFor="let x of ErrorList" [validation-form-group-name]="CurrentForm"
+validation-control-name="{{CurrentControl}}" validation-type="{{x.type}}">
+  {{x.message}}
+</lavi-validation-message>
+

@@ -1,0 +1,43 @@
+<div class="position-absolute">
+  <div
+  [style.transform]="
+  'translate(' +control.left + 'px, ' +control.top + 'px) scale(1)'
+"
+    [style.width.px]="control.width"
+    [style.height.px]="control.height"
+    [style.background-color]="control.backgroundColor"
+    [style.border-radius.px]="control.boxRoundCorners || 0"
+    [style.background-image]="'url(' + control.backgroundImageURL + ')'"
+    [ngClass]="{ shadow: control.boxShadow === true }"
+    class="e-panel insideDiv now-helping"
+  >
+    <p
+      [style.font-size]="control.titleFontSize ? control.titleFontSize + 'px' : ''"
+      [style.font-style]="control.titleFontStyle"
+      [style.font-family]="control.titleFont"
+      [style.color]="control.titleTextColor"
+      [style.font-weight]="control.titleFontWeight || ''"
+      class="heading-text"
+    >
+    {{(control.text[SelectedLanguage] | uppercase) || (control.text[DefaultLanguage] | uppercase) || "" }}
+    </p>
+    <div
+      [style.font-size]="control.fontSize ? control.fontSize + 'px' : ''"
+      [style.font-style]="control.fontStyle"
+      [style.font-family]="control.font"
+      [style.color]="control.color"
+      [style.font-weight]="control.fontWeight || ''"
+      class="list-container"
+    >
+
+    <div class="custom-container-wrapper" Autoscroller [AutoscrollerscrollSpeed]=20 [ngStyle]='bodyStyle'>
+      <div class="h-100 overflow-hidden position-relative py-2">
+        <div *ngFor="let nowServing of nowServings" class="row">
+          <div class="col-6">{{nowServing.columnOne}}</div>
+          <div class="col-6">{{nowServing.columnTwo}}</div>
+        </div>
+      </div>
+   </div>
+    </div>
+  </div>
+</div>

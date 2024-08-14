@@ -1,0 +1,19 @@
+<div class="property-window">
+  <ng-container *ngIf="{Buttons:ButtonsList$ | async,OffLinePageControlSelected:OffLinePageControlSelected$ | async} as values">
+    <lavi-button-property-control
+      *ngIf="values.Buttons.length > 0 && values.OffLinePageControlSelected"
+      PanelHeader="Off Line Button Properties"
+      [Buttons]="values.Buttons"
+      [(IsPageButtonSelected)]="values.OffLinePageControlSelected.IsButtonSelected"
+      [TextFormArray]="TextFormArray$ | async"
+      [ButtonImageFormArray]="ButtonImageFormArray$ | async"
+      (OpenDialog)="OpenTranslateDialog($event)"
+      (UpdateButtons)="UpdateButtons($event)"
+      (ButtonDropdownChange)="ButtonDropdownChange($event)"
+      (TranslateText)="Translate($event)"
+      (UpdateTranslatedText)="UpdateTranslatedTextsInForm($event)"
+      (OpenButtonImageModal)="OpenButtonImageModal($event)"
+      (ApplyImageChanges)="ApplyImageChanges($event)"
+    ></lavi-button-property-control>
+  </ng-container>
+</div>

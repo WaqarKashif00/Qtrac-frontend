@@ -1,0 +1,31 @@
+@import "src/stylings/primitives/primitives.scss";
+.header-title-container {
+  .exit-icon {
+    display: inline-block;
+    height: 20px;
+    margin-right: 12px;
+    position: relative;
+    top: 4px;
+    width: 16px;
+  }
+  ul {
+    border-right: solid 1px $nav-border-color;
+    display: inline-block;
+    list-style: none;
+    li {
+      cursor: pointer;
+      display: inline-block;
+      margin-right: 24px;
+    }
+  }
+  h3 {
+    font-size: 24px;
+    line-height: 32px;
+    margin-left: 24px;
+  }
+  .btn-primary {
+    background: $_color-primary-button-bg;
+    color: $color-text-white;
+    width: 200px;
+  }
+}

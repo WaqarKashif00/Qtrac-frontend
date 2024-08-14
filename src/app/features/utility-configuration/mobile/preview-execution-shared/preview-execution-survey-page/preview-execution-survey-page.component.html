@@ -1,0 +1,49 @@
+<div
+*ngIf="Data?.panel && Data?.items?.length != 0"
+[style.transform]="'translate(0px, ' + Data.panel.top + 'px) scale(1)'"
+[style.padding-left.px]="Data.panel.horizontalPadding || 0"
+[style.padding-right.px]="Data.panel.horizontalPadding || 0"
+[style.padding-top.px]="Data.panel.verticalPadding || 0"
+[style.padding-bottom.px]="Data.panel.verticalPadding || 0"
+class="e-panel text-center w-100 transperant position-absolute h-auto"
+>
+<ul class="UL">
+  <ng-container *ngFor="let item of Data?.items">
+    <li>
+      <lavi-preview-execution-input-controls
+      [Item]="item"
+      *ngIf="item.visible"
+      [IsNextButtonClick]="IsNextButtonClick"
+      [Panel]="Data.panel"
+      [DefaultCountry]=""
+      [SelectedLanguage]="SelectedLanguage"
+    ></lavi-preview-execution-input-controls>
+    </li>
+  </ng-container>
+  </ul>
+
+  <lavi-preview-execution-button
+  [Button]="Data?.button"
+  [SelectedLanguage]="SelectedLanguage"
+  [IsAbsolutePosition]="false"
+  [DefaultLanguage]="DefaultLanguage"
+  (OnButtonClick)="ExitSurveyPage()">
+  </lavi-preview-execution-button>
+</div>
+  <lavi-preview-execution-label
+    [Labels]="Data?.labels"
+    [SelectedLanguage]="SelectedLanguage"
+    [DefaultLanguage]="DefaultLanguage"
+  ></lavi-preview-execution-label>
+  <lavi-preview-execution-image
+    [Images]="Data?.images"
+    [SelectedLanguage]="SelectedLanguage"
+  ></lavi-preview-execution-image>
+  <lavi-preview-execution-video
+    [Videos]="Data?.videos"
+    [SelectedLanguage]="SelectedLanguage"
+  ></lavi-preview-execution-video>
+  <lavi-preview-execution-slider
+    [Slider]="Data?.sliders"
+    [SelectedLanguage]="SelectedLanguage"
+  ></lavi-preview-execution-slider>

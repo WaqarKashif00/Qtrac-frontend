@@ -1,0 +1,201 @@
+<div class="preview-control" [ngStyle]="{'text-align': (Item.itemType == QuestionType.DropDown.value) ? 'left' : ''}">
+  <ng-container *ngIf="Item.itemType == QuestionType.Text.value">
+    <kendo-textbox-container class="preview-control-items key{{Item.itemId}}" [style.color]="Item.color"
+      [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''" [style.font-style]="Item.fontStyle"
+      [style.font-family]="Item.font" [style.font-weight]="Item.fontWeight" floatingLabel="{{Item.itemText + ( Item.required ? ' *': '')}}">
+      <!-- <input kendoTextBox [maxlength]="Item.itemTypeSetting ? Item.itemTypeSetting: 50" [style.color]="Item.color" -->
+      <input kendoTextBox [maxlength]="Item.itemTypeSetting ? Item.itemTypeSetting: 50" [style.color]="Item.color"
+        [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''" [style.font-style]="Item.fontStyle"
+        [style.font-family]="Item.font" [style.font-weight]="Item.fontWeight" [(ngModel)]="Item.answer"
+        (mousedown)="MouseDownClick()"
+        (focus)="inputFocus($event)"
+        (input)="inputChange($event)" 
+        (focusout)="inputFocusOut($event)" 
+        id="key{{Item.itemId}}"/>
+    </kendo-textbox-container>
+    <div class="h-10 text-left">
+      <span *ngIf="IsSaveClick && Item.required && !Item.answer" class="error-message d-block ml-3">* Field Required</span>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="Item.itemType == QuestionType.LongText.value">
+    <kendo-floatinglabel class="preview-control-items key{{Item.itemId}}" [style.color]="Item.color"
+      [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''" [style.font-style]="Item.fontStyle"
+      [style.font-family]="Item.font" [style.font-weight]="Item.fontWeight" text="{{Item.itemText + ( Item.required ? ' *': '')}}"  >
+      <textarea kendoTextArea class="mt-2" maxlength="500" [style.color]="Item.color"
+        [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''" [style.font-style]="Item.fontStyle"
+        [style.font-family]="Item.font" [style.font-weight]="Item.fontWeight" [(ngModel)]="Item.answer" rows="4"v
+        (mousedown)="MouseDownClick()"
+        (focus)="inputFocus($event)"
+        (input)="inputChange($event)"
+        (focusout)="inputFocusOut($event)"
+        id="key{{Item.itemId}}"
+        
+        ></textarea><!-- id={{Item.itemId}} [id]="Item.itemId" (focus)="inputFocus($event)" (focusout)="inputFocusOut($event)" --> <!--style="background-color: transparent;"-->
+    </kendo-floatinglabel>
+    <div class="h-10 text-left">
+      <span *ngIf="IsSaveClick && Item.required && !Item.answer" class="error-message d-block ml-3">* Field Required</span>
+    </div>
+  </ng-container>
+
+  
+  <ng-container *ngIf="Item.itemType == QuestionType.DropDown.value">
+    <kendo-label class="w-100 preview-control-items" text="{{Item.itemText + ( Item.required ? ' *': '')}}"
+      [style.color]="Item.color" [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''"
+      [style.font-style]="Item.fontStyle" [style.font-family]="Item.font" [style.font-weight]="Item.fontWeight">
+    </kendo-label>
+      <kendo-dropdownlist class="preview-control-items" [data]="Item.itemTypeSetting" [style.color]="Item.color"
+      [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''" [style.font-style]="Item.fontStyle"
+      [style.font-family]="Item.font" [style.font-weight]="Item.fontWeight" [(ngModel)]="Item.answer"
+        (mousedown)="MouseDownClick()">
+        <ng-template kendoDropDownListItemTemplate let-itemTypeSetting>
+          <span [style.color]="Item.color"
+          [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''" [style.font-style]="Item.fontStyle"
+          [style.font-family]="Item.font" [style.font-weight]="Item.fontWeight">{{ itemTypeSetting }}</span> 
+     </ng-template>
+      </kendo-dropdownlist>
+    <div class="h-10">
+      <span *ngIf="IsSaveClick && Item.required && !Item.answer" class="error-message d-block ml-3">* Field Required</span>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="Item.itemType == QuestionType.Options.value">
+    <div class="preview-radio-btn-control pull-left" [style.color]="Item.color" [style.font-family]="Item.font"
+      [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''" [style.font-style]="Item.fontStyle"
+      [style.font-weight]="Item.fontWeight">
+      {{ Item.itemText }}<span *ngIf="Item.required"> *</span>
+    </div>
+    <ul style="list-style-type:none;">
+      <ng-container *ngFor="let option of Item.itemTypeSetting">
+        <li style="text-align: left;">
+          <input type="radio" [style.color]="Item.color"  [style.border-color]="Item.color"  [name]="Item.itemId"
+          [id]="Item.itemId"
+          [value]="option" kendoRadioButton
+          (click)="RadioClick(option)"
+          (mousedown)="MouseDownClick()" />
+          <label  class="preview-radio-btn-control" style="display: initial;" [for]='option' [style.color]="Item.color"
+            [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''" [style.font-style]="Item.fontStyle"
+            [style.font-family]="Item.font" [style.font-weight]="Item.fontWeight">
+            {{ option }}
+          </label>
+        </li>
+      </ng-container>
+    </ul>
+    <div class="h-10 text-left">
+      <span *ngIf="IsSaveClick && Item.required && !Item.answer" class="error-message d-block ml-3">* Field Required</span>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="Item.itemType == QuestionType.MultiSelect.value">
+    <kendo-textbox-container class="w-100 preview-control-items" floatingLabel="{{Item.itemText + ( Item.required ? ' *': '')}}"
+      [style.color]="Item.color" [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''"
+      [style.font-style]="Item.fontStyle" [style.font-family]="Item.font" [style.font-weight]="Item.fontWeight">
+      <kendo-multiselect class="preview-control-items" [data]="Item.itemTypeSetting" [style.color]="Item.color"
+        [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''" [style.font-style]="Item.fontStyle"
+        [style.font-family]="Item.font" [style.font-weight]="Item.fontWeight" [(ngModel)]="Item.answer"
+        (mousedown)="MouseDownClick()">
+        <ng-template kendoDropDownListItemTemplate let-itemTypeSetting>
+          <span [style.color]="Item.color"
+          [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''" [style.font-style]="Item.fontStyle"
+          [style.font-family]="Item.font" [style.font-weight]="Item.fontWeight">{{ itemTypeSetting }}</span> 
+     </ng-template>
+      </kendo-multiselect>
+    </kendo-textbox-container>
+    <div class="h-10 text-left">
+      <span *ngIf="IsSaveClick && Item.required && !Item.answer" class="error-message d-block ml-3">* Field Required</span>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="Item.itemType == QuestionType.Number.value">
+    <kendo-textbox-container class="preview-control-items key{{Item.itemId}}" floatingLabel="{{Item.itemText + ( Item.required ? ' *': '')}}"
+      [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''" [style.font-style]="Item.fontStyle"
+      [style.font-family]="Item.font" [style.color]="Item.color" [style.font-weight]="Item.fontWeight">
+      <input type="number" class="preview-control-items" kendoTextBox [min]="Item.itemTypeSetting.min"
+        [max]="Item.itemTypeSetting.max" [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''"
+        [style.font-style]="Item.fontStyle" [style.font-family]="Item.font" [style.font-weight]="Item.fontWeight"
+        [style.color]="Item.color" [autoCorrect]="true" [(ngModel)]="Item.answer"
+        (mousedown)="MouseDownClick()"
+        (focus)="inputFocus($event)"
+        (input)="inputChange($event)"
+        (focusout)="inputFocusOut($event)"
+        id="key{{Item.itemId}}"/>
+      </kendo-textbox-container>
+        <div class="h-10 text-left">
+      <span *ngIf="IsSaveClick && Item.required && !Item.answer" class="error-message d-block ml-3">* Field Required</span>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="Item.itemType == QuestionType.Email.value">
+    <kendo-textbox-container class="preview-control-items key{{Item.itemId}}" floatingLabel="{{Item.itemText + ( Item.required ? ' *': '')}}" [style.color]="Item.color"
+      [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''" [style.font-style]="Item.fontStyle"
+      [style.font-family]="Item.font" [style.font-weight]="Item.fontWeight">
+      <input  class="preview-control-items" kendoTextBox [maxLength]="Item.itemTypeSetting ? Item.itemTypeSetting : 50"
+        [value]="Item.itemTypeSetting" [style.color]="Item.color"
+        [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''" [style.font-style]="Item.fontStyle"
+        [style.font-family]="Item.font" [style.font-weight]="Item.fontWeight" [(ngModel)]="Item.answer"
+        [pattern]="ValidationPatterns.EmailRegX"
+        (mousedown)="MouseDownClick()" #previewEmail="ngModel" 
+        (focus)="inputFocus($event)"
+        (input)="inputChange($event)"
+        (focusout)="inputFocusOut($event)"
+        id="key{{Item.itemId}}"/>
+    </kendo-textbox-container>
+    <div class="h-10 text-left">
+      <span *ngIf="IsSaveClick && Item.required && !Item.answer" class="error-message d-block ml-3">* Field Required</span>
+      <span class="error-message d-block pl-3" *ngIf="previewEmail?.errors?.pattern"> Email is invalid.</span>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="Item.itemType == QuestionType.PhoneNumber.value || Item.itemType == QuestionType.SMSPhoneNumber.value">
+
+    <div class="preview-radio-btn-control text-left font-size-small-1 key{{Item.itemId}}" [style.color]="Item.color" [style.font-family]="Item.font"
+      [style.font-size]="Item.fontSize ? (Item.fontSize * 0.79) + 'px' : ''" [style.font-style]="Item.fontStyle"
+      [style.font-weight]="Item.fontWeight">
+      {{ Item.itemText }} <span *ngIf="Item.required"> *</span>
+    </div>
+
+    <lavi-phone-number [style.color]="Item.color"
+      [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''" [style.font-style]="Item.fontStyle"
+      [style.font-family]="Item.font" [style.font-weight]="Item.fontWeight" [PhoneNumber]="Item.answer"  
+      [DefaultCountry]="BranchCountryCode"
+      [ItemId]="Item.itemId"
+      (OnValidPhoneNumber)="PhoneNumberChanged($event)"
+      (OnInvalidPhoneNumber)="InvalidPhoneNumberChanged($event)"
+      (mousedown)="MouseDownClick()">
+    </lavi-phone-number>
+
+    <div class="h-10 text-left" *ngIf="IsSaveClick && Item.required && !Item.answer">
+      <span class="error-message d-block ml-3">* Field Required</span>
+    </div>
+
+    <div class="h-10 text-left" *ngIf="IsSaveClick && !Item.isValid">
+      <span class="error-message d-block ml-3">Phone Number is invalid.</span>
+    </div>
+
+  </ng-container>
+  <ng-container *ngIf="Item.itemType == QuestionType.Date.value">
+    <kendo-textbox-container class="preview-control-items" floatingLabel="{{Item.itemText + ( Item.required ? ' *': '')}}" [style.color]="Item.color"
+      [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''" [style.font-style]="Item.fontStyle"
+      [style.font-family]="Item.font" [style.font-weight]="Item.fontWeight">
+      <kendo-datepicker [style.color]="Item.color" [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''"
+        [style.font-style]="Item.fontStyle" [style.font-family]="Item.font" [style.font-weight]="Item.fontWeight"
+        [(ngModel)]="Item.answer"
+        (mousedown)="MouseDownClick()">
+      </kendo-datepicker>
+    </kendo-textbox-container>
+    <div class="h-10 text-left">
+      <span *ngIf="IsSaveClick && Item.required && !Item.answer" class="error-message d-block ml-3">* Field Required</span>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="Item.itemType == QuestionType.Time.value">
+    <kendo-textbox-container class="preview-control-items" floatingLabel="{{Item.itemText + ( Item.required ? ' *': '')}}" [style.color]="Item.color"
+      [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''" [style.font-style]="Item.fontStyle"
+      [style.font-family]="Item.font" [style.font-weight]="Item.fontWeight">
+      <kendo-timepicker class="preview-control-items" [style.color]="Item.color"
+        [style.font-size]="Item.fontSize ? Item.fontSize + 'px' : ''" [style.font-style]="Item.fontStyle"
+        [style.font-family]="Item.font" [style.font-weight]="Item.fontWeight" [(ngModel)]="Item.answer"
+        (mousedown)="MouseDownClick()">
+      </kendo-timepicker>
+    </kendo-textbox-container>
+    <div class="h-10 text-left">
+      <span *ngIf="IsSaveClick && Item.required && !Item.answer" class="error-message d-block ml-3">* Field Required</span>
+    </div>
+  </ng-container>
+</div>

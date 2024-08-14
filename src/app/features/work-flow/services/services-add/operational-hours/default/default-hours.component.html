@@ -1,0 +1,15 @@
+<div class="border pb-4 k-state-disabled">
+    <div class="col-12 row mt-1">
+      <div class="col-2 col-lg-2 col-sm-2 mt-4">
+        <kendo-switch [(ngModel)]="workingHour.isOpen"></kendo-switch>
+      </div>
+      <div class="col-5 col-sm-5 col-lg-5 mt-4">
+        <p>{{ workingHour.dayText }}</p>
+      </div>
+      <div class="col-5 col-lg-5 col-sm-5 mt-4">
+        <p class="text-right text-gray">
+          {{ workingHour.isOpen ? workingTime : "Closed" }}
+        </p>
+      </div>     
+    </div>
+  </div>

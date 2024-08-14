@@ -1,0 +1,15 @@
+<div class="container-fluid">
+  <div class="row border p-0 mt-1 filter-item-row">
+    <div class="p-0 border-right vertical-center" >
+      <div  *ngIf="!Group.isWorkflowGroup || IsCheckBoxVisible" (click)="Checked()" [class]="IsSelected
+      ?'select-box selected'
+      :'select-box'"></div>
+    </div>
+    <div class="p-2 text-break break-all font-size-small-1 text-left">{{Group.groupName}}</div>
+    <div class="p-0  vertical-center w-fit-content">
+      <div class="circle" [ngStyle]="{
+                      backgroundColor:Group.color
+                    }"></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+.k-textbox {
+  font-size: unset;
+}
+
+textarea{
+  resize: none;
+}
+
+.preview-control-items{
+  width: 100%;
+  margin: 0 13px 0 0;
+  padding: 0 13px;
+  // color: rgb(185, 207, 227);
+}
+.k-radio {
+  top: -3px;
+}
+
+.preview-control-items input:disabled{
+  opacity: 0.6;
+  pointer-events: none !important;
+}
+.preview-control ::ng-deep {
+  .k-textbox, .k-dateinput, .k-datepicker, .k-datetimepicker, .k-timepicker,.k-picker-wrap, .k-input,
+  .k-numerictextbox .k-numeric-wrap, .k-numerictextbox .k-numeric-wrap .k-input,
+  .k-dropdown .k-dropdown-wrap, .k-dropdowntree .k-dropdown-wrap,
+  .k-multiselect-wrap .k-floatwrap, .k-multiselect-wrap .k-floatwrap .k-reset .k-button, .k-button {
+    color: inherit !important;
+    border-color:inherit !important;
+  }
+}

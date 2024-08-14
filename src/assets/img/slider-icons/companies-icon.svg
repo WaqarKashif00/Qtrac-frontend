@@ -1,0 +1,20 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M16.5 17.5H22.5V5.05556C22.5 4.643 22.3104 4.24734 21.9728 3.95561C21.6352 3.66389 21.1774 3.5 20.7 3.5H15.3359C15.1523 3.5 14.5 3.5 14 4C13.5 4.5 13.5 5 13.5 5.06L13.5 6.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="18.6299" y="5.5" width="1.75" height="1.75" rx="0.25" fill="black"/>
+<rect x="18.6299" y="11.5" width="1.75" height="1.75" rx="0.25" fill="black"/>
+<rect x="18.6299" y="8.5" width="1.75" height="1.75" rx="0.25" fill="black"/>
+<path d="M17 15C17 14.7239 17.2239 14.5 17.5 14.5H18.5C18.7761 14.5 19 14.7239 19 15V17.5H17V15Z" fill="black"/>
+<path d="M7.5 17.5H1.5V5.06001C1.5 5.05394 1.5 5.03313 1.5 5.00061C1.5 4.17219 2.17157 3.50001 3 3.50001H3.33594H8.7H9C9.82843 3.50001 10.5 4.17159 10.5 5.00001V5.05557L10.5 6.50002" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="3.62988" y="5.5" width="1.75" height="1.75" rx="0.25" fill="black"/>
+<rect x="3.62988" y="8.5" width="1.75" height="1.75" rx="0.25" fill="black"/>
+<rect x="3.62988" y="11.5" width="1.75" height="1.75" rx="0.25" fill="black"/>
+<path d="M5 15C5 14.7239 5.22386 14.5 5.5 14.5H6.5C6.77614 14.5 7 14.7239 7 15V17.5H5V15Z" fill="black"/>
+<rect x="9.62988" y="8.5" width="1.75" height="1.75" rx="0.25" fill="black"/>
+<rect x="12.6299" y="8.5" width="1.75" height="1.75" rx="0.25" fill="black"/>
+<rect x="9.62988" y="11.5" width="1.75" height="1.75" rx="0.25" fill="black"/>
+<rect x="12.6299" y="14.5" width="1.75" height="1.75" rx="0.25" fill="black"/>
+<rect x="9.62988" y="14.5" width="1.75" height="1.75" rx="0.25" fill="black"/>
+<rect x="12.6299" y="11.5" width="1.75" height="1.75" rx="0.25" fill="black"/>
+<path d="M11 18C11 17.7239 11.2239 17.5 11.5 17.5H12.5C12.7761 17.5 13 17.7239 13 18V20.5H11V18Z" fill="black"/>
+<path d="M9.33599 6.5H14.7001C14.7798 6.5 14.883 6.5 14.9997 6.5C15.8282 6.5 16.5001 7.17199 16.5001 8.00042C16.5001 8.01997 16.5001 8.0384 16.5001 8.05556V20.5H7.50005V8.06C7.50005 8.05393 7.50005 8.03313 7.50005 8.00065C7.50002 7.1722 8.17213 6.5 9.00058 6.5C9.16701 6.5 9.29257 6.5 9.33599 6.5Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

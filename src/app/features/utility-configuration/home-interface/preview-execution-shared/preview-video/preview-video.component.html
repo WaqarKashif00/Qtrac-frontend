@@ -1,0 +1,30 @@
+<div
+  class="newControl newImage position-absolute"
+  *ngFor="let control of Videos"
+  [style.transform]="
+    'translate(' + control.left + 'px, ' + control.top + 'px) scale(1)'
+  "
+  [style.width.px]="control.width"
+  [style.height.px]="control.height"
+  [style.z-index]="control.zindex"
+>
+<video
+*ngIf="GetUrl(control.src) && UrlType?.other"
+  [style.width.px]="control.width"
+  [style.height.px]="control.height"
+  autoplay
+  [muted]="true"
+  loop="true" controls="false"
+>
+  <source [src]="GetUrl(control.src)" type="video/mp4" />
+</video>
+
+<iframe *ngIf="GetUrl(control.src) && UrlType?.youtube"
+[style.margin.px]="10"
+[style.width.px]="(control.width-20 > 0?control.width-20:0)"
+[style.height.px]="(control.height-20 > 0?control.height-20:0)"
+[src]="GetUrl(control.src)"
+allow='autoplay'
+loop="true" controls="false"
+></iframe>
+</div>

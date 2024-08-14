@@ -1,0 +1,6 @@
+<span *ngIf="GetElapsedTime(Time) as elapsed" [style]='CustomStyleGet'>
+  <span *ngIf="elapsed?.days > 0">{{elapsed.days }} {{elapsed.days > 1 ? "days" : "day"}}  </span>
+  <span translate="no">{{elapsed.hours | number: '2.0-0'}}:</span>
+  <span translate="no">{{elapsed.minutes | number: '2.0-0'}}</span>
+  <span *ngIf="ShowSeconds && elapsed?.days == 0" translate="no">:{{elapsed.seconds | number: '2.0-0'}}</span>
+</span>

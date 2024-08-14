@@ -1,0 +1,67 @@
+<div
+  *ngIf="{
+    DesignerPanel: DesignerPanel$ | async
+  } as values"
+  class="column center middle-outer-div"
+>
+  <div
+    *ngIf="values.DesignerPanel"
+    class="control-section divLayoutDesignContainer"
+  >
+    <lavi-layout-header
+      [Color]="values.DesignerPanel.headerColor"
+      [BackgroundColor]="values.DesignerPanel.headerBackgroundColor"
+      [LogoURL]="values.DesignerPanel.imageFileURL"
+    ></lavi-layout-header>
+    <lavi-execution-layout-template
+      [SelectedPageName]="SelectedPage$ | async"
+      [NearestBranchList]="NearestBranchList$ | async"
+      [DesignerPanel]="values.DesignerPanel"
+      [TicketPropertyPanel]="TicketPropertyPanel$ | async"
+      [SchedulerExecutionData]="SchedulerExecutionsData$ | async"
+      [Miles]="Miles$ | async"
+      [StepsDetails]="StepDetails$ | async"
+      [CurrentMapLocation]="CurrentMapLocation$ | async"
+      [IsModifiedAppointmentMode]="IsModifiedAppointmentMode$ | async"
+      [Services]="SchedulerServices$ | async"
+      [ShowCancelButton]="ShowCancelButton$ | async"
+      [ShowContinueButton]="ShowContinueButton$ | async"
+      [ShowSubmitButton]="ShowSubmitButton$ | async"
+      [FirstAvailableTimeSlots]="AvailableTimeSlot$ | async"
+      [SelectedDatesAvailableTimeSlots]="SelectedDatesTimeSlot$ | async"
+      [ValidationMessage]="ValidationMessage$ | async"
+      [AppointmentNotificationPreferences]="AppointmentNotificationPreferences$ |async"
+      [IsAuthenticatedUser]="IsAuthenticatedUser"
+      [Announcement]="Announcement$ | async"
+      [ValidOTP]="ValidateOTP$ | async"
+      [MinAvailableDate]="MinAvailableDate$ | async"
+      [isAppointmentExists]="isAppointmentExists$ | async"
+      (OnSelectedAppointmentDateChange)="OnAppointmentDateChange($event)"
+      (OnSelectingSelectedDateTimeSlot)="OnSelectedDatesTimeSlotChange($event)"
+      (OnDifferentDateSelectionButtonClick)="OnDifferentDateSelectionButtonClick()"
+      (OnFirstAvailableSelectionButtonClick)="OnFirstAvailableSelectionButtonClick()"
+      (OnSelectingTimeSlot)="OnSelectingAvailableSlots($event)"
+      (OnStepChange)="ChangePage($event)"
+      (OnMilesChange)="ChangeMiles($event)"
+      (OnServiceSelectionChange)="ChangeService($event)"
+      (OnBranchSelectionsChange)="ChangeBranchSelection($event)"
+      (OnNextClick)="OnNextButtonClick()"
+      (OnBackClick)="OnBackButtonClick()"
+      (OnDeleteButton)="OnClickDeleteButton()"
+      (OnSubmitClick)="OnSubmitButtonClick()"
+      (SearchBranchesByAddress)="OnSearchEnter($event)"
+      (OnPhoneNumberCheckBoxChecked)="OnPhoneCheckBoxChecked()"
+      (OnEmailCheckBoxChecked)="OnEmailAddressCheckBoxChecked()"
+      (OnIAgreeTermsCheck)="OnIAgreeTermsCheck()"
+      (OnVerifyOTPClick)="OnVerifyOTPClick($event)"
+      (OnSendOTPClick)="OnSendOTPClick()"
+      (OnConfirmationPageCloseButtonClick)="OnConfirmationPageCloseButtonClick()"
+      (ControlDataChange)="OnControlChange($event)"
+    ></lavi-execution-layout-template>
+    <lavi-layout-footer
+    [ShowLaviIconInFooter]="values.DesignerPanel.showLaviIconInFooter"
+    [FooterProperties]="FooterProperties$ | async"
+    [SelectedLanguage]="SelectedLanguage$ | async"
+    ></lavi-layout-footer>
+  </div>
+</div>

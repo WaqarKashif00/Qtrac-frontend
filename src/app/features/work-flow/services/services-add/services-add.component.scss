@@ -1,0 +1,121 @@
+@import "src/stylings/primitives/primitives.scss";
+.padding-right-25{
+    padding-right: 25%;
+}
+
+.name-model{
+    max-height: 180px;
+    padding-right: 20px;
+    padding-left: 20px;
+    overflow-y: scroll;
+    overflow-x: clip;
+}
+
+.description-model{
+    max-height: 270px;
+    overflow-y: auto;
+    padding-right: 30px;
+    padding-left: 20px;
+    overflow-x: clip;
+}
+
+.service-modal-body {
+    height: 320px;
+    overflow-y: auto;
+    overflow-x: clip;
+    margin: 10px 0;
+  }
+
+.service-modal-left-part-padding{
+    padding: 0px 0px;
+}
+
+.padding-right{
+    padding-right:100px ;
+}
+
+.translate-name{
+    padding-top: 5% !important;
+    position: absolute;
+    right: 0% !important;
+}
+
+
+.translation-div{
+    padding-top: 4% !important;
+    position: absolute;
+    right: 12% !important;
+}
+
+.paddin-right-lite{
+    padding-right: 67px;
+}
+
+.height-100{
+    height: 100px !important;
+}
+
+.margin-left-1{
+    margin-left: 1px;
+}
+
+.padding-top-0{
+    padding-top: 0% !important;
+}
+
+.icon-modal{
+    margin-bottom: 50px;
+    align-items: center;
+    display: flex;
+    flex-flow: column;
+}
+
+.icon-div{
+    display: flex;
+    align-items: center;
+}
+
+.icon{
+    height: 100px;
+    width: 100px;
+}
+
+.image-translation-Div{
+    padding-top: 0% !important;
+    position: absolute;
+    right: 51% !important;
+    bottom: 3%;
+}
+
+.remove-pointer-events{
+    pointer-events: none;
+}
+
+.width-150{
+    width: 150%;
+}
+
+.width-16{
+    width: 16% !important;
+}
+
+.mw-30{
+    max-width: 30%;
+}
+
+.mw-20{
+    max-width: 20%;
+}
+
+.height-190px{
+    height: 190px;
+}
+
+.width-fit-content{
+    max-width: fit-content;
+}
+
+.x-unset{
+    overflow-x: unset !important;
+}
+

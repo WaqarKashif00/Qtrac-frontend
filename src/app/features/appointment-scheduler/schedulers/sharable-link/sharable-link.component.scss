@@ -1,0 +1,34 @@
+@import "src/stylings/primitives/primitives.scss";
+.margin-top60-bottom40 {
+  margin: 50px 15px 10px;
+}
+.input-copy-cost-calculator {
+  border-top-left-radius: 9px;
+  border-bottom-left-radius: 9px;
+  color: $scheduler-copy-link-color;
+  font-size: inherit;
+  font-weight: 500;
+  height: 40px;
+  padding-top: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 472px;
+}
+.span-copy-cost-calculator-icon {
+  background-color: $color-background-white;
+  border-top-right-radius: 9px;
+  border-bottom-right-radius: 9px;
+  border: 1px solid $scheduler-copy-cost-calculator;
+  width: 45px;
+}
+.copy-icon {
+  position: absolute;
+  right: 9px;
+  top: 6px;
+}
+.lbl-copy-cost-calculator-text {
+  font-weight: 500;
+  margin-bottom: 11px;
+  margin-left: 25px;
+}

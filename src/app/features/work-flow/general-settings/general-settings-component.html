@@ -1,0 +1,45 @@
+<lavi-form-content-panel>
+    <div class="col-lg-12 inner-panel-padding right-column-width">
+      <div class="mb-5">
+        <div class="row">
+          <div class="col-lg-9">
+            <div class="font-weight-500">Workflow Description</div>
+          </div>
+          <div class="col-lg-3 text-right">
+          </div>
+        </div>
+        <div class="pl-4 pt-4" >
+          <lavi-form [FormGroup]="GeneralSettingForm">
+            <div class="row">
+              <div class="col-3 pb-5">
+                <div lavi-text-field-loader [show-text-field-loading]="WorkflowNameFormControl.pending" [text-field-loading-settings]="LoaderSettings">
+                  <div class="col-lg-12 col-md-12 float-left pr-0 pl-0 lavi-text-field-loader-container">
+                    <div class="form-group">
+                      <kendo-textbox-container  class="w-100"  floatingLabel="Workflow Name" [class.k-state-invalid]="WorkflowNameFormControl?.invalid &&WorkflowNameFormControl?.dirty">
+                        <input kendoTextBox [formControl]="GeneralSettingForm.controls.name" tabindex="1" maxlength="50"
+                        lavi-auto-focus lavi-trim-value/>
+                      </kendo-textbox-container>
+                      <div class="h-10"> <lavi-validation-message-list [validation-form-group-name]="GeneralSettingForm"
+                        validation-control-name="name" [validation-errorlist]="WorkFlowMessage.workflowNameMessages">
+                      </lavi-validation-message-list></div>
+                    </div>
+                </div>
+              </div>
+              </div>
+            </div>
+           <div class="row">
+            <div class="col-4">
+              <kendo-textbox-container floatingLabel="Workflow Description">
+                <textarea kendoTextArea [autoSize]="true" tabindex="2"
+                  [formControl]=GeneralSettingForm.controls.description maxlength="200" lavi-trim-value  >
+                  </textarea>
+              </kendo-textbox-container>
+            </div>
+           </div>
+
+          </lavi-form>
+        </div>
+      </div>
+  </div>
+
+</lavi-form-content-panel>

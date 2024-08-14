@@ -1,0 +1,51 @@
+<ng-container *ngIf="isSimpleLabel">
+  <div
+    class="newControl position-absolute"
+    *ngFor="let control of Labels"
+    [style.transform]="
+      'translate(' + control.left + 'px, ' + control.top + 'px) scale(1)'
+    "
+    [style.width.px]="control.width"
+    [style.height.px]="control.height"
+    [style.z-index]="control.zindex"
+    [style.color]="control.color"
+    [style.font-size]="control.fontSize ? control.fontSize + 'px' : ''"
+    [style.font-style]="control.fontStyle"
+    [style.font-weight]="control.fontWeight"
+    [style.font-family]="control.font"
+    [style.text-align]="control.alignment"
+    [style.background-color]="control.backgroundColor"
+  >
+    <span class="wrap">{{
+      control.text[SelectedLanguage] || control.text[DefaultLanguage]
+        | laviEmptyString
+    }}</span>
+  </div>
+</ng-container>
+<ng-container *ngIf="(showAnnoucementLabel$ | async) && !isSimpleLabel">
+  <ng-container *ngIf="announcementLabel$ | async as data">
+    <div
+      class="newControl position-absolute"
+      *ngFor="let values of data.monitorPageData.labels"
+      [style.transform]="
+        'translate(' + values.left + 'px, ' + values.top + 'px) scale(1)'
+      "
+      [style.width.px]="values.width"
+      [style.height.px]="values.height"
+      [style.z-index]="values.zindex"
+      [style.color]="values.color"
+      [style.font-size]="values.fontSize ? values.fontSize + 'px' : ''"
+      [style.font-style]="values.fontStyle"
+      [style.font-weight]="values.fontWeight"
+      [style.font-family]="values.font"
+      [style.text-align]="values.alignment"
+      [style.background-color]="values.backgroundColor"
+    >
+      <span class="wrap">{{
+        values.isTextToSpeachEnable == true &&
+          (values.text[SelectedLanguage] || values.text[DefaultLanguage])
+          | laviEmptyString
+      }}</span>
+    </div>
+  </ng-container>
+</ng-container>

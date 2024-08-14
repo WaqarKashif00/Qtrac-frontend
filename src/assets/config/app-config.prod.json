@@ -1,0 +1,42 @@
+{
+  "SentryDSNConfiguration": {
+    "url": "https://7a8818089eaf43169e248fbd59708afc@o1047275.ingest.sentry.io/6024373"
+  },
+  "BaseAPIUrl": "https://api-app.qtrac.com/company-configuration",
+  "MonitorTemplateBaseAPIUrl": "https://api-app.qtrac.com/monitor-template",
+  "FileUploadBaseApi": "https://api-app.qtrac.com/upload",
+  "locationBaseAPIUrl": "https://api-app.qtrac.com/location",
+  "LanguageBaseAPIUrl": "https://api-app.qtrac.com/language",
+  "AgentTemplateBaseAPIUrl": "https://api-app.qtrac.com/agent-template",
+  "WorkFlowBaseAPIUrl": "https://api-app.qtrac.com/workflow-configuration",
+  "BaseAPIUrlBranch": "https://api-app.qtrac.com/branch-configuration",
+  "UserRoleBaseAPIUrl": "https://api-app.qtrac.com/user-role",
+  "KioskTemplateBaseAPIUrl": "https://api-app.qtrac.com/kiosk-template",
+  "AppointmentSchedulerURL": "https://api-app.qtrac.com/scheduler-template",
+  "HoursOfOperationBaseAPIUrl": "https://api-app.qtrac.com/hours-of-operation",
+  "UserBaseAPIUrl": "https://api-app.qtrac.com/user",
+  "LanguageTranslateBaseAPIUrl": "https://api-app.qtrac.com/language-translate",
+  "MessengingServiceBaseURL": "https://api-app.qtrac.com/messenging",
+  "MobileInterfaceBaseAPIUrl": "https://api-app.qtrac.com/mobile-interface",
+  "DynamicVariablesAPIUrl": "https://api-app.qtrac.com/dynamic-processor",
+  "ReportingBaseApiUrl":"https://api-app.qtrac.com/reporting",
+  "HomeInterfaceBaseAPIUrl": "https://api-app.qtrac.com/home-interface",
+  "AzureFunctionBaseAPIUrl": "https://api-app.qtrac.com/af",
+  "GoogleAPIUrl":"https://maps.googleapis.com",
+  "TextToSpeachBlobStoragePath":"https://saqtracglobalapppublic.blob.core.windows.net/announcementblobs",
+  "LoggerConfig": {
+    "LogLevel": 5,
+    "EnableServerLogs": true,
+    "EnableServerErrorLogs": true
+  },
+  "AADConfig": {
+    "Tenant": "qtracapp",
+    "SignInPolicy": "B2C_1_SignIn_Local",
+    "PasswordResetPolicy": "B2C_1_PasswordReset_Local",
+    "PasswordChangePolicy": "B2C_1A_PROFILE_EDIT_PASSWORD_CHANGE",
+    "ClientId": "a0ca5ec9-aafa-4c03-9617-6ded16616497"
+  },
+  "CustomFunctionApiKey": "20359262-9050-46a5-a565-7795925f0ff2",
+  "GoogleApiKey": "AIzaSyDQyr0vjLzrWYVd95aeiRy6oHga3L2Qx6E",
+  "IsOpenQueueInNewTab": false
+}

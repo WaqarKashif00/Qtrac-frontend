@@ -1,0 +1,13 @@
+<div>
+  <lavi-welcome-button-control
+    [Buttons]="ButtonsList$ | async"
+    [GridSize]="GridSize"
+    [IsOnlyGrid]="IsOnlyGrid"
+    [DivLayoutDesignContainer]="DivLayoutDesignContainer"
+    [SelectedLanguage]="SelectedLanguage$ | async"
+    [DefaultLanguage]="DefaultLanguage$ | async"
+    (ButtonMoveEnd)="OnButtonMoveEnd($event)"
+    (ButtonResizeStop)="OnButtonResizeEnd($event)"
+  >
+  </lavi-welcome-button-control>
+</div>

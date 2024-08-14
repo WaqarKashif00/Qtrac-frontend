@@ -1,0 +1,70 @@
+<ng-container
+  *ngIf="{
+    IsEditMode: IsEditMode$ | async,
+    IsOpened: IsModalOpened$ | async,
+    WorkflowList: WorkFlowList$ | async
+  } as value"
+>
+  <lavi-auth-container [HeaderTitle]="'Mobile Interface Designer'" [ExitURL]="'/manage/mobile-interfaces'">
+    <lavi-mobile-layout-container
+      *ngIf="!value.IsOpened"
+    ></lavi-mobile-layout-container>
+    <lavi-modal
+      [OpenDialog]="value.IsOpened"
+      *ngIf="value.IsOpened && WorkFlowList$ | async as WorkflowList"
+      Title="{{
+        value.WorkflowList.length > 0 ? 'Select a workflow and continue' : ''
+      }}"
+      [MinWidth]="250"
+      [Width]="750"
+    >
+      <ng-container *ngIf="value.WorkflowList.length > 0">
+        <div class="text-center">
+          <kendo-textbox-container floatingLabel="Select Workflow" class="w-50">
+            <kendo-dropdownlist
+              tabindex="4"
+              (valueChange)="OnMobileWorkFloDropDownChange($event)"
+              [data]="value.WorkflowList"
+              textField="name"
+              valueField="workFlowId"
+              [(ngModel)]="SelectedWorkFlowValue"
+              placeholder="Select Workflow"
+            >
+            </kendo-dropdownlist>
+          </kendo-textbox-container>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="value.WorkflowList.length === 0">
+        <div class="text-center f-20">
+          <span>No workflow to continue.</span>
+        </div>
+      </ng-container>
+      <kendo-dialog-actions>
+        <div class="col-lg-12 col-sm-12 col-12 pt-5">
+          <div class="row">
+            <div class="col-lg-5 col-4"></div>
+            <div class="col-lg-7 col-8">
+              <div class="float-right">
+                <input
+                  kendoButton
+                  type="button"
+                  (click)="OnCancelClick()"
+                  class="secondary-button"
+                  value="Cancel"
+                />
+                <input
+                  *ngIf="value.WorkflowList.length > 0"
+                  type="button"
+                  (click)="OnSubmitAction()"
+                  kendoButton
+                  class="primary-button mr-4"
+                  value="Continue"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </kendo-dialog-actions>
+    </lavi-modal>
+  </lavi-auth-container>
+</ng-container>

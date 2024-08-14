@@ -1,0 +1,42 @@
+{
+  "SentryDSNConfiguration": {
+    "url": "https://7a8818089eaf43169e248fbd59708afc@o1047275.ingest.sentry.io/6024373"
+  },
+  "BaseAPIUrl": "https://api-staging.qtrac.com/company-configuration",
+  "MonitorTemplateBaseAPIUrl": "https://api-staging.qtrac.com/monitor-template",
+  "FileUploadBaseApi": "https://api-staging.qtrac.com/upload",
+  "locationBaseAPIUrl": "https://api-staging.qtrac.com/location",
+  "LanguageBaseAPIUrl": "https://api-staging.qtrac.com/language",
+  "AgentTemplateBaseAPIUrl": "https://api-staging.qtrac.com/agent-template",
+  "WorkFlowBaseAPIUrl": "https://api-staging.qtrac.com/workflow-configuration",
+  "BaseAPIUrlBranch": "https://api-staging.qtrac.com/branch-configuration",
+  "UserRoleBaseAPIUrl": "https://api-staging.qtrac.com/user-role",
+  "KioskTemplateBaseAPIUrl": "https://api-staging.qtrac.com/kiosk-template",
+  "AppointmentSchedulerURL": "https://api-staging.qtrac.com/scheduler-template",
+  "HoursOfOperationBaseAPIUrl": "https://api-staging.qtrac.com/hours-of-operation",
+  "UserBaseAPIUrl": "https://api-staging.qtrac.com/user",
+  "LanguageTranslateBaseAPIUrl": "https://api-staging.qtrac.com/language-translate",
+  "MessengingServiceBaseURL": "https://api-staging.qtrac.com/messenging",
+  "MobileInterfaceBaseAPIUrl": "https://api-staging.qtrac.com/mobile-interface",
+  "DynamicVariablesAPIUrl": "https://api-staging.qtrac.com/dynamic-processor",
+  "ReportingBaseApiUrl":"https://api-staging.qtrac.com/reporting",
+  "HomeInterfaceBaseAPIUrl": "https://api-staging.qtrac.com/home-interface",
+  "AzureFunctionBaseAPIUrl": "https://api-staging.qtrac.com/af",
+  "GoogleAPIUrl":"https://maps.googleapis.com",
+  "TextToSpeachBlobStoragePath":"https://saqtracglobalstapublic.blob.core.windows.net/announcementblobs",
+  "LoggerConfig": {
+    "LogLevel": 5,
+    "EnableServerLogs": true,
+    "EnableServerErrorLogs": true
+  },
+  "AADConfig": {
+    "Tenant": "qtracstaging",
+    "SignInPolicy": "B2C_1_SignIn_Local",
+    "PasswordResetPolicy": "B2C_1_PasswordReset_Local",
+    "PasswordChangePolicy": "B2C_1A_PROFILE_EDIT_PASSWORD_CHANGE",
+    "ClientId": "e744c986-0318-466e-9962-0fa11aeeba8a"
+  },
+  "CustomFunctionApiKey": "92d549a3-f8dc-4f1a-b6f3-f1b4ec33747a",
+  "GoogleApiKey": "AIzaSyDQyr0vjLzrWYVd95aeiRy6oHga3L2Qx6E",
+  "IsOpenQueueInNewTab": false
+}

@@ -1,0 +1,52 @@
+@import "src/stylings/primitives/primitives.scss";
+#question-grid .k-grid-header{
+    display: none;
+}
+
+.modal-background{
+  background: $color-background-white;
+}
+
+.margin-right-2 {
+    margin-right: 2%;
+}
+
+.question-list {
+    height: 145px;
+    margin-bottom: 20px;
+}
+
+.scroll-y {
+    overflow-y: auto;
+}
+
+.height-324-px {
+    height: 324px;
+}
+
+.left-col{
+  height: 277px;
+}
+
+.vertical-line {
+    background-color: rgba(0, 0, 0, 0.1);
+    width: 0.1%;
+}
+
+::ng-deep .k-window-content {
+  padding: 24px 36px;
+}
+
+::ng-deep .k-window.k-dialog {
+  background: #f2f3f4;
+}
+
+::ng-deep .k-tabstrip > .k-content {
+  background-color: $color-background-white;
+}
+.width-fit {
+    width: fit-content !important;
+}
+.flex-auto {
+  flex: auto;
+}

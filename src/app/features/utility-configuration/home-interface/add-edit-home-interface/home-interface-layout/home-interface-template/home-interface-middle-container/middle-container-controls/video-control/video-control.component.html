@@ -1,0 +1,27 @@
+<div
+  class="newControl newImage"
+  *ngFor="let control of Controls"
+  [position]="{ x: control.styles.left, y: control.styles.top }"
+  [style.width.px]="control.styles.width"
+  [style.height.px]="control.styles.height"
+  [style.z-index]="control.styles.zindex"
+  rzContainment="#DivLayoutDesignContainer"
+  [bounds]="DivLayoutDesignContainer"
+  [preventDefaultEvent]="true"
+  [gridSize]="IsOnlyGrid ? GridSize : null"
+  [rzGrid]="IsOnlyGrid ? GridSize : null"
+  (endOffset)="onControlMoveEnd($event, control)"
+  (rzStop)="onControlResizeStop($event, control)"
+  (click)="onControlClick(control)"
+  ngDraggable
+  ngResizable
+>
+  <ng-container *ngIf="control">
+    <lavi-video
+      [Width]="control.styles.width"
+      [Height]="control.styles.height"
+      [Src]="GetUrl(control.src)"
+      (Remove)="onControlRemove(control)"
+    ></lavi-video>
+  </ng-container>
+</div>

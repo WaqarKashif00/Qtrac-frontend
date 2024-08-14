@@ -1,0 +1,28 @@
+<div class="container">
+  <div [class]="OpenQueueInNewTab ? 'row mr-105 mt-1':'row'">
+    <div [class]="OpenQueueInNewTab ? 'col-10':'col-12'">
+
+      <div class="container p-0">
+        <div class="row">
+          <div class="col-12 text-right half-font light-font-color">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 text-right bold text-color-black">
+            {{UserName$| async}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 text-right half-font light-font-color">
+            {{CompanyName$| async}} | {{BranchName$| async}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-2 vertical-center p-0" *ngIf="OpenQueueInNewTab">
+      <img *ngIf="UserImageUrl$ | async" [src]="UserImageUrl$ | async" class="rounded-circle head-user-icon"
+        alt="avatar image" height="30" width="30" />
+      <span *ngIf="!(UserImageUrl$ | async)" class="head-username head-username-initial">{{Initials$ | async}}</span>
+    </div>
+  </div>
+</div>

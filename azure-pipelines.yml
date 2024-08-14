@@ -1,0 +1,60 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - develop
+      - staging
+      - production
+
+name: $(SourceBranchName).$(Date:yyyy-MM-dd)$(Rev:.r)
+
+resources:
+  - repo: self
+
+pool:
+  vmImage: ubuntu-20.04
+
+variables:
+  ${{ if eq(variables['Build.SourceBranchName'], 'develop') }}:
+    env: dev
+
+  ${{ if eq(variables['Build.SourceBranchName'], 'staging') }}:
+    env: stage
+
+  ${{ if eq(variables['Build.SourceBranchName'], 'production') }}:
+    env: prod
+
+steps:
+  - bash: |
+      echo "              env: $(env)"
+    displayName: Show variables
+
+  - task: NodeTool@0
+    displayName: "Install Node"
+    inputs:
+      versionSpec: 14.15.0
+
+  - script: |
+      npm install --force
+    displayName: Install Dependencies
+
+  - script: npx kendo-ui-license activate
+    displayName: 'Activate Kendo UI License'
+    env:
+      KENDO_UI_LICENSE: $(KENDO_UI_LICENSE)
+
+  - script: |
+      npm run build:$(env)
+    displayName: Build the Project
+
+  - task: ArchiveFiles@2
+    displayName: "Archive files"
+    inputs:
+      archiveFile: "$(Build.ArtifactStagingDirectory)/$(app)-$(service)-1.0.$(Build.BuildId).zip"
+      rootFolderOrFile: dist
+
+  - task: PublishPipelineArtifact@1
+    displayName: "Publish Artifact"
+    inputs:
+      targetPath: "$(Build.ArtifactStagingDirectory)"
+      artifact: drop

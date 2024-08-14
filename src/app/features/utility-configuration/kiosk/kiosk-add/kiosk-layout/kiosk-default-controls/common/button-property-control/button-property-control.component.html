@@ -1,0 +1,182 @@
+<ng-container >
+  <lavi-form-panel [PanelHeader]="PanelHeader" [(PanelExpand)]="IsPageButtonSelected">
+    <lavi-form-content-panel>
+      <ng-container>
+        <div class="property-window-body">
+          <ng-container *ngIf="Buttons.length > 1">
+          <label>Button</label>
+          <select (change)="OnButtonDropdownChange($event)">
+            <option
+              *ngFor="let button of Buttons"
+              [value]="button.name"
+              [selected]="button.showPropertyWindow"
+            >
+              {{ button.name }}
+            </option>
+          </select>
+        </ng-container>
+        <ng-container
+          *ngFor="let Button of Buttons; let i = index"
+        >
+          <div
+            *ngIf="Button.showPropertyWindow"
+            [formGroup]="Button.form"
+          >
+          <div>
+            <label>Show Icon</label>
+            <span class="float-right mr-3 mt-1">
+              <input
+              type="checkbox"
+              kendoCheckBox
+              formControlName="showIcon"
+            />
+            </span>
+          </div>
+            <div>
+              <label>Width</label
+              ><input
+                type="text"
+                maxlength="3"
+                lavi-app-numbers-only
+                formControlName="width"
+                [value]="Button.styles.width"
+                placeholder="Width"
+              />
+              <span>px</span>
+            </div>
+            <div>
+              <label>Height</label
+              ><input
+                type="text"
+                formControlName="height"
+                maxlength="3"
+                lavi-app-numbers-only
+                [value]="Button.styles.height"
+                placeholder="Height"
+              />
+              <span>px</span>
+            </div>
+            <div>
+              <label>Left</label
+              ><input
+                type="text"
+                maxlength="5"
+                lavi-app-numbers-only
+                formControlName="left"
+                [value]="Button.styles.left"
+                placeholder="Left"
+              />
+              <span>px</span>
+            </div>
+            <div>
+              <label>Top</label
+              ><input
+                type="text"
+                formControlName="top"
+                maxlength="3"
+                lavi-app-numbers-only
+                [value]="Button.styles.top"
+                placeholder="Top"
+              />
+              <span>px</span>
+            </div>
+            <div *ngIf="!Button.showIcon">
+              <label>Text</label>
+              <div class="float-right">
+                <span
+                  (click)="OpenTranslateDialog()"
+                  class="text-blue cursor-pointer"
+                >
+                  Edit text</span
+                >
+              </div>
+            </div>
+            <div class="position-relative" *ngIf="Button.showIcon">
+              <label>src</label>
+              <div class="float-right text-right upload-button-container">
+                <span class="mr-n3 browse-button">
+                  <ng-container><span (click)="OpenImageDialog()" class="text-blue">Click to add</span></ng-container>
+                  <span class="edit-icon"></span>
+                </span>
+              </div>
+            </div>
+            <ng-container *ngIf="!Button.showIcon">
+            <div>
+              <label>Background Color: </label>
+              <kendo-colorpicker
+                formControlName="backgroundColor"
+                [value]="Button.styles.backgroundColor"
+              >
+              </kendo-colorpicker>
+            </div>
+            <div>
+              <label>Text Color </label>
+              <kendo-colorpicker
+                formControlName="color"
+                [value]="Button.styles.color"
+              >
+              </kendo-colorpicker>
+            </div>
+            <lavi-font [FormGroup]="Button.form"></lavi-font>
+            <div>
+              <label>Box Round Corners</label
+              ><input
+                type="text"
+                formControlName="boxRoundCorners"
+                [value]="Button.styles.boxRoundCorners"
+                placeholder="Box Round Corners"
+                lavi-app-numbers-only
+                maxlength="2"
+              />
+              <span>px</span>
+            </div>
+            <div>
+              <label>Border</label>
+              <select class="cursor-pointer" formControlName="border">
+                <option *ngFor="let size of BorderSizes" [value]="size">
+                  {{ size }}
+                </option>
+              </select>
+            </div>
+            <div>
+              <label>Border color</label>
+              <kendo-colorpicker
+                formControlName="borderColor"
+                class="cursor-pointer"
+                [value]="Button.borderColor"
+              >
+              </kendo-colorpicker>
+            </div>
+            <div>
+              <label>Box Shadow</label>
+              <select formControlName="shadow">
+                <option [ngValue]="true">True</option>
+                <option [ngValue]="false">False</option>
+              </select>
+            </div>
+          </ng-container>
+          </div>
+        </ng-container>
+      </div>
+      </ng-container>
+    </lavi-form-content-panel>
+  </lavi-form-panel>
+
+  <lavi-language-translate-modal
+  Title="{{ ButtonName + ' Text'}}"
+  [OpenDialog]="Open"
+  [TextFormArray]="TextFormArray"
+  (CloseTranslateTextDialog)="CloseTranslateDialog()"
+  (Save)="UpdateTranslatedTextInForm($event)"
+  (TranslateText)="Translate($event)">
+  </lavi-language-translate-modal>
+
+  <lavi-language-image-modal [OpenDialog]="OpenImageModal"
+  [Title]="'Upload Images'"
+  [ImageFormArray]="ButtonImageFormArray"
+  (Save)="Save($event)"
+  (CloseImageModal)="CloseImageDialog()">
+  </lavi-language-image-modal>
+
+
+</ng-container>

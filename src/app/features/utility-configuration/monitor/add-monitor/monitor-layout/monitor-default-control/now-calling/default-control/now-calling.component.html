@@ -1,0 +1,68 @@
+<ng-container *ngIf="NowCallingControl$ | async as control">
+  <div
+    rzContainment="#DivLayoutDesignContainer"
+    (rzStop)="OnResizeStop($event)"
+    (endOffset)="OnMoveEnd($event)"
+    (click)="OnClick()"
+    [position]="{
+      x: control.styles.left,
+      y: control.styles.top
+    }"
+    [style.width.px]="control.styles.width"
+    [style.height.px]="control.styles.height"
+    [style.background-color]="control.styles.backgroundColor"
+    [style.border-radius.px]="control.styles.boxRoundCorners || 0"
+    [style.background-image]="'url(' + control.src + ')'"
+    [ngClass]="{ 'shadow': control.boxShadow }"
+    [inBounds]="true"
+    [bounds]="DivLayoutDesignContainer"
+    [preventDefaultEvent]="true"
+    [gridSize]="IsOnlyGrid ? GridSize : null"
+    [rzGrid]="IsOnlyGrid ? GridSize : null"
+    class="e-panel insideDiv now-calling"
+    ngDraggable
+    ngResizable
+  >
+    <p
+    [style.font-size]="
+    control.titleFontSize ? control.titleFontSize + 'px' : ''
+  "
+      [style.font-style]="control.titleFontStyle"
+      [style.font-family]="control.titleFont"
+      [style.font-weight]="control.titleFontWeight"
+      [style.color]="control.titleTextColor"
+      class="heading-text"
+    >
+    <ng-container *ngIf="SelectedLanguage$ | async as language">
+      {{control.text[language] ?
+        (control.text[language] | uppercase):
+        control.text[DefaultLanguage] | uppercase }}
+    </ng-container>
+    </p>
+    <div
+      [style.font-size]="control.styles.fontSize ? control.styles.fontSize + 'px' : ''"
+      [style.font-style]="control.styles.fontStyle"
+      [style.font-family]="control.styles.font"
+      [style.color]="control.styles.color"
+      [style.font-weight]="control.styles.fontWeight || ''"
+      class="list-container"
+    >
+    <div class="row justify-content-md-center">
+      <div class="col-5 wrap text-left">A008</div>
+      <div class="col-5 wrap text-left">DESK 3</div>
+    </div>
+    <div class="row justify-content-md-center">
+      <div class="col-5 wrap text-left">A009</div>
+      <div class="col-5 wrap text-left">DESK 5</div>
+    </div>
+    <div class="row justify-content-md-center">
+      <div class="col-5 wrap text-left">A010</div>
+      <div class="col-5 wrap text-left">DESK 6</div>
+    </div>
+    <div class="row justify-content-md-center">
+      <div class="col-5 wrap text-left">A011</div>
+      <div class="col-5 wrap text-left">DESK 8</div>
+    </div>
+    </div>
+  </div>
+</ng-container>

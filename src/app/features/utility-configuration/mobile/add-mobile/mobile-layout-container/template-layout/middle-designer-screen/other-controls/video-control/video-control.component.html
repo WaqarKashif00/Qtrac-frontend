@@ -1,0 +1,31 @@
+<div
+  class="newControl newImage position-absolute controls-width w-100"
+  *ngFor="let control of Controls"
+  [position]="{ x: control.styles.left, y: control.styles.top }"
+  [style.height.px]="control.styles.height"
+  [style.z-index]="control.styles.zindex"
+  [style.padding-left.px]="control.horizontalPadding || 0"
+  [style.padding-right.px]="control.horizontalPadding || 0"
+  [style.padding-top.px]="control.verticalPadding || 0"
+  [style.padding-bottom.px]="control.verticalPadding || 0"
+  rzContainment="#DivLayoutDesignContainer"
+  [inBounds]="true"
+  (endOffset)="onControlMoveEnd($event, control)"
+  (rzStop)="onControlResizeStop($event, control)"
+  (click)="onControlClick(control)"
+  lockAxis="x"
+  rzHandles="s,n"
+  ngDraggable
+  ngResizable
+  [ngClass]="{ controlFocus: control.selected }"
+>
+<ng-container *ngIf="control" >
+  <lavi-mobile-video
+  [Height]="control.styles.height"
+  [zindex]="control.styles.zindex"
+  [BoxRoundCorners]="control.styles.BoxRoundCorners"
+  [Src]="GetUrl(control.src)" 
+  (Remove)="onControlRemove(control)"
+  ></lavi-mobile-video>
+</ng-container>
+</div>

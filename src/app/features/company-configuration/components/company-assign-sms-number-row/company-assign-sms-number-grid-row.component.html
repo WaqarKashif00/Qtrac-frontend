@@ -1,0 +1,41 @@
+<div class="row pt-3 grid-content grid-border-bottom pb-2">
+    <div class="col-1 font-15">
+        <div class="row">
+            <div class="col-5" *ngIf="!IsActive">
+              <img class="img-width cursor-pointer" (click)="Delete()" src="../../../../assets/img/delete-icon.svg" *laviHasRoleAccess="roleActions.CompanyConfiguration;actionName: actionType.Delete" />
+            </div>
+            <div class="col-5" *ngIf="IsActive && (!IsEditMode) &&(!IsOtherEditModeOn)">
+              <img class="img-width cursor-pointer" (click)="Edit()" src="../../../../assets/img/edit-icon.svg" *laviHasRoleAccess="roleActions.CompanyConfiguration;actionName: actionType.AddEdit"/>
+            </div>
+            <div class="col-1 bold text-orange font-25" *ngIf="!IsActive" >
+                !
+            </div>
+        </div>
+    </div>
+
+    <div class="col-3 text-phone-number" >
+        {{Number | laviPhoneNumberFormat}}
+    </div>
+
+    <div class="col-5 text-left" *ngIf="!IsEditMode && BranchId">
+        {{BranchList | laviTextFromDropdown : BranchId : 'branchId' : 'branchName'}}
+    </div>
+    <div class="col-5 text-left" *ngIf="!IsEditMode && !BranchId">
+        <b>-</b>
+    </div>
+    <div class="col-3" *ngIf="IsEditMode">
+        <div>
+            <kendo-dropdownlist lavi-drop-down-event (lavi-drop-down-open)="OnOpenDropDown()" tabindex="4"
+             placeholder="Select Location" [data]="CopyBranchList | laviSortBy:'branchName'" textField="branchName"
+             (valueChange)='OnOptionsSelected($event)'
+              [defaultItem]="DefaultData" [(ngModel)]='SelectedBranch' valueField="branchId">
+            </kendo-dropdownlist>
+        </div>
+    </div>
+    <div class="col-2 mt-2">
+      <ng-container *laviHasRoleAccess="roleActions.CompanyConfiguration;actionName: actionType.AddEdit">
+      <span class="text-blue mr-2" (click)="Update()" *ngIf="IsEditMode && BranchId != SelectedBranch?.branchId">Update</span>
+    </ng-container>
+      <span class="text-blue update-link" (click)="Edit()" *ngIf="IsEditMode">Cancel</span>
+    </div>
+</div>

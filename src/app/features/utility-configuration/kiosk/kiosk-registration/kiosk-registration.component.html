@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="d-flex justify-content-center pb-5 pt-5">
+    <img src="../../../../../assets/img/qtracvr.png" />
+  </div>
+  <div class="d-flex justify-content-center pb-5">
+    Welcome to Qtrac device registration page. Click on Get Code to receive the
+    device registration code.
+  </div>
+  <div class="d-flex justify-content-center pb-5" *ngIf="!IsDeviceIdVisible && IsEnforceReCaptcha$ | async as boolean">
+    <re-captcha
+      [formControl]="CaptchaFormControl"
+      class="d-inline-block"
+    ></re-captcha>
+  </div>
+  <div class="d-flex justify-content-center" *ngIf="!IsDeviceIdVisible">
+    <input
+      type="button"
+      [disabled]="CaptchaFormControl.invalid && IsEnforceReCaptcha$ | async"
+      class="e-info k-button"
+      value="GET CODE"
+      (click)="createAzureSignalRServiceAndGetOtp()"
+    />
+  </div>
+  <ng-container *ngIf="DeviceId$ | async as DeviceId; else loading">
+    <div class="d-flex justify-content-center pb-5"  *ngIf="IsDeviceIdVisible">
+      Your device registration code is :
+    </div>
+    <div class="d-flex justify-content-center pb-5"   *ngIf="IsDeviceIdVisible">
+      <h4>{{DeviceId}}</h4>
+    </div>
+  </ng-container>
+  <ng-template #loading>
+    <div class="d-flex justify-content-center"    *ngIf="IsDeviceIdVisible">
+      <p class="card-text">Getting device registration code from Server.......</p>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,40 @@
+<div class="stepper-container content-area clearfix">
+  <kendo-stepper
+    [steps]="StepsDetails.steps"
+    [stepType]="'full'"
+    [(currentStep)]="CurrentStep"
+    [style.width.%]="100"
+    [linear]="StepsDetails.isLinear"
+    (activate)="OnSelect($event)"
+  >
+  </kendo-stepper>
+
+  <div class="stepper-desc" *ngIf="StepperPreview.descriptionList.length > 0">
+    <p>{{ StepperPreview.header }}</p>
+    <div
+      class="d-flex mb-1"
+      *ngFor="let desc of StepperPreview.descriptionList"
+    >
+      <span
+        *ngIf="!StepperPreview.isReviewPage"
+        [style.background-color]="Color.activeBackColor"
+        class="i-check-circle"
+      >
+        <span
+          [style.color]="Color.activeTextColor"
+          class="k-icon k-i-check preview-icon"
+        ></span>
+      </span>
+      <span *ngIf="StepperPreview.isReviewPage" class="col-4 col-md-3 pr-0">
+        {{ desc.label }}:
+      </span>
+      <span
+        [style.color]="Color.inActiveTextColor"
+        [class]="desc.description ? 'description' : 'description ml-3'"
+        >{{ desc.description || "-" }}</span
+      >
+      <span *ngIf="StepperPreview.isReviewPage"
+      (click)="OnSectionCLick(desc.stepId,StepperPreview.isReviewPage,desc.isDefaultSelected)" class="edit-icon-black"></span>
+    </div>
+  </div>
+</div>

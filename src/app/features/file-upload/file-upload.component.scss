@@ -1,0 +1,44 @@
+@import "src/stylings/primitives/primitives.scss";
+.lbl-upload-new {
+  color: $color-link-text-blue;
+  font-weight: $font-weight-500;
+  font-size: $font-size-small-4;
+  display: contents;
+}
+
+.file-upload {
+  width: 100%;
+  min-height: 210px;
+}
+
+.file-label {
+  width: 85%;
+  margin: 0 auto;
+}
+
+.file-dimension {
+  height: 160px;
+  padding: 4px;
+}
+
+
+.image-size {
+  height: 175px;
+  max-width: 100%;
+}
+
+.rounded-file-upload {
+  width: 80px !important;
+  height: 85px !important ;
+  box-shadow: 0 0.125rem 0.25rem rgba($color-background-black, 0.075) !important;
+  background-color: $color-background-white !important;
+  border: 2px solid  $file-upload-border;
+  border-radius: 4px;
+}
+
+.rounded-image-size{
+  height: 80px;
+  width: 80px;
+}
+
+

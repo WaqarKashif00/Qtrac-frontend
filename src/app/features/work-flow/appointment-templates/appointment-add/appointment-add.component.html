@@ -1,0 +1,2370 @@
+<lavi-modal
+  Title="Appointment Template"
+  [OpenDialog]="OpenAppointmentDialog"
+  [Width]="830"
+  class="ox-unset"
+>
+  <div class="add-service-modal p-0">
+    <form
+      [formGroup]="AddAppointmentForm"
+      (ngSubmit)="SaveAppointmentTemplate()"
+      autocomplete="off"
+    >
+      <div class="modal-body">
+        <div class="row mt-2 p-0">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-4">
+                <kendo-textbox-container floatingLabel="Template Name">
+                  <input
+                    type="text"
+                    kendoTextBox
+                    lavi-auto-focus
+                    [AutoFocusRequired]="OpenAppointmentDialog"
+                    maxlength="50"
+                    [formControl]="AddAppointmentForm.controls.templateName"
+                    tabindex="1"
+                    lavi-trim-value
+                  />
+                </kendo-textbox-container>
+                <lavi-validation-message-list
+                  [validation-form-group-name]="AddAppointmentForm"
+                  validation-control-name="templateName"
+                  [validation-errorlist]="WorkflowMessage.TemplateNameMessages"
+                >
+                </lavi-validation-message-list>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <!-- Appointment Configuration -->
+            <div>
+              <div class="appointment-sub-header mt-4">
+                Appointment Configuration
+              </div>
+            </div>
+
+            <div class="setting-data">
+              <div class="col-12 pl-4 pr-0">
+                <span class="checkbox-label w-100">
+                  <label class="checkbox-label"
+                    >Allow
+                    <input
+                      tabindex="2"
+                      maxlength="5"
+                      class="numericTextbox pl-0"
+                      kendoTextBox
+                      lavi-app-numbers-only
+                      [formControl]="
+                        AddAppointmentForm.controls.noOfPeopleInTimeSlot
+                      "
+                    />
+                   visitors for appointments that are
+                    <input
+                      tabindex="2"
+                      maxlength="5"
+                      class="numericTextbox pl-0"
+                      kendoTextBox
+                      lavi-app-numbers-only
+                      [formControl]="
+                        AddAppointmentForm.controls
+                          .durationOfEachTimeSlotInMinutes
+                      "
+                    />
+                    minutes long.</label
+                  >
+                  <br />
+                  <div class="row">
+                    <div class="col-6">
+                      <div
+                        class="error-message padding-left-13"
+                        *ngIf="
+                          AddAppointmentForm?.controls?.noOfPeopleInTimeSlot?.hasError(
+                            'required'
+                          ) &&
+                          !AddAppointmentForm?.controls?.noOfPeopleInTimeSlot
+                            ?.pristine
+                        "
+                      >
+                        Required and can not be Zero.
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div
+                        class="error-message padding-left-10"
+                        *ngIf="
+                          AddAppointmentForm?.controls?.durationOfEachTimeSlotInMinutes?.hasError(
+                            'required'
+                          ) &&
+                          !AddAppointmentForm?.controls
+                            ?.durationOfEachTimeSlotInMinutes?.pristine
+                        "
+                      >
+                        Required and can not be Zero.
+                      </div>
+                    </div>
+                  </div>
+                  <label class="checkbox-label">
+                    Appointments may only be booked
+                    <input
+                      class="numericTextbox pl-0"
+                      maxlength="5"
+                      kendoTextBox
+                      lavi-app-numbers-only
+                      tabindex="2"
+                      [formControl]="AddAppointmentForm.controls.bookInBefore"
+                    />
+                  </label>
+
+                  <label class="checkbox-label">
+                    <span class="d-inline">
+                      <kendo-dropdownlist
+                        tabindex="2"
+                        class="no-border pl-2 pr-2 mt-2"
+                        [data]="bookInAdvanceTypeDropDown"
+                        [formControl]="
+                          AddAppointmentForm.controls.bookInBeforeType
+                        "
+                      >
+                      </kendo-dropdownlist> </span
+                    >from the current time.</label
+                  >
+                  <div class="row">
+                    <div class="col-6">
+                      <div
+                        class="error-message padding-left-65"
+                        *ngIf="
+                          AddAppointmentForm?.controls?.bookInBefore?.hasError(
+                            'required'
+                          ) &&
+                          !AddAppointmentForm?.controls?.bookInBefore?.pristine
+                        "
+                      >
+                        Required
+                      </div>
+                    </div>
+                  </div>
+                  <label class="checkbox-label">
+                    Allow visitors to book
+                    <input
+                      class="numericTextbox pl-0"
+                      maxlength="5"
+                      kendoTextBox
+                      lavi-app-numbers-only
+                      tabindex="2"
+                      [formControl]="AddAppointmentForm.controls.bookInAdvance"
+                    />
+                  </label>
+
+                  <label class="checkbox-label">
+                    <span class="d-inline">
+                      <kendo-dropdownlist
+                        tabindex="2"
+                        class="no-border pl-2 pr-2 mt-2"
+                        [data]="bookInAdvanceTypeDropDown"
+                        [formControl]="
+                          AddAppointmentForm.controls.bookInAdvanceType
+                        "
+                      >
+                      </kendo-dropdownlist> </span
+                    >in advance and can check-in</label
+                  >
+                  <label class="checkbox-label">
+                    <input
+                      class="numericTextbox pl-0"
+                      maxlength="5"
+                      kendoTextBox
+                      lavi-app-numbers-only
+                      tabindex="2"
+                      [formControl]="
+                        AddAppointmentForm.controls.earlyCheckInMinutes
+                      "
+                    />minutes early
+                  </label>
+                  <br />
+                  <div class="row">
+                    <div class="col-6">
+                      <div
+                        class="error-message padding-left-42"
+                        *ngIf="
+                          AddAppointmentForm?.controls?.bookInAdvance?.hasError(
+                            'required'
+                          ) &&
+                          !AddAppointmentForm?.controls?.bookInAdvance?.pristine
+                        "
+                      >
+                        Required and can not be Zero.
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div
+                        class="error-message padding-left-32"
+                        *ngIf="
+                          AddAppointmentForm?.controls?.earlyCheckInMinutes?.hasError(
+                            'required'
+                          ) &&
+                          !AddAppointmentForm?.controls?.earlyCheckInMinutes
+                            ?.pristine
+                        "
+                      >
+                        Required and can not be Zero.
+                      </div>
+                    </div>
+                  </div>
+                  <label class="checkbox-label">
+                    or
+                    <input
+                      class="numericTextbox pl-0"
+                      maxlength="5"
+                      kendoTextBox
+                      lavi-app-numbers-only
+                      tabindex="2"
+                      [formControl]="
+                        AddAppointmentForm.controls.lateCheckInMinutes
+                      "
+                    />
+                    minutes late.
+                  </label>
+                  <div class="row">
+                    <div class="col-6">
+                      <div
+                        class="error-message padding-left-6"
+                        *ngIf="
+                          AddAppointmentForm?.controls?.lateCheckInMinutes?.hasError(
+                            'required'
+                          ) &&
+                          !AddAppointmentForm?.controls?.lateCheckInMinutes
+                            ?.pristine
+                        "
+                      >
+                        Required and can not be Zero.
+                      </div>
+                    </div>
+                  </div>
+                </span>
+              </div>
+            </div>
+            <div class="col-6 pl-4">
+              <kendo-textbox-container class="w-75" floatingLabel="Mobile Template">
+                <kendo-dropdownlist
+                  [formControl]="AddAppointmentForm.controls.mobileTemplate"
+                  tabindex="2"
+                  [data]="MobileList | laviSortBy:'name'"
+                  [textField]="'name'"
+                  [valueField]="'id'"
+                  [ngClass]="{'k-state-disabled': (!MobileList || !MobileList[0] || (AddAppointmentForm.controls.mobileTemplate.value && Mode == 'EDIT'))}"
+                  >
+                </kendo-dropdownlist>
+              </kendo-textbox-container>
+              <div class="h-10">
+                <lavi-validation-message-list
+                  [validation-form-group-name]="AddAppointmentForm"
+                  validation-control-name="mobileTemplate"
+                  [validation-errorlist]="
+                  WorkflowMessage.DropdownValueMessages
+                  "
+                >
+                </lavi-validation-message-list>
+              </div>
+            </div>
+
+            <!-- Communication -->
+            <div>
+              <div class="appointment-sub-header mt-4">Communication</div>
+
+              <div>
+                <!-- Verification -->
+                <!-- <div class="sub-title-appointment mt-3">Verification</div> -->
+                <!-- Verification Email Template  -->
+                <!-- <div class="mt-4">
+                  <div class="mt-3 ml-3">
+                    <label
+                      class="cursor-pointer checkbox-label"
+                      (change)="
+                        isVerificationEmailTranslationValid = true;
+                        OnEmailSelectionChanged(
+                          VerificationEmailArray,
+                          AddAppointmentForm.controls.enableVerificationEmail
+                            .value
+                        )
+                      "
+                    >
+                      <input
+                        type="checkbox"
+                        tabindex="3"
+                        kendoCheckBox
+                        [formControl]="
+                          AddAppointmentForm.controls.enableVerificationEmail
+                        "
+                      />
+                      <span>Send appointment verification email.</span>
+                    </label>
+                  </div>
+
+                  <div class="marginleft-8 mt-1">
+                    <div
+                      formArrayName="verificationEmail"
+                      *ngFor="
+                        let itemrow of VerificationEmailArray.controls;
+                        let i = index
+                      "
+                    >
+                      <div [formGroupName]="i" *ngIf="itemrow.value.isDefault">
+                        <kendo-textbox-container
+                          floatingLabel="Email Subject ({{
+                            itemrow.value.language
+                          }})"
+                        >
+                          <mwl-text-input-autocomplete-container
+                            class="full-expand-style"
+                          >
+                            <input
+                              type="text"
+                              mwlTextInputAutocomplete
+                              triggerCharacter="%"
+                              [findChoices]="findChoices"
+                              [getChoiceLabel]="getChoiceLabel"
+                              kendoTextBox
+                              maxlength="500"
+                              formControlName="emailSubject"
+                              autocomplete="new-password"
+                              tabindex="3"
+                            />
+                          </mwl-text-input-autocomplete-container>
+                        </kendo-textbox-container>
+                        <lavi-validation-message-list
+                          [validation-form-group-name]="itemrow"
+                          validation-control-name="emailSubject"
+                          [validation-errorlist]="
+                            WorkflowMessage.EmailSubjectMessage
+                          "
+                        >
+                        </lavi-validation-message-list>
+
+                        <mwl-text-input-autocomplete-container class="mt-4">
+                          <angular-editor [skip-keys]="skipKeys"
+                          placeholder="Email Template ({{ itemrow.value.language }})"
+                          [config]="EditorConfig"
+                          formControlName="emailTemplate"  tabindex="9"
+                          (blur)="UpdateEmailTemplateFormArray(i,$event.currentTarget.innerHTML,VerificationEmailArray)">
+                          </angular-editor>
+                        </mwl-text-input-autocomplete-container>
+                        <lavi-show-dynamic-field [ConditionsName]="ConditionsName" ></lavi-show-dynamic-field>
+
+                        <lavi-validation-message-list
+                          [validation-form-group-name]="itemrow"
+                          validation-control-name="emailTemplate"
+                          [validation-errorlist]="
+                            WorkflowMessage.EmailTemplateMessage
+                          "
+                        >
+                        </lavi-validation-message-list>
+                      </div>
+                    </div>
+
+                    <div
+                      class="width-28"
+                      *ngIf="VerificationEmailArray?.controls?.length > 1"
+                    >
+                      <kendo-panelbar>
+                        <kendo-panelbar-item title="">
+                          <ng-template
+                            kendoPanelBarItemTitle
+                            class="additional-lnaguage-div"
+                          >
+                            <div>
+                              <div
+                                class="width-125 error-message"
+                                *ngIf="
+                                  !isVerificationEmailTranslationValid &&
+                                  VerificationEmailArray.invalid
+                                "
+                              >
+                                Please check the additional languages.
+                              </div>
+                              <label
+                                class="
+                                  cursor-pointer
+                                  margin-left-9
+                                  font-size-small-1
+                                "
+                              >
+                                <span>Additional Languages</span>
+                              </label>
+                            </div>
+                          </ng-template>
+
+                          <ng-template kendoPanelBarContent>
+                            <div
+                              formArrayName="verificationEmail"
+                              class="width-357"
+                              *ngFor="
+                                let itemrow of VerificationEmailArray.controls;
+                                let i = index
+                              "
+                            >
+                              <label
+                                class="
+                                  cursor-pointer
+                                  marginleft-92
+                                  text-blue
+                                  small
+                                "
+                                (click)="
+                                  translate(
+                                    itemrow.value.emailTemplate,
+                                    VerificationEmailArray,
+                                    'emailTemplate',
+                                    itemrow.value.emailSubject,
+                                    'emailSubject'
+                                  )
+                                "
+                                *ngIf="itemrow.value.isDefault"
+                              >
+                                <span>Translate</span>
+                              </label>
+                            </div>
+                            <div
+                              formArrayName="verificationEmail"
+                              class="width-357"
+                              *ngFor="
+                                let itemrow of VerificationEmailArray.controls;
+                                let i = index
+                              "
+                            >
+                              <div
+                                [formGroupName]="i"
+                                *ngIf="!itemrow.value.isDefault"
+                              >
+                                <kendo-textbox-container
+                                  floatingLabel="Email Subject ({{
+                                    itemrow.value.language
+                                  }})"
+                                  class="mt-3"
+                                >
+                                  <mwl-text-input-autocomplete-container
+                                    class="full-expand-style"
+                                  >
+                                    <input
+                                      type="text"
+                                      mwlTextInputAutocomplete
+                                      triggerCharacter="%"
+                                      [findChoices]="findChoices"
+                                      [getChoiceLabel]="getChoiceLabel"
+                                      kendoTextBox
+                                      maxlength="500"
+                                      formControlName="emailSubject"
+                                      autocomplete="new-password"
+                                      tabindex="3"
+                                    />
+                                  </mwl-text-input-autocomplete-container>
+                                </kendo-textbox-container>
+                                <lavi-validation-message-list
+                                  [validation-form-group-name]="itemrow"
+                                  validation-control-name="emailSubject"
+                                  [validation-errorlist]="
+                                    WorkflowMessage.EmailSubjectMessage
+                                  "
+                                >
+                                </lavi-validation-message-list>
+
+                                <mwl-text-input-autocomplete-container class="mt-4">
+                                  <angular-editor [skip-keys]="skipKeys"
+                                  placeholder="Email Template ({{ itemrow.value.language }})"
+                                  [config]="EditorConfig"
+                                  formControlName="emailTemplate"  tabindex="9"
+                                  (blur)="UpdateEmailTemplateFormArray(i,$event.currentTarget.innerHTML,VerificationEmailArray)">
+                                  </angular-editor>
+                                </mwl-text-input-autocomplete-container>
+                                <lavi-show-dynamic-field [ConditionsName]="ConditionsName" ></lavi-show-dynamic-field>
+
+                                <lavi-validation-message-list
+                                  [validation-form-group-name]="itemrow"
+                                  validation-control-name="emailTemplate"
+                                  [validation-errorlist]="
+                                    WorkflowMessage.EmailTemplateMessage
+                                  "
+                                >
+                                </lavi-validation-message-list>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </kendo-panelbar-item>
+                      </kendo-panelbar>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-4">
+                  <div class="mt-3 ml-3">
+                    <label
+                      class="cursor-pointer checkbox-label"
+                      (change)="
+                        isVerificationSMSTranslationValid = true;
+                        OnSMSSelectionChanged(
+                          VerificationSMSArray,
+                          AddAppointmentForm.controls.enableVerificationSMS
+                            .value
+                        )
+                      "
+                    >
+                      <input
+                        type="checkbox"
+                        tabindex="4"
+                        kendoCheckBox
+                        [formControl]="
+                          AddAppointmentForm.controls.enableVerificationSMS
+                        "
+                      />
+                      <span>Send appointment verification SMS.</span>
+                    </label>
+                  </div>
+
+                  <div class="marginleft-8 mt-1">
+                    <div
+                      formArrayName="verificationSMS"
+                      *ngFor="
+                        let itemrow of VerificationSMSArray.controls;
+                        let i = index
+                      "
+                    >
+                      <div [formGroupName]="i" *ngIf="itemrow.value.isDefault">
+                        <kendo-floatinglabel
+                          text="SMS Template ({{ itemrow.value.language }})"
+                          class="w-100 mt-3"
+                        >
+                          <mwl-text-input-autocomplete-container
+                            class="full-expand-style"
+                          >
+                            <textarea
+                              class="full-expand-style-text-area mt-3 height-100 w-100"
+                              mwlTextInputAutocomplete
+                              triggerCharacter="%"
+                              [findChoices]="findChoices"
+                              [getChoiceLabel]="getChoiceLabel"
+                              kendoTextArea
+                              rows="4"
+                              [autoSize]="true"
+                              tabindex="4"
+                              formControlName="smsTemplate"
+                              maxlength="500"
+                            >
+                            </textarea>
+                          </mwl-text-input-autocomplete-container>
+                        </kendo-floatinglabel>
+
+                        <lavi-validation-message-list
+                          [validation-form-group-name]="itemrow"
+                          validation-control-name="smsTemplate"
+                          [validation-errorlist]="
+                            WorkflowMessage.EmailTemplateMessage
+                          "
+                        >
+                        </lavi-validation-message-list>
+                      </div>
+                    </div>
+
+                    <div
+                      class="width-28"
+                      *ngIf="VerificationSMSArray?.controls?.length > 1"
+                    >
+                      <kendo-panelbar>
+                        <kendo-panelbar-item title="">
+                          <ng-template kendoPanelBarItemTitle class="width-10">
+                            <div>
+                              <div
+                                class="width-125 error-message"
+                                *ngIf="
+                                  !isVerificationSMSTranslationValid &&
+                                  VerificationSMSArray.invalid
+                                "
+                              >
+                                Please check the additional languages.
+                              </div>
+                              <label
+                                class="
+                                  cursor-pointer
+                                  margin-left-9
+                                  font-size-small-1
+                                "
+                              >
+                                <span>Additional Languages</span>
+                              </label>
+                            </div>
+                          </ng-template>
+
+                          <ng-template kendoPanelBarContent>
+                            <div
+                              formArrayName="verificationSMS"
+                              *ngFor="
+                                let itemrow of VerificationSMSArray.controls;
+                                let i = index
+                              "
+                              class="width-357"
+                            >
+                              <label
+                                class="
+                                  cursor-pointer
+                                  marginleft-92
+                                  text-blue
+                                  small
+                                "
+                                (click)="
+                                  translate(
+                                    itemrow.value.smsTemplate,
+                                    VerificationSMSArray,
+                                    'smsTemplate'
+                                  )
+                                "
+                                *ngIf="itemrow.value.isDefault"
+                              >
+                                <span>Translate</span>
+                              </label>
+                            </div>
+                            <div
+                              formArrayName="verificationSMS"
+                              *ngFor="
+                                let itemrow of VerificationSMSArray.controls;
+                                let i = index
+                              "
+                              class="width-357"
+                            >
+                              <div
+                                [formGroupName]="i"
+                                *ngIf="!itemrow.value.isDefault"
+                              >
+                                <kendo-floatinglabel
+                                  text="SMS Template ({{
+                                    itemrow.value.language
+                                  }})"
+                                  class="w-100 mt-3"
+                                >
+                                  <mwl-text-input-autocomplete-container
+                                    class="full-expand-style"
+                                  >
+                                    <textarea
+                                      class="full-expand-style-text-area mt-3 height-100 w-100"
+                                      mwlTextInputAutocomplete
+                                      triggerCharacter="%"
+                                      [findChoices]="findChoices"
+                                      [getChoiceLabel]="getChoiceLabel"
+                                      kendoTextArea
+                                      rows="4"
+                                      [autoSize]="true"
+                                      tabindex="4"
+                                      formControlName="smsTemplate"
+                                      maxlength="500"
+                                    >
+                                    </textarea>
+                                  </mwl-text-input-autocomplete-container>
+                                </kendo-floatinglabel>
+
+                                <lavi-validation-message-list
+                                  [validation-form-group-name]="itemrow"
+                                  validation-control-name="smsTemplate"
+                                  [validation-errorlist]="
+                                    WorkflowMessage.confirmationSMSTemplateMessage
+                                  "
+                                >
+                                </lavi-validation-message-list>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </kendo-panelbar-item>
+                      </kendo-panelbar>
+                    </div>
+                  </div>
+                </div> -->
+
+                <!-- Registration -->
+                <div class="sub-title-appointment mt-3">Confirmation</div>
+                <!-- confirmation Email Template  -->
+                <div class="mt-4">
+                  <div class="mt-3 ml-3">
+                    <label
+                      class="cursor-pointer checkbox-label"
+                      (change)="
+                        isConfirmationEmailTranslationValid = true;
+                        OnEmailSelectionChanged(
+                          ConfirmationEmailArray,
+                          AddAppointmentForm.controls
+                            .enableConfirmationEmailAfterRegistration.value
+                        )
+                      "
+                    >
+                      <input
+                        type="checkbox"
+                        tabindex="3"
+                        kendoCheckBox
+                        [formControl]="
+                          AddAppointmentForm.controls
+                            .enableConfirmationEmailAfterRegistration
+                        "
+                      />
+                      <span
+                        >Send appointment confirmation email after
+                        confirmation.</span
+                      >
+                    </label>
+                  </div>
+
+                  <div class="marginleft-8 mt-1">
+                    <div
+                      formArrayName="confirmationEmail"
+                      *ngFor="
+                        let itemrow of ConfirmationEmailArray.controls;
+                        let i = index
+                      "
+                    >
+                      <div [formGroupName]="i" *ngIf="itemrow.value.isDefault">
+                        <kendo-textbox-container
+                          floatingLabel="Email Subject ({{
+                            itemrow.value.language
+                          }})"
+                        >
+                          <mwl-text-input-autocomplete-container
+                            class="full-expand-style"
+                          >
+                            <input
+                              type="text"
+                              mwlTextInputAutocomplete
+                              triggerCharacter="%"
+                              [findChoices]="findChoices"
+                              [getChoiceLabel]="getChoiceLabel"
+                              kendoTextBox
+                              maxlength="500"
+                              formControlName="emailSubject"
+                              autocomplete="new-password"
+                              tabindex="3"
+                            />
+                          </mwl-text-input-autocomplete-container>
+                        </kendo-textbox-container>
+                        <lavi-validation-message-list
+                          [validation-form-group-name]="itemrow"
+                          validation-control-name="emailSubject"
+                          [validation-errorlist]="
+                            WorkflowMessage.EmailSubjectMessage
+                          "
+                        >
+                        </lavi-validation-message-list>
+
+                        <mwl-text-input-autocomplete-container class="mt-4">
+                          <angular-editor [skip-keys]="skipKeys"
+                          placeholder="Email Template ({{ itemrow.value.language }})"
+
+                          [config]="EditorConfig"
+                          formControlName="emailTemplate"  tabindex="9"
+                          (blur)="UpdateEmailTemplateFormArray(i,$event.currentTarget.innerHTML,ConfirmationEmailArray)">
+                          </angular-editor>
+                        </mwl-text-input-autocomplete-container>
+                        <lavi-show-dynamic-field [ConditionsName]="ConditionsName" ></lavi-show-dynamic-field>
+
+                        <lavi-validation-message-list
+                          [validation-form-group-name]="itemrow"
+                          validation-control-name="emailTemplate"
+                          [validation-errorlist]="
+                            WorkflowMessage.EmailTemplateMessage
+                          "
+                        >
+                        </lavi-validation-message-list>
+                      </div>
+                    </div>
+
+                    <div
+                      class="width-28"
+                      *ngIf="ConfirmationEmailArray?.controls?.length > 1"
+                    >
+                      <kendo-panelbar>
+                        <kendo-panelbar-item title="">
+                          <ng-template
+                            kendoPanelBarItemTitle
+                            class="additional-lnaguage-div"
+                          >
+                            <div>
+                              <div
+                                class="width-125 error-message"
+                                *ngIf="
+                                  !isConfirmationEmailTranslationValid &&
+                                  ConfirmationEmailArray.invalid
+                                "
+                              >
+                                Please check the additional languages.
+                              </div>
+                              <label
+                                class="
+                                  cursor-pointer
+                                  margin-left-9
+                                  font-size-small-1
+                                "
+                              >
+                                <span>Additional Languages</span>
+                              </label>
+                            </div>
+                          </ng-template>
+
+                          <ng-template kendoPanelBarContent>
+                            <div
+                              formArrayName="confirmationEmail"
+                              class="width-357"
+                              *ngFor="
+                                let itemrow of ConfirmationEmailArray.controls;
+                                let i = index
+                              "
+                            >
+                              <label
+                                class="
+                                  cursor-pointer
+                                  marginleft-92
+                                  text-blue
+                                  small
+                                "
+                                (click)="
+                                  translate(
+                                    itemrow.value.emailTemplate,
+                                    ConfirmationEmailArray,
+                                    'emailTemplate',
+                                    itemrow.value.emailSubject,
+                                    'emailSubject'
+                                  )
+                                "
+                                *ngIf="itemrow.value.isDefault"
+                              >
+                                <span>Translate</span>
+                              </label>
+                            </div>
+                            <div
+                              formArrayName="confirmationEmail"
+                              class="width-357"
+                              *ngFor="
+                                let itemrow of ConfirmationEmailArray.controls;
+                                let i = index
+                              "
+                            >
+                              <div
+                                [formGroupName]="i"
+                                *ngIf="!itemrow.value.isDefault"
+                              >
+                                <kendo-textbox-container
+                                  floatingLabel="Email Subject ({{
+                                    itemrow.value.language
+                                  }})"
+                                  class="mt-3"
+                                >
+                                  <mwl-text-input-autocomplete-container
+                                    class="full-expand-style"
+                                  >
+                                    <input
+                                      type="text"
+                                      mwlTextInputAutocomplete
+                                      triggerCharacter="%"
+                                      [findChoices]="findChoices"
+                                      [getChoiceLabel]="getChoiceLabel"
+                                      kendoTextBox
+                                      maxlength="500"
+                                      formControlName="emailSubject"
+                                      autocomplete="new-password"
+                                      tabindex="3"
+                                    />
+                                  </mwl-text-input-autocomplete-container>
+                                </kendo-textbox-container>
+                                <lavi-validation-message-list
+                                  [validation-form-group-name]="itemrow"
+                                  validation-control-name="emailSubject"
+                                  [validation-errorlist]="
+                                    WorkflowMessage.EmailSubjectMessage
+                                  "
+                                >
+                                </lavi-validation-message-list>
+
+                                <mwl-text-input-autocomplete-container class="mt-4">
+                                  <angular-editor [skip-keys]="skipKeys"
+                                  placeholder="Email Template ({{ itemrow.value.language }})"
+                                  [config]="EditorConfig"
+                                  formControlName="emailTemplate"  tabindex="9"
+                                  (blur)="UpdateEmailTemplateFormArray(i,$event.currentTarget.innerHTML,ConfirmationEmailArray)">
+                                  </angular-editor>
+                                </mwl-text-input-autocomplete-container>
+                                <lavi-show-dynamic-field [ConditionsName]="ConditionsName" ></lavi-show-dynamic-field>
+                                <lavi-validation-message-list
+                                  [validation-form-group-name]="itemrow"
+                                  validation-control-name="emailTemplate"
+                                  [validation-errorlist]="
+                                    WorkflowMessage.EmailTemplateMessage
+                                  "
+                                >
+                                </lavi-validation-message-list>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </kendo-panelbar-item>
+                      </kendo-panelbar>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- SMS Template -->
+                <div class="mt-4">
+                  <div class="mt-3 ml-3">
+                    <label
+                      class="cursor-pointer checkbox-label"
+                      (change)="
+                        isConfirmationSMSTranslationValid = true;
+                        OnSMSSelectionChanged(
+                          ConfirmationSMSArray,
+                          AddAppointmentForm.controls
+                            .enableConfirmationSMSAfterRegistration.value
+                        )
+                      "
+                    >
+                      <input
+                        type="checkbox"
+                        tabindex="4"
+                        kendoCheckBox
+                        [formControl]="
+                          AddAppointmentForm.controls
+                            .enableConfirmationSMSAfterRegistration
+                        "
+                      />
+                      <span
+                        >Send appointment confirmation SMS after
+                        confirmation.</span
+                      >
+                    </label>
+                  </div>
+
+                  <div class="marginleft-8 mt-1">
+                    <div
+                      formArrayName="confirmationSMS"
+                      *ngFor="
+                        let itemrow of ConfirmationSMSArray.controls;
+                        let i = index
+                      "
+                    >
+                      <div [formGroupName]="i" *ngIf="itemrow.value.isDefault">
+                        <kendo-floatinglabel
+                          text="SMS Template ({{ itemrow.value.language }})"
+                          class="w-100 mt-3"
+                        >
+                          <mwl-text-input-autocomplete-container
+                            class="full-expand-style"
+                          >
+                            <textarea
+                              class="full-expand-style-text-area mt-3 height-100 w-100"
+                              mwlTextInputAutocomplete
+                              triggerCharacter="%"
+                              [findChoices]="findChoices"
+                              [getChoiceLabel]="getChoiceLabel"
+                              kendoTextArea
+                              rows="4"
+                              [autoSize]="true"
+                              tabindex="4"
+                              formControlName="smsTemplate"
+                              maxlength="500"
+                            >
+                            </textarea>
+                          </mwl-text-input-autocomplete-container>
+                        </kendo-floatinglabel>
+
+                        <lavi-validation-message-list
+                          [validation-form-group-name]="itemrow"
+                          validation-control-name="smsTemplate"
+                          [validation-errorlist]="
+                            WorkflowMessage.EmailTemplateMessage
+                          "
+                        >
+                        </lavi-validation-message-list>
+                      </div>
+                    </div>
+
+                    <div
+                      class="width-28"
+                      *ngIf="ConfirmationSMSArray?.controls?.length > 1"
+                    >
+                      <kendo-panelbar>
+                        <kendo-panelbar-item title="">
+                          <ng-template kendoPanelBarItemTitle class="width-10">
+                            <div>
+                              <div
+                                class="width-125 error-message"
+                                *ngIf="
+                                  !isConfirmationSMSTranslationValid &&
+                                  ConfirmationSMSArray.invalid
+                                "
+                              >
+                                Please check the additional languages.
+                              </div>
+                              <label
+                                class="
+                                  cursor-pointer
+                                  margin-left-9
+                                  font-size-small-1
+                                "
+                              >
+                                <span>Additional Languages</span>
+                              </label>
+                            </div>
+                          </ng-template>
+
+                          <ng-template kendoPanelBarContent>
+                            <div
+                              formArrayName="confirmationSMS"
+                              *ngFor="
+                                let itemrow of ConfirmationSMSArray.controls;
+                                let i = index
+                              "
+                              class="width-357"
+                            >
+                              <label
+                                class="
+                                  cursor-pointer
+                                  marginleft-92
+                                  text-blue
+                                  small
+                                "
+                                (click)="
+                                  translate(
+                                    itemrow.value.smsTemplate,
+                                    ConfirmationSMSArray,
+                                    'smsTemplate'
+                                  )
+                                "
+                                *ngIf="itemrow.value.isDefault"
+                              >
+                                <span>Translate</span>
+                              </label>
+                            </div>
+                            <div
+                              formArrayName="confirmationSMS"
+                              *ngFor="
+                                let itemrow of ConfirmationSMSArray.controls;
+                                let i = index
+                              "
+                              class="width-357"
+                            >
+                              <div
+                                [formGroupName]="i"
+                                *ngIf="!itemrow.value.isDefault"
+                              >
+                                <kendo-floatinglabel
+                                  text="SMS Template ({{
+                                    itemrow.value.language
+                                  }})"
+                                  class="w-100 mt-3"
+                                >
+                                  <mwl-text-input-autocomplete-container
+                                    class="full-expand-style"
+                                  >
+                                    <textarea
+                                      class="full-expand-style-text-area mt-3 height-100 w-100"
+                                      mwlTextInputAutocomplete
+                                      triggerCharacter="%"
+                                      [findChoices]="findChoices"
+                                      [getChoiceLabel]="getChoiceLabel"
+                                      kendoTextArea
+                                      rows="4"
+                                      [autoSize]="true"
+                                      tabindex="4"
+                                      formControlName="smsTemplate"
+                                      maxlength="500"
+                                    >
+                                    </textarea>
+                                  </mwl-text-input-autocomplete-container>
+                                </kendo-floatinglabel>
+
+                                <lavi-validation-message-list
+                                  [validation-form-group-name]="itemrow"
+                                  validation-control-name="smsTemplate"
+                                  [validation-errorlist]="
+                                    WorkflowMessage.confirmationSMSTemplateMessage
+                                  "
+                                >
+                                </lavi-validation-message-list>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </kendo-panelbar-item>
+                      </kendo-panelbar>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Updation -->
+                <div class="sub-title-appointment mt-3">Update</div>
+                <!-- confirmation Email Template  -->
+                <div class="mt-4">
+                  <div class="mt-3 ml-3">
+                    <label
+                      class="cursor-pointer checkbox-label"
+                      (change)="
+                        isUpdateEmailTranslationValid = true;
+                        OnEmailSelectionChanged(
+                          AppointmentUpdateEmailArray,
+                          AddAppointmentForm.controls
+                            .enableSendEmailOnAppointmentUpdate.value
+                        )
+                      "
+                    >
+                      <input
+                        type="checkbox"
+                        tabindex="5"
+                        kendoCheckBox
+                        [formControl]="
+                          AddAppointmentForm.controls
+                            .enableSendEmailOnAppointmentUpdate
+                        "
+                      />
+                      <span>Send email after appointment update.</span>
+                    </label>
+                  </div>
+
+                  <div class="marginleft-8 mt-1">
+                    <div
+                      formArrayName="appointmentUpdateEmail"
+                      *ngFor="
+                        let itemrow of AppointmentUpdateEmailArray.controls;
+                        let i = index
+                      "
+                    >
+                      <div [formGroupName]="i" *ngIf="itemrow.value.isDefault">
+                        <kendo-textbox-container
+                          floatingLabel="Email Subject ({{
+                            itemrow.value.language
+                          }})"
+                        >
+                          <mwl-text-input-autocomplete-container
+                            class="full-expand-style"
+                          >
+                            <input
+                              type="text"
+                              mwlTextInputAutocomplete
+                              triggerCharacter="%"
+                              [findChoices]="findChoices"
+                              [getChoiceLabel]="getChoiceLabel"
+                              kendoTextBox
+                              maxlength="500"
+                              tabindex="5"
+                              formControlName="emailSubject"
+                              autocomplete="new-password"
+                              tabindex="2"
+                            />
+                          </mwl-text-input-autocomplete-container>
+                        </kendo-textbox-container>
+                        <lavi-validation-message-list
+                          [validation-form-group-name]="itemrow"
+                          validation-control-name="emailSubject"
+                          [validation-errorlist]="
+                            WorkflowMessage.EmailSubjectMessage
+                          "
+                        >
+                        </lavi-validation-message-list>
+
+                        <mwl-text-input-autocomplete-container class="mt-4">
+                          <angular-editor [skip-keys]="skipKeys"
+                          placeholder="Email Template ({{ itemrow.value.language }})"
+                          [config]="EditorConfig"
+                          formControlName="emailTemplate"  tabindex="9"
+                          (blur)="UpdateEmailTemplateFormArray(i,$event.currentTarget.innerHTML,AppointmentUpdateEmailArray)">
+                          </angular-editor>
+                        </mwl-text-input-autocomplete-container>
+                        <lavi-show-dynamic-field [ConditionsName]="ConditionsName" ></lavi-show-dynamic-field>
+
+                        <lavi-validation-message-list
+                          [validation-form-group-name]="itemrow"
+                          validation-control-name="emailTemplate"
+                          [validation-errorlist]="
+                            WorkflowMessage.EmailTemplateMessage
+                          "
+                        >
+                        </lavi-validation-message-list>
+                      </div>
+                    </div>
+
+                    <div
+                      class="width-28"
+                      *ngIf="AppointmentUpdateEmailArray?.controls?.length > 1"
+                    >
+                      <kendo-panelbar>
+                        <kendo-panelbar-item title="">
+                          <ng-template kendoPanelBarItemTitle class="width-10">
+                            <div>
+                              <div
+                                class="width-125 error-message"
+                                *ngIf="
+                                  !isUpdateEmailTranslationValid &&
+                                  AppointmentUpdateEmailArray.invalid
+                                "
+                              >
+                                Please check the additional languages.
+                              </div>
+                              <label
+                                class="
+                                  cursor-pointer
+                                  margin-left-9
+                                  font-size-small-1
+                                "
+                              >
+                                <span>Additional Languages</span>
+                              </label>
+                            </div>
+                          </ng-template>
+
+                          <ng-template kendoPanelBarContent>
+                            <div
+                              formArrayName="appointmentUpdateEmail"
+                              *ngFor="
+                                let itemrow of AppointmentUpdateEmailArray.controls;
+                                let i = index
+                              "
+                              class="width-357"
+                            >
+                              <label
+                                class="
+                                  cursor-pointer
+                                  marginleft-92
+                                  text-blue
+                                  small
+                                "
+                                (click)="
+                                  translate(
+                                    itemrow.value.emailTemplate,
+                                    AppointmentUpdateEmailArray,
+                                    'emailTemplate',
+                                    itemrow.value.emailSubject,
+                                    'emailSubject'
+                                  )
+                                "
+                                *ngIf="itemrow.value.isDefault"
+                              >
+                                <span>Translate</span>
+                              </label>
+                            </div>
+                            <div
+                              formArrayName="appointmentUpdateEmail"
+                              *ngFor="
+                                let itemrow of AppointmentUpdateEmailArray.controls;
+                                let i = index
+                              "
+                              class="width-357"
+                            >
+                              <div
+                                [formGroupName]="i"
+                                *ngIf="!itemrow.value.isDefault"
+                              >
+                                <kendo-textbox-container
+                                  floatingLabel="Email Subject ({{
+                                    itemrow.value.language
+                                  }})"
+                                  class="mt-3"
+                                >
+                                  <mwl-text-input-autocomplete-container
+                                    class="full-expand-style"
+                                  >
+                                    <input
+                                      type="text"
+                                      mwlTextInputAutocomplete
+                                      triggerCharacter="%"
+                                      [findChoices]="findChoices"
+                                      [getChoiceLabel]="getChoiceLabel"
+                                      kendoTextBox
+                                      maxlength="500"
+                                      tabindex="5"
+                                      formControlName="emailSubject"
+                                      autocomplete="new-password"
+                                      tabindex="2"
+                                    />
+                                  </mwl-text-input-autocomplete-container>
+                                </kendo-textbox-container>
+                                <lavi-validation-message-list
+                                  [validation-form-group-name]="itemrow"
+                                  validation-control-name="emailSubject"
+                                  [validation-errorlist]="
+                                    WorkflowMessage.EmailSubjectMessage
+                                  "
+                                >
+                                </lavi-validation-message-list>
+
+                                <mwl-text-input-autocomplete-container class="mt-4">
+                                  <angular-editor [skip-keys]="skipKeys"
+                                  placeholder="Email Template ({{ itemrow.value.language }})"
+                                  [config]="EditorConfig"
+                                  formControlName="emailTemplate"  tabindex="9"
+                                  (blur)="UpdateEmailTemplateFormArray(i,$event.currentTarget.innerHTML,AppointmentUpdateEmailArray)">
+                                  </angular-editor>
+                                </mwl-text-input-autocomplete-container>
+                                <lavi-show-dynamic-field [ConditionsName]="ConditionsName" ></lavi-show-dynamic-field>
+
+                                <lavi-validation-message-list
+                                  [validation-form-group-name]="itemrow"
+                                  validation-control-name="emailTemplate"
+                                  [validation-errorlist]="
+                                    WorkflowMessage.EmailTemplateMessage
+                                  "
+                                >
+                                </lavi-validation-message-list>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </kendo-panelbar-item>
+                      </kendo-panelbar>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- SMS Template -->
+                <div class="mt-4">
+                  <div class="mt-3 ml-3">
+                    <label
+                      class="cursor-pointer checkbox-label"
+                      (change)="
+                        isUpdateSMSTranslationValid = true;
+                        OnSMSSelectionChanged(
+                          AppointmentUpdateSMSArray,
+                          AddAppointmentForm.controls
+                            .enableSendSMSOnAppointmentUpdate.value
+                        )
+                      "
+                    >
+                      <input
+                        type="checkbox"
+                        tabindex="6"
+                        kendoCheckBox
+                        [formControl]="
+                          AddAppointmentForm.controls
+                            .enableSendSMSOnAppointmentUpdate
+                        "
+                      />
+                      <span>Send SMS after appointment update.</span>
+                    </label>
+                  </div>
+
+                  <div class="marginleft-8 mt-1">
+                    <div
+                      formArrayName="appointmentUpdateSMS"
+                      *ngFor="
+                        let itemrow of AppointmentUpdateSMSArray.controls;
+                        let i = index
+                      "
+                    >
+                      <div [formGroupName]="i" *ngIf="itemrow.value.isDefault">
+                        <kendo-floatinglabel
+                          text="SMS Template ({{ itemrow.value.language }})"
+                          class="w-100 mt-3"
+                        >
+                          <mwl-text-input-autocomplete-container
+                            class="full-expand-style"
+                          >
+                            <textarea
+                              class="full-expand-style-text-area mt-3 height-100 w-100"
+                              mwlTextInputAutocomplete
+                              triggerCharacter="%"
+                              [findChoices]="findChoices"
+                              [getChoiceLabel]="getChoiceLabel"
+                              kendoTextArea
+                              rows="4"
+                              [autoSize]="true"
+                              tabindex="6"
+                              formControlName="smsTemplate"
+                              maxlength="500"
+                            >
+                            </textarea>
+                          </mwl-text-input-autocomplete-container>
+                        </kendo-floatinglabel>
+
+                        <lavi-validation-message-list
+                          [validation-form-group-name]="itemrow"
+                          validation-control-name="smsTemplate"
+                          [validation-errorlist]="
+                            WorkflowMessage.EmailTemplateMessage
+                          "
+                        >
+                        </lavi-validation-message-list>
+                      </div>
+                    </div>
+
+                    <div
+                      class="width-28"
+                      *ngIf="AppointmentUpdateSMSArray?.controls?.length > 1"
+                    >
+                      <kendo-panelbar>
+                        <kendo-panelbar-item title="">
+                          <ng-template kendoPanelBarItemTitle class="width-10">
+                            <div>
+                              <div
+                                class="width-125 error-message"
+                                *ngIf="
+                                  !isUpdateSMSTranslationValid &&
+                                  AppointmentUpdateSMSArray.invalid
+                                "
+                              >
+                                Please check the additional languages.
+                              </div>
+                              <label
+                                class="
+                                  cursor-pointer
+                                  margin-left-9
+                                  font-size-small-1
+                                "
+                              >
+                                <span>Additional Languages</span>
+                              </label>
+                            </div>
+                          </ng-template>
+
+                          <ng-template kendoPanelBarContent>
+                            <div
+                              formArrayName="appointmentUpdateSMS"
+                              *ngFor="
+                                let itemrow of AppointmentUpdateSMSArray.controls;
+                                let i = index
+                              "
+                              class="width-357"
+                            >
+                              <label
+                                class="
+                                  cursor-pointer
+                                  marginleft-92
+                                  text-blue
+                                  small
+                                "
+                                (click)="
+                                  translate(
+                                    itemrow.value.smsTemplate,
+                                    AppointmentUpdateSMSArray,
+                                    'smsTemplate'
+                                  )
+                                "
+                                *ngIf="itemrow.value.isDefault"
+                              >
+                                <span>Translate</span>
+                              </label>
+                            </div>
+                            <div
+                              formArrayName="appointmentUpdateSMS"
+                              *ngFor="
+                                let itemrow of AppointmentUpdateSMSArray.controls;
+                                let i = index
+                              "
+                              class="width-357"
+                            >
+                              <div
+                                [formGroupName]="i"
+                                *ngIf="!itemrow.value.isDefault"
+                              >
+                                <kendo-floatinglabel
+                                  text="SMS Template ({{
+                                    itemrow.value.language
+                                  }})"
+                                  class="w-100 mt-3"
+                                >
+                                  <mwl-text-input-autocomplete-container
+                                    class="full-expand-style"
+                                  >
+                                    <textarea
+                                      class="full-expand-style-text-area mt-3 height-100 w-100"
+                                      mwlTextInputAutocomplete
+                                      triggerCharacter="%"
+                                      [findChoices]="findChoices"
+                                      [getChoiceLabel]="getChoiceLabel"
+                                      kendoTextArea
+                                      rows="4"
+                                      [autoSize]="true"
+                                      tabindex="6"
+                                      formControlName="smsTemplate"
+                                      maxlength="500"
+                                    >
+                                    </textarea>
+                                  </mwl-text-input-autocomplete-container>
+                                </kendo-floatinglabel>
+
+                                <lavi-validation-message-list
+                                  [validation-form-group-name]="itemrow"
+                                  validation-control-name="smsTemplate"
+                                  [validation-errorlist]="
+                                    WorkflowMessage.confirmationSMSTemplateMessage
+                                  "
+                                >
+                                </lavi-validation-message-list>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </kendo-panelbar-item>
+                      </kendo-panelbar>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Cancellation -->
+                <div class="sub-title-appointment mt-3">Cancellation</div>
+                <!-- confirmation Email Template  -->
+                <div class="mt-4">
+                  <div class="mt-3 ml-3">
+                    <label
+                      class="cursor-pointer checkbox-label"
+                      (change)="
+                        isCancelledEmailTranslationValid = true;
+                        OnEmailSelectionChanged(
+                          AppointmentCancelEmailArray,
+                          AddAppointmentForm.controls
+                            .enableSendEmailOnAppointmentCancel.value
+                        )
+                      "
+                    >
+                      <input
+                        type="checkbox"
+                        tabindex="7"
+                        id="enableSendEmailOnAppointmentCancel"
+                        kendoCheckBox
+                        [formControl]="
+                          AddAppointmentForm.controls
+                            .enableSendEmailOnAppointmentCancel
+                        "
+                      />
+                      <span>Send email after appointment cancelled.</span>
+                    </label>
+                  </div>
+
+                  <div class="marginleft-8 mt-1">
+                    <div
+                      formArrayName="appointmentCancelEmail"
+                      *ngFor="
+                        let itemrow of AppointmentCancelEmailArray.controls;
+                        let i = index
+                      "
+                    >
+                      <div [formGroupName]="i" *ngIf="itemrow.value.isDefault">
+                        <kendo-textbox-container
+                          floatingLabel="Email Subject ({{
+                            itemrow.value.language
+                          }})"
+                        >
+                          <mwl-text-input-autocomplete-container
+                            class="full-expand-style"
+                          >
+                            <input
+                              type="text"
+                              mwlTextInputAutocomplete
+                              triggerCharacter="%"
+                              [findChoices]="findChoices"
+                              [getChoiceLabel]="getChoiceLabel"
+                              kendoTextBox
+                              maxlength="500"
+                              tabindex="7"
+                              formControlName="emailSubject"
+                              autocomplete="new-password"
+                              tabindex="2"
+                            />
+                          </mwl-text-input-autocomplete-container>
+                        </kendo-textbox-container>
+                        <lavi-validation-message-list
+                          [validation-form-group-name]="itemrow"
+                          validation-control-name="emailSubject"
+                          [validation-errorlist]="
+                            WorkflowMessage.EmailSubjectMessage
+                          "
+                        >
+                        </lavi-validation-message-list>
+
+                        <mwl-text-input-autocomplete-container class="mt-4">
+                          <angular-editor [skip-keys]="skipKeys"
+                          placeholder="Email Template ({{ itemrow.value.language }})"
+                          [config]="EditorConfig"
+                          formControlName="emailTemplate"  tabindex="9"
+                          (blur)="UpdateEmailTemplateFormArray(i,$event.currentTarget.innerHTML,AppointmentCancelEmailArray)">
+                          </angular-editor>
+                        </mwl-text-input-autocomplete-container>
+                        <lavi-show-dynamic-field [ConditionsName]="ConditionsName" ></lavi-show-dynamic-field>
+
+                        <lavi-validation-message-list
+                          [validation-form-group-name]="itemrow"
+                          validation-control-name="emailTemplate"
+                          [validation-errorlist]="
+                            WorkflowMessage.EmailTemplateMessage
+                          "
+                        >
+                        </lavi-validation-message-list>
+                      </div>
+                    </div>
+
+                    <div
+                      class="width-28"
+                      *ngIf="AppointmentCancelEmailArray?.controls?.length > 1"
+                    >
+                      <kendo-panelbar>
+                        <kendo-panelbar-item title="">
+                          <ng-template kendoPanelBarItemTitle class="width-10">
+                            <div>
+                              <div
+                                class="width-125 error-message"
+                                *ngIf="
+                                  !isCancelledEmailTranslationValid &&
+                                  AppointmentCancelEmailArray.invalid
+                                "
+                              >
+                                Please check the additional languages.
+                              </div>
+                              <label
+                                class="
+                                  cursor-pointer
+                                  margin-left-9
+                                  font-size-small-1
+                                "
+                              >
+                                <span>Additional Languages</span>
+                              </label>
+                            </div>
+                          </ng-template>
+
+                          <ng-template kendoPanelBarContent>
+                            <div
+                              formArrayName="appointmentCancelEmail"
+                              *ngFor="
+                                let itemrow of AppointmentCancelEmailArray.controls;
+                                let i = index
+                              "
+                              class="width-357"
+                            >
+                              <label
+                                class="
+                                  cursor-pointer
+                                  marginleft-92
+                                  text-blue
+                                  small
+                                "
+                                (click)="
+                                  translate(
+                                    itemrow.value.emailTemplate,
+                                    AppointmentCancelEmailArray,
+                                    'emailTemplate',
+                                    itemrow.value.emailSubject,
+                                    'emailSubject'
+                                  )
+                                "
+                                *ngIf="itemrow.value.isDefault"
+                              >
+                                <span>Translate</span>
+                              </label>
+                            </div>
+                            <div
+                              formArrayName="appointmentCancelEmail"
+                              *ngFor="
+                                let itemrow of AppointmentCancelEmailArray.controls;
+                                let i = index
+                              "
+                              class="width-357"
+                            >
+                              <div
+                                [formGroupName]="i"
+                                *ngIf="!itemrow.value.isDefault"
+                              >
+                                <kendo-textbox-container
+                                  floatingLabel="Email Subject ({{
+                                    itemrow.value.language
+                                  }})"
+                                  class="mt-3"
+                                >
+                                  <mwl-text-input-autocomplete-container
+                                    class="full-expand-style"
+                                  >
+                                    <input
+                                      type="text"
+                                      mwlTextInputAutocomplete
+                                      triggerCharacter="%"
+                                      [findChoices]="findChoices"
+                                      [getChoiceLabel]="getChoiceLabel"
+                                      kendoTextBox
+                                      maxlength="500"
+                                      tabindex="7"
+                                      formControlName="emailSubject"
+                                      autocomplete="new-password"
+                                      tabindex="2"
+                                    />
+                                  </mwl-text-input-autocomplete-container>
+                                </kendo-textbox-container>
+                                <lavi-validation-message-list
+                                  [validation-form-group-name]="itemrow"
+                                  validation-control-name="emailSubject"
+                                  [validation-errorlist]="
+                                    WorkflowMessage.EmailSubjectMessage
+                                  "
+                                >
+                                </lavi-validation-message-list>
+                                <mwl-text-input-autocomplete-container class="mt-4">
+                                  <angular-editor [skip-keys]="skipKeys"
+                                  placeholder="Email Template ({{ itemrow.value.language }})"
+                                  [config]="EditorConfig"
+                                  formControlName="emailTemplate"  tabindex="9"
+                                  (blur)="UpdateEmailTemplateFormArray(i,$event.currentTarget.innerHTML,AppointmentCancelEmailArray)">
+                                  </angular-editor>
+                                </mwl-text-input-autocomplete-container>
+                                <lavi-show-dynamic-field [ConditionsName]="ConditionsName" ></lavi-show-dynamic-field>
+                                <lavi-validation-message-list
+                                  [validation-form-group-name]="itemrow"
+                                  validation-control-name="emailTemplate"
+                                  [validation-errorlist]="
+                                    WorkflowMessage.EmailTemplateMessage
+                                  "
+                                >
+                                </lavi-validation-message-list>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </kendo-panelbar-item>
+                      </kendo-panelbar>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- SMS Template -->
+                <div class="mt-4">
+                  <div class="mt-3 ml-3">
+                    <label
+                      class="cursor-pointer checkbox-label"
+                      (change)="
+                        isCancelledSMSTranslationValid = true;
+                        OnSMSSelectionChanged(
+                          AppointmentCancelSMSArray,
+                          AddAppointmentForm.controls
+                            .enableSendSMSOnAppointmentCancel.value
+                        )
+                      "
+                    >
+                      <input
+                        type="checkbox"
+                        tabindex="8"
+                        kendoCheckBox
+                        [formControl]="
+                          AddAppointmentForm.controls
+                            .enableSendSMSOnAppointmentCancel
+                        "
+                      />
+                      <span>Send SMS after appointment cancelled.</span>
+                    </label>
+                  </div>
+
+                  <div class="marginleft-8 mt-1">
+                    <div
+                      formArrayName="appointmentCancelSMS"
+                      *ngFor="
+                        let itemrow of AppointmentCancelSMSArray.controls;
+                        let i = index
+                      "
+                    >
+                      <div [formGroupName]="i" *ngIf="itemrow.value.isDefault">
+                        <kendo-floatinglabel
+                          text="SMS Template ({{ itemrow.value.language }})"
+                          class="w-100 mt-3"
+                        >
+                          <mwl-text-input-autocomplete-container
+                            class="full-expand-style"
+                          >
+                            <textarea
+                              class="full-expand-style-text-area mt-3 height-100 w-100"
+                              mwlTextInputAutocomplete
+                              triggerCharacter="%"
+                              [findChoices]="findChoices"
+                              [getChoiceLabel]="getChoiceLabel"
+                              kendoTextArea
+                              rows="4"
+                              [autoSize]="true"
+                              tabindex="8"
+                              formControlName="smsTemplate"
+                              maxlength="500"
+                            >
+                            </textarea>
+                          </mwl-text-input-autocomplete-container>
+                        </kendo-floatinglabel>
+
+                        <lavi-validation-message-list
+                          [validation-form-group-name]="itemrow"
+                          validation-control-name="smsTemplate"
+                          [validation-errorlist]="
+                            WorkflowMessage.EmailTemplateMessage
+                          "
+                        >
+                        </lavi-validation-message-list>
+                      </div>
+                    </div>
+
+                    <div
+                      class="width-28"
+                      *ngIf="AppointmentCancelSMSArray?.controls?.length > 1"
+                    >
+                      <kendo-panelbar>
+                        <kendo-panelbar-item title="">
+                          <ng-template kendoPanelBarItemTitle class="width-10">
+                            <div>
+                              <div
+                                class="width-125 error-message"
+                                *ngIf="
+                                  !isCancelledSMSTranslationValid &&
+                                  AppointmentCancelSMSArray.invalid
+                                "
+                              >
+                                Please check the additional languages.
+                              </div>
+                              <label
+                                class="
+                                  cursor-pointer
+                                  margin-left-9
+                                  font-size-small-1
+                                "
+                              >
+                                <span>Additional Languages</span>
+                              </label>
+                            </div>
+                          </ng-template>
+
+                          <ng-template kendoPanelBarContent>
+                            <div
+                              formArrayName="appointmentCancelSMS"
+                              *ngFor="
+                                let itemrow of AppointmentCancelSMSArray.controls;
+                                let i = index
+                              "
+                              class="width-357"
+                            >
+                              <label
+                                class="
+                                  cursor-pointer
+                                  marginleft-92
+                                  text-blue
+                                  small
+                                "
+                                (click)="
+                                  translate(
+                                    itemrow.value.smsTemplate,
+                                    AppointmentCancelSMSArray,
+                                    'smsTemplate'
+                                  )
+                                "
+                                *ngIf="itemrow.value.isDefault"
+                              >
+                                <span>Translate</span>
+                              </label>
+                            </div>
+                            <div
+                              formArrayName="appointmentCancelSMS"
+                              *ngFor="
+                                let itemrow of AppointmentCancelSMSArray.controls;
+                                let i = index
+                              "
+                              class="width-357"
+                            >
+                              <div
+                                [formGroupName]="i"
+                                *ngIf="!itemrow.value.isDefault"
+                              >
+                                <kendo-floatinglabel
+                                  text="SMS Template ({{
+                                    itemrow.value.language
+                                  }})"
+                                  class="w-100 mt-3"
+                                >
+                                  <mwl-text-input-autocomplete-container
+                                    class="full-expand-style"
+                                  >
+                                    <textarea
+                                      class="full-expand-style-text-area mt-3 height-100 w-100"
+                                      mwlTextInputAutocomplete
+                                      triggerCharacter="%"
+                                      [findChoices]="findChoices"
+                                      [getChoiceLabel]="getChoiceLabel"
+                                      kendoTextArea
+                                      rows="4"
+                                      [autoSize]="true"
+                                      tabindex="8"
+                                      formControlName="smsTemplate"
+                                      maxlength="500"
+                                    >
+                                    </textarea>
+                                  </mwl-text-input-autocomplete-container>
+                                </kendo-floatinglabel>
+
+                                <lavi-validation-message-list
+                                  [validation-form-group-name]="itemrow"
+                                  validation-control-name="smsTemplate"
+                                  [validation-errorlist]="
+                                    WorkflowMessage.confirmationSMSTemplateMessage
+                                  "
+                                >
+                                </lavi-validation-message-list>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </kendo-panelbar-item>
+                      </kendo-panelbar>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- EnableBCCBranchWithEveryRegistration -->
+                <div class="mt-4">
+                  <div class="mt-3 ml-3">
+                    <input
+                      type="checkbox"
+                      tabindex="9"
+                      id="enableBCCBranchWithEveryRegistration"
+                      kendoCheckBox
+                      [formControl]="
+                        AddAppointmentForm.controls
+                          .enableBCCBranchWithEveryRegistration
+                      "
+                    />
+                    <label
+                      class="cursor-pointer checkbox-label"
+                      for="enableBCCBranchWithEveryRegistration"
+                    >
+                      <span
+                        >BCC location with every appointment confirmation</span
+                      >
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Reminders -->
+              <div>
+                <div class="sub-title-appointment mt-3">Reminders</div>
+                <div>
+                  <div
+                    class="mt-3 ml-3"
+                    formArrayName="reminders"
+                    *ngFor="
+                      let itemrow of RemindersFormArray.controls;
+                      let remIndex = index
+                    "
+                  >
+                    <div class="row" [formGroupName]="remIndex">
+                      <div class="col-sm-8">
+                        <div class="row">
+                          <label class="cursor-pointer mt-2">
+                            <span>Send</span>
+                          </label>
+                          <span class="ml-3">
+                            <kendo-dropdownlist
+                              class="no-border"
+                              [data]="remindsViaDropdown"
+                              formControlName="remindsVia"
+                              tabindex="10"
+                            >
+                            </kendo-dropdownlist>
+                          </span>
+                          <span class="ml-3">
+                            <kendo-dropdownlist
+                              class="no-border"
+                              [data]="remindsInDropdown"
+                              formControlName="remindsIn"
+                              tabindex="10"
+                            >
+                            </kendo-dropdownlist>
+                          </span>
+                          <span class="ml-3">
+                            <kendo-dropdownlist
+                              class="no-border"
+                              [data]="reminderTypeDropdown"
+                              formControlName="reminderPeriodType"
+                              tabindex="10"
+                            >
+                            </kendo-dropdownlist>
+                          </span>
+                          <label class="cursor-pointer mt-2 ml-3">
+                            <span>prior appointment day</span>
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-4 text-right width-48 pt-1">
+                        <label
+                          class="font-size-110 cursor-pointer text-blue"
+                          (click)="deleteReminder(remIndex)"
+                        >
+                          <span>Delete</span>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="marginleft-6_5" [formGroupName]="remIndex">
+                      <div
+                        formArrayName="reminderTemplate"
+                        *ngFor="
+                          let remtemplate of itemrow?.controls?.reminderTemplate
+                            ?.controls;
+                          let j = index
+                        "
+                      >
+                        <div
+                          [formGroupName]="j"
+                          *ngIf="remtemplate.value.isDefault"
+                        >
+                          <kendo-textbox-container
+                            floatingLabel="Email Subject ({{
+                              remtemplate.value.language
+                            }})"
+                            *ngIf="itemrow.value.remindsVia == 'Email'"
+                          >
+                            <mwl-text-input-autocomplete-container
+                              class="full-expand-style"
+                            >
+                              <input
+                                type="text"
+                                mwlTextInputAutocomplete
+                                triggerCharacter="%"
+                                [findChoices]="findChoices"
+                                [getChoiceLabel]="getChoiceLabel"
+                                kendoTextBox
+                                maxlength="500"
+                                formControlName="subject"
+                                tabindex="10"
+                              />
+                            </mwl-text-input-autocomplete-container>
+                          </kendo-textbox-container>
+                          <lavi-validation-message-list
+                            [validation-form-group-name]="remtemplate"
+                            validation-control-name="subject"
+                            [validation-errorlist]="
+                              WorkflowMessage.EmailSubjectMessage
+                            "
+                          >
+                          </lavi-validation-message-list>
+
+                          <kendo-floatinglabel
+                            text="{{ itemrow.value.remindsVia }} Template ({{
+                              remtemplate.value.language
+                            }})"
+                            class="w-100 mt-3"
+                          >
+                            <mwl-text-input-autocomplete-container
+                              class="full-expand-style"
+                            >
+                              <textarea
+                                class="full-expand-style-text-area mt-3 height-100 w-100"
+                                mwlTextInputAutocomplete
+                                triggerCharacter="%"
+                                [findChoices]="findChoices"
+                                [getChoiceLabel]="getChoiceLabel"
+                                kendoTextArea
+                                rows="4"
+                                [autoSize]="true"
+                                tabindex="10"
+                                formControlName="template"
+                                
+                              >
+                              </textarea>
+                            </mwl-text-input-autocomplete-container>
+                          </kendo-floatinglabel>
+
+                          <lavi-validation-message-list
+                            [validation-form-group-name]="remtemplate"
+                            validation-control-name="template"
+                            [validation-errorlist]="
+                              WorkflowMessage.reminderTemplateMessage
+                            "
+                          >
+                          </lavi-validation-message-list>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      class="rem-add-language-div"
+                      *ngIf="
+                        itemrow?.controls?.reminderTemplate?.controls?.length >
+                        1
+                      "
+                    >
+                      <kendo-panelbar [formGroupName]="remIndex">
+                        <kendo-panelbar-item title="">
+                          <ng-template kendoPanelBarItemTitle class="width-10">
+                            <div>
+                              <div
+                                class="width-125 error-message"
+                                *ngIf="
+                                  itemrow?.controls?.reminderTemplate.hasError(
+                                    'InvalidTranslation'
+                                  )
+                                "
+                              >
+                                Please check the additional languages.
+                              </div>
+                              <label
+                                class="
+                                  cursor-pointer
+                                  margin-left-9
+                                  font-size-small-1
+                                "
+                              >
+                                <span>Additional Languages</span>
+                              </label>
+                            </div>
+                          </ng-template>
+
+                          <ng-template kendoPanelBarContent>
+                            <div
+                              class="marginleft-6_5 width-359"
+                              formArrayName="reminderTemplate"
+                              *ngFor="
+                                let remtemplate of itemrow?.controls
+                                  ?.reminderTemplate?.controls;
+                                let j = index
+                              "
+                            >
+                              <label
+                                class="
+                                  cursor-pointer
+                                  marginleft-92
+                                  text-blue
+                                  small
+                                "
+                                (click)="
+                                  translate(
+                                    remtemplate.value.template,
+                                    itemrow?.controls?.reminderTemplate,
+                                    'template',
+                                    remtemplate.value.subject,
+                                    'subject'
+                                  )
+                                "
+                                *ngIf="remtemplate.value.isDefault"
+                              >
+                                <span>Translate</span>
+                              </label>
+                            </div>
+                            <div
+                              class="marginleft-6_5 width-359"
+                              formArrayName="reminderTemplate"
+                              *ngFor="
+                                let remtemplate of itemrow?.controls
+                                  ?.reminderTemplate?.controls;
+                                let j = index
+                              "
+                            >
+                              <div
+                                [formGroupName]="j"
+                                *ngIf="!remtemplate.value.isDefault"
+                              >
+                                <kendo-textbox-container
+                                  class="mt-3"
+                                  floatingLabel="Email Subject ({{
+                                    remtemplate.value.language
+                                  }})"
+                                  *ngIf="itemrow.value.remindsVia == 'Email'"
+                                >
+                                  <mwl-text-input-autocomplete-container
+                                    class="full-expand-style"
+                                  >
+                                    <input
+                                      type="text"
+                                      mwlTextInputAutocomplete
+                                      triggerCharacter="%"
+                                      [findChoices]="findChoices"
+                                      [getChoiceLabel]="getChoiceLabel"
+                                      kendoTextBox
+                                      maxlength="500"
+                                      formControlName="subject"
+                                      tabindex="10"
+                                    />
+                                  </mwl-text-input-autocomplete-container>
+                                </kendo-textbox-container>
+                                <lavi-validation-message-list
+                                  [validation-form-group-name]="remtemplate"
+                                  validation-control-name="subject"
+                                  [validation-errorlist]="
+                                    WorkflowMessage.EmailSubjectMessage
+                                  "
+                                >
+                                </lavi-validation-message-list>
+
+                                <kendo-floatinglabel
+                                  text="{{
+                                    itemrow.value.remindsVia
+                                  }} Template ({{
+                                    remtemplate.value.language
+                                  }})"
+                                  class="w-100 mt-3"
+                                >
+                                  <mwl-text-input-autocomplete-container
+                                    class="full-expand-style"
+                                  >
+                                    <textarea
+                                      class="full-expand-style-text-area mt-3 height-100 w-100"
+                                      mwlTextInputAutocomplete
+                                      triggerCharacter="%"
+                                      [findChoices]="findChoices"
+                                      [getChoiceLabel]="getChoiceLabel"
+                                      kendoTextArea
+                                      rows="4"
+                                      [autoSize]="true"
+                                      tabindex="10"
+                                      formControlName="template"
+                                      
+                                    >
+                                    </textarea>
+                                  </mwl-text-input-autocomplete-container>
+                                </kendo-floatinglabel>
+
+                                <lavi-validation-message-list
+                                  [validation-form-group-name]="remtemplate"
+                                  validation-control-name="template"
+                                  [validation-errorlist]="
+                                    WorkflowMessage.reminderTemplateMessage
+                                  "
+                                >
+                                </lavi-validation-message-list>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </kendo-panelbar-item>
+                      </kendo-panelbar>
+                    </div>
+                  </div>
+
+                  <div class="ml-3 mt-3">
+                    <label
+                      class="cursor-pointer text-blue"
+                      (click)="addReminder()"
+                    >
+                      <span>Add New Reminder</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quiet Hours -->
+              <div class="pb-5">
+                <div class="sub-title-appointment mt-3">Quiet Hours</div>
+                <div class="mt-3">
+                  <div class="ml-3 mt-3">
+                    <div>
+                      <label
+                        class="cursor-pointer checkbox-label"
+                        for="enableQuietHours"
+                        (click)="
+                          OnQuiteHoursChange(
+                            AddAppointmentForm.controls.enableQuietHours.value
+                          )
+                        "
+                      >
+                        <input
+                          type="checkbox"
+                          tabindex="11"
+                          id="enableQuietHours"
+                          kendoCheckBox
+                          [formControl]="
+                            AddAppointmentForm.controls.enableQuietHours
+                          "
+                        />
+                        <span>Enable quiet hours</span>
+                      </label>
+                    </div>
+
+                    <div
+                      class="row ml-4"
+                      *ngIf="AddAppointmentForm.controls.enableQuietHours.value"
+                    >
+                      <label class="cursor-pointer mt-2">
+                        <span>From</span>
+                      </label>
+                      <div>
+                        <div class="col-12">
+                          <kendo-dropdownlist
+                            style="width: 120px"
+                            tabindex="11"
+                            class="no-border"
+                            [data]="quietHoursDropdown"
+                            [defaultItem]="defaultValues.timeOpen"
+                            [formControl]="AddAppointmentForm.controls.from"
+                          >
+                          </kendo-dropdownlist>
+                          <lavi-validation-message-list
+                            [validation-form-group-name]="AddAppointmentForm"
+                            validation-control-name="from"
+                            [validation-errorlist]="
+                              WorkflowMessage.TimeMessages
+                            "
+                          >
+                          </lavi-validation-message-list>
+                          <div class="text-danger small h-10">
+                            <span
+                              *ngIf="
+                                AddAppointmentForm.hasError(
+                                  'invalidStartTime'
+                                ) || AddAppointmentForm.hasError('invalidTime')
+                              "
+                              >Please select time.</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+
+                      <label class="cursor-pointer mt-2">
+                        <span>To</span>
+                      </label>
+
+                      <div>
+                        <div class="col-12">
+                          <kendo-dropdownlist
+                            style="width: 120px"
+                            tabindex="11"
+                            class="no-border"
+                            [data]="quietHoursDropdown"
+                            [defaultItem]="defaultValues.time"
+                            [formControl]="AddAppointmentForm.controls.to"
+                          >
+                          </kendo-dropdownlist>
+                          <lavi-validation-message-list
+                            [validation-form-group-name]="AddAppointmentForm"
+                            validation-control-name="to"
+                            [validation-errorlist]="
+                              WorkflowMessage.TimeMessages
+                            "
+                          >
+                          </lavi-validation-message-list>
+                          <div
+                            class="text-danger small h-10"
+                            *ngIf="
+                              AddAppointmentForm.hasError('invalidEndTime') ||
+                              AddAppointmentForm.hasError('invalidTime')
+                            "
+                          >
+                            Please select time.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 mt-4">
+        <div class="float-right">
+          <button
+            kendoButton
+            class="secondary-button mr-2"
+            type="button"
+            (click)="Cancel()"
+          >
+            Cancel
+          </button>
+          <button
+            kendoButton
+            class="primary-button"
+            *ngIf="Mode == 'ADD'"
+            type="submit"
+          >
+            Add
+          </button>
+          <button
+            kendoButton
+            class="primary-button"
+            *ngIf="Mode == 'EDIT'"
+            type="submit"
+          >
+            Update
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</lavi-modal>

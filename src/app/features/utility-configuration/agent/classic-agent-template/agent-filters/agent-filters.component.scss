@@ -1,0 +1,50 @@
+@import "src/stylings/primitives/primitives.scss";
+@import "src/stylings/shared/agent-layout.scss";
+
+.sidebar-icon-container{
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: grid;
+    padding: 5px;
+    // height: 70px;
+}
+.sidebar-icon{
+    height: 50px;
+    width: 50px;
+}
+.sidebar-active{
+    border-left: 0.3em solid $sidebar-yellow-border;
+    padding-bottom: 0.3em;
+}
+.sidebar-footer{
+    position: fixed;
+    font-size: $global-font-size;
+    bottom: 10px;
+    width: 100%;
+}
+.sidebar-footer-popover-menu{
+    position: fixed;
+    bottom: 30px;
+    box-shadow: 0px 0px 10px -5px;
+    left: 40px;
+    background: $color-background-white;
+}
+
+.filtes-container{
+    max-height: calc(100vh - (#{$agent-header-height} + 5px ));
+    overflow-y: auto;
+    overflow-x: clip;
+}
+
+.filter-item-row{
+    border-radius: 10px;
+}
+
+.circle{
+    height: 9px;
+    width: 9px;
+    border-radius: 50%;
+}
+

@@ -1,0 +1,16 @@
+.advance-workflow-list {
+    .k-grid,
+    .k-grid th,
+    .k-grid td,
+     ::ng-deep .k-grid-header,
+     ::ng-deep .k-grid-header-wrap {
+        border: none;
+    }
+}
+
+.advance-workflow-list ::ng-deep .k-grid tbody tr td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-color: transparent;
+}
